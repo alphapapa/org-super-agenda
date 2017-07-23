@@ -255,7 +255,6 @@
                                                     (osa/insert-agenda-header section-name)
                                                     (insert (org-agenda-finalize-entries items 'agenda)
                                                             "\n\n")))
-
                                       (when non-matching
                                         ;; Insert non-matching items in main section
                                         (osa/insert-agenda-header "Other items")
