@@ -445,3 +445,34 @@ CLOSED: [2017-07-23 Sun 16:51]
 
     (org-super-agenda nil nil 'day nil :super-filters '((osa/separate-by-any-tags ("bills" "apartment"))))
 #+END_SRC
+
+** UNDERWAY Use macros
+:LOGBOOK:
+-  State "UNDERWAY"   from              [2017-07-23 Sun 18:08]
+:END:
+
+This is a start.
+
+#+BEGIN_SRC elisp
+  (cl-defmacro osa/def-separator (name docstring &key section-name test)
+    (declare (indent defun))
+    (let ((function-name (intern (concat "osa/separate-by-" (symbol-name name)))))
+      `(defun ,function-name (items args)
+         ,docstring
+         (unless (listp args)
+           (setq args (list args)))
+         (cl-loop with section-name = ,section-name
+                  for item in items
+                  if ,test
+                  collect item into matching
+                  else collect item into non-matching
+                  finally return (list section-name non-matching matching)))))
+
+  (osa/def-separator priorities
+    "Separate items by PRIORITIES.
+    PRIORITIES may be a string or a list of strings which match the
+    letter in an Org priority cookie, e.g. \"A\", \"B\", etc.
+    Returns (SECTION-NAME NON-MATCHING MATCHING)."
+    :section-name (concat "Priority " (s-join " and " args) " items")
+    :test (cl-member (osa/get-priority-cookie item) args :test 'string=))
+#+END_SRC
