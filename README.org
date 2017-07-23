@@ -27,3 +27,7 @@ The ~org-super-agenda~ command works as a custom agenda command, so you can add 
 This uses the =s= library, which you can install from MELPA.
 
 To start, open the ~org-super-agenda.el~ file in Emacs and run ~eval-buffer~.  Then you can run the code above to test it.  Then you can modify it to suit yourself, and add it to your ~org-agenda-custom-commands~ list (copy the list which starts with ~"u"~, and you can change the key to your liking).
+
+Here's a screenshot:
+
+[[screenshot.png]]
