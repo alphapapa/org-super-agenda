@@ -1,0 +1,29 @@
+* org-super-agenda
+
+This is a prototype for a "supercharged" Org daily/weekly agenda.  The idea is to divide items into sections, rather than having them all in one big list.
+
+Now you can sort-of do this already with custom agenda commands, but when you do that, you lose the daily/weekly aspect of the agenda: items are no longer shown based on deadline/scheduled timestamps, but are shown no-matter-what.
+
+So this ~org-super-agenda~ command essentially copies the ~org-agenda-list~ command, but right before it inserts the agenda items, it runs them through a set of user-defined filters that separate them into sections.  Then the sections are inserted into the agenda buffer, and any remaining items are inserted at the end.
+
+The end result is your standard daily/weekly agenda, but arranged into sections defined by you.  You might put items with certain tags in one section, habits in another section, items with certain todo keywords in another, and items with certain priorities in another.  The possibilities are only limited by the filter functions (which you can easily add to, and more will be added here).
+
+The ~org-super-agenda~ command works as a custom agenda command, so you can add it to your ~org-agenda-custom-commands~ list.  You can also test it quickly like this:
+
+#+BEGIN_SRC elisp
+  (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
+                                                  org-super-agenda ""
+                                                  ((super-filters '((osa/separate-by-any-tags ("bills"))
+                                                                    osa/separate-by-habits
+                                                                    (osa/separate-by-todo-keywords "WAITING")
+                                                                    (osa/separate-by-todo-keywords ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING"))
+                                                                    (osa/separate-by-priorities "A")
+                                                                    (osa/separate-by-priorities "B")
+                                                                    (osa/separate-by-priorities "C")))
+                                                   (org-agenda-span 'day)))))))
+    (org-agenda nil "u"))
+#+END_SRC
+
+This uses the =s.el= library, which you can install from MELPA.
+
+To start, open the ~org-super-agenda.el~ file in Emacs and run ~eval-buffer~.  Then you can run the code above to test it.  Then you can modify it to suit yourself, and add it to your ~org-agenda-custom-commands~ list (copy the list which starts with ~"u"~, and you can change the key to your liking).
