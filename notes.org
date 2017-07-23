@@ -34,8 +34,13 @@ Here's my initial plan.  What I basically need to do is run the standard agenda 
   (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
                                                   org-super-agenda ""
                                                   ((super-filters '((osa/separate-by-any-tags ("bills"))
-                                                                    (osa/separate-by-any-tags ("apartment"))
-                                                                    osa/separate-by-habits))
+                                                                    osa/separate-by-habits
+                                                                    (osa/separate-by-todo-keywords ("WAITING"))
+                                                                    (osa/separate-by-todo-keywords ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING"))
+                                                                    (osa/separate-by-priorities "A")
+                                                                    (osa/separate-by-priorities "B")
+                                                                    (osa/separate-by-priorities "C")
+                                                                    (osa/separate-by-any-tags ("prayers"))))
                                                    (org-agenda-span 'day)))))))
     (org-agenda nil "u"))
 #+END_SRC
@@ -93,7 +98,11 @@ CLOSED: [2017-07-23 Sun 15:36]
 
 [2017-07-23 Sun 13:53] Okay, this is a good prototype: it takes a list of agenda items and separates it into two lists, one containing items that don't match the tags, and one containing items that do.  Note that it may not be sorted; I think that happens at a later step.
 
-*** TODO Filter habits
+*** DONE Filter habits
+CLOSED: [2017-07-23 Sun 16:02]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:02]
+:END:
 
 #+BEGIN_SRC elisp
   (defun osa/separate-by-habits (items &ignore)
@@ -105,6 +114,56 @@ CLOSED: [2017-07-23 Sun 15:36]
              collect item into matching
              else collect item into non-matching
              finally return (list "Habits" non-matching matching)))
+#+END_SRC
+
+*** DONE Filter by todo keyword
+CLOSED: [2017-07-23 Sun 16:16]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:16]
+:END:
+
+#+BEGIN_SRC elisp
+  (defun osa/separate-by-todo-keywords (items todo-keywords)
+    "Separate items by TODO-KEYWORDS.
+    Returns (SECTION-NAME NON-MATCHING MATCHING)."
+    (unless (listp todo-keywords)
+      ;; Accept either one word or a list
+      (setq todo-keywords (list todo-keywords)))
+    (cl-loop with section-name = (concat (s-join " and " todo-keywords) " items")
+             for item in items
+             if (cl-member (org-find-text-property-in-string 'todo-state item) todo-keywords :test 'string=)
+             collect item into matching
+             else collect item into non-matching
+             finally return (list section-name non-matching matching)))
+#+END_SRC
+
+*** DONE Filter by priority
+CLOSED: [2017-07-23 Sun 16:41]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:41]
+:END:
+
+#+BEGIN_SRC elisp
+  (defun osa/separate-by-priorities (items priorities)
+    "Separate items by PRIORITIES.
+  PRIORITIES may be a string or a list of strings which match the
+  letter in an Org priority cookie, e.g. \"A\", \"B\", etc.
+  Returns (SECTION-NAME NON-MATCHING MATCHING)."
+    (unless (listp priorities)
+      ;; Accept either one word or a list
+      (setq priorities (list priorities)))
+    (cl-loop with section-name = (concat "Priority " (s-join " and " priorities) " items")
+             for item in items
+             for priority = (osa/get-priority-cookie item)
+             if (cl-member (osa/get-priority-cookie item) priorities :test 'string=)
+             collect item into matching
+             else collect item into non-matching
+             finally return (list section-name non-matching matching)))
+
+  (defun osa/get-priority-cookie (item)
+    "Return priority character for item."
+    (when (string-match org-priority-regexp item)
+      (match-string-no-properties 2 item)))
 #+END_SRC
 
 ** TODO Insert into agenda buffer
