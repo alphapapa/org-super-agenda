@@ -14,6 +14,10 @@
 
 ;; You can adjust the `super-filters' to create as many different sections as you like.
 
+(require 'org)
+(require 'cl-lib)
+(require 's)
+
 (defun osa/get-tags (s)
   "Return list of tags in agenda item string S."
   (org-find-text-property-in-string 'tags s))
