@@ -28,6 +28,10 @@ I want to be able to pass a list of headers with filter criteria, and any item m
 
 Here's my initial plan.  What I basically need to do is run the standard agenda command, but get the list of items instead of filling the agenda buffer.  Then I can rearrange those items, and then insert into the agenda buffer myself.  This may end up being practically rewriting or at least refactoring the agenda function.  The hardest part may be doing the insertion in the same way the agenda does, preserving the metadata and such.
 
+[2017-07-23 Sun 16:51] Well, that didn't take /too/ long.  I consider this now a very functional first version.  I'd like to eventually get to where ~super-filters~ could be specified like in the example above, but this is a good start.
+
+Now, I wonder if I should keep the name ~super-agenda~ or if something more descriptive like ~org-divided-agenda~ would be better.  Maybe ask on the mailing list...
+
 ** Testing code
 
 #+BEGIN_SRC elisp
@@ -45,8 +49,10 @@ Here's my initial plan.  What I basically need to do is run the standard agenda 
     (org-agenda nil "u"))
 #+END_SRC
 
-** TODO Get list of agenda items from agenda function, just before it inserts into the agenda buffer
+** DONE Get list of agenda items from agenda function, just before it inserts into the agenda buffer
+CLOSED: [2017-07-23 Sun 16:50]
 :LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:50]
 CLOCK: [2017-07-23 Sun 12:24]
 :END:
 
@@ -59,7 +65,11 @@ CLOCK: [2017-07-23 Sun 12:24]
 
 +  =org-agenda-list= is the function that makes the default agenda view.
      -  It seems to use ~(org-agenda-finalize-entries rtnall 'agenda)~ to return a string containing the actual items to insert.  So maybe I can just override that function, although I'm not sure if that's enough, because I don't think that function creates section headers.
-** TODO Filter list according to passed arguments
+
+** UNDERWAY Filter list according to passed arguments
+:LOGBOOK:
+-  State "UNDERWAY"   from "TODO"       [2017-07-23 Sun 16:50]
+:END:
 
 *** DONE Filter by tags
 CLOSED: [2017-07-23 Sun 15:36]
@@ -166,7 +176,11 @@ CLOSED: [2017-07-23 Sun 16:41]
       (match-string-no-properties 2 item)))
 #+END_SRC
 
-** TODO Insert into agenda buffer
+** DONE Insert into agenda buffer
+CLOSED: [2017-07-23 Sun 16:51]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:51]
+:END:
 
 +  =org-agenda-prepare= is an early step.
 +  =org-agenda-finalize= may be relevant here.
@@ -191,7 +205,11 @@ On the other hand, maybe I should look at the custom commands...that might end u
             "\n"))
 #+END_SRC
 
-*** TODO Copy and modify =org-agenda-list=
+*** DONE Copy and modify =org-agenda-list=
+CLOSED: [2017-07-23 Sun 16:51]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:51]
+:END:
 
 #+BEGIN_SRC elisp
   (cl-defun org-super-agenda (&optional arg start-day span with-hour)
