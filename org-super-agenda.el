@@ -2,13 +2,15 @@
 
 ;; (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
 ;;                                                 org-super-agenda ""
-;;                                                 ((super-filters '((osa/separate-by-any-tags ("bills"))
+;;                                                 ((super-filters '((:fn osa/separate-by-any-tags :args ("bills"))
 ;;                                                                   osa/separate-by-habits
-;;                                                                   (osa/separate-by-todo-keywords WAITING")
-;;                                                                   (osa/separate-by-todo-keywords ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING"))
-;;                                                                   (osa/separate-by-priorities "A")
-;;                                                                   (osa/separate-by-priorities "B")
-;;                                                                   (osa/separate-by-priorities "C")))
+;;                                                                   (:fn osa/separate-by-todo-keywords :args "WAITING")
+;;                                                                   (:fn osa/separate-by-todo-keywords
+;;                                                                        :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+;;                                                                        :last t)
+;;                                                                   (:fn osa/separate-by-priorities :args "A")
+;;                                                                   (:fn osa/separate-by-priorities :args "B")
+;;                                                                   (:fn osa/separate-by-priorities :args "C")))
 ;;                                                  (org-agenda-span 'day)))))))
 ;;   (org-agenda nil "u"))
 
@@ -81,7 +83,7 @@
 (cl-defun org-super-agenda (&optional arg start-day span with-hour)
   "SUPER-FILTERS should be a list like (FILTER-FN ARG), e.g.:
 
-    '(osa/separate-by-any-tags (\"bills\"))"
+'(osa/separate-by-any-tags (\"bills\"))"
   (interactive "P")
   (if org-agenda-overriding-arguments
       (setq arg (car org-agenda-overriding-arguments)
@@ -239,13 +241,17 @@
                 ;; Insert each filtered sublist
                 (cl-loop with filter-fn
                          with args
+                         with last-sections
                          for filter in super-filters
                          if (functionp filter) do (setq filter-fn filter
-                                                        args nil)
-                         else do (setq filter-fn (car filter)
-                                       args (cadr filter))
+                                                        args nil
+                                                        last nil)
+                         else do (setq filter-fn (plist-get filter :fn)
+                                       args (plist-get filter :args)
+                                       last (plist-get filter :last))
                          for (section-name non-matching matching) = (funcall filter-fn rtnall args)
-                         collect (cons section-name matching) into sections
+                         if last collect (cons section-name matching) into last-sections
+                         else collect (cons section-name matching) into sections
                          and do (setq rtnall non-matching)
                          finally do (progn
                                       ;; Insert sections
@@ -259,7 +265,15 @@
                                         ;; Insert non-matching items in main section
                                         (osa/insert-agenda-header "Other items")
                                         (insert (org-agenda-finalize-entries non-matching 'agenda)
-                                                "\n")))))
+                                                "\n\n"))
+
+                                      ;; Insert final sections
+                                      (cl-loop for (section-name . items) in last-sections
+                                               when items
+                                               do (progn
+                                                    (osa/insert-agenda-header section-name)
+                                                    (insert (org-agenda-finalize-entries items 'agenda)
+                                                            "\n\n"))))))
 
 
               (put-text-property s (1- (point)) 'day d)
