@@ -39,7 +39,7 @@ Now, I wonder if I should keep the name ~super-agenda~ or if something more desc
                                                   org-super-agenda ""
                                                   ((super-filters '((osa/separate-by-any-tags ("bills"))
                                                                     osa/separate-by-habits
-                                                                    (osa/separate-by-todo-keywords ("WAITING"))
+                                                                    (osa/separate-by-todo-keywords "WAITING")
                                                                     (osa/separate-by-todo-keywords ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING"))
                                                                     (osa/separate-by-priorities "A")
                                                                     (osa/separate-by-priorities "B")

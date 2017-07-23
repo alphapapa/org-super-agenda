@@ -1,16 +1,18 @@
-;; Run this code to open an example:
+;; To try this out, evaluate this file and run this code to open an example:
 
 ;; (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
 ;;                                                 org-super-agenda ""
 ;;                                                 ((super-filters '((osa/separate-by-any-tags ("bills"))
 ;;                                                                   osa/separate-by-habits
-;;                                                                   (osa/separate-by-todo-keywords ("WAITING"))
+;;                                                                   (osa/separate-by-todo-keywords WAITING")
 ;;                                                                   (osa/separate-by-todo-keywords ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING"))
 ;;                                                                   (osa/separate-by-priorities "A")
 ;;                                                                   (osa/separate-by-priorities "B")
 ;;                                                                   (osa/separate-by-priorities "C")))
 ;;                                                  (org-agenda-span 'day)))))))
 ;;   (org-agenda nil "u"))
+
+;; You can adjust the `super-filters' to create as many different sections as you like.
 
 (defun osa/get-tags (s)
   "Return list of tags in agenda item string S."
