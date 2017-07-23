@@ -242,9 +242,8 @@
                          for filter in super-filters
                          if (functionp filter) do (setq filter-fn filter
                                                         args nil)
-                         else do (progn
-                                   (setq filter-fn (car filter)
-                                         args (cadr filter)))
+                         else do (setq filter-fn (car filter)
+                                       args (cadr filter))
                          for (section-name non-matching matching) = (funcall filter-fn rtnall args)
                          collect (cons section-name matching) into sections
                          and do (setq rtnall non-matching)
