@@ -1,11 +1,13 @@
+;;; Commentary:
+
 ;; To try this out, evaluate this file and run this code to open an example:
 
 ;; (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
 ;;                                                 org-super-agenda ""
 ;;                                                 ((super-filters '((:fn osa/separate-by-any-tags :args ("bills"))
 ;;                                                                   osa/separate-by-habits
-;;                                                                   (:fn osa/separate-by-todo-keywords :args "WAITING")
-;;                                                                   (:fn osa/separate-by-todo-keywords
+;;                                                                   (:fn osa/separate-by-todo-keyword :args "WAITING")
+;;                                                                   (:fn osa/separate-by-todo-keyword
 ;;                                                                        :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
 ;;                                                                        :last t)
 ;;                                                                   (:fn osa/separate-by-priorities :args "A")
@@ -16,69 +18,57 @@
 
 ;; You can adjust the `super-filters' to create as many different sections as you like.
 
+;;; Code:
+
+;;;; Requirements
+
 (require 'org)
 (require 'cl-lib)
 (require 's)
 
-(defun osa/get-tags (s)
-  "Return list of tags in agenda item string S."
-  (org-find-text-property-in-string 'tags s))
+;;;; Filter macro and functions
 
-(defun osa/separate-by-any-tags (items tags)
+(cl-defmacro osa/def-separator (name docstring &key section-name test)
+  (declare (indent defun))
+  (let ((function-name (intern (concat "osa/separate-by-" (symbol-name name)))))
+    `(defun ,function-name (items args)
+       ,docstring
+       (unless (listp args)
+         (setq args (list args)))
+       (cl-loop with section-name = ,section-name
+                for item in items
+                if ,test
+                collect item into matching
+                else collect item into non-matching
+                finally return (list section-name non-matching matching)))))
+
+(osa/def-separator any-tags
   "Separate agenda ITEMS into two lists, putting items that contain any of TAGS into the second list.
   Returns list like (SECTION-NAME NON-MATCHING MATCHING)."
-  (let ((section-name (concat "Items tagged with: "
-                              (s-join " OR " tags))))
-    (cl-loop for item in items
-             for item-tags = (osa/get-tags item)
-             if (seq-intersection item-tags tags)
-             collect item into matching
-             else collect item into non-matching
-             finally return (list section-name non-matching matching))))
+  :section-name (concat "Items tagged with: " (s-join " OR " args))
+  :test (seq-intersection (osa/get-tags item) args))
 
-(defun osa/separate-by-habits (items &ignore)
+(osa/def-separator habits
   "Separate habits into separate list.
   Returns (\"Habits\" NON-HABITS HABITS)."
-  (cl-loop for item in items
-           for marker = (org-find-text-property-in-string 'org-marker item)
-           if (org-is-habit-p marker)
-           collect item into matching
-           else collect item into non-matching
-           finally return (list "Habits" non-matching matching)))
+  :section-name "Habits"
+  :test (org-is-habit-p (org-find-text-property-in-string 'org-marker item)))
 
-(defun osa/separate-by-todo-keywords (items todo-keywords)
-  "Separate items by TODO-KEYWORDS.
+(osa/def-separator todo-keyword
+  "Separate items by TODO-KEYWORD.
     Returns (SECTION-NAME NON-MATCHING MATCHING)."
-  (unless (listp todo-keywords)
-    ;; Accept either one word or a list
-    (setq todo-keywords (list todo-keywords)))
-  (cl-loop with section-name = (concat (s-join " and " todo-keywords) " items")
-           for item in items
-           if (cl-member (org-find-text-property-in-string 'todo-state item) todo-keywords :test 'string=)
-           collect item into matching
-           else collect item into non-matching
-           finally return (list section-name non-matching matching)))
+  :section-name (concat (s-join " and " args) " items")
+  :test (cl-member (org-find-text-property-in-string 'todo-state item) args :test 'string=))
 
-(defun osa/separate-by-priorities (items priorities)
+(osa/def-separator priorities
   "Separate items by PRIORITIES.
-  PRIORITIES may be a string or a list of strings which match the
-  letter in an Org priority cookie, e.g. \"A\", \"B\", etc.
-  Returns (SECTION-NAME NON-MATCHING MATCHING)."
-  (unless (listp priorities)
-    ;; Accept either one word or a list
-    (setq priorities (list priorities)))
-  (cl-loop with section-name = (concat "Priority " (s-join " and " priorities) " items")
-           for item in items
-           for priority = (osa/get-priority-cookie item)
-           if (cl-member (osa/get-priority-cookie item) priorities :test 'string=)
-           collect item into matching
-           else collect item into non-matching
-           finally return (list section-name non-matching matching)))
+      PRIORITIES may be a string or a list of strings which match the
+      letter in an Org priority cookie, e.g. \"A\", \"B\", etc.
+      Returns (SECTION-NAME NON-MATCHING MATCHING)."
+  :section-name (concat "Priority " (s-join " and " args) " items")
+  :test (cl-member (osa/get-priority-cookie item) args :test 'string=))
 
-(defun osa/get-priority-cookie (item)
-  "Return priority character for item."
-  (when (string-match org-priority-regexp item)
-    (match-string-no-properties 2 item)))
+;;;; Agenda command
 
 (cl-defun org-super-agenda (&optional arg start-day span with-hour)
   "SUPER-FILTERS should be a list like (FILTER-FN ARG), e.g.:
@@ -323,6 +313,17 @@
       (setq buffer-read-only t)
       (message ""))))
 
+;;;;; Support functions
+
+(defun osa/get-tags (s)
+  "Return list of tags in agenda item string S."
+  (org-find-text-property-in-string 'tags s))
+
 (defun osa/insert-agenda-header (s)
   "Insert agenda header into current buffer containing string S and a newline."
   (insert (org-add-props s nil 'face 'org-agenda-structure) "\n"))
+
+(defun osa/get-priority-cookie (item)
+  "Return priority character for item."
+  (when (string-match org-priority-regexp item)
+    (match-string-no-properties 2 item)))

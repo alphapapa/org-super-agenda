@@ -37,14 +37,16 @@ Now, I wonder if I should keep the name ~super-agenda~ or if something more desc
 #+BEGIN_SRC elisp
   (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
                                                   org-super-agenda ""
-                                                  ((super-filters '((osa/separate-by-any-tags ("bills"))
+                                                  ((super-filters '((:fn osa/separate-by-any-tags :args ("bills"))
                                                                     osa/separate-by-habits
-                                                                    (osa/separate-by-todo-keywords "WAITING")
-                                                                    (osa/separate-by-todo-keywords ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING"))
-                                                                    (osa/separate-by-priorities "A")
-                                                                    (osa/separate-by-priorities "B")
-                                                                    (osa/separate-by-priorities "C")
-                                                                    (osa/separate-by-any-tags ("prayers"))))
+                                                                    (:fn osa/separate-by-todo-keyword :args "WAITING")
+                                                                    (:fn osa/separate-by-todo-keyword
+                                                                         :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                                                                         :last t)
+                                                                    (:fn osa/separate-by-priorities :args "A")
+                                                                    (:fn osa/separate-by-priorities :args "B")
+                                                                    (:fn osa/separate-by-priorities :args "C")
+                                                                    (:fn osa/separate-by-any-tags :args ("prayers"))))
                                                    (org-agenda-span 'day)))))))
     (org-agenda nil "u"))
 #+END_SRC
@@ -77,13 +79,10 @@ CLOSED: [2017-07-23 Sun 15:36]
 -  State "DONE"       from "TODO"       [2017-07-23 Sun 15:36]
 :END:
 
-#+BEGIN_SRC elisp :results list
+#+BEGIN_SRC elisp
   (defun osa/get-tags (s)
     "Return list of tags in agenda item string S."
     (org-find-text-property-in-string 'tags s))
-
-  ;; (seq-intersection (osa/get-tags (osa/get-first-agenda-item))
-  ;;                   '("bills"))
 
   (defun osa/separate-by-any-tags (items tags)
     "Separate agenda ITEMS into two lists, putting items that contain any of TAGS into the second list.
@@ -97,13 +96,11 @@ CLOSED: [2017-07-23 Sun 15:36]
                else collect item into non-matching
                finally return (list section-name non-matching matching))))
 
-  (-let (((non-matching . matching) (osa/separate-by-any-tags (seq-subseq (org-agenda-get-day-entries "~/org/main.org"
-                                                                                                      (calendar-current-date)
-                                                                                                      :deadline)
-                                                                          0 5)
-                                                              '("apartment"))))
-    (list (seq-subseq non-matching 0 2)
-          (seq-subseq matching 0 1)))
+  (osa/def-separator any-tags
+    "Separate agenda ITEMS into two lists, putting items that contain any of TAGS into the second list.
+  Returns list like (SECTION-NAME NON-MATCHING MATCHING)."
+    :section-name (concat "Items tagged with: " (s-join " OR " args))
+    :test (seq-intersection (osa/get-tags item) args))
 #+END_SRC
 
 [2017-07-23 Sun 13:53] Okay, this is a good prototype: it takes a list of agenda items and separates it into two lists, one containing items that don't match the tags, and one containing items that do.  Note that it may not be sorted; I think that happens at a later step.
@@ -124,6 +121,12 @@ CLOSED: [2017-07-23 Sun 16:02]
              collect item into matching
              else collect item into non-matching
              finally return (list "Habits" non-matching matching)))
+
+  (osa/def-separator habits
+    "Separate habits into separate list.
+  Returns (\"Habits\" NON-HABITS HABITS)."
+    :section-name "Habits"
+    :test (org-is-habit-p (org-find-text-property-in-string 'org-marker item)))
 #+END_SRC
 
 *** DONE Filter by todo keyword
@@ -145,6 +148,12 @@ CLOSED: [2017-07-23 Sun 16:16]
              collect item into matching
              else collect item into non-matching
              finally return (list section-name non-matching matching)))
+
+  (osa/def-separator todo-keyword
+    "Separate items by TODO-KEYWORD.
+    Returns (SECTION-NAME NON-MATCHING MATCHING)."
+    :section-name (concat (s-join " and " args) " items")
+    :test (cl-member (org-find-text-property-in-string 'todo-state item) args :test 'string=))
 #+END_SRC
 
 *** DONE Filter by priority
@@ -154,6 +163,11 @@ CLOSED: [2017-07-23 Sun 16:41]
 :END:
 
 #+BEGIN_SRC elisp
+  (defun osa/get-priority-cookie (item)
+    "Return priority character for item."
+    (when (string-match org-priority-regexp item)
+      (match-string-no-properties 2 item)))
+
   (defun osa/separate-by-priorities (items priorities)
     "Separate items by PRIORITIES.
   PRIORITIES may be a string or a list of strings which match the
@@ -170,10 +184,13 @@ CLOSED: [2017-07-23 Sun 16:41]
              else collect item into non-matching
              finally return (list section-name non-matching matching)))
 
-  (defun osa/get-priority-cookie (item)
-    "Return priority character for item."
-    (when (string-match org-priority-regexp item)
-      (match-string-no-properties 2 item)))
+  (osa/def-separator priorities
+    "Separate items by PRIORITIES.
+      PRIORITIES may be a string or a list of strings which match the
+      letter in an Org priority cookie, e.g. \"A\", \"B\", etc.
+      Returns (SECTION-NAME NON-MATCHING MATCHING)."
+    :section-name (concat "Priority " (s-join " and " args) " items")
+    :test (cl-member (osa/get-priority-cookie item) args :test 'string=))
 #+END_SRC
 
 ** DONE Insert into agenda buffer
@@ -718,12 +735,14 @@ This isn't quite as elegant to configure, but it's definitely worth the benefits
     (plist-get filter :args))
 #+END_SRC
 
-** UNDERWAY Use macros
+** DONE Use macros
+CLOSED: [2017-07-23 Sun 19:22]
 :LOGBOOK:
+-  State "DONE"       from "UNDERWAY"   [2017-07-23 Sun 19:22]
 -  State "UNDERWAY"   from              [2017-07-23 Sun 18:08]
 :END:
 
-This is a start.
+Calls are in the sections above.
 
 #+BEGIN_SRC elisp
   (cl-defmacro osa/def-separator (name docstring &key section-name test)
@@ -738,13 +757,5 @@ This is a start.
                   if ,test
                   collect item into matching
                   else collect item into non-matching
-                  finally return (list section-name non-matching matching)))))
-
-  (osa/def-separator priorities
-    "Separate items by PRIORITIES.
-    PRIORITIES may be a string or a list of strings which match the
-    letter in an Org priority cookie, e.g. \"A\", \"B\", etc.
-    Returns (SECTION-NAME NON-MATCHING MATCHING)."
-    :section-name (concat "Priority " (s-join " and " args) " items")
-    :test (cl-member (osa/get-priority-cookie item) args :test 'string=))
+                  finally return (list section-name non-matching matching))))) 
 #+END_SRC
