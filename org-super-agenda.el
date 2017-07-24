@@ -231,7 +231,6 @@
                 ;; Insert each filtered sublist
                 (cl-loop with filter-fn
                          with args
-                         with last-sections
                          for filter in super-filters
                          if (functionp filter) do (setq filter-fn filter
                                                         args nil
