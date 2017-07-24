@@ -625,9 +625,13 @@ This isn't quite as elegant to configure, but it's definitely worth the benefits
                                          args (plist-get filter :args)
                                          last (plist-get filter :last))
                            for (section-name non-matching matching) = (funcall filter-fn rtnall args)
+
+                           ;; FIXME: This repetition is kind of ugly, but I guess cl-loop is worth it...
                            if last collect (cons section-name matching) into last-sections
+                           and do (setq rtnall non-matching)
                            else collect (cons section-name matching) into sections
                            and do (setq rtnall non-matching)
+
                            finally do (progn
                                         ;; Insert sections
                                         (cl-loop for (section-name . items) in sections

@@ -83,7 +83,7 @@
 (cl-defun org-super-agenda (&optional arg start-day span with-hour)
   "SUPER-FILTERS should be a list like (FILTER-FN ARG), e.g.:
 
-'(osa/separate-by-any-tags (\"bills\"))"
+  '(osa/separate-by-any-tags (\"bills\"))"
   (interactive "P")
   (if org-agenda-overriding-arguments
       (setq arg (car org-agenda-overriding-arguments)
@@ -250,9 +250,13 @@
                                        args (plist-get filter :args)
                                        last (plist-get filter :last))
                          for (section-name non-matching matching) = (funcall filter-fn rtnall args)
+
+                         ;; FIXME: This repetition is kind of ugly, but I guess cl-loop is worth it...
                          if last collect (cons section-name matching) into last-sections
+                         and do (setq rtnall non-matching)
                          else collect (cons section-name matching) into sections
                          and do (setq rtnall non-matching)
+
                          finally do (progn
                                       ;; Insert sections
                                       (cl-loop for (section-name . items) in sections
