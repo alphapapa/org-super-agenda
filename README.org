@@ -13,10 +13,12 @@ The ~org-super-agenda~ command works as a custom agenda command, so you can add 
 #+BEGIN_SRC elisp
   (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
                                                   org-super-agenda ""
-                                                  ((super-filters '((:fn osa/separate-by-any-tags :args ("bills"))
+                                                  ((super-filters '(osa/separate-by-time
+                                                                    (:fn osa/separate-by-any-tags :args ("bills"))
                                                                     osa/separate-by-habits
-                                                                    (:fn osa/separate-by-todo-keywords :args "WAITING")
-                                                                    (:fn osa/separate-by-todo-keywords :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                                                                    (:fn osa/separate-by-todo-keyword :args "WAITING")
+                                                                    (:fn osa/separate-by-todo-keyword
+                                                                         :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
                                                                          :last t)
                                                                     (:fn osa/separate-by-priorities :args "A")
                                                                     (:fn osa/separate-by-priorities :args "B")

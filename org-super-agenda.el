@@ -4,7 +4,8 @@
 
 ;; (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
 ;;                                                 org-super-agenda ""
-;;                                                 ((super-filters '((:fn osa/separate-by-any-tags :args ("bills"))
+;;                                                 ((super-filters '(osa/separate-by-time
+;;                                                                   (:fn osa/separate-by-any-tags :args ("bills"))
 ;;                                                                   osa/separate-by-habits
 ;;                                                                   (:fn osa/separate-by-todo-keyword :args "WAITING")
 ;;                                                                   (:fn osa/separate-by-todo-keyword
@@ -41,6 +42,13 @@
                 collect item into matching
                 else collect item into non-matching
                 finally return (list section-name non-matching matching)))))
+
+(osa/def-separator time
+  "Separate agenda items that have a time associated."
+  :section-name "Schedule"  ; Note: this does not mean the item has a "SCHEDULED:" line
+  :test (let ((time (org-find-text-property-in-string 'dotime item)))
+          (when time
+            (not (eql time 'time)))))
 
 (osa/def-separator any-tags
   "Separate agenda ITEMS into two lists, putting items that contain any of TAGS into the second list.
