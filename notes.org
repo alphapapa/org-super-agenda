@@ -51,6 +51,47 @@ Now, I wonder if I should keep the name ~super-agenda~ or if something more desc
     (org-agenda nil "u"))
 #+END_SRC
 
+*** Agenda examining
+
+This helps a lot.
+
+#+BEGIN_SRC elisp
+  (defun data-debug-show-string-with-properties (s)
+    (with-current-buffer (get-buffer-create "argh")
+      (erase-buffer)
+      (print s (current-buffer))
+
+      ;; Convert string reader representations to plain lists that can be set
+      (cl-loop for (match replace) in '(("#(" "'(")
+                                        ("#<" "'(")
+                                        (">" ")"))
+               do (progn
+                    (goto-char (point-min))
+                    (while (search-forward match nil 'noerror)
+                      (replace-match replace 'fixedcase 'literal))))
+
+      ;; Surround content in a list which `argh' is set to, then eval
+      ;; the buffer to do it
+      (goto-char (point-min))
+      (insert "(setq argh (list ")
+      (delete-forward-char 2)
+      (goto-char (point-max))
+      (insert ")")
+
+      ;; Okay, sure, eval'ing the buffer is dangerous and bad and wrong.
+      ;; But this is the only way I can find to make this work.  (Maybe
+      ;; `text-properties-at' could be used to get actual lists...)
+      (eval-buffer)
+
+      (data-debug-show-stuff argh "argh")
+      ;;  (switch-to-buffer (current-buffer))
+      ))
+
+  (with-current-buffer "*Org Agenda*"
+    (data-debug-show-string-with-properties (seq-subseq (split-string (buffer-string) "\n")
+                                                        0 5)))
+#+END_SRC
+
 ** DONE Get list of agenda items from agenda function, just before it inserts into the agenda buffer
 CLOSED: [2017-07-23 Sun 16:50]
 :LOGBOOK:
