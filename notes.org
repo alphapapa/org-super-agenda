@@ -799,3 +799,11 @@ Calls are in the sections above.
                   else collect item into non-matching
                   finally return (list section-name non-matching matching))))) 
 #+END_SRC
+
+** MAYBE Rewrite the whole agenda after it's done instead
+
+Ideally, I guess, we would let the normal agenda command finish, then work on the buffer.  But this would mean that we have to avoid non-agenda-item lines, like headers, timetables, clockreports, etc.  That would likely get messy and have edge cases.  It's nice to get the list of agenda items before they are inserted, so we can filter them to begin with, but the problem with that is that we have to make a copy of the agenda command, which will get out-of-sync with newer Org versions.
+
+So /ideally/ we would get a patch committed to Org which would make this sort of thing possible, but that would probably entail a major refactoring of much of the agenda code.  And while that might end up with a nice result, it would be an enormous amount of work, and there aren't any guarantees that Org would merge it.
+
+In the meantime, this works well.
