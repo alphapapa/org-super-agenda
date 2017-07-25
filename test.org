@@ -64,19 +64,40 @@ SCHEDULED: <2017-07-24 Mon>
 * Code
 
 #+BEGIN_SRC elisp
-  (let ((org-agenda-files (list "~/src/org-super-agenda/test.org")))
-    (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
-                                                    org-super-agenda ""
-                                                    ((super-filters '(osa/separate-by-time
-                                                                      (:fn osa/separate-by-any-tags :args ("bills"))
-                                                                      osa/separate-by-habits
-                                                                      (:fn osa/separate-by-todo-keyword :args "WAITING")
-                                                                      (:fn osa/separate-by-todo-keyword
-                                                                           :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
-                                                                           :last t)
-                                                                      (:fn osa/separate-by-priorities :args "A")
-                                                                      (:fn osa/separate-by-priorities :args "B")
-                                                                      (:fn osa/separate-by-priorities :args "C")))
-                                                     (org-agenda-span 'day)))))))
-      (org-agenda nil "u")))
+  ;; Before
+  (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+        (org-agenda-custom-commands
+         (list '("u" "SUPER Agenda"
+                 org-super-agenda ""
+                 ((org-agenda-span 'day))))))
+    (org-agenda nil "u"))
+
+  ;; After
+  (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+        (org-agenda-custom-commands
+         (list '("u" "SUPER Agenda"
+                 org-super-agenda ""
+                 ((org-agenda-super-filters '(
+                                              ;; Optionally specify the section name
+                                              (:name "Schedule" :fn osa/separate-by-time)
+                                              (:name "Bills" :fn osa/separate-by-any-tag
+                                                     ;; One arg may be given alone, without a list
+                                                     :args "bills")
+                                              ;; This function needs no args so it may be specified like this
+                                              osa/separate-by-habit
+                                              ;; Filter functions supply their own section names when none are given
+                                              (:fn osa/separate-by-todo-keyword :args "WAITING")
+                                              (:fn osa/separate-by-todo-keyword
+                                                   ;; Multiple args given in a list
+                                                   :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                                                   ;; Show this section at the end of the agenda.  If you specified
+                                                   ;; this filter last, items with these todo keywords that have
+                                                   ;; priority A, B, or C would be displayed in those sections
+                                                   ;; instead, because items are filtered out in the order the
+                                                   ;; filters are listed.
+                                                   :last t)
+                                              (:fn osa/separate-by-priority :args "A")
+                                              (:fn osa/separate-by-priority :args ("B" "C"))))
+                  (org-agenda-span 'day))))))
+    (org-agenda nil "u"))
 #+END_SRC

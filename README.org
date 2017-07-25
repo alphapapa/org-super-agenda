@@ -11,19 +11,31 @@ The end result is your standard daily/weekly agenda, but arranged into sections 
 The ~org-super-agenda~ command works as a custom agenda command, so you can add it to your ~org-agenda-custom-commands~ list.  You can also test it quickly like this:
 
 #+BEGIN_SRC elisp
-  (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
-                                                  org-super-agenda ""
-                                                  ((super-filters '(osa/separate-by-time
-                                                                    (:fn osa/separate-by-any-tags :args ("bills"))
-                                                                    osa/separate-by-habits
-                                                                    (:fn osa/separate-by-todo-keyword :args "WAITING")
-                                                                    (:fn osa/separate-by-todo-keyword
-                                                                         :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
-                                                                         :last t)
-                                                                    (:fn osa/separate-by-priorities :args "A")
-                                                                    (:fn osa/separate-by-priorities :args "B")
-                                                                    (:fn osa/separate-by-priorities :args "C")))
-                                                   (org-agenda-span 'day)))))))
+  (let ((org-agenda-custom-commands
+         (list '("u" "SUPER Agenda"
+                 org-super-agenda ""
+                 ((org-agenda-super-filters '(
+                                              ;; Optionally specify the section name
+                                              (:name "Schedule" :fn osa/separate-by-time)
+                                              (:name "Bills" :fn osa/separate-by-any-tag
+                                                     ;; One arg may be given alone, without a list
+                                                     :args "bills")
+                                              ;; This function needs no args so it may be specified like this
+                                              osa/separate-by-habit
+                                              ;; Filter functions supply their own section names when none are given
+                                              (:fn osa/separate-by-todo-keyword :args "WAITING")
+                                              (:fn osa/separate-by-todo-keyword
+                                                   ;; Multiple args given in a list
+                                                   :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                                                   ;; Show this section at the end of the agenda.  If you specified
+                                                   ;; this filter last, items with these todo keywords that have
+                                                   ;; priority A, B, or C would be displayed in those sections
+                                                   ;; instead, because items are filtered out in the order the
+                                                   ;; filters are listed.
+                                                   :last t)
+                                              (:fn osa/separate-by-priority :args "A")
+                                              (:fn osa/separate-by-priority :args ("B" "C"))))
+                  (org-agenda-span 'day))))))
     (org-agenda nil "u"))
 #+END_SRC
 
@@ -31,6 +43,10 @@ This uses the =s= library, which you can install from MELPA.
 
 To start, open the ~org-super-agenda.el~ file in Emacs and run ~eval-buffer~.  Then you can run the code above to test it.  Then you can modify it to suit yourself, and add it to your ~org-agenda-custom-commands~ list (copy the list which starts with the string =u= and you can change the key to your liking).
 
-Here's a screenshot:
+Here's what a normal agenda looks like:
 
-[[screenshot.png]]
+[[screenshot-before.png]]
+
+Here's what the "super" agenda looks like:
+
+[[screenshot-after.png]]
