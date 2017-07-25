@@ -364,15 +364,15 @@ items if they have an hour specification like [h]h:mm."
     (insert (org-agenda-finalize-entries all-items 'agenda)
             "\n")))
 
-(defun osa/get-tags (s)
+(defsubst osa/get-tags (s)
   "Return list of tags in agenda item string S."
   (org-find-text-property-in-string 'tags s))
 
-(defun osa/insert-agenda-header (s)
+(defsubst osa/insert-agenda-header (s)
   "Insert agenda header into current buffer containing string S and a newline."
   (insert (org-add-props s nil 'face 'org-agenda-structure) "\n"))
 
-(defun osa/get-priority-cookie (s)
+(defsubst osa/get-priority-cookie (s)
   "Return priority character for string S.
 Matches `org-priority-regexp'."
   (when (string-match org-priority-regexp s)
