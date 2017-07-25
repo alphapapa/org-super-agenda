@@ -7,8 +7,8 @@
 ;;                                                 ((super-filters '(osa/separate-by-time
 ;;                                                                   (:fn osa/separate-by-any-tags :args ("bills"))
 ;;                                                                   osa/separate-by-habits
-;;                                                                   (:fn osa/separate-by-todo-keyword :args "WAITING")
-;;                                                                   (:fn osa/separate-by-todo-keyword
+;;                                                                   (:fn osa/separate-by-todo-keywords :args "WAITING")
+;;                                                                   (:fn osa/separate-by-todo-keywords
 ;;                                                                        :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
 ;;                                                                        :last t)
 ;;                                                                   (:fn osa/separate-by-priorities :args "A")
@@ -62,7 +62,7 @@
   :section-name "Habits"
   :test (org-is-habit-p (org-find-text-property-in-string 'org-marker item)))
 
-(osa/def-separator todo-keyword
+(osa/def-separator todo-keywords
   "Separate items by TODO-KEYWORD.
     Returns (SECTION-NAME NON-MATCHING MATCHING)."
   :section-name (concat (s-join " and " args) " items")
