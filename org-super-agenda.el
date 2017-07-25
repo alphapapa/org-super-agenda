@@ -2,32 +2,32 @@
 
 ;; To try this out, evaluate this file and run this code to open an example:
 
-(let ((org-agenda-custom-commands
-       (list '("u" "SUPER Agenda"
-               org-super-agenda ""
-               ((org-agenda-super-filters '(
-                                            ;; Optionally specify the section name
-                                            (:name "Schedule" :fn osa/filter-time)
-                                            (:name "Bills" :fn osa/filter-any-tag
-                                                   ;; One arg may be given alone, without a list
-                                                   :args "bills")
-                                            ;; This function needs no args so it may be specified like this
-                                            osa/filter-habit
-                                            ;; Filter functions supply their own section names when none are given
-                                            (:fn osa/filter-todo-keyword :args "WAITING")
-                                            (:fn osa/filter-todo-keyword
-                                                 ;; Multiple args given in a list
-                                                 :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
-                                                 ;; Show this section at the end of the agenda.  If you specified
-                                                 ;; this filter last, items with these todo keywords that have
-                                                 ;; priority A, B, or C would be displayed in those sections
-                                                 ;; instead, because items are filtered out in the order the
-                                                 ;; filters are listed.
-                                                 :last t)
-                                            (:fn osa/filter-priority :args "A")
-                                            (:fn osa/filter-priority :args ("B" "C"))))
-                (org-agenda-span 'day))))))
-  (org-agenda nil "u"))
+;; (let ((org-agenda-custom-commands
+;;        (list '("u" "SUPER Agenda"
+;;                org-super-agenda ""
+;;                ((org-agenda-super-filters '(
+;;                                             ;; Optionally specify the section name
+;;                                             (:name "Schedule" :fn osa/filter-time)
+;;                                             (:name "Bills" :fn osa/filter-any-tag
+;;                                                    ;; One arg may be given alone, without a list
+;;                                                    :args "bills")
+;;                                             ;; This function needs no args so it may be specified like this
+;;                                             osa/filter-habit
+;;                                             ;; Filter functions supply their own section names when none are given
+;;                                             (:fn osa/filter-todo-keyword :args "WAITING")
+;;                                             (:fn osa/filter-todo-keyword
+;;                                                  ;; Multiple args given in a list
+;;                                                  :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+;;                                                  ;; Show this section at the end of the agenda.  If you specified
+;;                                                  ;; this filter last, items with these todo keywords that have
+;;                                                  ;; priority A, B, or C would be displayed in those sections
+;;                                                  ;; instead, because items are filtered out in the order the
+;;                                                  ;; filters are listed.
+;;                                                  :last t)
+;;                                             (:fn osa/filter-priority :args "A")
+;;                                             (:fn osa/filter-priority :args ("B" "C"))))
+;;                 (org-agenda-span 'day))))))
+;;   (org-agenda nil "u"))
 
 ;; You can adjust the `super-filters' to create as many different sections as you like.
 
@@ -43,6 +43,23 @@
 ;;;; Filter macro and functions
 
 (cl-defmacro osa/deffilter (name docstring &key section-name test)
+  "Define an agenda-item filter function.
+NAME is a symbol that will be appended to `osa/filter-' to
+construct the name of the filter function.
+
+DOCSTRING is a string used for the function's docstring.
+
+:TEST is a lisp form that is run for each item, with the variable
+`item' available.  Items passing this test are filtered into a
+separate list.
+
+:SECTION-NAME is a string or a lisp form that is run once, with
+the variable `items' available.
+
+Finally a list of three items is returned to the calling
+function, with the value returned by :SECTION-NAME as the first
+item, a list of items matching the :TEST as the second, and a
+list of items not matching as the third."
   (declare (indent defun))
   (let ((function-name (intern (concat "osa/filter-" (symbol-name name)))))
     `(defun ,function-name (items args)
@@ -57,41 +74,45 @@
                 finally return (list section-name non-matching matching)))))
 
 (osa/deffilter time
-               "Separate agenda items that have a time associated."
-               :section-name "Schedule"  ; Note: this does not mean the item has a "SCHEDULED:" line
-               :test (when-let ((time (org-find-text-property-in-string 'dotime item)))
-                       (not (eql (org-find-text-property-in-string 'dotime item) 'time))))
+  "Filter items that have a time associated.
+Items with an associated timestamp that has a time (rather than
+just a date) are filtered."
+  :section-name "Schedule"  ; Note: this does not mean the item has a "SCHEDULED:" line
+  :test (when-let ((time (org-find-text-property-in-string 'dotime item)))
+          (not (eql (org-find-text-property-in-string 'dotime item) 'time))))
 
 (osa/deffilter any-tag
-               "Separate agenda ITEMS into two lists, putting items that contain any of TAGS into the second list.
-  Returns list like (SECTION-NAME NON-MATCHING MATCHING)."
-               :section-name (concat "Items tagged with: " (s-join " OR " args))
-               :test (seq-intersection (osa/get-tags item) args))
+  "Filter items that match any of the given tags.
+Argument may be a string or list of strings."
+  :section-name (concat "Items tagged with: " (s-join " OR " args))
+  :test (seq-intersection (osa/get-tags item) args))
 
 (osa/deffilter habit
-               "Separate habits into separate list.
-  Returns (\"Habits\" NON-HABITS HABITS)."
-               :section-name "Habits"
-               :test (org-is-habit-p (org-find-text-property-in-string 'org-marker item)))
+  "Filter habit items.
+Habit items have a \"STYLE: habit\" Org property."
+  :section-name "Habits"
+  :test (org-is-habit-p (org-find-text-property-in-string 'org-marker item)))
 
 (osa/deffilter todo-keyword
-               "Separate items by TODO-KEYWORD.
-    Returns (SECTION-NAME NON-MATCHING MATCHING)."
-               :section-name (concat (s-join " and " args) " items")
-               :test (cl-member (org-find-text-property-in-string 'todo-state item) args :test 'string=))
+  "Filter items that match any of the given TODO keywords.
+Argument may be a string or list of strings."
+  :section-name (concat (s-join " and " args) " items")
+  :test (cl-member (org-find-text-property-in-string 'todo-state item) args :test 'string=))
 
 (osa/deffilter priority
-  "Separate items by PRIORITIES.
-      PRIORITIES may be a string or a list of strings which match the
-      letter in an Org priority cookie, e.g. \"A\", \"B\", etc.
-      Returns (SECTION-NAME NON-MATCHING MATCHING)."
+  "Filter items that match any of the given priorities.
+Argument may be a string or list of strings, which should be,
+e.g. \"A\" or (\"B\" \"C\")."
   :section-name (concat "Priority " (s-join " and " args) " items")
   :test (cl-member (osa/get-priority-cookie item) args :test 'string=))
 
 ;;;; Agenda command
 
 (defun org-super-agenda (&optional arg start-day span with-hour)
-  "Produce a daily/weekly view from all files in variable `org-agenda-files'.
+  "This function is a copy of `org-agenda-list' which filters according to `org-agenda-super-filters'.
+It is otherwise identical.
+
+Produce a daily/weekly view from all files in variable `org-agenda-files'.
 The view will be for the current day or week, but from the overview buffer
 you will be able to go to other days/weeks.
 
@@ -292,7 +313,7 @@ items if they have an hour specification like [h]h:mm."
 ;;;;; Support functions
 
 (defun osa/insert-sections (all-items)
-  "Divide ITEMS into sections and insert them into the agenda."
+  "Divide ALL-ITEMS into sections and insert them into the agenda."
   ;; This essentially replaces the part of `org-agenda-list' that
   ;; finally inserts the `rtnall' variable.
   (if (bound-and-true-p org-agenda-super-filters)
@@ -351,7 +372,8 @@ items if they have an hour specification like [h]h:mm."
   "Insert agenda header into current buffer containing string S and a newline."
   (insert (org-add-props s nil 'face 'org-agenda-structure) "\n"))
 
-(defun osa/get-priority-cookie (item)
-  "Return priority character for item."
-  (when (string-match org-priority-regexp item)
+(defun osa/get-priority-cookie (s)
+  "Return priority character for string S.
+Matches `org-priority-regexp'."
+  (when (string-match org-priority-regexp s)
     (match-string-no-properties 2 item)))
