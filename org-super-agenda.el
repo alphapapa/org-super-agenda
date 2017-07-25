@@ -377,3 +377,9 @@ items if they have an hour specification like [h]h:mm."
 Matches `org-priority-regexp'."
   (when (string-match org-priority-regexp s)
     (match-string-no-properties 2 item)))
+
+;;; Footer
+
+(provide 'org-super-agenda)
+
+;;; org-super-agenda.el ends here
