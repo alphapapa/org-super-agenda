@@ -79,15 +79,15 @@ SCHEDULED: <2017-07-24 Mon>
                  org-super-agenda ""
                  ((org-agenda-super-filters '(
                                               ;; Optionally specify the section name
-                                              (:name "Schedule" :fn osa/separate-by-time)
-                                              (:name "Bills" :fn osa/separate-by-any-tag
+                                              (:name "Schedule" :fn osa/filter-time)
+                                              (:name "Bills" :fn osa/filter-any-tag
                                                      ;; One arg may be given alone, without a list
                                                      :args "bills")
                                               ;; This function needs no args so it may be specified like this
-                                              osa/separate-by-habit
+                                              osa/filter-habit
                                               ;; Filter functions supply their own section names when none are given
-                                              (:fn osa/separate-by-todo-keyword :args "WAITING")
-                                              (:fn osa/separate-by-todo-keyword
+                                              (:fn osa/filter-todo-keyword :args "WAITING")
+                                              (:fn osa/filter-todo-keyword
                                                    ;; Multiple args given in a list
                                                    :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
                                                    ;; Show this section at the end of the agenda.  If you specified
@@ -96,8 +96,8 @@ SCHEDULED: <2017-07-24 Mon>
                                                    ;; instead, because items are filtered out in the order the
                                                    ;; filters are listed.
                                                    :last t)
-                                              (:fn osa/separate-by-priority :args "A")
-                                              (:fn osa/separate-by-priority :args ("B" "C"))))
+                                              (:fn osa/filter-priority :args "A")
+                                              (:fn osa/filter-priority :args ("B" "C"))))
                   (org-agenda-span 'day))))))
     (org-agenda nil "u"))
 #+END_SRC
