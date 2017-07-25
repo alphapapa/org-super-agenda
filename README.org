@@ -4,7 +4,7 @@ This is a prototype for a "supercharged" Org daily/weekly agenda.  The idea is t
 
 Now you can sort-of do this already with custom agenda commands, but when you do that, you lose the daily/weekly aspect of the agenda: items are no longer shown based on deadline/scheduled timestamps, but are shown no-matter-what.
 
-So this ~org-super-agenda~ command essentially copies the ~org-agenda-list~ command, but right before it inserts the agenda items, it runs them through a set of user-defined filters that separate them into sections.  Then the sections are inserted into the agenda buffer, and any remaining items are inserted at the end.
+So this ~org-super-agenda~ command essentially copies the ~org-agenda-list~ command, but right before it inserts the agenda items, it runs them through a set of user-defined filters that separate them into sections.  Then the sections are inserted into the agenda buffer, and any remaining items are inserted at the end.  Empty sections are not displayed.
 
 The end result is your standard daily/weekly agenda, but arranged into sections defined by you.  You might put items with certain tags in one section, habits in another section, items with certain todo keywords in another, and items with certain priorities in another.  The possibilities are only limited by the filter functions (which you can easily add to, and more will be added here).
 

@@ -29,7 +29,8 @@
 ;;                 (org-agenda-span 'day))))))
 ;;   (org-agenda nil "u"))
 
-;; You can adjust the `org-agenda-super-filters' to create as many different sections as you like.
+;; You can adjust the `org-agenda-super-filters' to create as many
+;; different sections as you like.  Empty sections are not displayed.
 
 ;;; Code:
 
