@@ -173,7 +173,7 @@ items if they have an hour specification like [h]h:mm."
 	   s e rtn rtnall file date d start-pos end-pos todayp
 	   clocktable-start clocktable-end filter)
       (setq org-agenda-redo-command
-	    (list 'org-agenda-list (list 'quote arg) start-day (list 'quote span) with-hour))
+	    (list 'org-super-agenda (list 'quote arg) start-day (list 'quote span) with-hour))
       (dotimes (n (1- ndays))
 	(push (1+ (car day-numbers)) day-numbers))
       (setq day-numbers (nreverse day-numbers))
