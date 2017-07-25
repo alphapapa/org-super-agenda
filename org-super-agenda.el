@@ -50,17 +50,17 @@ construct the name of the filter function.
 
 DOCSTRING is a string used for the function's docstring.
 
+:SECTION-NAME is a string or a lisp form that is run once, with
+the variable `items' available.
+
 :TEST is a lisp form that is run for each item, with the variable
 `item' available.  Items passing this test are filtered into a
 separate list.
 
-:SECTION-NAME is a string or a lisp form that is run once, with
-the variable `items' available.
-
-Finally a list of three items is returned to the calling
-function, with the value returned by :SECTION-NAME as the first
-item, a list of items matching the :TEST as the second, and a
-list of items not matching as the third."
+Finally a list of three items is returned, with the value
+returned by :SECTION-NAME as the first item, a list of items
+matching the :TEST as the second, and a list of items not
+matching as the third."
   (declare (indent defun))
   (let ((function-name (intern (concat "osa/filter-" (symbol-name name)))))
     `(defun ,function-name (items args)
