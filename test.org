@@ -1,0 +1,82 @@
+* Test data
+
+Rather than using my personal agenda every time I want to take a screenshot, how about this.
+
+** TODAY [#A] Take over the world
+DEADLINE: <2017-07-28 Fri -1m>
+
+I'd like to be finished with this before the weekend...
+
+** TODO [#A] Skype with president of Antarctica             :world:meetings:
+SCHEDULED: <2017-07-24 Mon 21:00>
+
+Not sure what his timezone is...
+
+** TODO Order a pizza                                          :food:dinner:
+SCHEDULED: <2017-07-24 Mon 18:00>
+
+** SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+DEADLINE: <2017-07-26 Wed>
+:LOGBOOK:
+-  State "SOMEDAY"    from "MAYBE"      [2017-07-24 Mon 18:59]
+-  State "MAYBE"      from              [2017-07-24 Mon 18:58]
+:END:
+
+I mean, since no one has ever tried doing it before...
+
+** CHECK /r/emacs                                            :website:Emacs:
+SCHEDULED: <2017-07-29 Sat -1m>
+:LOGBOOK:
+-  State "CHECK"      from              [2017-07-24 Mon 19:00]
+:END:
+
+** WAITING Visit the moon                                     :space:travel:
+SCHEDULED: <2017-06-27 Tue>
+:LOGBOOK:
+-  State "WAITING"    from              [2017-07-24 Mon 19:01]
+:END:
+
+Just waiting on that callback from NASA...
+
+** TODO [#C] Get haircut                                    :personal:@town:
+SCHEDULED: <2017-07-25 Tue -1m>
+
+Should probably do this before I take over the world.  Want to look my best.  (Not that it will matter once I'm in charge.)
+
+** TODO [#A] Internet                                                :bills:
+DEADLINE: <2017-08-21 Mon -1m>
+
+** TODO [#A] Spaceship lease                                         :bills:
+DEADLINE: <2017-07-26 Wed +1m>
+
+** TODO Practice leaping tall buildings in a single bound
+SCHEDULED: <2017-07-24 Mon +2d>
+:PROPERTIES:
+:STYLE:    habit
+:END:
+
+** TODO [#B] Renew membership in supervillain club
+DEADLINE: <2017-07-24 Mon>
+
+** TODO Shop for groceries
+SCHEDULED: <2017-07-24 Mon>
+
+* Code
+
+#+BEGIN_SRC elisp
+  (let ((org-agenda-files (list "~/src/org-super-agenda/test.org")))
+    (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
+                                                    org-super-agenda ""
+                                                    ((super-filters '(osa/separate-by-time
+                                                                      (:fn osa/separate-by-any-tags :args ("bills"))
+                                                                      osa/separate-by-habits
+                                                                      (:fn osa/separate-by-todo-keyword :args "WAITING")
+                                                                      (:fn osa/separate-by-todo-keyword
+                                                                           :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                                                                           :last t)
+                                                                      (:fn osa/separate-by-priorities :args "A")
+                                                                      (:fn osa/separate-by-priorities :args "B")
+                                                                      (:fn osa/separate-by-priorities :args "C")))
+                                                     (org-agenda-span 'day)))))))
+      (org-agenda nil "u")))
+#+END_SRC
