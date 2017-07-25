@@ -39,10 +39,6 @@ The ~org-super-agenda~ command works as a custom agenda command, so you can add 
     (org-agenda nil "u"))
 #+END_SRC
 
-This uses the =s= library, which you can install from MELPA.
-
-To start, open the ~org-super-agenda.el~ file in Emacs and run ~eval-buffer~.  Then you can run the code above to test it.  Then you can modify it to suit yourself, and add it to your ~org-agenda-custom-commands~ list (copy the list which starts with the string =u= and you can change the key to your liking).
-
 Here's what a normal agenda looks like:
 
 [[screenshot-before.png]]
@@ -50,3 +46,21 @@ Here's what a normal agenda looks like:
 Here's what the "super" agenda looks like:
 
 [[screenshot-after.png]]
+
+** Installation
+
+This package will eventually be submitted to MELPA, and hopefully upstreamed into Org in some fashion.  In the meantime, install it like this:
+
+1.  Install the =s= package from MELPA.
+2.  Put the file =org-super-agenda.el= in your =load-path= directory.
+3.  Add to your init file: ~(use-package org-super-agenda)~.
+4.  Add a new custom command to =org-agenda-custom-commands= that calls =org-super-agenda=.  Use the example code above as a guideline.
+5.  Start the day with confidence, knowing that nothing important has been lost in the jumble of /ahem/ overdue items.
+
+** Development
+
+Contributions and feedback are welcome.
+
+** License
+
+GPLv3+
