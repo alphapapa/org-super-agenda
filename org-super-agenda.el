@@ -5,15 +5,15 @@
 ;; (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
 ;;                                                 org-super-agenda ""
 ;;                                                 ((super-filters '(osa/separate-by-time
-;;                                                                   (:fn osa/separate-by-any-tags :args ("bills"))
-;;                                                                   osa/separate-by-habits
+;;                                                                   (:fn osa/separate-by-any-tag :args ("bills"))
+;;                                                                   osa/separate-by-habit
 ;;                                                                   (:fn osa/separate-by-todo-keyword :args "WAITING")
 ;;                                                                   (:fn osa/separate-by-todo-keyword
 ;;                                                                        :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
 ;;                                                                        :last t)
-;;                                                                   (:fn osa/separate-by-priorities :args "A")
-;;                                                                   (:fn osa/separate-by-priorities :args "B")
-;;                                                                   (:fn osa/separate-by-priorities :args "C")))
+;;                                                                   (:fn osa/separate-by-priority :args "A")
+;;                                                                   (:fn osa/separate-by-priority :args "B")
+;;                                                                   (:fn osa/separate-by-priority :args "C")))
 ;;                                                  (org-agenda-span 'day)))))))
 ;;   (org-agenda nil "u"))
 
@@ -50,13 +50,13 @@
   :test (when-let ((time (org-find-text-property-in-string 'dotime item)))
           (not (eql (org-find-text-property-in-string 'dotime item) 'time))))
 
-(osa/def-separator any-tags
+(osa/def-separator any-tag
   "Separate agenda ITEMS into two lists, putting items that contain any of TAGS into the second list.
   Returns list like (SECTION-NAME NON-MATCHING MATCHING)."
   :section-name (concat "Items tagged with: " (s-join " OR " args))
   :test (seq-intersection (osa/get-tags item) args))
 
-(osa/def-separator habits
+(osa/def-separator habit
   "Separate habits into separate list.
   Returns (\"Habits\" NON-HABITS HABITS)."
   :section-name "Habits"
@@ -68,7 +68,7 @@
   :section-name (concat (s-join " and " args) " items")
   :test (cl-member (org-find-text-property-in-string 'todo-state item) args :test 'string=))
 
-(osa/def-separator priorities
+(osa/def-separator priority
   "Separate items by PRIORITIES.
       PRIORITIES may be a string or a list of strings which match the
       letter in an Org priority cookie, e.g. \"A\", \"B\", etc.
@@ -81,7 +81,7 @@
 (cl-defun org-super-agenda (&optional arg start-day span with-hour)
   "SUPER-FILTERS should be a list like (FILTER-FN ARG), e.g.:
 
-  '(osa/separate-by-any-tags (\"bills\"))"
+  '(osa/separate-by-any-tag (\"bills\"))"
   (interactive "P")
   (if org-agenda-overriding-arguments
       (setq arg (car org-agenda-overriding-arguments)
