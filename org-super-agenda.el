@@ -23,6 +23,7 @@
 
 ;;;; Requirements
 
+(require 'subr-x)
 (require 'org)
 (require 'cl-lib)
 (require 's)
@@ -46,9 +47,8 @@
 (osa/def-separator time
   "Separate agenda items that have a time associated."
   :section-name "Schedule"  ; Note: this does not mean the item has a "SCHEDULED:" line
-  :test (let ((time (org-find-text-property-in-string 'dotime item)))
-          (when time
-            (not (eql time 'time)))))
+  :test (when-let ((time (org-find-text-property-in-string 'dotime item)))
+          (not (eql (org-find-text-property-in-string 'dotime item) 'time))))
 
 (osa/def-separator any-tags
   "Separate agenda ITEMS into two lists, putting items that contain any of TAGS into the second list.
