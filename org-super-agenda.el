@@ -90,6 +90,9 @@
 
 ;;;; Variables
 
+(defvar org-agenda-group-types nil
+  "List of agenda group types.  Added to automatically by `osa/deffilter'.")
+
 (defcustom org-super-agenda-fontify-whole-header-line nil
   "Fontify the whole line for section headers.
 This is mostly useful if section headers have a highlight color, making it stretch across the screen."
@@ -116,7 +119,9 @@ returned by :SECTION-NAME as the first item, a list of items not
 matching the :TEST as the second, and a list of items matching as
 the third."
   (declare (indent defun))
-  (let ((function-name (intern (concat "osa/filter-" (symbol-name name)))))
+  (let ((function-name (intern (concat "osa/filter-" (symbol-name name))))
+        (group-type (intern (concat ":" (symbol-name name)))))
+    (push group-type org-agenda-group-types)
     `(defun ,function-name (items args)
        ,docstring
        (unless (listp args)
@@ -456,3 +461,84 @@ Matches `org-priority-regexp'."
 (provide 'org-super-agenda)
 
 ;;; org-super-agenda.el ends here
+
+
+(defun osa/insert-sections (all-items)
+  "Divide ALL-ITEMS into sections and insert them into the agenda."
+  ;; This essentially replaces the part of `org-agenda-list' that
+  ;; finally inserts the `rtnall' variable.
+  (if (bound-and-true-p org-agenda-groups)
+      (cl-loop with filter-fn
+               with args
+               with last
+               for filter in org-agenda-groups
+               for custom-section-name = (plist-get filter :name)
+               for last = (plist-get filter :last)
+               for (auto-section-name non-matching matching) = (osa/dispatch-group all-items filter)
+               for section-name = (or custom-section-name auto-section-name)
+
+               ;; FIXME: This repetition is kind of ugly, but I guess cl-loop is worth it...
+               if last collect (cons section-name matching) into last-sections
+               and do (setq all-items non-matching)
+               else collect (cons section-name matching) into sections
+               and do (setq all-items non-matching)
+
+               finally do
+               (progn
+                 ;; Insert sections
+                 (cl-loop for (section-name . items) in sections
+                          when items
+                          do (progn
+                               (osa/insert-agenda-header section-name)
+                               (insert (org-agenda-finalize-entries items 'agenda)
+                                       "\n\n")))
+                 (when non-matching
+                   ;; Insert non-matching items in main section
+                   (osa/insert-agenda-header "Other items")
+                   (insert (org-agenda-finalize-entries non-matching 'agenda)
+                           "\n\n"))
+
+                 ;; Insert final sections
+                 (cl-loop for (section-name . items) in last-sections
+                          when items
+                          do (progn
+                               (osa/insert-agenda-header section-name)
+                               (insert (org-agenda-finalize-entries items 'agenda)
+                                       "\n\n")))))
+    ;; No super-filters; insert normally
+    (insert (org-agenda-finalize-entries all-items 'agenda)
+            "\n")))
+
+(defun osa/dispatch-group (items group)
+  (cl-loop with fn
+           for group-type in org-agenda-group-types
+           for args = (plist-get group group-type)
+           when args
+           do (setq fn (intern (concat "osa/filter-"
+                                       (replace-regexp-in-string (rx bol ":") ""
+                                                                 (symbol-name group-type)))))
+           and return (funcall fn items args)))
+
+(defun osa/filter-or (items filters)
+  "Group ITEMS with boolean OR according to FILTERS."
+  ;; Add to the group types since this isn't defined with the macro
+  (eval-when-compile (push :or org-agenda-group-types))
+  (let* ((matches (cl-loop for (filter args) on filters by 'cddr
+                           for (auto-section-name non-matching matching) = (osa/dispatch-group items (list filter args))
+
+                           append matching
+                           and do (setq items non-matching))))
+    ;; Return results without a name
+    (list nil items matches)))
+
+(osa/deffilter any-tags
+  "Filter items that match any of the given tags.
+Argument may be a string or list of strings."
+  :section-name (concat "Items tagged with: " (s-join " OR " args))
+  :test (seq-intersection (osa/get-tags item) args))
+
+(osa/deffilter todo
+  "Filter items that match any of the given TODO keywords.
+Argument may be a string or list of strings."
+  :section-name (concat (s-join " and " args) " items")
+  :test (cl-member (org-find-text-property-in-string 'todo-state item) args :test 'string=))

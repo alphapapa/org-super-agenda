@@ -8,12 +8,12 @@ DEADLINE: <2017-07-28 Fri -1m>
 I'd like to be finished with this before the weekend...
 
 ** TODO [#A] Skype with president of Antarctica             :world:meetings:
-SCHEDULED: <2017-07-25 Tue 21:00>
+SCHEDULED: <2017-07-26 Wed 21:00>
 
 Not sure what his timezone is...
 
 ** TODO Order a pizza                                          :food:dinner:
-SCHEDULED: <2017-07-25 Tue 18:00>
+SCHEDULED: <2017-07-26 Wed 18:00>
 
 ** SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
 DEADLINE: <2017-07-26 Wed>
@@ -39,7 +39,7 @@ SCHEDULED: <2017-06-27 Tue>
 Just waiting on that callback from NASA...
 
 ** TODO [#C] Get haircut                                    :personal:@town:
-SCHEDULED: <2017-07-25 Tue>
+SCHEDULED: <2017-07-26 Wed>
 
 Should probably do this before I take over the world.  Want to look my best.  (Not that it will matter once I'm in charge.)
 
@@ -119,3 +119,135 @@ SCHEDULED: <2017-07-17 Mon>
                 (:filter osa/filter-priority :args ("B" "C")))))))))
     (org-agenda nil "u"))
 #+END_SRC
+
+** More declarative
+
+#+BEGIN_SRC elisp
+  (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+        (org-agenda-custom-commands
+         '(("u" "SUPER Agenda"
+            org-super-agenda ""
+            ((org-agenda-span 'day)
+             (org-agenda-groups '((:name "Today"
+                                         :or (:time t :todo "TODAY"))
+                                  (:name "Important"
+                                         :or (:any-tags "bills" :priority "A"))
+                                  (:name "Food-related"
+                                         :any-tags ("food" "dinner"))
+                                  (:name "Personal"
+                                         :or (:habit t :any-tags "personal"))
+                                  (:todo "WAITING")
+                                  (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                                         :last t)
+                                  (:priority ("B" "C")))))))))
+    (org-agenda nil "u"))
+
+    ;; (defun osa/dispatch-group (group items)
+    ;;   (osa/let-plist (:name :or :habit :priority :time :todo :tags) group
+    ;;     (let  ((fn (cond
+    ;;                 ((and or) (osa/filter-or items or))
+    ;;                 (habit (osa/filter-habit items habit))
+    ;;                 (priority (osa/filter-priority items priority))
+    ;;                 (time (osa/filter-time items time))
+    ;;                 (todo (osa/filter-todo-keyword items todo))
+    ;;                 (tags (osa/filter-any-tag items tags))))))))
+
+    (defun osa/dispatch-group (group items)
+      (let ((org-super-agenda-group-types '(:or :habit :priority :time :todo :tags)))
+        (cl-loop with fn
+                 for group-type in org-super-agenda-group-types
+                 for args = (plist-get group group-type)
+                 when args
+                 do (setq fn (intern (concat "osa/filter-"
+                                             (replace-regexp-in-string (rx bol ":") ""
+                                                                       (symbol-name group-type)))))
+                 and return (list fn items args))))
+
+    (defmacro osa/let-plist (keys plist &rest body)
+      "`cl-destructuring-bind' without the boilerplate for plists."
+      ;; See https://emacs.stackexchange.com/q/22542/3871
+
+      ;; I really don't understand why Emacs doesn't have this already.
+      ;; So many things come close to it: pcase, pcase-let, map-let,
+      ;; cl-destructuring-bind, -let...but none of them let you simply
+      ;; bind all the values of a plist to variables with the same name as
+      ;; their keys.  You always have to type the name of the key twice.
+
+      ;; For example, compare these two forms:
+
+      ;; (-let (((&keys :from from :to to :date date :subject subject) email))
+      ;;   (list from to date subject))
+
+      ;; (osa/let-plist (:from :to :date :subject) email
+      ;;   (list from to date subject))
+
+      ;; Now, sure, sometimes you need to bind values to differently named
+      ;; variables.  But when you don't, I know which one I prefer.
+      (declare (indent defun))
+      (setq keys (cl-loop for key in keys
+                          collect (intern (replace-regexp-in-string (rx bol ":") ""
+                                                                    (symbol-name key)))))
+      `(cl-destructuring-bind
+           (&key ,@keys &allow-other-keys)
+           ,plist
+         ,@body))
+
+    (let* ((groups '((:name "Today" :or (:time t :todo "TODAY"))
+                     (:name "Important" :or (:tags "bills" :priority "A"))
+                     (:name "Food-related" :tags ("food" "dinner"))
+                     (:name "Personal" :or (:habit t :tags "personal"))
+                     (:todo "WAITING")
+                     (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING") :last t)
+                     (:priority ("B" "C"))))
+           (items '(1 2 3)))
+      (cl-loop for group in groups
+               collect (osa/dispatch-group group items)))
+
+
+    (defun osa/insert-sections (all-items)
+      "Divide ALL-ITEMS into sections and insert them into the agenda."
+      ;; This essentially replaces the part of `org-agenda-list' that
+      ;; finally inserts the `rtnall' variable.
+      (if (bound-and-true-p org-agenda-super-filters)
+          (cl-loop with filter-fn
+                   with args
+                   with last
+                   for filter in org-agenda-groups
+                   for custom-section-name = (plist-get filter :name)
+                   for last = (plist-get filter :last)
+                   for (auto-section-name non-matching matching) = (osa/dispatch-group filter)
+                   for section-name = (or custom-section-name auto-section-name)
+
+                   ;; FIXME: This repetition is kind of ugly, but I guess cl-loop is worth it...
+                   if last collect (cons section-name matching) into last-sections
+                   and do (setq all-items non-matching)
+                   else collect (cons section-name matching) into sections
+                   and do (setq all-items non-matching)
+
+                   finally do
+                   (progn
+                     ;; Insert sections
+                     (cl-loop for (section-name . items) in sections
+                              when items
+                              do (progn
+                                   (osa/insert-agenda-header section-name)
+                                   (insert (org-agenda-finalize-entries items 'agenda)
+                                           "\n\n")))
+                     (when non-matching
+                       ;; Insert non-matching items in main section
+                       (osa/insert-agenda-header "Other items")
+                       (insert (org-agenda-finalize-entries non-matching 'agenda)
+                               "\n\n"))
+
+                     ;; Insert final sections
+                     (cl-loop for (section-name . items) in last-sections
+                              when items
+                              do (progn
+                                   (osa/insert-agenda-header section-name)
+                                   (insert (org-agenda-finalize-entries items 'agenda)
+                                           "\n\n")))))
+        ;; No super-filters; insert normally
+        (insert (org-agenda-finalize-entries all-items 'agenda)
+                "\n")))
+#+END_SRC
+
