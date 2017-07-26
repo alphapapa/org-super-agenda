@@ -1,3 +1,9 @@
+#+PROPERTY: LOGGING nil
+
+#+BEGIN_HTML
+<a href=https://alphapapa.github.io/dont-tread-on-emacs/><img src="dont-tread-on-emacs-150.png" align="right"></a>
+#+END_HTML
+
 * org-super-agenda
 
 This package lets you "supercharge" your Org daily/weekly agenda.  The idea is to group items into sections, rather than having them all in one big list.
