@@ -83,6 +83,13 @@
 (require 'cl-lib)
 (require 's)
 
+;;;; Variables
+
+(defcustom org-super-agenda-fontify-whole-header-line nil
+  "Fontify the whole line for section headers.
+This is mostly useful if section headers have a highlight color, making it stretch across the screen."
+  :group 'org)
+
 ;;;; Filter macro and functions
 
 (cl-defmacro osa/deffilter (name docstring &key section-name test)
@@ -427,7 +434,11 @@ items if they have an hour specification like [h]h:mm."
 
 (defsubst osa/insert-agenda-header (s)
   "Insert agenda header into current buffer containing string S and a newline."
-  (insert (org-add-props s nil 'face 'org-agenda-structure) "\n"))
+  (let ((start (point)))
+    (insert (org-add-props s nil 'face 'org-agenda-structure))
+    (insert "\n")
+    (when org-super-agenda-fontify-whole-header-line
+      (add-text-properties start (point) '(face org-agenda-structure)))))
 
 (defsubst osa/get-priority-cookie (s)
   "Return priority character for string S.
