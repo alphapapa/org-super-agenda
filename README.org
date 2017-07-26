@@ -63,7 +63,7 @@ Here's the code for the example above.  The ~org-super-agenda~ command works as 
 
 This package will eventually be submitted to MELPA, and hopefully upstreamed into Org in some fashion.  In the meantime, install it like this:
 
-1.  Install the =s= package from MELPA.
+1.  Install the =dash= and =s= packages from MELPA.
 2.  Put the file =org-super-agenda.el= in your =load-path= directory.
 3.  Add to your init file: ~(use-package org-super-agenda)~.
 4.  Add a new custom command to =org-agenda-custom-commands= that calls =org-super-agenda=.  Use the example code above as a guideline.
