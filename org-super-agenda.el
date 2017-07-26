@@ -78,7 +78,7 @@
 
 ;;;; Variables
 
-(defvar org-agenda-group-types nil
+(defvar org-super-agenda-group-types nil
   "List of agenda grouping keywords and associated functions.
 Populated automatically by `osa/defgroup'.")
 
@@ -93,7 +93,7 @@ This is mostly useful if section headers have a highlight color, making it stret
   "Define an agenda-item group function.
 NAME is a symbol that will be appended to `osa/group-' to
 construct the name of the group function.  A symbol like `:name'
-will be added to the `org-agenda-group-types' list, associated
+will be added to the `org-super-agenda-group-types' list, associated
 with the function, which is used by the dispatcher.
 
 DOCSTRING is a string used for the function's docstring.
@@ -113,7 +113,7 @@ the third."
   (let ((group-type (intern (concat ":" (symbol-name name))))
         (function-name (intern (concat "osa/group-" (symbol-name name)))))
     ;; Associate the group type with this function so the dispatcher can find it
-    (setq org-agenda-group-types (plist-put org-agenda-group-types group-type function-name))
+    (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types group-type function-name))
     `(defun ,function-name (items args)
        ,docstring
        (unless (listp args)
@@ -426,11 +426,11 @@ items if they have an hour specification like [h]h:mm."
 
 (defun osa/group-dispatch (items group)
   "Group ITEMS with the appropriate grouping functions for GROUP.
-Grouping functions are listed in `org-agenda-group-types', which
+Grouping functions are listed in `org-super-agenda-group-types', which
 see."
   (cl-loop with name with fn with auto-section-name with non-matching with matching
            for (group-type args) on group by 'cddr  ; plist access
-           for fn = (plist-get org-agenda-group-types group-type)
+           for fn = (plist-get org-super-agenda-group-types group-type)
            ;; This double "when fn" is an ugly hack, but it lets us
            ;; use the destructuring-bind; otherwise we'd have to put
            ;; all the collection logic in a progn, or do the
