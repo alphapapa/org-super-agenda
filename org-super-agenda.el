@@ -95,7 +95,7 @@
 This is mostly useful if section headers have a highlight color, making it stretch across the screen."
   :group 'org)
 
-;;;; Filter macro and functions
+;;;; Filters
 
 (cl-defmacro osa/deffilter (name docstring &key section-name test)
   "Define an agenda-item filter function.
@@ -160,6 +160,20 @@ Argument may be a string or list of strings, which should be,
 e.g. \"A\" or (\"B\" \"C\")."
   :section-name (concat "Priority " (s-join " and " args) " items")
   :test (cl-member (osa/get-priority-cookie item) args :test 'string=))
+
+(defun osa/filter-or (items filters)
+  "Group ITEMS with boolean OR according to FILTERS."
+  (let* ((matches (cl-loop with fn with args
+                           for filter in filters
+                           if (functionp filter) do (setq fn filter
+                                                          args nil)
+                           else do (setq fn (plist-get filter :filter)
+                                         args (plist-get filter :args))
+                           for (auto-section-name non-matching matching) = (funcall fn items args)
+                           append matching
+                           and do (setq items non-matching))))
+    ;; Return results without a name
+    (list nil items matches)))
 
 ;;;; Agenda command
 
@@ -419,20 +433,6 @@ items if they have an hour specification like [h]h:mm."
     (insert (org-agenda-finalize-entries all-items 'agenda)
             "\n")))
 
-(defun osa/filter-or (items filters)
-  "Group ITEMS with boolean OR according to FILTERS."
-  (let* ((matches (cl-loop with fn with args
-                           for filter in filters
-                           if (functionp filter) do (setq fn filter
-                                                          args nil)
-                           else do (setq fn (plist-get filter :filter)
-                                         args (plist-get filter :args))
-                           for (auto-section-name non-matching matching) = (funcall fn items args)
-                           append matching
-                           and do (setq items non-matching))))
-    ;; Return results
-    (list nil items matches)))
-
 (defsubst osa/get-tags (s)
   "Return list of tags in agenda item string S."
   (org-find-text-property-in-string 'tags s))
@@ -451,7 +451,7 @@ Matches `org-priority-regexp'."
   (when (string-match org-priority-regexp s)
     (match-string-no-properties 2 item)))
 
-;;; Footer
+;;;; Footer
 
 (provide 'org-super-agenda)
 
