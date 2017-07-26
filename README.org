@@ -14,6 +14,16 @@ So this ~org-super-agenda~ command essentially copies the ~org-agenda-list~ comm
 
 The end result is your standard daily/weekly agenda, but arranged into sections defined by you.  You might put items with certain tags in one section, habits in another section, items with certain todo keywords in another, and items with certain priorities in another.  The possibilities are only limited by the filter functions (which you can easily add to, and more will be added here).
 
+Here's what a normal agenda looks like:
+
+[[screenshot-before.png]]
+
+Here's what the "super" agenda looks like:
+
+[[screenshot-after.png]]
+
+** Usage
+
 The ~org-super-agenda~ command works as a custom agenda command, so you can add it to your ~org-agenda-custom-commands~ list.  You can also test it quickly like this:
 
 #+BEGIN_SRC elisp
@@ -54,14 +64,6 @@ The ~org-super-agenda~ command works as a custom agenda command, so you can add 
                 (:fn osa/filter-priority :args ("B" "C")))))))))
     (org-agenda nil "u"))
 #+END_SRC
-
-Here's what a normal agenda looks like:
-
-[[screenshot-before.png]]
-
-Here's what the "super" agenda looks like:
-
-[[screenshot-after.png]]
 
 ** Installation
 
