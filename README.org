@@ -24,7 +24,7 @@ Here's what the "super" agenda looks like:
 
 ** Usage
 
-The ~org-super-agenda~ command works as a custom agenda command, so you can add it to your ~org-agenda-custom-commands~ list.  You can also test it quickly like this:
+Here's the code for the example above.  The ~org-super-agenda~ command works as a custom agenda command, so you can add it to your ~org-agenda-custom-commands~ list.  You can also test it quickly like this:
 
 #+BEGIN_SRC elisp
   (let ((org-agenda-custom-commands
