@@ -89,7 +89,10 @@ SCHEDULED: <2017-07-17 Mon>
                 (:name "Today"
                        ;; The OR filter accepts a list of other filters
                        :fn osa/filter-or
-                       :args (osa/filter-time
+                       :args (
+                              ;; The filter-time filter doesn't require
+                              ;; arguments, so it can be given by itself
+                              osa/filter-time
                               ;; Single arg given by itself
                               (:fn osa/filter-todo-keyword :args "TODAY")))
                 (:name "Important"
