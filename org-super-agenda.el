@@ -38,33 +38,34 @@
 ;;        '(("u" "SUPER Agenda"
 ;;           org-super-agenda ""
 ;;           ((org-agenda-span 'day)
-;;            (org-agenda-groups '(;; Each group has an implicit boolean OR operator between its selectors.
-;;                                 (:name "Today"  ; Optionally specify section name
-;;                                        :time t  ; Items that have a time associated
-;;                                        :todo "TODAY")  ; Items that have this TODO keyword
-;;                                 (:name "Important"
-;;                                        ;; Single arguments given alone
-;;                                        :any-tags "bills"
-;;                                        :priority "A")
-;;                                 (:name "Food-related"
-;;                                        ;; Multiple args given in list
-;;                                        :any-tags ("food" "dinner"))
-;;                                 (:name "Personal"
-;;                                        :habit t
-;;                                        :any-tags "personal")
-;;                                 ;; Filter functions supply their own section names when none are given
-;;                                 (:todo "WAITING")
-;;                                 (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
-;;                                        ;; Show this section at the end of the agenda. If you specified
-;;                                        ;; this filter last, items with these todo keywords that have
-;;                                        ;; priority A, B, or C would be displayed in those sections
-;;                                        ;; instead, because items are filtered out in the order the
-;;                                        ;; filters are listed.
-;;                                        :last t)
-;;                                 (:priority ("B" "C")))))))))
+;;            (org-super-agenda-groups
+;;             '(;; Each group has an implicit boolean OR operator between its selectors.
+;;               (:name "Today"  ; Optionally specify section name
+;;                      :time t  ; Items that have a time associated
+;;                      :todo "TODAY")  ; Items that have this TODO keyword
+;;               (:name "Important"
+;;                      ;; Single arguments given alone
+;;                      :any-tags "bills"
+;;                      :priority "A")
+;;               (:name "Food-related"
+;;                      ;; Multiple args given in list
+;;                      :any-tags ("food" "dinner"))
+;;               (:name "Personal"
+;;                      :habit t
+;;                      :any-tags "personal")
+;;               ;; Filter functions supply their own section names when none are given
+;;               (:todo "WAITING")
+;;               (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+;;                      ;; Show this section at the end of the agenda. If you specified
+;;                      ;; this filter last, items with these todo keywords that have
+;;                      ;; priority A, B, or C would be displayed in those sections
+;;                      ;; instead, because items are filtered out in the order the
+;;                      ;; filters are listed.
+;;                      :last t)
+;;               (:priority ("B" "C")))))))))
 ;;   (org-agenda nil "u"))
 
-;; You can adjust the `org-agenda-groups' to create as many different
+;; You can adjust the `org-super-agenda-groups' to create as many different
 ;; groups as you like.
 
 ;;; Code:
@@ -382,11 +383,11 @@ items if they have an hour specification like [h]h:mm."
   "Divide ALL-ITEMS into sections and insert them into the agenda."
   ;; This essentially replaces the part of `org-agenda-list' that
   ;; finally inserts the `rtnall' variable.
-  (if (bound-and-true-p org-agenda-groups)
+  (if (bound-and-true-p org-super-agenda-groups)
       (cl-loop with filter-fn
                with args
                with last
-               for filter in org-agenda-groups
+               for filter in org-super-agenda-groups
                for custom-section-name = (plist-get filter :name)
                for last = (plist-get filter :last)
                for (auto-section-name non-matching matching) = (osa/group-dispatch all-items filter)
