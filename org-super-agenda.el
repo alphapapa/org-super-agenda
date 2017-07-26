@@ -36,40 +36,42 @@
 ;; you can add it to your `org-agenda-custom-commands' list.  You can
 ;; also test it quickly like this:
 
-;; (org-agenda-custom-commands
-;;  '(("u" "SUPER Agenda"
-;;     org-super-agenda ""
-;;     ((org-agenda-span 'day)
-;;      (org-agenda-super-filters
-;;       '(
-;;         ;; Optionally specify the section name
-;;         (:name "Today"
-;;                ;; The OR filter accepts a list of other filters
-;;                :fn osa/filter-or
-;;                :args (osa/filter-time
-;;                       (:fn osa/filter-todo-keyword :args "TODAY")))
-;;         (:name "Important"
-;;                :fn osa/filter-or
-;;                :args ((:fn osa/filter-any-tag :args "bills")
-;;                       (:fn osa/filter-priority :args "A")))
-;;         (:name "Food-related"
-;;                :fn osa/filter-any-tag :args ("food" "dinner"))
-;;         (:name "Personal"
-;;                :fn osa/filter-or
-;;                :args (osa/filter-habit
-;;                       (:fn osa/filter-any-tag :args "personal")))
-;;         ;; Filter functions supply their own section names when none are given
-;;         (:fn osa/filter-todo-keyword :args "WAITING")
-;;         (:fn osa/filter-todo-keyword
-;;              ;; Multiple args given in a list
-;;              :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
-;;              ;; Show this section at the end of the agenda.  If you specified
-;;              ;; this filter last, items with these todo keywords that have
-;;              ;; priority A, B, or C would be displayed in those sections
-;;              ;; instead, because items are filtered out in the order the
-;;              ;; filters are listed.
-;;              :last t)
-;;         (:fn osa/filter-priority :args ("B" "C"))))))))
+;; (let ((org-agenda-custom-commands
+;;        '(("u" "SUPER Agenda"
+;;           org-super-agenda ""
+;;           ((org-agenda-span 'day)
+;;            (org-agenda-super-filters
+;;             '(
+;;               ;; Optionally specify the section name
+;;               (:name "Today"
+;;                      ;; The OR filter accepts a list of other filters
+;;                      :fn osa/filter-or
+;;                      :args (osa/filter-time
+;;                             ;; Single arg given by itself
+;;                             (:fn osa/filter-todo-keyword :args "TODAY")))
+;;               (:name "Important"
+;;                      :fn osa/filter-or
+;;                      :args ((:fn osa/filter-any-tag :args "bills")
+;;                             (:fn osa/filter-priority :args "A")))
+;;               (:name "Food-related"
+;;                      ;; Multiple args given in a list
+;;                      :fn osa/filter-any-tag :args ("food" "dinner"))
+;;               (:name "Personal"
+;;                      :fn osa/filter-or
+;;                      :args (osa/filter-habit
+;;                             (:fn osa/filter-any-tag :args "personal")))
+;;               ;; Filter functions supply their own section names when none are given
+;;               (:fn osa/filter-todo-keyword :args "WAITING")
+;;               (:fn osa/filter-todo-keyword
+;;                    :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+;;                    ;; Show this section at the end of the agenda.  If you specified
+;;                    ;; this filter last, items with these todo keywords that have
+;;                    ;; priority A, B, or C would be displayed in those sections
+;;                    ;; instead, because items are filtered out in the order the
+;;                    ;; filters are listed.
+;;                    :last t)
+;;               (:fn osa/filter-priority :args ("B" "C")))))))))
+;;   (org-agenda nil "u"))
 
 ;; You can adjust the `org-agenda-super-filters' to create as many
 ;; different sections as you like.  Empty sections are not displayed.
