@@ -58,9 +58,9 @@ the variable `items' available.
 separate list.
 
 Finally a list of three items is returned, with the value
-returned by :SECTION-NAME as the first item, a list of items
-matching the :TEST as the second, and a list of items not
-matching as the third."
+returned by :SECTION-NAME as the first item, a list of items not
+matching the :TEST as the second, and a list of items matching as
+the third."
   (declare (indent defun))
   (let ((function-name (intern (concat "osa/filter-" (symbol-name name)))))
     `(defun ,function-name (items args)
