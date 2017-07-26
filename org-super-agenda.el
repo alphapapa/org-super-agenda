@@ -79,7 +79,8 @@
 ;;;; Variables
 
 (defvar org-agenda-group-types nil
-  "List of agenda group types.  Added to automatically by `osa/defgroup'.")
+  "List of agenda grouping keywords and associated functions.
+Populated automatically by `osa/defgroup'.")
 
 (defcustom org-super-agenda-fontify-whole-header-line nil
   "Fontify the whole line for section headers.
