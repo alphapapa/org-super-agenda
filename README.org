@@ -1,6 +1,6 @@
 * org-super-agenda
 
-This is a prototype for a "supercharged" Org daily/weekly agenda.  The idea is to divide items into sections, rather than having them all in one big list.
+This is a prototype for a "supercharged" Org daily/weekly agenda.  The idea is to group items into sections, rather than having them all in one big list.
 
 Now you can sort-of do this already with custom agenda commands, but when you do that, you lose the daily/weekly aspect of the agenda: items are no longer shown based on deadline/scheduled timestamps, but are shown no-matter-what.
 
@@ -12,30 +12,39 @@ The ~org-super-agenda~ command works as a custom agenda command, so you can add 
 
 #+BEGIN_SRC elisp
   (let ((org-agenda-custom-commands
-         (list '("u" "SUPER Agenda"
-                 org-super-agenda ""
-                 ((org-agenda-super-filters '(
-                                              ;; Optionally specify the section name
-                                              (:name "Schedule" :fn osa/filter-time)
-                                              (:name "Bills" :fn osa/filter-any-tag
-                                                     ;; One arg may be given alone, without a list
-                                                     :args "bills")
-                                              ;; This function needs no args so it may be specified like this
-                                              osa/filter-habit
-                                              ;; Filter functions supply their own section names when none are given
-                                              (:fn osa/filter-todo-keyword :args "WAITING")
-                                              (:fn osa/filter-todo-keyword
-                                                   ;; Multiple args given in a list
-                                                   :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
-                                                   ;; Show this section at the end of the agenda.  If you specified
-                                                   ;; this filter last, items with these todo keywords that have
-                                                   ;; priority A, B, or C would be displayed in those sections
-                                                   ;; instead, because items are filtered out in the order the
-                                                   ;; filters are listed.
-                                                   :last t)
-                                              (:fn osa/filter-priority :args "A")
-                                              (:fn osa/filter-priority :args ("B" "C"))))
-                  (org-agenda-span 'day))))))
+         '(("u" "SUPER Agenda"
+            org-super-agenda ""
+            ((org-agenda-span 'day)
+             (org-agenda-super-filters
+              '(
+                ;; Optionally specify the section name
+                (:name "Today"
+                       ;; The OR filter accepts a list of other filters
+                       :fn osa/filter-or
+                       :args (osa/filter-time
+                              (:fn osa/filter-todo-keyword :args "TODAY")))
+                (:name "Important"
+                       :fn osa/filter-or
+                       :args ((:fn osa/filter-any-tag :args "bills")
+                              (:fn osa/filter-priority :args "A")))
+                (:name "Food-related"
+                       :fn osa/filter-any-tag :args ("food" "dinner"))
+                (:name "Personal"
+                       :fn osa/filter-or
+                       :args (osa/filter-habit
+                              (:fn osa/filter-any-tag :args "personal")))
+                ;; Filter functions supply their own section names when none are given
+                (:fn osa/filter-todo-keyword :args "WAITING")
+                (:fn osa/filter-todo-keyword
+                     ;; Multiple args given in a list
+                     :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                     ;; Show this section at the end of the agenda.  If you specified
+                     ;; this filter last, items with these todo keywords that have
+                     ;; priority A, B, or C would be displayed in those sections
+                     ;; instead, because items are filtered out in the order the
+                     ;; filters are listed.
+                     :last t)
+                (:fn osa/filter-priority :args ("B" "C")))))))))
     (org-agenda nil "u"))
 #+END_SRC
 

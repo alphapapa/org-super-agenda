@@ -1,33 +1,75 @@
+;;; org-super-agenda.el --- Supercharge your agenda by grouping it into sections
+
+;; Author: Adam Porter <adam@alphapapa.net>
+;; Url: http://github.com/alphapapa/org-super-agenda
+;; Version: 0.1-pre
+;; Package-Requires: ((emacs "25.1") (s "1.10.0"))
+;; Keywords: hypermedia, outlines, Org, agenda
+
 ;;; Commentary:
 
-;; To try this out, evaluate this file and run this code to open an example:
+;; This package lets you "supercharge" your Org daily/weekly agenda.
+;; The idea is to group items into sections, rather than having them
+;; all in one big list.
 
-;; (let ((org-agenda-custom-commands
-;;        (list '("u" "SUPER Agenda"
-;;                org-super-agenda ""
-;;                ((org-agenda-super-filters '(
-;;                                             ;; Optionally specify the section name
-;;                                             (:name "Schedule" :fn osa/filter-time)
-;;                                             (:name "Bills" :fn osa/filter-any-tag
-;;                                                    ;; One arg may be given alone, without a list
-;;                                                    :args "bills")
-;;                                             ;; This function needs no args so it may be specified like this
-;;                                             osa/filter-habit
-;;                                             ;; Filter functions supply their own section names when none are given
-;;                                             (:fn osa/filter-todo-keyword :args "WAITING")
-;;                                             (:fn osa/filter-todo-keyword
-;;                                                  ;; Multiple args given in a list
-;;                                                  :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
-;;                                                  ;; Show this section at the end of the agenda.  If you specified
-;;                                                  ;; this filter last, items with these todo keywords that have
-;;                                                  ;; priority A, B, or C would be displayed in those sections
-;;                                                  ;; instead, because items are filtered out in the order the
-;;                                                  ;; filters are listed.
-;;                                                  :last t)
-;;                                             (:fn osa/filter-priority :args "A")
-;;                                             (:fn osa/filter-priority :args ("B" "C"))))
-;;                 (org-agenda-span 'day))))))
-;;   (org-agenda nil "u"))
+;; Now you can sort-of do this already with custom agenda commands,
+;; but when you do that, you lose the daily/weekly aspect of the
+;; agenda: items are no longer shown based on deadline/scheduled
+;; timestamps, but are shown no-matter-what.
+
+;; So this `org-super-agenda' command essentially copies the
+;; `org-agenda-list' command, but right before it inserts the agenda
+;; items, it runs them through a set of user-defined filters that
+;; separate them into sections.  Then the sections are inserted into
+;; the agenda buffer, and any remaining items are inserted at the end.
+;; Empty sections are not displayed.
+
+;; The end result is your standard daily/weekly agenda, but arranged
+;; into sections defined by you.  You might put items with certain
+;; tags in one section, habits in another section, items with certain
+;; todo keywords in another, and items with certain priorities in
+;; another.  The possibilities are only limited by the filter
+;; functions (which you can easily add to, and more will be added
+;; here).
+
+;; The `org-super-agenda' command works as a custom agenda command, so
+;; you can add it to your `org-agenda-custom-commands' list.  You can
+;; also test it quickly like this:
+
+;; (org-agenda-custom-commands
+;;  '(("u" "SUPER Agenda"
+;;     org-super-agenda ""
+;;     ((org-agenda-span 'day)
+;;      (org-agenda-super-filters
+;;       '(
+;;         ;; Optionally specify the section name
+;;         (:name "Today"
+;;                ;; The OR filter accepts a list of other filters
+;;                :fn osa/filter-or
+;;                :args (osa/filter-time
+;;                       (:fn osa/filter-todo-keyword :args "TODAY")))
+;;         (:name "Important"
+;;                :fn osa/filter-or
+;;                :args ((:fn osa/filter-any-tag :args "bills")
+;;                       (:fn osa/filter-priority :args "A")))
+;;         (:name "Food-related"
+;;                :fn osa/filter-any-tag :args ("food" "dinner"))
+;;         (:name "Personal"
+;;                :fn osa/filter-or
+;;                :args (osa/filter-habit
+;;                       (:fn osa/filter-any-tag :args "personal")))
+;;         ;; Filter functions supply their own section names when none are given
+;;         (:fn osa/filter-todo-keyword :args "WAITING")
+;;         (:fn osa/filter-todo-keyword
+;;              ;; Multiple args given in a list
+;;              :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+;;              ;; Show this section at the end of the agenda.  If you specified
+;;              ;; this filter last, items with these todo keywords that have
+;;              ;; priority A, B, or C would be displayed in those sections
+;;              ;; instead, because items are filtered out in the order the
+;;              ;; filters are listed.
+;;              :last t)
+;;         (:fn osa/filter-priority :args ("B" "C"))))))))
 
 ;; You can adjust the `org-agenda-super-filters' to create as many
 ;; different sections as you like.  Empty sections are not displayed.
@@ -364,6 +406,20 @@ items if they have an hour specification like [h]h:mm."
     ;; No super-filters; insert normally
     (insert (org-agenda-finalize-entries all-items 'agenda)
             "\n")))
+
+(defun osa/filter-or (items filters)
+  "Group ITEMS with boolean OR according to FILTERS."
+  (let* ((matches (cl-loop with fn with args
+                           for filter in filters
+                           if (functionp filter) do (setq fn filter
+                                                          args nil)
+                           else do (setq fn (plist-get filter :fn)
+                                         args (plist-get filter :args))
+                           for (auto-section-name non-matching matching) = (funcall fn items args)
+                           append matching
+                           and do (setq items non-matching))))
+    ;; Return results
+    (list nil items matches)))
 
 (defsubst osa/get-tags (s)
   "Return list of tags in agenda item string S."
