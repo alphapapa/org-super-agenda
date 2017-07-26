@@ -45,35 +45,35 @@
 ;;               ;; Optionally specify the section name
 ;;               (:name "Today"
 ;;                      ;; The OR filter accepts a list of other filters
-;;                      :fn osa/filter-or
+;;                      :filter osa/filter-or
 ;;                      :args (
 ;;                             ;; The filter-time filter doesn't require
 ;;                             ;; arguments, so it can be given by itself
 ;;                             osa/filter-time
 ;;                             ;; Single arg given by itself
-;;                             (:fn osa/filter-todo-keyword :args "TODAY")))
+;;                             (:filter osa/filter-todo-keyword :args "TODAY")))
 ;;               (:name "Important"
-;;                      :fn osa/filter-or
-;;                      :args ((:fn osa/filter-any-tag :args "bills")
-;;                             (:fn osa/filter-priority :args "A")))
+;;                      :filter osa/filter-or
+;;                      :args ((:filter osa/filter-any-tag :args "bills")
+;;                             (:filter osa/filter-priority :args "A")))
 ;;               (:name "Food-related"
 ;;                      ;; Multiple args given in a list
-;;                      :fn osa/filter-any-tag :args ("food" "dinner"))
+;;                      :filter osa/filter-any-tag :args ("food" "dinner"))
 ;;               (:name "Personal"
-;;                      :fn osa/filter-or
+;;                      :filter osa/filter-or
 ;;                      :args (osa/filter-habit
-;;                             (:fn osa/filter-any-tag :args "personal")))
+;;                             (:filter osa/filter-any-tag :args "personal")))
 ;;               ;; Filter functions supply their own section names when none are given
-;;               (:fn osa/filter-todo-keyword :args "WAITING")
-;;               (:fn osa/filter-todo-keyword
-;;                    :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
-;;                    ;; Show this section at the end of the agenda.  If you specified
-;;                    ;; this filter last, items with these todo keywords that have
-;;                    ;; priority A, B, or C would be displayed in those sections
-;;                    ;; instead, because items are filtered out in the order the
-;;                    ;; filters are listed.
-;;                    :last t)
-;;               (:fn osa/filter-priority :args ("B" "C")))))))))
+;;               (:filter osa/filter-todo-keyword :args "WAITING")
+;;               (:filter osa/filter-todo-keyword
+;;                        :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+;;                        ;; Show this section at the end of the agenda.  If you specified
+;;                        ;; this filter last, items with these todo keywords that have
+;;                        ;; priority A, B, or C would be displayed in those sections
+;;                        ;; instead, because items are filtered out in the order the
+;;                        ;; filters are listed.
+;;                        :last t)
+;;               (:filter osa/filter-priority :args ("B" "C")))))))))
 ;;   (org-agenda nil "u"))
 
 ;; You can adjust the `org-agenda-super-filters' to create as many
@@ -381,7 +381,7 @@ items if they have an hour specification like [h]h:mm."
                                               args nil
                                               last nil)
                else do (setq custom-section-name (plist-get filter :name)
-                             filter-fn (plist-get filter :fn)
+                             filter-fn (plist-get filter :filter)
                              args (plist-get filter :args)
                              last (plist-get filter :last))
                for (auto-section-name non-matching matching) = (funcall filter-fn all-items args)
@@ -425,7 +425,7 @@ items if they have an hour specification like [h]h:mm."
                            for filter in filters
                            if (functionp filter) do (setq fn filter
                                                           args nil)
-                           else do (setq fn (plist-get filter :fn)
+                           else do (setq fn (plist-get filter :filter)
                                          args (plist-get filter :args))
                            for (auto-section-name non-matching matching) = (funcall fn items args)
                            append matching
