@@ -138,7 +138,7 @@ just a date) are filtered."
   "Group items that match any of the given tags.
 Argument may be a string or list of strings."
   :section-name (concat "Items tagged with: " (s-join " OR " args))
-  :test (seq-intersection (osa/get-tags item) args))
+  :test (seq-intersection (osa/get-tags item) args 'equalp))
 
 (osa/defgroup habit
   "Group habit items.
