@@ -440,6 +440,7 @@ see."
            when fn
            for (auto-section-name non-matching matching) = (funcall fn items args)
            when fn
+           ;; This is the implicit OR
            append matching into all-matches
            and collect auto-section-name into names
            and do (setq items non-matching)
