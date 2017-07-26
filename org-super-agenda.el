@@ -450,7 +450,8 @@ see."
 
 (defsubst osa/insert-agenda-header (s)
   "Insert agenda header into current buffer containing string S and a newline."
-  (let ((start (point)))
+  (let ((start (point))
+        (s (concat " " s)))
     (insert (org-add-props s nil 'face 'org-agenda-structure))
     (insert "\n")
     (when org-super-agenda-fontify-whole-header-line
