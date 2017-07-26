@@ -439,9 +439,9 @@ see."
            for (auto-section-name non-matching matching) = (funcall fn items args)
            when fn
            append matching into all-matches
-           and do (setq items non-matching
-                        name (s-join " AND " (list name auto-section-name)))
-           finally return (list name items all-matches)))
+           and collect auto-section-name into names
+           and do (setq items non-matching)
+           finally return (list (s-join " and " (-non-nil names)) items all-matches)))
 
 (defsubst osa/get-tags (s)
   "Return list of tags in agenda item string S."
