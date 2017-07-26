@@ -38,14 +38,14 @@ Here's the code for the example above.  The ~org-super-agenda~ command works as 
                        :todo "TODAY")  ; Items that have this TODO keyword
                 (:name "Important"
                        ;; Single arguments given alone
-                       :any-tags "bills"
+                       :tags "bills"
                        :priority "A")
                 (:name "Food-related"
-                       ;; Multiple args given in list
-                       :any-tags ("food" "dinner"))
+                       ;; Multiple args given in list with implicit OR
+                       :tags ("food" "dinner"))
                 (:name "Personal"
                        :habit t
-                       :any-tags "personal")
+                       :tags "personal")
                 ;; Filter functions supply their own section names when none are given
                 (:todo "WAITING")
                 (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
