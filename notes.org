@@ -817,9 +817,19 @@ Calls are in the sections above.
                   finally return (list section-name non-matching matching))))) 
 #+END_SRC
 
-** TODO Use seq
+** CANCELED Use seq
+CLOSED: [2017-07-27 Thu 02:12]
+:LOGBOOK:
+-  State "CANCELED"   from "TODO"       [2017-07-27 Thu 02:12]
+:END:
 
 Instead of writing all this custom code in =cl-loop=, I can use the new =seq= library and =seq-group-by=.
+
+Nevermind.  Sounds like a nice idea, but the tests I use don't always return just =t= or =nil=, and =seq-group-by= groups item by return value, not merely =nil= or =non-nil=.  So the order of the groups returned is not guaranteed, and the keys will vary.
+
+Then again, if I wrap the tests in ~(not (null ...))~, I can use it.  But what's the benefit then?  =cl-loop= seems verbose in comparison, but I have wasted literally hours trying to debug this, because I was confused by the inconsistent order of results from =seq-group-by=, when all I care about is =nil= or =non-nil=.  =cl-loop='s ~if ,test~ is very clearly only testing for =nil= / =non-nil=, and that's all I need.
+
+I know some people don't like the =loop= macro, because it seems non-lispy.  But lisp isn't just about sexps and parentheses, it's also about having the power to define a more purposeful language for a certain task and integrate that into your program.  And the =loop= macro is very well suited to this task.  And even though it has its own idiosyncrasies, I think I've spent less time debugging it than I spent on this.  Maybe that just means I'm a poor programmer (although, in my defense, trying to debug lists of text with thousands of characters of text-properties in Emacs that get abbreviated and wrapped and truncated on-screen...) , but I think I'm going to stick with =loop= until I actually need something that =seq-group-by= provides.
 
 ** MAYBE Rewrite the whole agenda after it's done instead
 
