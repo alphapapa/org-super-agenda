@@ -463,7 +463,7 @@ see."
   "Return priority character for string S.
 Matches `org-priority-regexp'."
   (when (string-match org-priority-regexp s)
-    (match-string-no-properties 2 item)))
+    (match-string-no-properties 2 s)))
 
 ;;;; Footer
 
