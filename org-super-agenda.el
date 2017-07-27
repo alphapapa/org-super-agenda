@@ -133,7 +133,7 @@ Items with an associated timestamp that has a time (rather than
 just a date) are filtered."
   :section-name "Schedule"  ; Note: this does not mean the item has a "SCHEDULED:" line
   :test (when-let ((time (org-find-text-property-in-string 'dotime item)))
-          (not (eql (org-find-text-property-in-string 'dotime item) 'time))))
+          (not (eql time 'time))))
 
 (osa/defgroup tags
   "Group items that match any of the given tags.
