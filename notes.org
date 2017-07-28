@@ -799,7 +799,11 @@ Then again, if I wrap the tests in ~(not (null ...))~, I can use it.  But what's
 
 I know some people don't like the =loop= macro, because it seems non-lispy.  But lisp isn't just about sexps and parentheses, it's also about having the power to define a more purposeful language for a certain task and integrate that into your program.  And the =loop= macro is very well suited to this task.  And even though it has its own idiosyncrasies, I think I've spent less time debugging it than I spent on this.  Maybe that just means I'm a poor programmer (although, in my defense, trying to debug lists of text with thousands of characters of text-properties in Emacs that get abbreviated and wrapped and truncated on-screen...) , but I think I'm going to stick with =loop= until I actually need something that =seq-group-by= provides.
 
-** TODO Add boolean AND
+** DONE Add boolean AND
+CLOSED: [2017-07-27 Thu 23:35]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-27 Thu 23:35]
+:END:
 
 Proof-of-concept code:
 
@@ -878,7 +882,11 @@ Test groups:
      (list :non-matching non-matching :matching matching)))
 #+END_SRC
 
-** TODO Boolean NOT
+** DONE Boolean NOT
+CLOSED: [2017-07-27 Thu 23:35]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-27 Thu 23:35]
+:END:
 
 #+BEGIN_SRC elisp
   (let ((org-agenda-files '("test.org"))
