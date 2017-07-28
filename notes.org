@@ -831,6 +831,85 @@ Then again, if I wrap the tests in ~(not (null ...))~, I can use it.  But what's
 
 I know some people don't like the =loop= macro, because it seems non-lispy.  But lisp isn't just about sexps and parentheses, it's also about having the power to define a more purposeful language for a certain task and integrate that into your program.  And the =loop= macro is very well suited to this task.  And even though it has its own idiosyncrasies, I think I've spent less time debugging it than I spent on this.  Maybe that just means I'm a poor programmer (although, in my defense, trying to debug lists of text with thousands of characters of text-properties in Emacs that get abbreviated and wrapped and truncated on-screen...) , but I think I'm going to stick with =loop= until I actually need something that =seq-group-by= provides.
 
+** TODO Add boolean AND
+
+Proof-of-concept code:
+
+#+BEGIN_SRC elisp
+  (defun factor-of-3 (num)
+    (= 0 (mod num 3)))
+
+  (defun factor-of-2 (num)
+    (= 0 (mod num 2)))
+
+  (factor-of-3 3)
+
+  (factor-of-2 4)
+
+  (-let* ((l (number-sequence 1 20))
+          ((&plist :non-matching non-matching :matching matching) (cl-loop for fn in '(factor-of-2 factor-of-3)
+                                                                           for result = (seq-group-by fn l)
+                                                                           collect (alist-get t result) into matching
+                                                                           and collect (alist-get nil result) into non-matching
+                                                                           finally return (list :non-matching non-matching :matching matching)))
+          (intersection (reduce 'seq-intersection matching))
+          (difference (seq-difference l intersection))
+          )
+    (list :intersection intersection
+          :difference difference))
+#+END_SRC
+
+Test groups:
+
+#+BEGIN_SRC elisp
+  (let ((org-agenda-files '("test.org"))
+        (org-agenda-custom-commands
+         '(("u" "SUPER Agenda"
+            org-super-agenda ""
+            ((org-agenda-span 'day)
+             (org-super-agenda-groups '((:name "Spaceship bills"
+                                               :and (:tags "spaceship" :tags "bills"))
+(:name "CHECK Emacs" :and (:todo "CHECK" :tags "Emacs"))
+(:name "A-priority world-related" :and (:priority "A" :tags "world")))))))))
+    (org-agenda nil "u"))
+
+  (-let* ((results (org-agenda-get-day-entries "test.org" (calendar-current-date)))
+          (fn 'osa/group-tags)
+          (args "bills")
+          ((name non-matching matching) (funcall fn results args)))
+    (mapcar 'substring-no-properties matching))
+
+  (-let* ((edebug-print-level 1)
+          (edebug-print-length 1)
+          (results (org-agenda-get-day-entries "test.org" (calendar-current-date)))
+          (fn 'osa/group-dispatch-and)
+          (args (list :tags "bills"
+                      :tags "spaceship"))
+          ((name non-matching matching) (funcall fn results args))
+          ((non-matching matching) (--map (mapcar 'substring-no-properties it) (list non-matching matching))))
+
+    (list :non-matching non-matching :matching matching))
+
+  ;; I found cust-print.el but it says it's obsolete, but it doesn't say
+  ;; why.  It works for normal use, but when I use this with edebug,
+  ;; Emacs freezes hard, no CPU usage, no response to any signals.
+  ;; Sigh.
+  (require 'cust-print)
+  (with-custom-print
+   (add-custom-printer 'stringp (lambda (s)
+                                  (princ (substring-no-properties s))))
+   (-let* ((edebug-print-level 1)
+           (edebug-print-length 1)
+           (results (org-agenda-get-day-entries "test.org" (calendar-current-date)))
+           (fn 'osa/group-dispatch-and)
+           (args (list :tags "bills"
+                       :tags "spaceship"))
+           ((name non-matching matching) (funcall fn results args))
+           ((non-matching matching) (--map (mapcar 'substring-no-properties it) (list non-matching matching))))
+
+     (list :non-matching non-matching :matching matching)))
+#+END_SRC
+
 ** MAYBE Use cl-seq
 
 I just discovered the =cl-seq= library, which includes =cl-subsetp=, which might be preferable over =seq-intersection= for testing membership.

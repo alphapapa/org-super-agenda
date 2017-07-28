@@ -40,6 +40,9 @@ Here's the code for the example above.  The ~org-super-agenda~ command works as 
                        ;; Single arguments given alone
                        :tags "bills"
                        :priority "A")
+                (:name "Shopping in town"
+                       ;; Boolean AND group matches items that match all subgroups
+                       :and (:tags "shopping" :tags "@town"))
                 (:name "Food-related"
                        ;; Multiple args given in list with implicit OR
                        :tags ("food" "dinner"))

@@ -47,6 +47,9 @@
 ;;                      ;; Single arguments given alone
 ;;                      :tags "bills"
 ;;                      :priority "A")
+;;               (:name "Shopping in town"
+;;                      ;; Boolean AND group matches items that match all subgroups
+;;                      :and (:tags "shopping" :tags "@town"))
 ;;               (:name "Food-related"
 ;;                      ;; Multiple args given in list with implicit OR
 ;;                      :tags ("food" "dinner"))
@@ -462,6 +465,38 @@ see."
            and collect auto-section-name into names
            and do (setq items non-matching)
            finally return (list (s-join " and " (-non-nil names)) items all-matches)))
+
+;; TODO: This works, but it seems inelegant to basically copy the
+;; group-dispatch function.  A more pure-functional approach might be
+;; more DRY, but that would preclude using the loop macro, and might
+;; be slower.  Decisions, decisions...
+
+(defun osa/group-dispatch-and (items group)
+  "Group ITEMS that match all selectors in GROUP.
+Used for the `:and' selector."
+  (cl-loop with name with fn with auto-section-name with non-matching with matching
+           with final-non-matches with final-matches
+           with all-items = items  ; Save for later
+           for (group-type args) on group by 'cddr  ; plist access
+           for fn = (plist-get org-super-agenda-group-types group-type)
+           ;; This double "when fn" is an ugly hack, but it lets us
+           ;; use the destructuring-bind; otherwise we'd have to put
+           ;; all the collection logic in a progn, or do the
+           ;; destructuring ourselves, which would be uglier.
+           when fn
+           for (auto-section-name non-matching matching) = (funcall fn items args)
+           when fn
+           collect matching into all-matches
+           and collect auto-section-name into names
+
+           ;; Now for the AND
+           finally do (setq final-matches (reduce 'seq-intersection all-matches))
+           finally do (setq final-non-matches (seq-difference all-items final-matches))
+           finally return (list (s-join " AND " (-non-nil names))
+                                final-non-matches
+                                final-matches)))
+;; FIXME: This must be done but is this the way to do it?  Do I need eval-when-compile?
+(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :and 'osa/group-dispatch-and))
 
 (defsubst osa/get-tags (s)
   "Return list of tags in agenda item string S."
