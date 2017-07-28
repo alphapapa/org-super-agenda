@@ -153,7 +153,7 @@ Argument may be a string or list of strings."
   "Group habit items.
 Habit items have a \"STYLE: habit\" Org property."
   :section-name "Habits"
-  :test (org-is-habit-p (org-find-text-property-in-string 'org-marker item)))
+  :test (org-is-habit-p (osa/get-marker item)))
 
 (osa/defgroup todo
   "Group items that match any of the given TODO keywords.
@@ -175,7 +175,7 @@ be a regular expression.  You'll probably want to override the
 section name for this group."
   :section-name (concat "Items matching regexps: " (s-join " and " args))
   :test (let* ((case-fold-search t)
-               (marker (org-find-text-property-in-string 'org-marker item))
+               (marker (osa/get-marker item))
                (entry (with-current-buffer (marker-buffer marker)
                         (goto-char marker)
                         (buffer-substring (org-entry-beginning-position) (org-entry-end-position)))))
@@ -507,6 +507,9 @@ Used for the `:not' selector."
   (-let (((name non-matching matching) (osa/group-dispatch items group)))
     (list name matching non-matching)))
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :not 'osa/group-dispatch-not))
+
+(defsubst osa/get-marker (s)
+  (org-find-text-property-in-string 'org-marker s))
 
 (defsubst osa/get-tags (s)
   "Return list of tags in agenda item string S."
