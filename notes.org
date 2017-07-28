@@ -939,6 +939,10 @@ CLOSED: [2017-07-27 Thu 23:46]
     (org-agenda nil "u"))
 #+END_SRC
 
+** TODO Add property matcher
+
+Might be handy.
+
 ** DONE Make function to describe groupers
 CLOSED: [2017-07-28 Fri 00:02]
 :LOGBOOK:
