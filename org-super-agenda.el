@@ -169,12 +169,6 @@ Argument may be a string or list of strings."
   :section-name (concat "Items tagged with: " (s-join " OR " args))
   :test (seq-intersection (org-super-agenda--get-tags item) args 'equalp))
 
-(org-super-agenda--defgroup habit
-  "Group habit items.
-Habit items have a \"STYLE: habit\" Org property."
-  :section-name "Habits"
-  :test (org-is-habit-p (org-super-agenda--get-marker item)))
-
 (org-super-agenda--defgroup todo
   "Group items that match any of the given TODO keywords.
 Argument may be a string or list of strings."
@@ -215,6 +209,13 @@ section name for this group."
   :test (when-let ((m (org-super-agenda--get-marker item)))
           (with-current-buffer (marker-buffer m)
             (org-get-scheduled-time m))))
+
+(with-eval-after-load 'org-habit
+  (org-super-agenda--defgroup habit
+    "Group habit items.
+Habit items have a \"STYLE: habit\" Org property."
+    :section-name "Habits"
+    :test (org-is-habit-p (org-super-agenda--get-marker item))))
 
 ;;;; Group transformers
 
