@@ -47,6 +47,7 @@
 ;;                      ;; Single arguments given alone
 ;;                      :tag "bills"
 ;;                      :priority "A")
+;;               ;; Set order of multiple groups at once
 ;;               (:order-multi (2 (:name "Shopping in town"
 ;;                                       ;; Boolean AND group matches items that match all subgroups
 ;;                                       :and (:tag "shopping" :tag "@town"))
