@@ -97,22 +97,22 @@ SCHEDULED: <2017-07-17 Mon>
                        :todo "TODAY")  ; Items that have this TODO keyword
                 (:name "Important"
                        ;; Single arguments given alone
-                       :tags "bills"
+                       :tag "bills"
                        :priority "A")
                 (:name "Shopping in town"
                        ;; Boolean AND group matches items that match all subgroups
-                       :and (:tags "shopping" :tags "@town"))
+                       :and (:tag "shopping" :tag "@town"))
                 (:name "Food-related"
                        ;; Multiple args given in list with implicit OR
-                       :tags ("food" "dinner"))
+                       :tag ("food" "dinner"))
                 (:name "Personal"
                        :habit t
-                       :tags "personal")
+                       :tag "personal")
                 (:name "Space-related (non-moon-or-planet-related)"
                        ;; Regexps match case-insensitively on the entire entry
                        :and (:regexp ("space" "NASA")
                                      ;; Boolean NOT also has implicit OR between selectors
-                                     :not (:regexp "moon" :tags "planet")))
+                                     :not (:regexp "moon" :tag "planet")))
                 ;; Filter functions supply their own section names when none are given
                 (:todo "WAITING")
                 (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")

@@ -45,22 +45,22 @@
 ;;                      :todo "TODAY")  ; Items that have this TODO keyword
 ;;               (:name "Important"
 ;;                      ;; Single arguments given alone
-;;                      :tags "bills"
+;;                      :tag "bills"
 ;;                      :priority "A")
 ;;               (:name "Shopping in town"
 ;;                      ;; Boolean AND group matches items that match all subgroups
-;;                      :and (:tags "shopping" :tags "@town"))
+;;                      :and (:tag "shopping" :tag "@town"))
 ;;               (:name "Food-related"
 ;;                      ;; Multiple args given in list with implicit OR
-;;                      :tags ("food" "dinner"))
+;;                      :tag ("food" "dinner"))
 ;;               (:name "Personal"
 ;;                      :habit t
-;;                      :tags "personal")
+;;                      :tag "personal")
 ;;               (:name "Space-related (non-moon-or-planet-related)"
 ;;                      ;; Regexps match case-insensitively on the entire entry
 ;;                      :and (:regexp ("space" "NASA")
 ;;                                    ;; Boolean NOT also has implicit OR between selectors
-;;                                    :not (:regexp "moon" :tags "planet")))
+;;                                    :not (:regexp "moon" :tag "planet")))
 ;;               ;; Filter functions supply their own section names when none are given
 ;;               (:todo "WAITING")
 ;;               (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
@@ -143,7 +143,7 @@ just a date) are filtered."
   :test (when-let ((time (org-find-text-property-in-string 'dotime item)))
           (not (eql time 'time))))
 
-(osa/defgroup tags
+(osa/defgroup tag
   "Group items that match any of the given tags.
 Argument may be a string or list of strings."
   :section-name (concat "Items tagged with: " (s-join " OR " args))
