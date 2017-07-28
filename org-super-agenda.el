@@ -1,4 +1,4 @@
-;;; org-super-agenda.el --- Supercharge your agenda by grouping it into sections  -*- lexical-binding: t; -*-
+;;; org-super-agenda.el --- Supercharge your agenda  -*- lexical-binding: t; -*-
 
 ;; Author: Adam Porter <adam@alphapapa.net>
 ;; Url: http://github.com/alphapapa/org-super-agenda
