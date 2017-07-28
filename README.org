@@ -74,7 +74,7 @@ Here's the code for the example above.  The ~org-super-agenda~ command works as 
 
 *** Group selectors
 
-Each group selector takes an argument which can be a single atom or a list, e.g. =:tag= takes a tag or list of tags.  Some groupers are predicates, like =:deadline= or =:habit=; for consistency, they also take an argument, but it is ignored.
+Each group selector takes an argument which can be a single atom or a list, e.g. =:tag= takes a string or list of strings.  Some groupers are predicates, like =:deadline= or =:habit=; for consistency, they also take an argument, but it is ignored.
 
 *Special selectors*:
 
