@@ -182,6 +182,20 @@ section name for this group."
           (cl-loop for regexp in args
                    thereis (string-match-p regexp entry))))
 
+(osa/defgroup deadline
+  "Group items that have deadlines."
+  :section-name "Deadline items"
+  :test (when-let ((m (osa/get-marker item)))
+          (with-current-buffer (marker-buffer m)
+            (org-get-deadline-time m))))
+
+(osa/defgroup scheduled
+  "Group items that are scheduled."
+  :section-name "Scheduled items"
+  :test (when-let ((m (osa/get-marker item)))
+          (with-current-buffer (marker-buffer m)
+            (org-get-scheduled-time m))))
+
 (defun osa/filter-or (items filters)
   "Group ITEMS with boolean OR according to FILTERS."
   (let* ((matches (cl-loop with fn with args

@@ -899,6 +899,44 @@ CLOSED: [2017-07-27 Thu 23:35]
     (org-agenda nil "u"))
 #+END_SRC
 
+** DONE Add scheduled/deadline matchers
+CLOSED: [2017-07-27 Thu 23:46]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-27 Thu 23:46]
+:END:
+
+#+BEGIN_SRC elisp
+  (defun osa/get-marker (s)
+    (org-find-text-property-in-string 'org-marker s))
+
+  (osa/defgroup scheduled
+    "Group items that are scheduled."
+    :section-name "Scheduled items"
+    :test (when-let ((m (osa/get-marker item)))
+            (with-current-buffer (marker-buffer m)
+              (org-get-scheduled-time m))))
+
+  (-let* ((edebug-print-level 1)
+          (edebug-print-length 1)
+          (results (org-agenda-get-day-entries "test.org" (calendar-current-date)))
+          (fn 'osa/group-dispatch)
+          (args (list :scheduled t))
+          ((name non-matching matching) (funcall fn results args))
+          ((non-matching matching) (--map (mapcar 'substring-no-properties it) (list non-matching matching))))
+
+    (list :non-matching non-matching :matching matching))
+
+  (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+        (org-agenda-custom-commands
+         '(("u" "SUPER Agenda"
+            org-super-agenda ""
+            ((org-agenda-span 'day)
+             (org-super-agenda-groups
+              '((:scheduled t)
+                (:deadline t))))))))
+    (org-agenda nil "u"))
+#+END_SRC
+
 ** MAYBE Use cl-seq
 
 I just discovered the =cl-seq= library, which includes =cl-subsetp=, which might be preferable over =seq-intersection= for testing membership.
