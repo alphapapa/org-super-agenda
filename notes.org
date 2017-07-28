@@ -1008,7 +1008,7 @@ CLOSED: [2017-07-28 Fri 00:02]
                            when docstring
                            collect (list group-type docstring) into groups
                            finally return (-sort (-on 'string< 'car) groups))))
-      (apply 'concat (--map (format "+ =%s=: %s\n" (first it) (second it))
+      (apply 'concat (--map (format "+ =%s= %s\n" (first it) (second it))
                             groups))))
 #+END_SRC
 
