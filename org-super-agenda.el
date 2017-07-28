@@ -519,8 +519,8 @@ see."
   "Insert agenda header into current buffer containing string S and a newline."
   (let ((start (point))
         (s (concat " " s)))
-    (insert (org-add-props s nil 'face 'org-agenda-structure))
-    (insert "\n")
+    (insert (org-add-props s nil 'face 'org-agenda-structure)
+            "\n")
     (when org-super-agenda-fontify-whole-header-line
       (add-text-properties start (point) '(face org-agenda-structure)))))
 
