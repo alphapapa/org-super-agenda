@@ -90,6 +90,7 @@ SCHEDULED: <2017-07-17 Mon>
          '(("u" "SUPER Agenda"
             org-super-agenda ""
             ((org-agenda-span 'day)
+             (org-agenda-start-day "2017-07-28")  ; So I don't have to keep adjusting the dates forward
              (org-super-agenda-groups
               '(;; Each group has an implicit boolean OR operator between its selectors.
                 (:name "Today"  ; Optionally specify section name
@@ -131,6 +132,15 @@ SCHEDULED: <2017-07-17 Mon>
                 ;; After the last group, the agenda will display items that didn't
                 ;; match any of these groups, with the default order position of 99
                 )))))))
+    (org-agenda nil "u"))
+
+  (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+        (org-agenda-custom-commands
+         '(("u" "SUPER Agenda"
+            org-super-agenda ""
+            ((org-agenda-span 'day)
+             (org-super-agenda-groups
+              '((:discard (:not (:tag ("Emacs" "bills") :regexp "space"))))))))))
     (org-agenda nil "u"))
 #+END_SRC
 
