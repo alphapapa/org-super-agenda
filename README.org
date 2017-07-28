@@ -87,7 +87,7 @@ Each group selector takes an argument which can be a single atom or a list, e.g.
 +  =:deadline= Group items that have deadlines.
 +  =:habit= Group habit items. Habit items have a "STYLE: habit" Org property.
 +  =:order= A number setting the order sections will be displayed in the agenda, lowest number first.  Defaults to =0=.
-+  =:priority= Group items that match any of the given priorities. Argument may be a string or list of strings, which should be, e.g. "A" or ("B" "C").
++  =:priority= Group items that match any of the given priorities. Argument may be a string or list of strings, which should be the priority letter, e.g. =A=.
 +  =:regexp= Group items that match a regular expression. Argument may be a string or list of strings, each of which should be a regular expression. You’ll probably want to override the section name for this group.
 +  =:scheduled= Group items that are scheduled.
 +  =:tag= Group items that match any of the given tags. Argument may be a string or list of strings.
