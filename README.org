@@ -77,11 +77,18 @@ Here's the code for the example above.  The ~org-super-agenda~ command works as 
 
 *** Group selectors
 
-Each group selector takes an argument which can be a single atom or a list, e.g. =:tag= takes a string or list of strings.  Some selectors are predicates, like =:deadline= or =:habit=; for consistency, they also take an argument, but it is ignored.
+Each group selector takes an argument which can be a single atom or a list, e.g. =:tag= takes a string or list of strings.  Some selectors are predicates, like =:deadline= or =:habit=; for consistency, they also take an argument, but it is ignored.  
+
+A group selector creates a section in the agenda containing the items it matches, and any items it doesn't match are passed to the next group selector.
+
+=:discard= is a special exception to this: it simply discards any items it matches, and passes through the rest to the next group selector.
+
+Note that the =:not= group selector /creates/ a group with items it /does not/ match; it can be combined with =:discard= to discard items that /don't/ match, e.g. ~(:discard (:not (:priority "A")))~ as the first selector would mean that only priority =A= items would appear in the agenda, while ~(:discard (:priority "C"))~ would mean that any priority =C= items would not appear in the agenda.
 
 *Special selectors*:
 
 +  =:and= Group ITEMS that match all selectors in GROUP.
++  =:discard= Discard items that don't match selectors.  Any groups processed after this one will not see discarded items.  You might use this at the beginning or end of a list of groups, either to narrow down the list of items (used in combination with =:not=), or to exclude items you're not interested in.
 +  =:not= Group ITEMS that match no selectors in GROUP.
 +  =:order-multi= Set the order of multiple groups at once, like ~(:order-multi (2 (groupA) (groupB) ...))~ to set the order of these groups to 2.
 

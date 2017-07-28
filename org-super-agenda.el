@@ -538,6 +538,35 @@ see."
     (list name matching non-matching)))
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :not 'org-super-agenda--group-dispatch-not))
 
+;; TODO: Add example for :discard
+(defun org-super-agenda--group-dispatch-discard (items group)
+  "Discard items that match GROUP.
+Any groups processed after this will not see these items."
+  (cl-loop with name with fn with auto-section-name with non-matching with matching
+           with final-non-matches with final-matches
+           with all-items = items  ; Save for later
+           for (group-type args) on group by 'cddr  ; plist access
+           for fn = (plist-get org-super-agenda-group-types group-type)
+           ;; This double "when fn" is an ugly hack, but it lets us
+           ;; use the destructuring-bind; otherwise we'd have to put
+           ;; all the collection logic in a progn, or do the
+           ;; destructuring ourselves, which would be uglier.
+           when fn
+           for (auto-section-name non-matching matching) = (funcall fn items args)
+           when fn
+           collect matching into all-matches
+           and collect auto-section-name into names
+
+           ;; Now for the AND
+           finally do (setq final-matches (reduce 'seq-intersection all-matches))
+           finally do (setq final-non-matches (seq-difference all-items final-matches))
+           finally return (list (s-join " AND " (-non-nil names))
+                                final-non-matches
+                                nil)))
+;; FIXME: This must be done but is this the way to do it?  Do I need eval-when-compile?
+(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
+                                              :discard 'org-super-agenda--group-dispatch-discard))
+
 (defun org-super-agenda--transform-groups (groups)
   "Transform GROUPS according to `org-super-agenda-group-transformers'."
   (cl-loop for group in groups
