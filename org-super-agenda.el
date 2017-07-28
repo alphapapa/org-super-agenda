@@ -75,7 +75,10 @@
 ;;                          ;; Show this section after "Today" and "Important", because
 ;;                          ;; their order is unspecified, defaulting to 0.  Sections
 ;;                          ;; are displayed lowest-number-first.
-;;                          :order 1))))))))
+;;                          :order 1)
+;;               ;; After the last group, the agenda will display items that didn't
+;;               ;; match any of these groups, with the default order position of 99
+;;               )))))))
 ;;   (org-agenda nil "u"))
 
 ;; You can adjust the `org-super-agenda-groups' to create as many different
@@ -100,10 +103,18 @@ Populated automatically by `osa/defgroup'.")
 (defvar org-super-agenda-group-transformers nil
   "List of agenda group transformers.")
 
+(defgroup org-super-agenda nil
+  "Settings for `org-super-agenda'."
+  :group 'org
+  :link '(url-link "http://github.com/alphapapa/org-super-agenda"))
+
+(defcustom org-super-agenda-unmatched-order 99
+  "Default order setting for agenda section containing items unmatched by any filter.")
+
 (defcustom org-super-agenda-fontify-whole-header-line nil
   "Fontify the whole line for section headers.
-This is mostly useful if section headers have a highlight color, making it stretch across the screen."
-  :group 'org)
+This is mostly useful if section headers have a highlight color,
+making it stretch across the screen.")
 
 ;;;; Filters
 
@@ -443,6 +454,7 @@ items if they have an hour specification like [h]h:mm."
                  and do (setq all-items non-matching)
 
                  ;; Sort sections by :order then :name
+                 finally do (setq non-matching (list :name "Other items" :items non-matching :order org-super-agenda-unmatched-order))
                  finally do (setq sections (--sort (let ((o-it (plist-get it :order))
                                                          (o-other (plist-get other :order)))
                                                      (cond ((and (= o-it o-other)
@@ -451,7 +463,7 @@ items if they have an hour specification like [h]h:mm."
                                                             (string< (plist-get it :name)
                                                                      (plist-get other :name)))
                                                            (t (< o-it o-other))))
-                                                   sections))
+                                                   (push non-matching sections)))
                  ;; Insert sections
                  finally do (progn
                               ;; cl-loop doesn't technically support plist destructuring, but
@@ -461,12 +473,7 @@ items if they have an hour specification like [h]h:mm."
                                        do (progn
                                             (osa/insert-agenda-header name)
                                             (insert (org-agenda-finalize-entries items 'agenda)
-                                                    "\n\n")))
-                              (when non-matching
-                                ;; Insert non-matching items in main section
-                                (osa/insert-agenda-header "Other items")
-                                (insert (org-agenda-finalize-entries non-matching 'agenda)
-                                        "\n\n")))))
+                                                    "\n\n"))))))
     ;; No super-filters; insert normally
     (insert (org-agenda-finalize-entries all-items 'agenda)
             "\n")))
