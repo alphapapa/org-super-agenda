@@ -8,12 +8,12 @@ DEADLINE: <2017-07-28 Fri -1m>
 I'd like to be finished with this before the weekend...
 
 ** TODO [#A] Skype with president of Antarctica             :world:meetings:
-SCHEDULED: <2017-07-26 Wed 21:00>
+SCHEDULED: <2017-07-27 Thu 21:00>
 
 Not sure what his timezone is...
 
 ** TODO Order a pizza                                          :food:dinner:
-SCHEDULED: <2017-07-26 Wed 18:00>
+SCHEDULED: <2017-07-27 Thu 18:00>
 
 ** SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
 DEADLINE: <2017-07-26 Wed>
