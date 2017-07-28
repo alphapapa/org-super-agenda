@@ -539,6 +539,7 @@ see."
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :not 'org-super-agenda--group-dispatch-not))
 
 (defun org-super-agenda--transform-groups (groups)
+  "Transform GROUPS according to `org-super-agenda-group-transformers'."
   (cl-loop for group in groups
            for fn = (plist-get org-super-agenda-group-transformers (car group))
            if fn
@@ -547,6 +548,7 @@ see."
            else collect group))
 
 (defsubst org-super-agenda--get-marker (s)
+  "Return `org-marker' text properties of string S."
   (org-find-text-property-in-string 'org-marker s))
 
 (defsubst org-super-agenda--get-tags (s)
