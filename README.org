@@ -79,7 +79,7 @@ Each group selector takes an argument which can be a single atom or a list, e.g.
 + =:regexp=: Group items that match a regular expression. Argument may be a string or list of strings, each of which should be a regular expression. You’ll probably want to override the section name for this group.
 + =:scheduled=: Group items that are scheduled.
 + =:tag=: Group items that match any of the given tags. Argument may be a string or list of strings.
-+ =:time=: Group items that have a time associated. Items with an associated timestamp that has a time (rather than just a date) are filtered.
++ =:time=: Group items that have a time associated. Items with an associated timestamp that has a time (rather than just a date) are selected.
 + =:todo=: Group items that match any of the given TODO keywords. Argument may be a string or list of strings.
 
 ** Installation

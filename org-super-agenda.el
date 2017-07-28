@@ -138,7 +138,7 @@ the third."
 (osa/defgroup time
   "Group items that have a time associated.
 Items with an associated timestamp that has a time (rather than
-just a date) are filtered."
+just a date) are selected."
   :section-name "Schedule"  ; Note: this does not mean the item has a "SCHEDULED:" line
   :test (when-let ((time (org-find-text-property-in-string 'dotime item)))
           (not (eql time 'time))))
