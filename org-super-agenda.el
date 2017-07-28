@@ -96,12 +96,13 @@
 
 ;;;; Variables
 
-(defvar org-super-agenda-group-types nil
-  "List of agenda grouping keywords and associated functions.
+(eval-when-compile
+  (defvar org-super-agenda-group-types nil
+    "List of agenda grouping keywords and associated functions.
 Populated automatically by `org-super-agenda--defgroup'.")
 
-(defvar org-super-agenda-group-transformers nil
-  "List of agenda group transformers.")
+  (defvar org-super-agenda-group-transformers nil
+    "List of agenda group transformers."))
 
 (defgroup org-super-agenda nil
   "Settings for `org-super-agenda'."
