@@ -92,6 +92,9 @@
   "List of agenda grouping keywords and associated functions.
 Populated automatically by `osa/defgroup'.")
 
+(defvar org-super-agenda-group-transformers nil
+  "List of agenda group transformers.")
+
 (defcustom org-super-agenda-fontify-whole-header-line nil
   "Fontify the whole line for section headers.
 This is mostly useful if section headers have a highlight color, making it stretch across the screen."
@@ -407,43 +410,51 @@ items if they have an hour specification like [h]h:mm."
   ;; This essentially replaces the part of `org-agenda-list' that
   ;; finally inserts the `rtnall' variable.
   (if (bound-and-true-p org-super-agenda-groups)
-      (cl-loop with filter-fn
-               with args
-               with last
-               for filter in org-super-agenda-groups
-               for custom-section-name = (plist-get filter :name)
-               for last = (plist-get filter :last)
-               for (auto-section-name non-matching matching) = (osa/group-dispatch all-items filter)
-               for section-name = (or custom-section-name auto-section-name)
+      (progn
+        ;; Run transformers over group list
+        (cl-loop for (_ transformer) on org-super-agenda-group-transformers by 'cddr
+                 do (setq org-super-agenda-groups (funcall transformer org-super-agenda-groups)))
 
-               ;; FIXME: This repetition is kind of ugly, but I guess cl-loop is worth it...
-               if last collect (cons section-name matching) into last-sections
-               and do (setq all-items non-matching)
-               else collect (cons section-name matching) into sections
-               and do (setq all-items non-matching)
+        ;; Collect and insert groups
+        (cl-loop with filter-fn with args with last
 
-               finally do
-               (progn
-                 ;; Insert sections
-                 (cl-loop for (section-name . items) in sections
-                          when items
-                          do (progn
-                               (osa/insert-agenda-header section-name)
-                               (insert (org-agenda-finalize-entries items 'agenda)
-                                       "\n\n")))
-                 (when non-matching
-                   ;; Insert non-matching items in main section
-                   (osa/insert-agenda-header "Other items")
-                   (insert (org-agenda-finalize-entries non-matching 'agenda)
-                           "\n\n"))
+                 for filter in org-super-agenda-groups
+                 for custom-section-name = (plist-get filter :name)
+                 for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
+                 for (auto-section-name non-matching matching) = (osa/group-dispatch all-items filter)
+                 for section-name = (or custom-section-name auto-section-name)
 
-                 ;; Insert final sections
-                 (cl-loop for (section-name . items) in last-sections
-                          when items
-                          do (progn
-                               (osa/insert-agenda-header section-name)
-                               (insert (org-agenda-finalize-entries items 'agenda)
-                                       "\n\n")))))
+                 collect (list :name section-name :items matching :order order) into sections
+                 and do (setq all-items non-matching)
+
+                 ;; Sort sections by :order then :name
+                 finally do (setq sections (--sort (let ((o-it (plist-get it :order))
+                                                         (o-other (plist-get other :order)))
+                                                     (cond ((and (= o-it o-other)
+                                                                 (/= o-it 0))
+                                                            ;; Sort by string only for items with a set order
+                                                            (string< (plist-get it :name)
+                                                                     (plist-get other :name)))
+                                                           (t (< o-it o-other))))
+                                                   sections))
+                 finally do
+                 (progn
+                   ;; Insert sections
+
+                   ;; cl-loop doesn't technically support plist
+                   ;; destructuring, but as long as they are given in
+                   ;; the same order, it should work
+                   (cl-loop for (:name name :items items) in sections
+                            when items
+                            do (progn
+                                 (osa/insert-agenda-header name)
+                                 (insert (org-agenda-finalize-entries items 'agenda)
+                                         "\n\n")))
+                   (when non-matching
+                     ;; Insert non-matching items in main section
+                     (osa/insert-agenda-header "Other items")
+                     (insert (org-agenda-finalize-entries non-matching 'agenda)
+                             "\n\n")))))
     ;; No super-filters; insert normally
     (insert (org-agenda-finalize-entries all-items 'agenda)
             "\n")))
@@ -507,6 +518,21 @@ see."
   (-let (((name non-matching matching) (osa/group-dispatch items group)))
     (list name matching non-matching)))
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :not 'osa/group-dispatch-not))
+
+(defun osa/group-transform-order (groups)
+  "Return groups with their order set."
+  (cl-loop with args with order
+           for group in groups
+           if (eq (car group) :order-all)
+           do (setq args (cadr group))
+           and do (setq order (pop args))
+           and do (setq group (cl-loop for subgroup in args
+                                       collect (plist-put subgroup :order order)))
+           and append group
+           else collect group))
+;; FIXME: Is there a better way to do this?  Maybe if I ever have any more transformers...
+(setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
+                                                     :order-all 'osa/group-transform-order))
 
 (defsubst osa/get-marker (s)
   (org-find-text-property-in-string 'org-marker s))

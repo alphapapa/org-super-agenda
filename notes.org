@@ -943,6 +943,56 @@ CLOSED: [2017-07-27 Thu 23:46]
 
 Might be handy.
 
+** TODO Sort sections
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:name "Today"
+                  :time t
+                  :todo "TODAY")
+           (:name "Bills"
+                  :tags "bills"
+                  :order 1)
+           (:name "Prayers"
+                  :tags "prayers"
+                  :order 2)
+           (:name "Personal"
+                  :habit t
+                  :tags "personal"
+                  :order 3)
+           (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                  :order 9)
+           (:name "People"
+                  :tags ("friends" "family")
+                  :order 3)
+           (:name "Computer"
+                  :tags ("Emacs" "Org" "computer" "computers" "Onyx" "sparky" "software")
+                  :order 4)
+           (:todo "WAITING" :order 5)
+
+           (:name "Priority A items" :priority "A" :order 2)
+           (:name "Priority B and C items" :priority ("B" "C") :order 2))))
+    (cl-loop for filter in org-super-agenda-groups
+             for custom-section-name = (plist-get filter :name)
+             for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
+             for section-name = custom-section-name
+             for matching = nil
+             collect (list :name section-name :items matching :order order) into sections
+
+             ;; Sort sections
+             ;; finally return (setq sections (-sort (-on '< (lambda (it)
+             ;;                                                (plist-get it :order)))
+             ;;                                      sections))
+             finally return (--sort (cond ((= (plist-get it :order)
+                                              (plist-get other :order))
+                                           (string< (plist-get it :name)
+                                                    (plist-get other :name)))
+                                          (t (< (plist-get it :order)
+                                                (plist-get other :order))))
+                                    sections)
+             ))
+#+END_SRC
+
 ** DONE Make function to describe groupers
 CLOSED: [2017-07-28 Fri 00:02]
 :LOGBOOK:

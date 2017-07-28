@@ -99,30 +99,31 @@ SCHEDULED: <2017-07-17 Mon>
                        ;; Single arguments given alone
                        :tag "bills"
                        :priority "A")
-                (:name "Shopping in town"
-                       ;; Boolean AND group matches items that match all subgroups
-                       :and (:tag "shopping" :tag "@town"))
-                (:name "Food-related"
-                       ;; Multiple args given in list with implicit OR
-                       :tag ("food" "dinner"))
-                (:name "Personal"
-                       :habit t
-                       :tag "personal")
-                (:name "Space-related (non-moon-or-planet-related)"
-                       ;; Regexps match case-insensitively on the entire entry
-                       :and (:regexp ("space" "NASA")
-                                     ;; Boolean NOT also has implicit OR between selectors
-                                     :not (:regexp "moon" :tag "planet")))
+                (:order-all (2 (:name "Shopping in town"
+                                     ;; Boolean AND group matches items that match all subgroups
+                                     :and (:tag "shopping" :tag "@town"))
+                              (:name "Food-related"
+                                     ;; Multiple args given in list with implicit OR
+                                     :tag ("food" "dinner"))
+                              (:name "Personal"
+                                     :habit t
+                                     :tag "personal")
+                              (:name "Space-related (non-moon-or-planet-related)"
+                                     ;; Regexps match case-insensitively on the entire entry
+                                     :and (:regexp ("space" "NASA")
+                                                   ;; Boolean NOT also has implicit OR between selectors
+                                                   :not (:regexp "moon" :tag "planet")))))
                 ;; Filter functions supply their own section names when none are given
-                (:todo "WAITING")
+                (:todo "WAITING" :order 8)
                 (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
                        ;; Show this section at the end of the agenda. If you specified
                        ;; this filter last, items with these todo keywords that have
                        ;; priority A, B, or C would be displayed in those sections
                        ;; instead, because items are filtered out in the order the
                        ;; filters are listed.
-                       :last t)
-                (:priority ("B" "C")))))))))
+                       :order 9)
+                (:priority ("B" "C")
+                           :order 1))))))))
     (org-agenda nil "u"))
 #+END_SRC
 
