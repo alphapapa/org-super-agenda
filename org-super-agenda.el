@@ -47,20 +47,20 @@
 ;;                      ;; Single arguments given alone
 ;;                      :tag "bills"
 ;;                      :priority "A")
-;;               (:order-all (2 (:name "Shopping in town"
-;;                                     ;; Boolean AND group matches items that match all subgroups
-;;                                     :and (:tag "shopping" :tag "@town"))
-;;                              (:name "Food-related"
-;;                                     ;; Multiple args given in list with implicit OR
-;;                                     :tag ("food" "dinner"))
-;;                              (:name "Personal"
-;;                                     :habit t
-;;                                     :tag "personal")
-;;                              (:name "Space-related (non-moon-or-planet-related)"
-;;                                     ;; Regexps match case-insensitively on the entire entry
-;;                                     :and (:regexp ("space" "NASA")
-;;                                                   ;; Boolean NOT also has implicit OR between selectors
-;;                                                   :not (:regexp "moon" :tag "planet")))))
+;;               (:order-multi (2 (:name "Shopping in town"
+;;                                       ;; Boolean AND group matches items that match all subgroups
+;;                                       :and (:tag "shopping" :tag "@town"))
+;;                                (:name "Food-related"
+;;                                       ;; Multiple args given in list with implicit OR
+;;                                       :tag ("food" "dinner"))
+;;                                (:name "Personal"
+;;                                       :habit t
+;;                                       :tag "personal")
+;;                                (:name "Space-related (non-moon-or-planet-related)"
+;;                                       ;; Regexps match case-insensitively on the entire entry
+;;                                       :and (:regexp ("space" "NASA")
+;;                                                     ;; Boolean NOT also has implicit OR between selectors
+;;                                                     :not (:regexp "moon" :tag "planet")))))
 ;;               ;; Filter functions supply their own section names when none are given
 ;;               (:todo "WAITING" :order 8)
 ;;               (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
@@ -211,7 +211,7 @@ actually the ORDER for the groups."
            collect (plist-put group :order order)))
 ;; FIXME: Is there a better way to do this?  Maybe if I ever have any more transformers...
 (setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
-                                                     :order-all 'osa/group-transform-order))
+                                                     :order-multi 'osa/group-transform-order))
 
 ;;;; Agenda command
 
