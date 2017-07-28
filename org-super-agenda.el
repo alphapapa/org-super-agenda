@@ -110,12 +110,14 @@ Populated automatically by `org-super-agenda--defgroup'.")
   :link '(url-link "http://github.com/alphapapa/org-super-agenda"))
 
 (defcustom org-super-agenda-unmatched-order 99
-  "Default order setting for agenda section containing items unmatched by any filter.")
+  "Default order setting for agenda section containing items unmatched by any filter."
+  :type 'integer)
 
 (defcustom org-super-agenda-fontify-whole-header-line nil
   "Fontify the whole line for section headers.
 This is mostly useful if section headers have a highlight color,
-making it stretch across the screen.")
+making it stretch across the screen."
+  :type 'boolean)
 
 ;;;; Filters
 
