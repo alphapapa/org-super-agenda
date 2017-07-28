@@ -40,20 +40,20 @@ Here's the code for the example above.  The ~org-super-agenda~ command works as 
                        ;; Single arguments given alone
                        :tag "bills"
                        :priority "A")
-                (:name "Shopping in town"
-                       ;; Boolean AND group matches items that match all subgroups
-                       :and (:tag "shopping" :tag "@town"))
-                (:name "Food-related"
-                       ;; Multiple args given in list with implicit OR
-                       :tag ("food" "dinner"))
-                (:name "Personal"
-                       :habit t
-                       :tag "personal")
-                (:name "Space-related (non-moon-or-planet-related)"
-                       ;; Regexps match case-insensitively on the entire entry
-                       :and (:regexp ("space" "NASA")
-                                     ;; Boolean NOT also has implicit OR between selectors
-                                     :not (:regexp "moon" :tag "planet")))
+                (:order-all (2 (:name "Shopping in town"
+                                      ;; Boolean AND group matches items that match all subgroups
+                                      :and (:tag "shopping" :tag "@town"))
+                               (:name "Food-related"
+                                      ;; Multiple args given in list with implicit OR
+                                      :tag ("food" "dinner"))
+                               (:name "Personal"
+                                      :habit t
+                                      :tag "personal")
+                               (:name "Space-related (non-moon-or-planet-related)"
+                                      ;; Regexps match case-insensitively on the entire entry
+                                      :and (:regexp ("space" "NASA")
+                                                    ;; Boolean NOT also has implicit OR between selectors
+                                                    :not (:regexp "moon" :tag "planet")))))
                 ;; Filter functions supply their own section names when none are given
                 (:todo "WAITING" :order 8)
                 (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
@@ -72,12 +72,17 @@ Here's the code for the example above.  The ~org-super-agenda~ command works as 
 
 Each group selector takes an argument which can be a single atom or a list, e.g. =:tag= takes a tag or list of tags.  Some groupers are predicates, like =:deadline= or =:habit=; for consistency, they also take an argument, but it is ignored.
 
+*Special selectors*:
+
 +  =:and=: Group ITEMS that match all selectors in GROUP.
++  =:not=: Group ITEMS that match no selectors in GROUP.
++  =:order-all=: Set the order of multiple groups at once, like ~(:order-all (2 (groupA) (groupB) ...))~ to set the order of these groups to 2.
+
+*Normal selectors:*
+
 +  =:deadline=: Group items that have deadlines.
 +  =:habit=: Group habit items. Habit items have a "STYLE: habit" Org property.
-+  =:not=: Group ITEMS that match no selectors in GROUP.
 +  =:order=: A number setting the order sections will be displayed in the agenda, lowest number first.  Defaults to =0=.
-+  =:order-all=: A special group that sets the order of all groups within it.
 +  =:priority=: Group items that match any of the given priorities. Argument may be a string or list of strings, which should be, e.g. "A" or ("B" "C").
 +  =:regexp=: Group items that match a regular expression. Argument may be a string or list of strings, each of which should be a regular expression. You’ll probably want to override the section name for this group.
 +  =:scheduled=: Group items that are scheduled.

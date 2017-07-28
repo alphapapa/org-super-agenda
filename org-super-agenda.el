@@ -47,30 +47,31 @@
 ;;                      ;; Single arguments given alone
 ;;                      :tag "bills"
 ;;                      :priority "A")
-;;               (:name "Shopping in town"
-;;                      ;; Boolean AND group matches items that match all subgroups
-;;                      :and (:tag "shopping" :tag "@town"))
-;;               (:name "Food-related"
-;;                      ;; Multiple args given in list with implicit OR
-;;                      :tag ("food" "dinner"))
-;;               (:name "Personal"
-;;                      :habit t
-;;                      :tag "personal")
-;;               (:name "Space-related (non-moon-or-planet-related)"
-;;                      ;; Regexps match case-insensitively on the entire entry
-;;                      :and (:regexp ("space" "NASA")
-;;                                    ;; Boolean NOT also has implicit OR between selectors
-;;                                    :not (:regexp "moon" :tag "planet")))
+;;               (:order-all (2 (:name "Shopping in town"
+;;                                     ;; Boolean AND group matches items that match all subgroups
+;;                                     :and (:tag "shopping" :tag "@town"))
+;;                              (:name "Food-related"
+;;                                     ;; Multiple args given in list with implicit OR
+;;                                     :tag ("food" "dinner"))
+;;                              (:name "Personal"
+;;                                     :habit t
+;;                                     :tag "personal")
+;;                              (:name "Space-related (non-moon-or-planet-related)"
+;;                                     ;; Regexps match case-insensitively on the entire entry
+;;                                     :and (:regexp ("space" "NASA")
+;;                                                   ;; Boolean NOT also has implicit OR between selectors
+;;                                                   :not (:regexp "moon" :tag "planet")))))
 ;;               ;; Filter functions supply their own section names when none are given
-;;               (:todo "WAITING")
+;;               (:todo "WAITING" :order 8)
 ;;               (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
 ;;                      ;; Show this section at the end of the agenda. If you specified
 ;;                      ;; this filter last, items with these todo keywords that have
 ;;                      ;; priority A, B, or C would be displayed in those sections
 ;;                      ;; instead, because items are filtered out in the order the
 ;;                      ;; filters are listed.
-;;                      :last t)
-;;               (:priority ("B" "C")))))))))
+;;                      :order 9)
+;;               (:priority ("B" "C")
+;;                          :order 1))))))))
 ;;   (org-agenda nil "u"))
 
 ;; You can adjust the `org-super-agenda-groups' to create as many different
@@ -198,6 +199,19 @@ section name for this group."
   :test (when-let ((m (osa/get-marker item)))
           (with-current-buffer (marker-buffer m)
             (org-get-scheduled-time m))))
+
+;;;; Group transformers
+
+(defun osa/group-transform-order (groups)
+  "Return GROUPS with their order set.
+GROUPS is a list of groups, but the first element of the list is
+actually the ORDER for the groups."
+  (cl-loop with order = (pop groups)
+           for group in groups
+           collect (plist-put group :order order)))
+;; FIXME: Is there a better way to do this?  Maybe if I ever have any more transformers...
+(setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
+                                                     :order-all 'osa/group-transform-order))
 
 ;;;; Agenda command
 
@@ -410,11 +424,8 @@ items if they have an hour specification like [h]h:mm."
   ;; This essentially replaces the part of `org-agenda-list' that
   ;; finally inserts the `rtnall' variable.
   (if (bound-and-true-p org-super-agenda-groups)
-      (progn
-        ;; Run transformers over group list
-        (cl-loop for (_ transformer) on org-super-agenda-group-transformers by 'cddr
-                 do (setq org-super-agenda-groups (funcall transformer org-super-agenda-groups)))
-
+      ;; Transform groups
+      (let ((org-super-agenda-groups (osa/transform-groups org-super-agenda-groups)))
         ;; Collect and insert groups
         (cl-loop with filter-fn with args with last
 
@@ -437,24 +448,21 @@ items if they have an hour specification like [h]h:mm."
                                                                      (plist-get other :name)))
                                                            (t (< o-it o-other))))
                                                    sections))
-                 finally do
-                 (progn
-                   ;; Insert sections
-
-                   ;; cl-loop doesn't technically support plist
-                   ;; destructuring, but as long as they are given in
-                   ;; the same order, it should work
-                   (cl-loop for (:name name :items items) in sections
-                            when items
-                            do (progn
-                                 (osa/insert-agenda-header name)
-                                 (insert (org-agenda-finalize-entries items 'agenda)
-                                         "\n\n")))
-                   (when non-matching
-                     ;; Insert non-matching items in main section
-                     (osa/insert-agenda-header "Other items")
-                     (insert (org-agenda-finalize-entries non-matching 'agenda)
-                             "\n\n")))))
+                 ;; Insert sections
+                 finally do (progn
+                              ;; cl-loop doesn't technically support plist destructuring, but
+                              ;; as long as they are given in the same order, it should work
+                              (cl-loop for (:name name :items items) in sections
+                                       when items
+                                       do (progn
+                                            (osa/insert-agenda-header name)
+                                            (insert (org-agenda-finalize-entries items 'agenda)
+                                                    "\n\n")))
+                              (when non-matching
+                                ;; Insert non-matching items in main section
+                                (osa/insert-agenda-header "Other items")
+                                (insert (org-agenda-finalize-entries non-matching 'agenda)
+                                        "\n\n")))))
     ;; No super-filters; insert normally
     (insert (org-agenda-finalize-entries all-items 'agenda)
             "\n")))
@@ -519,20 +527,13 @@ see."
     (list name matching non-matching)))
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :not 'osa/group-dispatch-not))
 
-(defun osa/group-transform-order (groups)
-  "Return groups with their order set."
-  (cl-loop with args with order
-           for group in groups
-           if (eq (car group) :order-all)
-           do (setq args (cadr group))
-           and do (setq order (pop args))
-           and do (setq group (cl-loop for subgroup in args
-                                       collect (plist-put subgroup :order order)))
+(defun osa/transform-groups (groups)
+  (cl-loop for group in groups
+           for fn = (plist-get org-super-agenda-group-transformers (car group))
+           if fn
+           do (setq group (funcall fn (cadr group)))
            and append group
            else collect group))
-;; FIXME: Is there a better way to do this?  Maybe if I ever have any more transformers...
-(setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
-                                                     :order-all 'osa/group-transform-order))
 
 (defsubst osa/get-marker (s)
   (org-find-text-property-in-string 'org-marker s))
