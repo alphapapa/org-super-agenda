@@ -488,8 +488,8 @@ see."
 ;; be slower.  Decisions, decisions...
 
 (defun osa/group-dispatch-and (items group)
-  "Group ITEMS that match all selectors in GROUP.
-Used for the `:and' selector."
+  "Group ITEMS that match all selectors in GROUP."
+  ;; Used for the `:and' selector.
   (cl-loop with name with fn with auto-section-name with non-matching with matching
            with final-non-matches with final-matches
            with all-items = items  ; Save for later
@@ -515,8 +515,8 @@ Used for the `:and' selector."
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :and 'osa/group-dispatch-and))
 
 (defun osa/group-dispatch-not (items group)
-  "Group ITEMS that match no selectors in GROUP.
-Used for the `:not' selector."
+  "Group ITEMS that match no selectors in GROUP."
+  ;; Used for the `:not' selector.
   ;; I think all I need to do is re-dispatch and reverse the results
   (-let (((name non-matching matching) (osa/group-dispatch items group)))
     (list name matching non-matching)))
