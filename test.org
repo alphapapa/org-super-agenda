@@ -38,6 +38,11 @@ SCHEDULED: <2017-06-27 Tue>
 
 Just waiting on that callback from NASA...
 
+** TODO Visit Mars                                            :space:travel:planet:
+SCHEDULED: <2017-07-20 Thu>
+
+Ah, the red planet...
+
 ** TODO [#C] Get haircut                                    :personal:@town:
 SCHEDULED: <2017-07-26 Wed>
 
@@ -103,9 +108,11 @@ SCHEDULED: <2017-07-17 Mon>
                 (:name "Personal"
                        :habit t
                        :tags "personal")
-                (:name "Space-related"
+                (:name "Space-related (non-moon-or-planet-related)"
                        ;; Regexps match case-insensitively on the entire entry
-                       :regexp ("moon" "space" "NASA"))
+                       :and (:regexp ("space" "NASA")
+                                     ;; Boolean NOT also has implicit OR between selectors
+                                     :not (:regexp "moon" :tags "planet")))
                 ;; Filter functions supply their own section names when none are given
                 (:todo "WAITING")
                 (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")

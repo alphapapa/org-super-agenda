@@ -56,9 +56,11 @@
 ;;               (:name "Personal"
 ;;                      :habit t
 ;;                      :tags "personal")
-;;               (:name "Space-related"
+;;               (:name "Space-related (non-moon-or-planet-related)"
 ;;                      ;; Regexps match case-insensitively on the entire entry
-;;                      :regexp ("moon" "space" "NASA"))
+;;                      :and (:regexp ("space" "NASA")
+;;                                    ;; Boolean NOT also has implicit OR between selectors
+;;                                    :not (:regexp "moon" :tags "planet")))
 ;;               ;; Filter functions supply their own section names when none are given
 ;;               (:todo "WAITING")
 ;;               (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
@@ -497,6 +499,14 @@ Used for the `:and' selector."
                                 final-matches)))
 ;; FIXME: This must be done but is this the way to do it?  Do I need eval-when-compile?
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :and 'osa/group-dispatch-and))
+
+(defun osa/group-dispatch-not (items group)
+  "Group ITEMS that match no selectors in GROUP.
+Used for the `:not' selector."
+  ;; I think all I need to do is re-dispatch and reverse the results
+  (-let (((name non-matching matching) (osa/group-dispatch items group)))
+    (list name matching non-matching)))
+(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :not 'osa/group-dispatch-not))
 
 (defsubst osa/get-tags (s)
   "Return list of tags in agenda item string S."
