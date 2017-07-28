@@ -3,7 +3,7 @@
 ;; Author: Adam Porter <adam@alphapapa.net>
 ;; Url: http://github.com/alphapapa/org-super-agenda
 ;; Version: 0.1-pre
-;; Package-Requires: ((emacs "25.1") (s "1.10.0") (dash "2.13"))
+;; Package-Requires: ((emacs "25.1") (s "1.10.0") (dash "2.13") (org "9.0"))
 ;; Keywords: hypermedia, outlines, Org, agenda
 
 ;;; Commentary:
