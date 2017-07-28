@@ -188,11 +188,11 @@ Argument may be a string or list of strings, each of which should
 be a regular expression.  You'll probably want to override the
 section name for this group."
   :section-name (concat "Items matching regexps: " (s-join " and " args))
-  :test (let* ((case-fold-search t)
-               (marker (org-super-agenda--get-marker item))
-               (entry (with-current-buffer (marker-buffer marker)
-                        (goto-char marker)
-                        (buffer-substring (org-entry-beginning-position) (org-entry-end-position)))))
+  :test (when-let ((case-fold-search t)
+                   (marker (org-super-agenda--get-marker item))
+                   (entry (with-current-buffer (marker-buffer marker)
+                            (goto-char marker)
+                            (buffer-substring (org-entry-beginning-position) (org-entry-end-position)))))
           (cl-loop for regexp in args
                    thereis (string-match-p regexp entry))))
 
