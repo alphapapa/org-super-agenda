@@ -46,6 +46,9 @@ Here's the code for the example above.  The ~org-super-agenda~ command works as 
                 (:name "Personal"
                        :habit t
                        :tags "personal")
+                (:name "Space-related"
+                       ;; Regexps match case-insensitively on the entire entry
+                       :regexp ("moon" "space" "NASA"))
                 ;; Filter functions supply their own section names when none are given
                 (:todo "WAITING")
                 (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")

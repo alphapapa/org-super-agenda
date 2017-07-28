@@ -53,6 +53,9 @@
 ;;               (:name "Personal"
 ;;                      :habit t
 ;;                      :tags "personal")
+;;               (:name "Space-related"
+;;                      ;; Regexps match case-insensitively on the entire entry
+;;                      :regexp ("moon" "space" "NASA"))
 ;;               ;; Filter functions supply their own section names when none are given
 ;;               (:todo "WAITING")
 ;;               (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
@@ -159,6 +162,20 @@ Argument may be a string or list of strings, which should be,
 e.g. \"A\" or (\"B\" \"C\")."
   :section-name (concat "Priority " (s-join " and " args) " items")
   :test (cl-member (osa/get-priority-cookie item) args :test 'string=))
+
+(osa/defgroup regexp
+  "Group items that match a regular expression.
+Argument may be a string or list of strings, each of which should
+be a regular expression.  You'll probably want to override the
+section name for this group."
+  :section-name (concat "Items matching regexps: " (s-join " and " args))
+  :test (let* ((case-fold-search t)
+               (marker (org-find-text-property-in-string 'org-marker item))
+               (entry (with-current-buffer (marker-buffer marker)
+                        (goto-char marker)
+                        (buffer-substring (org-entry-beginning-position) (org-entry-end-position)))))
+          (cl-loop for regexp in args
+                   thereis (string-match-p regexp entry))))
 
 (defun osa/filter-or (items filters)
   "Group ITEMS with boolean OR according to FILTERS."

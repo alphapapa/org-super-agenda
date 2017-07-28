@@ -49,7 +49,7 @@ DEADLINE: <2017-08-21 Mon -1m>
 ** TODO [#A] Spaceship lease                               :bills:spaceship:
 DEADLINE: <2017-07-26 Wed +1m>
 
-** TODO [#A] Fix flux capacitor                                  :spaceship:
+** TODO [#B] Fix flux capacitor                                  :spaceship:
 SCHEDULED: <2017-07-22 Sat>
 
 If I don't, the frobnicator will probably fall off halfway to Mars...
@@ -98,6 +98,9 @@ SCHEDULED: <2017-07-17 Mon>
                 (:name "Personal"
                        :habit t
                        :tags "personal")
+                (:name "Space-related"
+                       ;; Regexps match case-insensitively on the entire entry
+                       :regexp ("moon" "space" "NASA"))
                 ;; Filter functions supply their own section names when none are given
                 (:todo "WAITING")
                 (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
