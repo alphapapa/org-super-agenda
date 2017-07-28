@@ -71,16 +71,17 @@ Here's the code for the example above.  The ~org-super-agenda~ command works as 
 
 Each group selector takes an argument which can be a single atom or a list, e.g. =:tag= takes a tag or list of tags.  Some groupers are predicates, like =:deadline= or =:habit=; for consistency, they also take an argument, but it is ignored.
 
-+ =:and=: Group ITEMS that match all selectors in GROUP.
-+ =:deadline=: Group items that have deadlines.
-+ =:habit=: Group habit items. Habit items have a "STYLE: habit" Org property.
-+ =:not=: Group ITEMS that match no selectors in GROUP.
-+ =:priority=: Group items that match any of the given priorities. Argument may be a string or list of strings, which should be, e.g. "A" or ("B" "C").
-+ =:regexp=: Group items that match a regular expression. Argument may be a string or list of strings, each of which should be a regular expression. You’ll probably want to override the section name for this group.
-+ =:scheduled=: Group items that are scheduled.
-+ =:tag=: Group items that match any of the given tags. Argument may be a string or list of strings.
-+ =:time=: Group items that have a time associated. Items with an associated timestamp that has a time (rather than just a date) are selected.
-+ =:todo=: Group items that match any of the given TODO keywords. Argument may be a string or list of strings.
++  =:and=: Group ITEMS that match all selectors in GROUP.
++  =:deadline=: Group items that have deadlines.
++  =:habit=: Group habit items. Habit items have a "STYLE: habit" Org property.
++  =:last=: Causes group to be displayed last in the agenda.
++  =:not=: Group ITEMS that match no selectors in GROUP.
++  =:priority=: Group items that match any of the given priorities. Argument may be a string or list of strings, which should be, e.g. "A" or ("B" "C").
++  =:regexp=: Group items that match a regular expression. Argument may be a string or list of strings, each of which should be a regular expression. You’ll probably want to override the section name for this group.
++  =:scheduled=: Group items that are scheduled.
++  =:tag=: Group items that match any of the given tags. Argument may be a string or list of strings.
++  =:time=: Group items that have a time associated. Items with an associated timestamp that has a time (rather than just a date) are selected.
++  =:todo=: Group items that match any of the given TODO keywords. Argument may be a string or list of strings.
 
 ** Installation
 
