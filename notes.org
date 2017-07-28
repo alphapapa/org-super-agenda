@@ -94,8 +94,10 @@ CLOCK: [2017-07-23 Sun 12:24]
 +  =org-agenda-list= is the function that makes the default agenda view.
      -  It seems to use ~(org-agenda-finalize-entries rtnall 'agenda)~ to return a string containing the actual items to insert.  So maybe I can just override that function, although I'm not sure if that's enough, because I don't think that function creates section headers.
 
-** UNDERWAY Filter list according to passed arguments
+** DONE Filter list according to passed arguments
+CLOSED: [2017-07-28 Fri 00:11]
 :LOGBOOK:
+-  State "DONE"       from "UNDERWAY"   [2017-07-28 Fri 00:11]
 -  State "UNDERWAY"   from "TODO"       [2017-07-23 Sun 16:50]
 :END:
 
@@ -960,10 +962,16 @@ CLOSED: [2017-07-28 Fri 00:02]
 
 I just discovered the =cl-seq= library, which includes =cl-subsetp=, which might be preferable over =seq-intersection= for testing membership.
 
-** MAYBE Rewrite the whole agenda after it's done instead
+** CANCELED Rewrite the whole agenda after it's done instead
+CLOSED: [2017-07-28 Fri 00:11]
+:LOGBOOK:
+-  State "CANCELED"   from "MAYBE"      [2017-07-28 Fri 00:11]
+:END:
 
 Ideally, I guess, we would let the normal agenda command finish, then work on the buffer.  But this would mean that we have to avoid non-agenda-item lines, like headers, timetables, clockreports, etc.  That would likely get messy and have edge cases.  It's nice to get the list of agenda items before they are inserted, so we can filter them to begin with, but the problem with that is that we have to make a copy of the agenda command, which will get out-of-sync with newer Org versions.
 
 So /ideally/ we would get a patch committed to Org which would make this sort of thing possible, but that would probably entail a major refactoring of much of the agenda code.  And while that might end up with a nice result, it would be an enormous amount of work, and there aren't any guarantees that Org would merge it.
 
 In the meantime, this works well.
+
+[2017-07-28 Fri 00:11] Nope, nope, nope.  Not worth it.
