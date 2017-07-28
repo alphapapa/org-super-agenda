@@ -468,9 +468,7 @@ items if they have an hour specification like [h]h:mm."
                                                    (push non-matching sections)))
                  ;; Insert sections
                  finally do (progn
-                              ;; cl-loop doesn't technically support plist destructuring, but
-                              ;; as long as they are given in the same order, it should work
-                              (cl-loop for (:name name :items items) in sections
+                              (cl-loop for (_ name _ items) in sections
                                        when items
                                        do (progn
                                             (org-super-agenda--insert-agenda-header name)
