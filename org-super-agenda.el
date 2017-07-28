@@ -98,7 +98,7 @@
 
 (defvar org-super-agenda-group-types nil
   "List of agenda grouping keywords and associated functions.
-Populated automatically by `osa/defgroup'.")
+Populated automatically by `org-super-agenda--defgroup'.")
 
 (defvar org-super-agenda-group-transformers nil
   "List of agenda group transformers.")
@@ -118,9 +118,9 @@ making it stretch across the screen.")
 
 ;;;; Filters
 
-(cl-defmacro osa/defgroup (name docstring &key section-name test)
+(cl-defmacro org-super-agenda--defgroup (name docstring &key section-name test)
   "Define an agenda-item group function.
-NAME is a symbol that will be appended to `osa/group-' to
+NAME is a symbol that will be appended to `org-super-agenda--group-' to
 construct the name of the group function.  A symbol like `:name'
 will be added to the `org-super-agenda-group-types' list, associated
 with the function, which is used by the dispatcher.
@@ -140,7 +140,7 @@ matching the :TEST as the second, and a list of items matching as
 the third."
   (declare (indent defun))
   (let ((group-type (intern (concat ":" (symbol-name name))))
-        (function-name (intern (concat "osa/group-" (symbol-name name)))))
+        (function-name (intern (concat "org-super-agenda--group-" (symbol-name name)))))
     ;; Associate the group type with this function so the dispatcher can find it
     (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types group-type function-name))
     `(defun ,function-name (items args)
@@ -154,7 +154,7 @@ the third."
                 else collect item into non-matching
                 finally return (list section-name non-matching matching)))))
 
-(osa/defgroup time
+(org-super-agenda--defgroup time
   "Group items that have a time associated.
 Items with an associated timestamp that has a time (rather than
 just a date) are selected."
@@ -162,62 +162,62 @@ just a date) are selected."
   :test (when-let ((time (org-find-text-property-in-string 'dotime item)))
           (not (eql time 'time))))
 
-(osa/defgroup tag
+(org-super-agenda--defgroup tag
   "Group items that match any of the given tags.
 Argument may be a string or list of strings."
   :section-name (concat "Items tagged with: " (s-join " OR " args))
-  :test (seq-intersection (osa/get-tags item) args 'equalp))
+  :test (seq-intersection (org-super-agenda--get-tags item) args 'equalp))
 
-(osa/defgroup habit
+(org-super-agenda--defgroup habit
   "Group habit items.
 Habit items have a \"STYLE: habit\" Org property."
   :section-name "Habits"
-  :test (org-is-habit-p (osa/get-marker item)))
+  :test (org-is-habit-p (org-super-agenda--get-marker item)))
 
-(osa/defgroup todo
+(org-super-agenda--defgroup todo
   "Group items that match any of the given TODO keywords.
 Argument may be a string or list of strings."
   :section-name (concat (s-join " and " args) " items")
   :test (cl-member (org-find-text-property-in-string 'todo-state item) args :test 'string=))
 
-(osa/defgroup priority
+(org-super-agenda--defgroup priority
   "Group items that match any of the given priorities.
 Argument may be a string or list of strings, which should be,
 e.g. \"A\" or (\"B\" \"C\")."
   :section-name (concat "Priority " (s-join " and " args) " items")
-  :test (cl-member (osa/get-priority-cookie item) args :test 'string=))
+  :test (cl-member (org-super-agenda--get-priority-cookie item) args :test 'string=))
 
-(osa/defgroup regexp
+(org-super-agenda--defgroup regexp
   "Group items that match a regular expression.
 Argument may be a string or list of strings, each of which should
 be a regular expression.  You'll probably want to override the
 section name for this group."
   :section-name (concat "Items matching regexps: " (s-join " and " args))
   :test (let* ((case-fold-search t)
-               (marker (osa/get-marker item))
+               (marker (org-super-agenda--get-marker item))
                (entry (with-current-buffer (marker-buffer marker)
                         (goto-char marker)
                         (buffer-substring (org-entry-beginning-position) (org-entry-end-position)))))
           (cl-loop for regexp in args
                    thereis (string-match-p regexp entry))))
 
-(osa/defgroup deadline
+(org-super-agenda--defgroup deadline
   "Group items that have deadlines."
   :section-name "Deadline items"
-  :test (when-let ((m (osa/get-marker item)))
+  :test (when-let ((m (org-super-agenda--get-marker item)))
           (with-current-buffer (marker-buffer m)
             (org-get-deadline-time m))))
 
-(osa/defgroup scheduled
+(org-super-agenda--defgroup scheduled
   "Group items that are scheduled."
   :section-name "Scheduled items"
-  :test (when-let ((m (osa/get-marker item)))
+  :test (when-let ((m (org-super-agenda--get-marker item)))
           (with-current-buffer (marker-buffer m)
             (org-get-scheduled-time m))))
 
 ;;;; Group transformers
 
-(defun osa/group-transform-order (groups)
+(defun org-super-agenda--group-transform-order (groups)
   "Return GROUPS with their order set.
 GROUPS is a list of groups, but the first element of the list is
 actually the ORDER for the groups."
@@ -226,7 +226,7 @@ actually the ORDER for the groups."
            collect (plist-put group :order order)))
 ;; FIXME: Is there a better way to do this?  Maybe if I ever have any more transformers...
 (setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
-                                                     :order-multi 'osa/group-transform-order))
+                                                     :order-multi 'org-super-agenda--group-transform-order))
 
 ;;;; Agenda command
 
@@ -396,7 +396,7 @@ items if they have an hour specification like [h]h:mm."
 		    (org-agenda-add-time-grid-maybe rtnall ndays todayp))
               ;; Insert items
 	      (when rtnall
-                (osa/insert-sections rtnall))
+                (org-super-agenda--insert-sections rtnall))
 	      (put-text-property s (1- (point)) 'day d)
 	      (put-text-property s (1- (point)) 'org-day-cnt day-cnt))))
       (when (and org-agenda-clockreport-mode clocktable-start)
@@ -434,20 +434,20 @@ items if they have an hour specification like [h]h:mm."
 
 ;;;;; Support functions
 
-(defun osa/insert-sections (all-items)
+(defun org-super-agenda--insert-sections (all-items)
   "Divide ALL-ITEMS into sections and insert them into the agenda."
   ;; This essentially replaces the part of `org-agenda-list' that
   ;; finally inserts the `rtnall' variable.
   (if (bound-and-true-p org-super-agenda-groups)
       ;; Transform groups
-      (let ((org-super-agenda-groups (osa/transform-groups org-super-agenda-groups)))
+      (let ((org-super-agenda-groups (org-super-agenda--transform-groups org-super-agenda-groups)))
         ;; Collect and insert groups
         (cl-loop with filter-fn with args with last
 
                  for filter in org-super-agenda-groups
                  for custom-section-name = (plist-get filter :name)
                  for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
-                 for (auto-section-name non-matching matching) = (osa/group-dispatch all-items filter)
+                 for (auto-section-name non-matching matching) = (org-super-agenda--group-dispatch all-items filter)
                  for section-name = (or custom-section-name auto-section-name)
 
                  collect (list :name section-name :items matching :order order) into sections
@@ -471,14 +471,14 @@ items if they have an hour specification like [h]h:mm."
                               (cl-loop for (:name name :items items) in sections
                                        when items
                                        do (progn
-                                            (osa/insert-agenda-header name)
+                                            (org-super-agenda--insert-agenda-header name)
                                             (insert (org-agenda-finalize-entries items 'agenda)
                                                     "\n\n"))))))
     ;; No super-filters; insert normally
     (insert (org-agenda-finalize-entries all-items 'agenda)
             "\n")))
 
-(defun osa/group-dispatch (items group)
+(defun org-super-agenda--group-dispatch (items group)
   "Group ITEMS with the appropriate grouping functions for GROUP.
 Grouping functions are listed in `org-super-agenda-group-types', which
 see."
@@ -503,7 +503,7 @@ see."
 ;; more DRY, but that would preclude using the loop macro, and might
 ;; be slower.  Decisions, decisions...
 
-(defun osa/group-dispatch-and (items group)
+(defun org-super-agenda--group-dispatch-and (items group)
   "Group ITEMS that match all selectors in GROUP."
   ;; Used for the `:and' selector.
   (cl-loop with name with fn with auto-section-name with non-matching with matching
@@ -528,17 +528,17 @@ see."
                                 final-non-matches
                                 final-matches)))
 ;; FIXME: This must be done but is this the way to do it?  Do I need eval-when-compile?
-(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :and 'osa/group-dispatch-and))
+(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :and 'org-super-agenda--group-dispatch-and))
 
-(defun osa/group-dispatch-not (items group)
+(defun org-super-agenda--group-dispatch-not (items group)
   "Group ITEMS that match no selectors in GROUP."
   ;; Used for the `:not' selector.
   ;; I think all I need to do is re-dispatch and reverse the results
-  (-let (((name non-matching matching) (osa/group-dispatch items group)))
+  (-let (((name non-matching matching) (org-super-agenda--group-dispatch items group)))
     (list name matching non-matching)))
-(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :not 'osa/group-dispatch-not))
+(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :not 'org-super-agenda--group-dispatch-not))
 
-(defun osa/transform-groups (groups)
+(defun org-super-agenda--transform-groups (groups)
   (cl-loop for group in groups
            for fn = (plist-get org-super-agenda-group-transformers (car group))
            if fn
@@ -546,14 +546,14 @@ see."
            and append group
            else collect group))
 
-(defsubst osa/get-marker (s)
+(defsubst org-super-agenda--get-marker (s)
   (org-find-text-property-in-string 'org-marker s))
 
-(defsubst osa/get-tags (s)
+(defsubst org-super-agenda--get-tags (s)
   "Return list of tags in agenda item string S."
   (org-find-text-property-in-string 'tags s))
 
-(defsubst osa/insert-agenda-header (s)
+(defsubst org-super-agenda--insert-agenda-header (s)
   "Insert agenda header into current buffer containing string S and a newline."
   (let ((start (point))
         (s (concat " " s)))
@@ -562,7 +562,7 @@ see."
     (when org-super-agenda-fontify-whole-header-line
       (add-text-properties start (point) '(face org-agenda-structure)))))
 
-(defsubst osa/get-priority-cookie (s)
+(defsubst org-super-agenda--get-priority-cookie (s)
   "Return priority character for string S.
 Matches `org-priority-regexp'."
   (when (string-match org-priority-regexp s)
