@@ -196,20 +196,6 @@ section name for this group."
           (with-current-buffer (marker-buffer m)
             (org-get-scheduled-time m))))
 
-(defun osa/filter-or (items filters)
-  "Group ITEMS with boolean OR according to FILTERS."
-  (let* ((matches (cl-loop with fn with args
-                           for filter in filters
-                           if (functionp filter) do (setq fn filter
-                                                          args nil)
-                           else do (setq fn (plist-get filter :filter)
-                                         args (plist-get filter :args))
-                           for (auto-section-name non-matching matching) = (funcall fn items args)
-                           append matching
-                           and do (setq items non-matching))))
-    ;; Return results without a name
-    (list nil items matches)))
-
 ;;;; Agenda command
 
 (defun org-super-agenda (&optional arg start-day span with-hour)
