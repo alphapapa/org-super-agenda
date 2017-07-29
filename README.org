@@ -94,13 +94,13 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 +  =:and= Group ITEMS that match all selectors in GROUP.
 +  =:discard= Discard items that don't match selectors.  Any groups processed after this one will not see discarded items.  You might use this at the beginning or end of a list of groups, either to narrow down the list of items (used in combination with =:not=), or to exclude items you're not interested in.
 +  =:not= Group ITEMS that match no selectors in GROUP.
++  =:order= A number setting the order sections will be displayed in the agenda, lowest number first.  Defaults to =0=.
 +  =:order-multi= Set the order of multiple groups at once, like ~(:order-multi (2 (groupA) (groupB) ...))~ to set the order of these groups to 2.
 
 *Normal selectors:*
 
 +  =:deadline= Group items that have deadlines.
 +  =:habit= Group habit items. Habit items have a "STYLE: habit" Org property.
-+  =:order= A number setting the order sections will be displayed in the agenda, lowest number first.  Defaults to =0=.
 +  =:priority= Group items that match any of the given priorities. Argument may be a string or list of strings, which should be the priority letter, e.g. =A=.
 +  =:priority>= Group items that are higher than the given priority, e.g. =C=.
 +  =:priority>== Group items that are higher than or equal to the given priority, e.g. =B=.
