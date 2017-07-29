@@ -6,6 +6,8 @@
 
 * org-super-agenda
 
+[[https://melpa.org/#/helm-org-rifle][file:https://melpa.org/packages/org-super-agenda-badge.svg]]
+
 This package lets you "supercharge" your Org daily/weekly agenda.  The idea is to group items into sections, rather than having them all in one big list.
 
 Now you can sort-of do this already with custom agenda commands, but when you do that, you lose the daily/weekly aspect of the agenda: items are no longer shown based on deadline/scheduled timestamps, but are shown no-matter-what.
@@ -108,13 +110,11 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 
 ** Installation
 
-This package will eventually be submitted to MELPA, and hopefully upstreamed into Org in some fashion.  In the meantime, install it like this:
+Install =org-super-agenda= from MELPA.  Then:
 
-1.  Install the =dash= and =s= packages from MELPA.
-2.  Put the file =org-super-agenda.el= in your =load-path= directory.
-3.  Add to your init file: ~(use-package org-super-agenda :config (org-super-agenda-mode))~.
-4.  Set the =org-super-agenda-groups= variable.  Use the example code above as a guideline.
-5.  Start the day with confidence, knowing that nothing important has been lost in the jumble of /ahem/ overdue items.
+1.  Add to your init file: ~(use-package org-super-agenda :config (org-super-agenda-mode))~.
+2.  Set the =org-super-agenda-groups= variable.  Use the example code above as a guideline.
+3.  Start the day with confidence, knowing that nothing important has been lost in the jumble of /ahem/ overdue items.
 
 ** Development
 
