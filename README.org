@@ -22,6 +22,8 @@ Here's what the "super" agenda looks like:
 
 [[screenshot-after.png]]
 
+There are also a few [[screenshots/index.org][more screenshots]].
+
 ** Usage
 
 After installing, run the command =org-super-agenda-mode=, then set the variable =org-super-agenda-groups= as desired.  The variable should be a list of groups.  Then run an agenda command, and the entries will be grouped!

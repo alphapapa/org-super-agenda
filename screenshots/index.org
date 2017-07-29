@@ -1,0 +1,15 @@
+* Screenshots
+
+Here are some more screenshots.  While the screenshot in the readme file was taken on my personal Emacs config, these were taken in a nearly default Emacs setup,
+
+** Spacemacs theme
+
+[[spacemacs-before.png]]
+
+[[spacemacs-after.png]]
+
+** Zenburn theme
+
+[[zenburn-before.png]]
+
+[[zenburn-after.png]]
