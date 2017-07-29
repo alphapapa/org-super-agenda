@@ -186,7 +186,7 @@ the variable `items' available.
 `item' available.  Items passing this test are filtered into a
 separate list.
 
-:LET is a `let*' binding form that is bound around the function
+:LET* is a `let*' binding form that is bound around the function
 body after the ARGS are made a list.
 
 Finally a list of three items is returned, with the value
