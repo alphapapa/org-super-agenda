@@ -284,9 +284,7 @@ Habit items have a \"STYLE: habit\" Org property."
       ;; Transform groups
       (let ((org-super-agenda-groups (org-super-agenda--transform-groups org-super-agenda-groups)))
         ;; Collect and insert groups
-        (cl-loop with filter-fn with args with last
-
-                 for filter in org-super-agenda-groups
+        (cl-loop for filter in org-super-agenda-groups
                  for custom-section-name = (plist-get filter :name)
                  for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
                  for (auto-section-name non-matching matching) = (org-super-agenda--group-dispatch all-items filter)
@@ -320,8 +318,7 @@ Habit items have a \"STYLE: habit\" Org property."
   "Group ITEMS with the appropriate grouping functions for GROUP.
 Grouping functions are listed in `org-super-agenda-group-types', which
 see."
-  (cl-loop with name with fn with auto-section-name with non-matching with matching
-           for (group-type args) on group by 'cddr  ; plist access
+  (cl-loop for (group-type args) on group by 'cddr  ; plist access
            for fn = (plist-get org-super-agenda-group-types group-type)
            ;; This double "when fn" is an ugly hack, but it lets us
            ;; use the destructuring-bind; otherwise we'd have to put
@@ -344,8 +341,7 @@ see."
 (defun org-super-agenda--group-dispatch-and (items group)
   "Group ITEMS that match all selectors in GROUP."
   ;; Used for the `:and' selector.
-  (cl-loop with name with fn with auto-section-name with non-matching with matching
-           with final-non-matches with final-matches
+  (cl-loop with final-non-matches with final-matches
            with all-items = items  ; Save for later
            for (group-type args) on group by 'cddr  ; plist access
            for fn = (plist-get org-super-agenda-group-types group-type)
@@ -354,7 +350,7 @@ see."
            ;; all the collection logic in a progn, or do the
            ;; destructuring ourselves, which would be uglier.
            when fn
-           for (auto-section-name non-matching matching) = (funcall fn items args)
+           for (auto-section-name _ matching) = (funcall fn items args)
            when fn
            collect matching into all-matches
            and collect auto-section-name into names
