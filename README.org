@@ -6,7 +6,7 @@
 
 * org-super-agenda
 
-[[https://melpa.org/#/helm-org-rifle][file:https://melpa.org/packages/org-super-agenda-badge.svg]]
+[[https://melpa.org/#/org-super-agenda][file:https://melpa.org/packages/org-super-agenda-badge.svg]]
 
 This package lets you "supercharge" your Org daily/weekly agenda.  The idea is to group items into sections, rather than having them all in one big list.
 
