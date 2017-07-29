@@ -17,9 +17,9 @@
 ;; agenda: items are no longer shown based on deadline/scheduled
 ;; timestamps, but are shown no-matter-what.
 
-;; So this `org-super-agenda' command essentially copies the
-;; `org-agenda-list' command, but right before it inserts the agenda
-;; items, it runs them through a set of filters that separate them
+;; So this package overrides the `org-agenda-finalize-entries'
+;; function, which runs just before items are inserted into agenda
+;; views.  It runs them through a set of filters that separate them
 ;; into groups.  Then the groups are inserted into the agenda buffer,
 ;; and any remaining items are inserted at the end.  Empty groups are
 ;; not displayed.
@@ -30,9 +30,10 @@
 ;; keywords in another, and items with certain priorities in another.
 ;; The possibilities are only limited by the grouping functions.
 
-;; The `org-super-agenda' command works as a custom agenda command, so
-;; you can add it to your `org-agenda-custom-commands' list.  You can
-;; also test it quickly like this:
+;; The primary use of this package is for the daily/weekly agenda,
+;; made by the `org-agenda-list' command, but it also works for other
+;; agenda views, like `org-tags-view', `org-todo-list',
+;; `org-search-view', etc.
 
 ;; (let ((org-super-agenda-groups
 ;;        '(;; Each group has an implicit boolean OR operator between its selectors.
