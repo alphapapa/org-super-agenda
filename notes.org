@@ -943,7 +943,11 @@ CLOSED: [2017-07-27 Thu 23:46]
 
 Might be handy.
 
-** TODO Sort sections
+** DONE Sort sections
+CLOSED: [2017-07-28 Fri 20:26]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-28 Fri 20:26]
+:END:
 
 #+BEGIN_SRC elisp
   (let ((org-super-agenda-groups
