@@ -133,6 +133,28 @@ This is mostly useful if section headers have a highlight color,
 making it stretch across the screen."
   :type 'boolean)
 
+;;;; Support functions
+
+(defsubst org-super-agenda--get-marker (s)
+  "Return `org-marker' text properties of string S."
+  (org-find-text-property-in-string 'org-marker s))
+
+(defsubst org-super-agenda--get-tags (s)
+  "Return list of tags in agenda item string S."
+  (org-find-text-property-in-string 'tags s))
+
+(defun org-super-agenda--make-agenda-header (s)
+  "Return agenda header containing string S and a newline."
+  (setq s (concat " " s))
+  (org-add-props s nil 'face 'org-agenda-structure)
+  (concat "\n" s))
+
+(defsubst org-super-agenda--get-priority-cookie (s)
+  "Return priority character for string S.
+Matches `org-priority-regexp'."
+  (when (string-match org-priority-regexp s)
+    (match-string-no-properties 2 s)))
+
 ;;;; Minor mode
 
 ;;;###autoload
@@ -448,35 +470,6 @@ The optional argument TYPE tells the agenda type."
     (setq list (org-super-agenda--group-items list))
 
     (mapconcat 'identity list "\n")))
-
-;;;; Support functions
-
-(defsubst org-super-agenda--get-marker (s)
-  "Return `org-marker' text properties of string S."
-  (org-find-text-property-in-string 'org-marker s))
-
-(defsubst org-super-agenda--get-tags (s)
-  "Return list of tags in agenda item string S."
-  (org-find-text-property-in-string 'tags s))
-
-(defun org-super-agenda--make-agenda-header (s)
-  "Return agenda header containing string S and a newline."
-  (let ((start (point))
-        (s (concat " " s)))
-    ;; (when org-super-agenda-fontify-whole-header-line
-    ;;   ;; Add newline before adding properties
-    ;;   (setq s (concat s "\n")))
-    (org-add-props s nil 'face 'org-agenda-structure)
-    ;; (unless org-super-agenda-fontify-whole-header-line
-    ;;   ;; Add newline after adding properties
-    ;;   (setq s (concat s "\n")))
-    (concat "\n" s)))
-
-(defsubst org-super-agenda--get-priority-cookie (s)
-  "Return priority character for string S.
-Matches `org-priority-regexp'."
-  (when (string-match org-priority-regexp s)
-    (match-string-no-properties 2 s)))
 
 ;;;; Footer
 
