@@ -144,11 +144,11 @@ SCHEDULED: <2017-07-05 Wed>
                     ;; displayed in that group instead, because items are grouped
                     ;; out in the order the groups are listed.
                     :order 9)
-             (:priority ("B" "C")
-                        ;; Show this section after "Today" and "Important", because
-                        ;; their order is unspecified, defaulting to 0. Sections
-                        ;; are displayed lowest-number-first.
-                        :order 1)
+             (:priority<= "B"
+                          ;; Show this section after "Today" and "Important", because
+                          ;; their order is unspecified, defaulting to 0. Sections
+                          ;; are displayed lowest-number-first.
+                          :order 1)
              ;; After the last group, the agenda will display items that didn't
              ;; match any of these groups, with the default order position of 99
              )))
