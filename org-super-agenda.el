@@ -337,7 +337,7 @@ see."
            and collect auto-section-name into names
 
            ;; Now for the AND
-           finally do (setq final-matches (reduce 'seq-intersection all-matches))
+           finally do (setq final-matches (cl-reduce 'seq-intersection all-matches))
            finally do (setq final-non-matches (seq-difference all-items final-matches))
            finally return (list (s-join " AND " (-non-nil names))
                                 final-non-matches
@@ -373,7 +373,7 @@ Any groups processed after this will not see these items."
            and collect auto-section-name into names
 
            ;; Now for the AND
-           finally do (setq final-matches (reduce 'seq-intersection all-matches))
+           finally do (setq final-matches (cl-reduce 'seq-intersection all-matches))
            finally do (setq final-non-matches (seq-difference all-items final-matches))
            finally return (list (s-join " AND " (-non-nil names))
                                 final-non-matches
