@@ -103,6 +103,7 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 
 +  =:deadline= Group items that have deadlines.
 +  =:habit= Group habit items. Habit items have a "STYLE: habit" Org property.
++  =:heading-regexp= Group items whose headings match any of the given regular expressions.
 +  =:priority= Group items that match any of the given priorities. Argument may be a string or list of strings, which should be the priority letter, e.g. =A=.
 +  =:priority>= Group items that are higher than the given priority, e.g. =C=.
 +  =:priority>== Group items that are higher than or equal to the given priority, e.g. =B=.

@@ -283,6 +283,22 @@ section name for this group."
           (cl-loop for regexp in args
                    thereis (string-match-p regexp entry))))
 
+(org-super-agenda--defgroup heading-regexp
+  "Group items whose headings match a regular expression.
+Argument may be a string or list of strings, each of which should
+be a regular expression.  You'll probably want to override the
+section name for this group."
+  :section-name (concat "Headings matching regexps: " (s-join " OR "
+                                                              (--map (s-wrap it "\"")
+                                                                     args)))
+  :test (when-let ((case-fold-search t)
+                   (marker (org-super-agenda--get-marker item))
+                   (heading (with-current-buffer (marker-buffer marker)
+                              (goto-char marker)
+                              (org-get-heading 'no-tags 'no-todo))))
+          (cl-loop for regexp in args
+                   thereis (string-match-p regexp heading))))
+
 (org-super-agenda--defgroup deadline
   "Group items that have deadlines."
   :section-name "Deadline items"
