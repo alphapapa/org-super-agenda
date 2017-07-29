@@ -97,6 +97,9 @@
 ;;;; Variables
 
 (eval-when-compile
+  ;; FIXME: Is this really necessary, or is this the best way to do
+  ;; this?
+
   (defvar org-super-agenda-group-types nil
     "List of agenda grouping keywords and associated functions.
 Populated automatically by `org-super-agenda--defgroup'.")
@@ -104,10 +107,20 @@ Populated automatically by `org-super-agenda--defgroup'.")
   (defvar org-super-agenda-group-transformers nil
     "List of agenda group transformers."))
 
+(defvar org-super-agenda-function-overrides
+  '((org-agenda-finalize-entries . org-super-agenda--finalize-entries))
+  "List of alists mapping agenda functions to overriding
+  functions.")
+
 (defgroup org-super-agenda nil
   "Settings for `org-super-agenda'."
   :group 'org
   :link '(url-link "http://github.com/alphapapa/org-super-agenda"))
+
+(defcustom org-super-agenda-groups nil
+  "List of groups to apply to agenda views when `org-super-agenda-mode' is on.
+See readme for information."
+  :type 'list)
 
 (defcustom org-super-agenda-unmatched-order 99
   "Default order setting for agenda section containing items unmatched by any filter."
@@ -119,7 +132,26 @@ This is mostly useful if section headers have a highlight color,
 making it stretch across the screen."
   :type 'boolean)
 
-;;;; Filters
+;;;; Minor mode
+
+(define-minor-mode org-super-agenda-mode
+  "Global minor mode to override standard Org agenda commands with modified versions that group according to `org-super-agenda-groups'.With prefix argument ARG, turn on if positive, otherwise off."
+  :global t
+  (let ((advice-function (if org-super-agenda-mode
+                             (lambda (to fun)
+                               ;; Enable mode
+                               (advice-add to :override fun))
+                           (lambda (from fun)
+                             ;; Disable mode
+                             (advice-remove from fun)))))
+    (cl-loop for (target . override) in org-super-agenda-function-overrides
+             do (funcall advice-function target override))
+    ;; Display message
+    (if org-super-agenda-mode
+        (message "org-super-agenda-mode enabled.")
+      (message "org-super-agenda-mode disabled."))))
+
+;;;; Group selectors
 
 (cl-defmacro org-super-agenda--defgroup (name docstring &key section-name test)
   "Define an agenda-item group function.
@@ -219,229 +251,11 @@ Habit items have a \"STYLE: habit\" Org property."
     :section-name "Habits"
     :test (org-is-habit-p (org-super-agenda--get-marker item))))
 
-;;;; Group transformers
 
-(defun org-super-agenda--group-transform-order (groups)
-  "Return GROUPS with their order set.
-GROUPS is a list of groups, but the first element of the list is
-actually the ORDER for the groups."
-  (cl-loop with order = (pop groups)
-           for group in groups
-           collect (plist-put group :order order)))
-;; FIXME: Is there a better way to do this?  Maybe if I ever have any more transformers...
-(setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
-                                                     :order-multi 'org-super-agenda--group-transform-order))
+;;;; Grouping functions
 
-;;;; Agenda command
-
-(defun org-super-agenda (&optional arg start-day span with-hour)
-  "This function is a copy of `org-agenda-list' which filters according to `org-agenda-super-filters'.
-It is otherwise identical.
-
-Produce a daily/weekly view from all files in variable `org-agenda-files'.
-The view will be for the current day or week, but from the overview buffer
-you will be able to go to other days/weeks.
-
-With a numeric prefix argument in an interactive call, the agenda will
-span ARG days.  Lisp programs should instead specify SPAN to change
-the number of days.  SPAN defaults to `org-agenda-span'.
-
-START-DAY defaults to TODAY, or to the most recent match for the weekday
-given in `org-agenda-start-on-weekday'.
-
-When WITH-HOUR is non-nil, only include scheduled and deadline
-items if they have an hour specification like [h]h:mm."
-  (interactive "P")
-  (if org-agenda-overriding-arguments
-      (setq arg (car org-agenda-overriding-arguments)
-	    start-day (nth 1 org-agenda-overriding-arguments)
-	    span (nth 2 org-agenda-overriding-arguments)))
-  (if (and (integerp arg) (> arg 0))
-      (setq span arg arg nil))
-  (catch 'exit
-    (setq org-agenda-buffer-name
-	  (or org-agenda-buffer-tmp-name
-	      (if org-agenda-sticky
-		  (cond ((and org-keys (stringp org-match))
-			 (format "*Org Agenda(%s:%s)*" org-keys org-match))
-			(org-keys
-			 (format "*Org Agenda(%s)*" org-keys))
-			(t "*Org Agenda(a)*")))
-	      org-agenda-buffer-name))
-    (org-agenda-prepare "Day/Week")
-    (setq start-day (or start-day org-agenda-start-day))
-    (if (stringp start-day)
-	;; Convert to an absolute day number
-	(setq start-day (time-to-days (org-read-date nil t start-day))))
-    (org-compile-prefix-format 'agenda)
-    (org-set-sorting-strategy 'agenda)
-    (let* ((span (org-agenda-ndays-to-span (or span org-agenda-span)))
-	   (today (org-today))
-	   (sd (or start-day today))
-	   (ndays (org-agenda-span-to-ndays span sd))
-	   (org-agenda-start-on-weekday
-	    (if (or (eq ndays 7) (eq ndays 14))
-		org-agenda-start-on-weekday))
-	   (thefiles (org-agenda-files nil 'ifmode))
-	   (files thefiles)
-	   (start (if (or (null org-agenda-start-on-weekday)
-			  (< ndays 7))
-		      sd
-		    (let* ((nt (calendar-day-of-week
-				(calendar-gregorian-from-absolute sd)))
-			   (n1 org-agenda-start-on-weekday)
-			   (d (- nt n1)))
-		      (- sd (+ (if (< d 0) 7 0) d)))))
-	   (day-numbers (list start))
-	   (day-cnt 0)
-	   (inhibit-redisplay (not debug-on-error))
-	   (org-agenda-show-log-scoped org-agenda-show-log)
-	   s e rtn rtnall file date d start-pos end-pos todayp
-	   clocktable-start clocktable-end filter)
-      (setq org-agenda-redo-command
-	    (list 'org-super-agenda (list 'quote arg) start-day (list 'quote span) with-hour))
-      (dotimes (n (1- ndays))
-	(push (1+ (car day-numbers)) day-numbers))
-      (setq day-numbers (nreverse day-numbers))
-      (setq clocktable-start (car day-numbers)
-	    clocktable-end (1+ (or (org-last day-numbers) 0)))
-      (setq-local org-starting-day (car day-numbers))
-      (setq-local org-arg-loc arg)
-      (setq-local org-agenda-current-span (org-agenda-ndays-to-span span))
-      (unless org-agenda-compact-blocks
-	(let* ((d1 (car day-numbers))
-	       (d2 (org-last day-numbers))
-	       (w1 (org-days-to-iso-week d1))
-	       (w2 (org-days-to-iso-week d2)))
-	  (setq s (point))
-	  (if org-agenda-overriding-header
-	      (insert (org-add-props (copy-sequence org-agenda-overriding-header)
-			  nil 'face 'org-agenda-structure) "\n")
-	    (insert (org-agenda-span-name span)
-		    "-agenda"
-		    (if (< (- d2 d1) 350)
-			(if (= w1 w2)
-			    (format " (W%02d)" w1)
-			  (format " (W%02d-W%02d)" w1 w2))
-		      "")
-		    ":\n")))
-	(add-text-properties s (1- (point)) (list 'face 'org-agenda-structure
-						  'org-date-line t))
-	(org-agenda-mark-header-line s))
-      (while (setq d (pop day-numbers))
-	(setq date (calendar-gregorian-from-absolute d)
-	      s (point))
-	(if (or (setq todayp (= d today))
-		(and (not start-pos) (= d sd)))
-	    (setq start-pos (point))
-	  (if (and start-pos (not end-pos))
-	      (setq end-pos (point))))
-	(setq files thefiles
-	      rtnall nil)
-	(while (setq file (pop files))
-	  (catch 'nextfile
-	    (org-check-agenda-file file)
-	    (let ((org-agenda-entry-types org-agenda-entry-types))
-	      ;; Starred types override non-starred equivalents
-	      (when (member :deadline* org-agenda-entry-types)
-		(setq org-agenda-entry-types
-		      (delq :deadline org-agenda-entry-types)))
-	      (when (member :scheduled* org-agenda-entry-types)
-		(setq org-agenda-entry-types
-		      (delq :scheduled org-agenda-entry-types)))
-	      ;; Honor with-hour
-	      (when with-hour
-		(when (member :deadline org-agenda-entry-types)
-		  (setq org-agenda-entry-types
-			(delq :deadline org-agenda-entry-types))
-		  (push :deadline* org-agenda-entry-types))
-		(when (member :scheduled org-agenda-entry-types)
-		  (setq org-agenda-entry-types
-			(delq :scheduled org-agenda-entry-types))
-		  (push :scheduled* org-agenda-entry-types)))
-	      (unless org-agenda-include-deadlines
-		(setq org-agenda-entry-types
-		      (delq :deadline* (delq :deadline org-agenda-entry-types))))
-	      (cond
-	       ((memq org-agenda-show-log-scoped '(only clockcheck))
-		(setq rtn (org-agenda-get-day-entries
-			   file date :closed)))
-	       (org-agenda-show-log-scoped
-		(setq rtn (apply 'org-agenda-get-day-entries
-				 file date
-				 (append '(:closed) org-agenda-entry-types))))
-	       (t
-		(setq rtn (apply 'org-agenda-get-day-entries
-				 file date
-				 org-agenda-entry-types)))))
-	    (setq rtnall (append rtnall rtn)))) ;; all entries
-	(if org-agenda-include-diary
-	    (let ((org-agenda-search-headline-for-time t))
-	      (require 'diary-lib)
-	      (setq rtn (org-get-entries-from-diary date))
-	      (setq rtnall (append rtnall rtn))))
-	(if (or rtnall org-agenda-show-all-dates)
-	    (progn
-	      (setq day-cnt (1+ day-cnt))
-	      (insert
-	       (if (stringp org-agenda-format-date)
-		   (format-time-string org-agenda-format-date
-				       (org-time-from-absolute date))
-		 (funcall org-agenda-format-date date))
-	       "\n")
-	      (put-text-property s (1- (point)) 'face
-				 (org-agenda-get-day-face date))
-	      (put-text-property s (1- (point)) 'org-date-line t)
-	      (put-text-property s (1- (point)) 'org-agenda-date-header t)
-	      (put-text-property s (1- (point)) 'org-day-cnt day-cnt)
-	      (when todayp
-		(put-text-property s (1- (point)) 'org-today t))
-	      (setq rtnall
-		    (org-agenda-add-time-grid-maybe rtnall ndays todayp))
-              ;; Insert items
-	      (when rtnall
-                (org-super-agenda--insert-sections rtnall))
-	      (put-text-property s (1- (point)) 'day d)
-	      (put-text-property s (1- (point)) 'org-day-cnt day-cnt))))
-      (when (and org-agenda-clockreport-mode clocktable-start)
-	(let ((org-agenda-files (org-agenda-files nil 'ifmode))
-	      ;; the above line is to ensure the restricted range!
-	      (p (copy-sequence org-agenda-clockreport-parameter-plist))
-	      tbl)
-	  (setq p (org-plist-delete p :block))
-	  (setq p (plist-put p :tstart clocktable-start))
-	  (setq p (plist-put p :tend clocktable-end))
-	  (setq p (plist-put p :scope 'agenda))
-	  (setq tbl (apply 'org-clock-get-clocktable p))
-	  (insert tbl)))
-      (goto-char (point-min))
-      (or org-agenda-multi (org-agenda-fit-window-to-buffer))
-      (unless (and (pos-visible-in-window-p (point-min))
-		   (pos-visible-in-window-p (point-max)))
-	(goto-char (1- (point-max)))
-	(recenter -1)
-	(if (not (pos-visible-in-window-p (or start-pos 1)))
-	    (progn
-	      (goto-char (or start-pos 1))
-	      (recenter 1))))
-      (goto-char (or start-pos 1))
-      (add-text-properties (point-min) (point-max)
-			   `(org-agenda-type agenda
-					     org-last-args (,arg ,start-day ,span)
-					     org-redo-cmd ,org-agenda-redo-command
-					     org-series-cmd ,org-cmd))
-      (if (eq org-agenda-show-log-scoped 'clockcheck)
-	  (org-agenda-show-clocking-issues))
-      (org-agenda-finalize)
-      (setq buffer-read-only t)
-      (message ""))))
-
-;;;;; Support functions
-
-(defun org-super-agenda--insert-sections (all-items)
-  "Divide ALL-ITEMS into sections and insert them into the agenda."
-  ;; This essentially replaces the part of `org-agenda-list' that
-  ;; finally inserts the `rtnall' variable.
+(defun org-super-agenda--group-items (all-items)
+  "Divide ALL-ITEMS into groups based on `org-super-agenda-groups'."
   (if (bound-and-true-p org-super-agenda-groups)
       ;; Transform groups
       (let ((org-super-agenda-groups (org-super-agenda--transform-groups org-super-agenda-groups)))
@@ -469,16 +283,14 @@ items if they have an hour specification like [h]h:mm."
                                                            (t (< o-it o-other))))
                                                    (push non-matching sections)))
                  ;; Insert sections
-                 finally do (progn
-                              (cl-loop for (_ name _ items) in sections
-                                       when items
-                                       do (progn
-                                            (org-super-agenda--insert-agenda-header name)
-                                            (insert (org-agenda-finalize-entries items 'agenda)
-                                                    "\n\n"))))))
-    ;; No super-filters; insert normally
-    (insert (org-agenda-finalize-entries all-items 'agenda)
-            "\n")))
+                 finally return (cl-loop for (_ name _ items) in sections
+                                         when items
+                                         collect (org-super-agenda--make-agenda-header name)
+                                         and append items)))
+    ;; No super-filters; return list unmodified
+    all-items))
+
+;;;;; Dispatchers
 
 (defun org-super-agenda--group-dispatch (items group)
   "Group ITEMS with the appropriate grouping functions for GROUP.
@@ -569,6 +381,8 @@ Any groups processed after this will not see these items."
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
                                               :discard 'org-super-agenda--group-dispatch-discard))
 
+;;;;; Transformers
+
 (defun org-super-agenda--transform-groups (groups)
   "Transform GROUPS according to `org-super-agenda-group-transformers'."
   (cl-loop for group in groups
@@ -578,6 +392,63 @@ Any groups processed after this will not see these items."
            and append group
            else collect group))
 
+(defun org-super-agenda--transform-group-order (groups)
+  "Return GROUPS with their order set.
+GROUPS is a list of groups, but the first element of the list is
+actually the ORDER for the groups."
+  (cl-loop with order = (pop groups)
+           for group in groups
+           collect (plist-put group :order order)))
+;; FIXME: Is there a better way to do this?  Maybe if I ever have any more transformers...
+(setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
+                                                     :order-multi 'org-super-agenda--transform-group-order))
+
+;;;; Finalize function
+
+(defun org-super-agenda--finalize-entries (list &optional type)
+  "Sort, limit and concatenate the LIST of agenda items.
+The optional argument TYPE tells the agenda type."
+  ;; This function is a copy of `org-agenda-finalize-entries', with
+  ;; the only change being that it groups items with
+  ;; `org-super-agenda--group-items' before it finally returns them.
+  (let ((max-effort (cond ((listp org-agenda-max-effort)
+			   (cdr (assoc type org-agenda-max-effort)))
+			  (t org-agenda-max-effort)))
+	(max-todo (cond ((listp org-agenda-max-todos)
+			 (cdr (assoc type org-agenda-max-todos)))
+			(t org-agenda-max-todos)))
+	(max-tags (cond ((listp org-agenda-max-tags)
+			 (cdr (assoc type org-agenda-max-tags)))
+			(t org-agenda-max-tags)))
+	(max-entries (cond ((listp org-agenda-max-entries)
+			    (cdr (assoc type org-agenda-max-entries)))
+			   (t org-agenda-max-entries))))
+    (when org-agenda-before-sorting-filter-function
+      (setq list
+	    (delq nil
+		  (mapcar
+		   org-agenda-before-sorting-filter-function list))))
+    (setq list (mapcar 'org-agenda-highlight-todo list)
+	  list (mapcar 'identity (sort list 'org-entries-lessp)))
+    (when max-effort
+      (setq list (org-agenda-limit-entries
+		  list 'effort-minutes max-effort
+		  (lambda (e) (or e (if org-sort-agenda-noeffort-is-high
+					32767 -1))))))
+    (when max-todo
+      (setq list (org-agenda-limit-entries list 'todo-state max-todo)))
+    (when max-tags
+      (setq list (org-agenda-limit-entries list 'tags max-tags)))
+    (when max-entries
+      (setq list (org-agenda-limit-entries list 'org-hd-marker max-entries)))
+
+    ;; Filter with super-groups
+    (setq list (org-super-agenda--group-items list))
+
+    (mapconcat 'identity list "\n")))
+
+;;;; Support functions
+
 (defsubst org-super-agenda--get-marker (s)
   "Return `org-marker' text properties of string S."
   (org-find-text-property-in-string 'org-marker s))
@@ -586,14 +457,18 @@ Any groups processed after this will not see these items."
   "Return list of tags in agenda item string S."
   (org-find-text-property-in-string 'tags s))
 
-(defsubst org-super-agenda--insert-agenda-header (s)
-  "Insert agenda header into current buffer containing string S and a newline."
+(defun org-super-agenda--make-agenda-header (s)
+  "Return agenda header containing string S and a newline."
   (let ((start (point))
         (s (concat " " s)))
-    (insert (org-add-props s nil 'face 'org-agenda-structure)
-            "\n")
-    (when org-super-agenda-fontify-whole-header-line
-      (add-text-properties start (point) '(face org-agenda-structure)))))
+    ;; (when org-super-agenda-fontify-whole-header-line
+    ;;   ;; Add newline before adding properties
+    ;;   (setq s (concat s "\n")))
+    (org-add-props s nil 'face 'org-agenda-structure)
+    ;; (unless org-super-agenda-fontify-whole-header-line
+    ;;   ;; Add newline after adding properties
+    ;;   (setq s (concat s "\n")))
+    (concat "\n" s)))
 
 (defsubst org-super-agenda--get-priority-cookie (s)
   "Return priority character for string S.

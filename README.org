@@ -24,56 +24,56 @@ Here's what the "super" agenda looks like:
 
 ** Usage
 
-Here's the code for the example above.  The ~org-super-agenda~ command works as a custom agenda command, so you can add it to your ~org-agenda-custom-commands~ list.  You can also test it quickly like this:
+After installing, run the command =org-super-agenda-mode=, then set the variable =org-super-agenda-groups= as desired.  The variable should be a list of groups.  Then run an agenda command, and the entries will be grouped!
+
+Here's the code for the example above.  You can test it quickly by evaluating this form:
 
 #+BEGIN_SRC elisp
-  (let ((org-agenda-custom-commands
-         '(("u" "SUPER Agenda"
-            org-super-agenda ""
-            ((org-agenda-span 'day)
-             (org-super-agenda-groups
-              '(;; Each group has an implicit boolean OR operator between its selectors.
-                (:name "Today"  ; Optionally specify section name
-                       :time t  ; Items that have a time associated
-                       :todo "TODAY")  ; Items that have this TODO keyword
-                (:name "Important"
-                       ;; Single arguments given alone
-                       :tag "bills"
-                       :priority "A")
-                ;; Set order of multiple groups at once
-                (:order-multi (2 (:name "Shopping in town"
-                                        ;; Boolean AND group matches items that match all subgroups
-                                        :and (:tag "shopping" :tag "@town"))
-                                 (:name "Food-related"
-                                        ;; Multiple args given in list with implicit OR
-                                        :tag ("food" "dinner"))
-                                 (:name "Personal"
-                                        :habit t
-                                        :tag "personal")
-                                 (:name "Space-related (non-moon-or-planet-related)"
-                                        ;; Regexps match case-insensitively on the entire entry
-                                        :and (:regexp ("space" "NASA")
-                                                      ;; Boolean NOT also has implicit OR between selectors
-                                                      :not (:regexp "moon" :tag "planet")))))
-                ;; Groups supply their own section names when none are given
-                (:todo "WAITING" :order 8)  ; Set order of this section
-                (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
-                       ;; Show this group at the end of the agenda (since it has the
-                       ;; highest number). If you specified this group last, items
-                       ;; with these todo keywords that e.g. have priority A would be
-                       ;; displayed in that group instead, because items are grouped
-                       ;; out in the order the groups are listed.
-                       :order 9)
-                (:priority ("B" "C")
-                           ;; Show this section after "Today" and "Important", because
-                           ;; their order is unspecified, defaulting to 0.  Sections
-                           ;; are displayed lowest-number-first.
-                           :order 1)
-                ;; After the last group, the agenda will display items that didn't
-                ;; match any of these groups, with the default order position of 99
-                )))))))
-    (org-agenda nil "u"))
+  (let ((org-super-agenda-groups
+         '(;; Each group has an implicit boolean OR operator between its selectors.
+           (:name "Today"  ; Optionally specify section name
+                  :time t  ; Items that have a time associated
+                  :todo "TODAY")  ; Items that have this TODO keyword
+           (:name "Important"
+                  ;; Single arguments given alone
+                  :tag "bills"
+                  :priority "A")
+           ;; Set order of multiple groups at once
+           (:order-multi (2 (:name "Shopping in town"
+                                   ;; Boolean AND group matches items that match all subgroups
+                                   :and (:tag "shopping" :tag "@town"))
+                            (:name "Food-related"
+                                   ;; Multiple args given in list with implicit OR
+                                   :tag ("food" "dinner"))
+                            (:name "Personal"
+                                   :habit t
+                                   :tag "personal")
+                            (:name "Space-related (non-moon-or-planet-related)"
+                                   ;; Regexps match case-insensitively on the entire entry
+                                   :and (:regexp ("space" "NASA")
+                                                 ;; Boolean NOT also has implicit OR between selectors
+                                                 :not (:regexp "moon" :tag "planet")))))
+           ;; Groups supply their own section names when none are given
+           (:todo "WAITING" :order 8)  ; Set order of this section
+           (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                  ;; Show this group at the end of the agenda (since it has the
+                  ;; highest number). If you specified this group last, items
+                  ;; with these todo keywords that e.g. have priority A would be
+                  ;; displayed in that group instead, because items are grouped
+                  ;; out in the order the groups are listed.
+                  :order 9)
+           (:priority ("B" "C")
+                      ;; Show this section after "Today" and "Important", because
+                      ;; their order is unspecified, defaulting to 0.  Sections
+                      ;; are displayed lowest-number-first.
+                      :order 1)
+           ;; After the last group, the agenda will display items that didn't
+           ;; match any of these groups, with the default order position of 99
+           )))
+    (org-agenda nil "a"))
 #+END_SRC
+
+The groups apply to all agenda commands (at least, every one that calls =org-agenda-finalize-entries=).  You can set different groups for custom commands by setting =org-super-agenda-groups= in the custom command's =settings= list (see the description for =org-agenda-custom-commands=).  You can disable grouping by binding =org-agenda-super-groups= to nil around a call to an agenda command, or you can disable it globally by disabling the mode.
 
 *** Group selectors
 
@@ -110,13 +110,17 @@ This package will eventually be submitted to MELPA, and hopefully upstreamed int
 
 1.  Install the =dash= and =s= packages from MELPA.
 2.  Put the file =org-super-agenda.el= in your =load-path= directory.
-3.  Add to your init file: ~(use-package org-super-agenda)~.
-4.  Add a new custom command to =org-agenda-custom-commands= that calls =org-super-agenda=.  Use the example code above as a guideline.
+3.  Add to your init file: ~(use-package org-super-agenda :config (org-super-agenda-mode))~.
+4.  Set the =org-super-agenda-groups= variable.  Use the example code above as a guideline.
 5.  Start the day with confidence, knowing that nothing important has been lost in the jumble of /ahem/ overdue items.
 
 ** Development
 
 Contributions and feedback are welcome.
+
+*** Bugs
+
++ The =org-search-view= agenda command does not seem to set the =todo-state= text property for items it finds, so the =:todo= selector doesn't work with it.  We should be able to work around this by getting the todo state for each item manually, but we have to make sure that we only do that when necessary, otherwise it might be slow.  And I wouldn't be surprised if there are other selectors that don't work with this or other commands, but =org-agenda-list= should work fine, and =org-tags-view= and =org-todo-list= seem to work.
 
 ** License
 

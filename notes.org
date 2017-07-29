@@ -77,6 +77,25 @@ This helps a lot.
                                                         0 5)))
 #+END_SRC
 
+** DONE Use advice and minor mode
+CLOSED: [2017-07-28 Fri 22:18]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-28 Fri 22:18]
+:END:
+
+Instead of making a new agenda command that must be called separately, I could use advice to override the standard agenda commands with my modified versions, and that way users wouldn't have to do anything except define the groups.  That could even be done globally.  Then a minor mode could add/remove the advice.
+
+Yep, added an override for =org-todo-list= and it seems to be working fine so far.
+
+** DONE Just modify org-agenda-finalize-entries?
+CLOSED: [2017-07-28 Fri 22:18]
+:LOGBOOK:
+-  State "DONE"       from "MAYBE"      [2017-07-28 Fri 22:18] \\
+   It works!
+:END:
+
+I just realized that, instead of copying and modifying every agenda command, I might be able to just modify =org-agenda-finalize-entries=!
+
 ** DONE Get list of agenda items from agenda function, just before it inserts into the agenda buffer
 CLOSED: [2017-07-23 Sun 16:50]
 :LOGBOOK:
@@ -93,7 +112,6 @@ CLOCK: [2017-07-23 Sun 12:24]
 
 +  =org-agenda-list= is the function that makes the default agenda view.
      -  It seems to use ~(org-agenda-finalize-entries rtnall 'agenda)~ to return a string containing the actual items to insert.  So maybe I can just override that function, although I'm not sure if that's enough, because I don't think that function creates section headers.
-
 ** DONE Filter list according to passed arguments
 CLOSED: [2017-07-28 Fri 00:11]
 :LOGBOOK:
