@@ -272,7 +272,9 @@ The string should be the priority cookie letter, e.g. \"A\".")
 Argument may be a string or list of strings, each of which should
 be a regular expression.  You'll probably want to override the
 section name for this group."
-  :section-name (concat "Items matching regexps: " (s-join " and " args))
+  :section-name (concat "Items matching regexps: " (s-join " OR "
+                                                           (--map (s-wrap it "\"")
+                                                                  args)))
   :test (when-let ((case-fold-search t)
                    (marker (org-super-agenda--get-marker item))
                    (entry (with-current-buffer (marker-buffer marker)
