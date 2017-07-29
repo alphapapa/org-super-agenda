@@ -109,7 +109,7 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 +  =:priority>== Group items that are higher than or equal to the given priority, e.g. =B=.
 +  =:priority<= Group items that are lower than the given priority, e.g. =A=.
 +  =:priority<== Group items that are lower than or equal to the given priority, e.g. =B=.
-+  =:regexp= Group items that match a regular expression. Argument may be a string or list of strings, each of which should be a regular expression. You’ll probably want to override the section name for this group.
++  =:regexp= Group items that match any of the given regular expressions.
 +  =:scheduled= Group items that are scheduled.
 +  =:tag= Group items that match any of the given tags. Argument may be a string or list of strings.
 +  =:time= Group items that have a time associated. Items with an associated timestamp that has a time (rather than just a date) are selected.

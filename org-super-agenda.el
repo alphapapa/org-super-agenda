@@ -268,7 +268,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
   :comparator >=)
 
 (org-super-agenda--defgroup regexp
-  "Group items that match a regular expression.
+  "Group items that match any of the given regular expressions.
 Argument may be a string or list of strings, each of which should
 be a regular expression.  You'll probably want to override the
 section name for this group."
@@ -284,7 +284,7 @@ section name for this group."
                    thereis (string-match-p regexp entry))))
 
 (org-super-agenda--defgroup heading-regexp
-  "Group items whose headings match a regular expression.
+  "Group items whose headings match any of the given regular expressions.
 Argument may be a string or list of strings, each of which should
 be a regular expression.  You'll probably want to override the
 section name for this group."
