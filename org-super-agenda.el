@@ -239,7 +239,9 @@ e.g. \"A\" or (\"B\" \"C\")."
 (cl-defmacro org-super-agenda--defpriority-group (name docstring &key section-name comparator)
   (declare (indent defun))
   `(org-super-agenda--defgroup ,(intern (concat "priority" (symbol-name name)))
-     ,docstring
+     ,(concat docstring "\nArgument is a string; it may also be a list of
+strings, in which case only the first will be used.
+The string should be the priority cookie letter, e.g. \"A\".")
      :section-name (concat "Priority " ,(symbol-name name) " "
                            (s-join " or " args) " items")
      :let* ((priority-number (string-to-char (car args))))
@@ -249,31 +251,19 @@ e.g. \"A\" or (\"B\" \"C\")."
                (,comparator (string-to-char item-priority) priority-number)))))
 
 (org-super-agenda--defpriority-group >
-  "Group items that are higher than any the given priority.
-Argument is a string; it may also be a list of strings, in which
-case only the first will be used.  The string should be the
-priority cookie letter, e.g. \"A\."
+  "Group items that are higher than the given priority."
   :comparator <)
 
 (org-super-agenda--defpriority-group >=
-  "Group items that are >= the given priority.
-Argument is a string; it may also be a list of strings, in which
-case only the first will be used.  The string should be the
-priority cookie letter, e.g. \"A\."
+  "Group items that are greater than or equal to the given priority."
   :comparator <=)
 
 (org-super-agenda--defpriority-group <
-  "Group items that are < the given priority.
-Argument is a string; it may also be a list of strings, in which
-case only the first will be used.  The string should be the
-priority cookie letter, e.g. \"A\."
+  "Group items that are lower than the given priority."
   :comparator >)
 
 (org-super-agenda--defpriority-group <=
-  "Group items that are <= the given priority.
-Argument is a string; it may also be a list of strings, in which
-case only the first will be used.  The string should be the
-priority cookie letter, e.g. \"A\."
+  "Group items that are lower than or equal to the given priority."
   :comparator >=)
 
 (org-super-agenda--defgroup regexp
