@@ -407,8 +407,8 @@ see."
            finally return (list (s-join " AND " (-non-nil names))
                                 final-non-matches
                                 final-matches)))
-;; FIXME: This must be done but is this the way to do it?  Do I need eval-when-compile?
-(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :and 'org-super-agenda--group-dispatch-and))
+(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
+                                              :and 'org-super-agenda--group-dispatch-and))
 
 (defun org-super-agenda--group-dispatch-not (items group)
   "Group ITEMS that match no selectors in GROUP."
@@ -416,7 +416,8 @@ see."
   ;; I think all I need to do is re-dispatch and reverse the results
   (-let (((name non-matching matching) (org-super-agenda--group-dispatch items group)))
     (list name matching non-matching)))
-(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types :not 'org-super-agenda--group-dispatch-not))
+(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
+                                              :not 'org-super-agenda--group-dispatch-not))
 
 ;; TODO: Add example for :discard
 (defun org-super-agenda--group-dispatch-discard (items group)
@@ -438,7 +439,6 @@ Any groups processed after this will not see these items."
            finally return (list (s-join " and " (-non-nil names))
                                 items
                                 nil)))
-;; FIXME: This must be done but is this the way to do it?  Do I need eval-when-compile?
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
                                               :discard 'org-super-agenda--group-dispatch-discard))
 
@@ -460,7 +460,6 @@ actually the ORDER for the groups."
   (cl-loop with order = (pop groups)
            for group in groups
            collect (plist-put group :order order)))
-;; FIXME: Is there a better way to do this?  Maybe if I ever have any more transformers...
 (setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
                                                      :order-multi 'org-super-agenda--transform-group-order))
 
