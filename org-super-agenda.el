@@ -173,7 +173,7 @@ Matches `org-priority-regexp'."
 
 ;;;; Group selectors
 
-(cl-defmacro org-super-agenda--defgroup (name docstring &key section-name test)
+(cl-defmacro org-super-agenda--defgroup (name docstring &key section-name test let*)
   "Define an agenda-item group function.
 NAME is a symbol that will be appended to `org-super-agenda--group-' to
 construct the name of the group function.  A symbol like `:name'
@@ -189,6 +189,9 @@ the variable `items' available.
 `item' available.  Items passing this test are filtered into a
 separate list.
 
+:LET is a `let*' binding form that is bound around the function
+body after the ARGS are made a list.
+
 Finally a list of three items is returned, with the value
 returned by :SECTION-NAME as the first item, a list of items not
 matching the :TEST as the second, and a list of items matching as
@@ -203,12 +206,13 @@ the third."
          ,docstring
          (unless (listp args)
            (setq args (list args)))
-         (cl-loop with section-name = ,section-name
-                  for item in items
-                  if ,test
-                  collect item into matching
-                  else collect item into non-matching
-                  finally return (list section-name non-matching matching))))))
+         (let* ,let*
+           (cl-loop with section-name = ,section-name
+                    for item in items
+                    if ,test
+                    collect item into matching
+                    else collect item into non-matching
+                    finally return (list section-name non-matching matching)))))))
 
 (org-super-agenda--defgroup time
   "Group items that have a time associated.
@@ -236,6 +240,46 @@ Argument may be a string or list of strings, which should be,
 e.g. \"A\" or (\"B\" \"C\")."
   :section-name (concat "Priority " (s-join " and " args) " items")
   :test (cl-member (org-super-agenda--get-priority-cookie item) args :test 'string=))
+
+(cl-defmacro org-super-agenda--defpriority-group (name docstring &key section-name comparator)
+  (declare (indent defun))
+  `(org-super-agenda--defgroup ,(intern (concat "priority" (symbol-name name)))
+     ,docstring
+     :section-name (concat "Priority " ,(symbol-name name) " "
+                           (s-join " or " args) " items")
+     :let* ((priority-number (string-to-char (car args))))
+     :test (let ((item-priority (org-super-agenda--get-priority-cookie item)))
+             (when item-priority
+               ;; Higher priority means lower number
+               (,comparator (string-to-char item-priority) priority-number)))))
+
+(org-super-agenda--defpriority-group >
+  "Group items that are higher than any the given priority.
+Argument is a string; it may also be a list of strings, in which
+case only the first will be used.  The string should be the
+priority cookie letter, e.g. \"A\."
+  :comparator <)
+
+(org-super-agenda--defpriority-group >=
+  "Group items that are >= the given priority.
+Argument is a string; it may also be a list of strings, in which
+case only the first will be used.  The string should be the
+priority cookie letter, e.g. \"A\."
+  :comparator <=)
+
+(org-super-agenda--defpriority-group <
+  "Group items that are < the given priority.
+Argument is a string; it may also be a list of strings, in which
+case only the first will be used.  The string should be the
+priority cookie letter, e.g. \"A\."
+  :comparator >)
+
+(org-super-agenda--defpriority-group <=
+  "Group items that are <= the given priority.
+Argument is a string; it may also be a list of strings, in which
+case only the first will be used.  The string should be the
+priority cookie letter, e.g. \"A\."
+  :comparator >=)
 
 (org-super-agenda--defgroup regexp
   "Group items that match a regular expression.

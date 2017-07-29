@@ -102,6 +102,10 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 +  =:habit= Group habit items. Habit items have a "STYLE: habit" Org property.
 +  =:order= A number setting the order sections will be displayed in the agenda, lowest number first.  Defaults to =0=.
 +  =:priority= Group items that match any of the given priorities. Argument may be a string or list of strings, which should be the priority letter, e.g. =A=.
++  =:priority>= Group items that are higher than the given priority, e.g. =C=.
++  =:priority>== Group items that are higher than or equal to the given priority, e.g. =B=.
++  =:priority<= Group items that are lower than the given priority, e.g. =A=.
++  =:priority<== Group items that are lower than or equal to the given priority, e.g. =B=.
 +  =:regexp= Group items that match a regular expression. Argument may be a string or list of strings, each of which should be a regular expression. You’ll probably want to override the section name for this group.
 +  =:scheduled= Group items that are scheduled.
 +  =:tag= Group items that match any of the given tags. Argument may be a string or list of strings.

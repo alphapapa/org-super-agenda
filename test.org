@@ -106,7 +106,7 @@ SCHEDULED: <2017-07-05 Wed>
   (with-org-today-date "2017-07-05 00:00"
     (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
           (org-agenda-span 'day))
-      (org-agenda-list nil "2017-07-05")))
+      (org-agenda-list nil)))
 
   (with-org-today-date "2017-07-05 00:00"
     (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
@@ -160,6 +160,34 @@ SCHEDULED: <2017-07-05 Wed>
           (org-super-agenda-groups
            '((:discard (:regexp "pizza"
                                 :regexp "groceries")))))
+      (org-agenda nil "a")))
+
+  (with-org-today-date "2017-07-05 00:00"
+    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+          (org-agenda-span 'day)
+          (org-super-agenda-groups
+           '((:priority>= "B"))))
+      (org-agenda nil "a")))
+
+  (with-org-today-date "2017-07-05 00:00"
+    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+          (org-agenda-span 'day)
+          (org-super-agenda-groups
+           '((:priority>= "A"))))
+      (org-agenda nil "a")))
+
+  (with-org-today-date "2017-07-05 00:00"
+    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+          (org-agenda-span 'day)
+          (org-super-agenda-groups
+           '((:priority< "B" :order 100))))
+      (org-agenda nil "a")))
+
+  (with-org-today-date "2017-07-05 00:00"
+    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+          (org-agenda-span 'day)
+          (org-super-agenda-groups
+           '((:priority<= "C" :order 100))))
       (org-agenda nil "a")))
 
 
