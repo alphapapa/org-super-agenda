@@ -97,16 +97,12 @@
 
 ;;;; Variables
 
-(eval-when-compile
-  ;; FIXME: Is this really necessary, or is this the best way to do
-  ;; this?
-
-  (defvar org-super-agenda-group-types nil
-    "List of agenda grouping keywords and associated functions.
+(defvar org-super-agenda-group-types nil
+  "List of agenda grouping keywords and associated functions.
 Populated automatically by `org-super-agenda--defgroup'.")
 
-  (defvar org-super-agenda-group-transformers nil
-    "List of agenda group transformers."))
+(defvar org-super-agenda-group-transformers nil
+  "List of agenda group transformers.")
 
 (defvar org-super-agenda-function-overrides
   '((org-agenda-finalize-entries . org-super-agenda--finalize-entries))
@@ -201,17 +197,18 @@ the third."
   (let ((group-type (intern (concat ":" (symbol-name name))))
         (function-name (intern (concat "org-super-agenda--group-" (symbol-name name)))))
     ;; Associate the group type with this function so the dispatcher can find it
-    (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types group-type function-name))
-    `(defun ,function-name (items args)
-       ,docstring
-       (unless (listp args)
-         (setq args (list args)))
-       (cl-loop with section-name = ,section-name
-                for item in items
-                if ,test
-                collect item into matching
-                else collect item into non-matching
-                finally return (list section-name non-matching matching)))))
+    `(progn
+       (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types ,group-type ',function-name))
+       (defun ,function-name (items args)
+         ,docstring
+         (unless (listp args)
+           (setq args (list args)))
+         (cl-loop with section-name = ,section-name
+                  for item in items
+                  if ,test
+                  collect item into matching
+                  else collect item into non-matching
+                  finally return (list section-name non-matching matching))))))
 
 (org-super-agenda--defgroup time
   "Group items that have a time associated.
