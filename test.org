@@ -32,7 +32,8 @@ DEADLINE: <2017-07-05 Wed>
 -  State "CHECK"      from              [2017-07-24 Mon 19:00]
 :END:
 
-** WAITING Visit the moon <2017-08-27 Sun -2m>                                    :space:travel: 
+** WAITING Visit the moon                                     :space:travel:
+   DEADLINE: <2017-08-27 Sun -2m>
 :LOGBOOK:
 -  State "WAITING"    from              [2017-07-24 Mon 19:01]
 :END:
@@ -40,11 +41,11 @@ DEADLINE: <2017-07-05 Wed>
 Just waiting on that callback from NASA...
 
 ** TODO Visit Mars                                            :space:travel:planet:
-SCHEDULED: <2017-09-20 Wed -3m>
+DEADLINE: <2017-09-20 Wed -3m>
 
 Ah, the red planet...
 
-** TODAY [#C] Get haircut                                   :personal:@town:
+** TODO [#C] Get haircut                                     :personal:@town:
 SCHEDULED: <2017-07-05 Wed>
 
 Should probably do this before I take over the world.  Want to look my best.  (Not that it will matter once I'm in charge.)
@@ -56,7 +57,7 @@ DEADLINE: <2017-07-21 Fri -1m>
 DEADLINE: <2017-08-01 Tue -1m>
 
 ** TODO [#B] Fix flux capacitor               :spaceship:shopping:@computer:
-SCHEDULED: <2017-07-06 Thu -1w>
+SCHEDULED: <2017-07-05 Wed>
 
 If I don't, the frobnicator will probably fall off halfway to Mars...
 
@@ -87,9 +88,7 @@ SCHEDULED: <2017-07-05 Wed>
           (sequence "TO-READ(r!)" "READING(R!)" "|" "HAVE-READ(d@)")
           (sequence "TO-WATCH(!)" "WATCHING(!)" "SEEN(!)")))
   (with-current-buffer "test.org" (revert-buffer))
-#+END_SRC
 
-#+BEGIN_SRC elisp
   (defmacro with-org-today-date (date &rest body)
     "Run BODY with the `org-today' function set to return simply DATE.
   DATE should be a date-time string (both date and time must be included)."
