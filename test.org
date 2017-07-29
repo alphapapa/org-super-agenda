@@ -76,6 +76,19 @@ SCHEDULED: <2017-07-17 Mon>
 * Code
 
 #+BEGIN_SRC elisp
+  ;; Setup code
+  (require 'org-super-agenda)
+  (org-super-agenda-mode 1)
+  (require 'org-habit)
+  (setq org-todo-keywords
+        '((sequence "TODO(t!)" "TODAY(a!)" "NEXT(n!)" "STARTED(s!)" "IN-PROGRESS(p!)" "UNDERWAY(u!)" "WAITING(w@)" "SOMEDAY(o!)" "MAYBE(m!)" "|" "DONE(d@)" "CANCELED(c@)")
+          (sequence "CHECK(k!)" "|" "DONE(d@)")
+          (sequence "TO-READ(r!)" "READING(R!)" "|" "HAVE-READ(d@)")
+          (sequence "TO-WATCH(!)" "WATCHING(!)" "SEEN(!)")))
+  (with-current-buffer "test.org" (revert-buffer))
+#+END_SRC
+
+#+BEGIN_SRC elisp
   ;; Before
   (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
         (org-agenda-custom-commands
