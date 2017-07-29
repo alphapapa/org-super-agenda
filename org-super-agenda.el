@@ -90,6 +90,7 @@
 
 (require 'subr-x)
 (require 'org)
+(require 'org-agenda)
 (require 'cl-lib)
 (require 'dash)
 (require 's)
