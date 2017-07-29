@@ -151,7 +151,8 @@ Matches `org-priority-regexp'."
 
 ;;;###autoload
 (define-minor-mode org-super-agenda-mode
-  "Global minor mode to override standard Org agenda commands with modified versions that group according to `org-super-agenda-groups'.With prefix argument ARG, turn on if positive, otherwise off."
+  "Global minor mode to group items in Org agenda views according to `org-super-agenda-groups'.
+With prefix argument ARG, turn on if positive, otherwise off."
   :global t
   (let ((advice-function (if org-super-agenda-mode
                              (lambda (to fun)
