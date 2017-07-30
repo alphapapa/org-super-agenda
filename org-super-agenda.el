@@ -167,6 +167,14 @@ Matches `org-priority-regexp'."
   (when (string-match org-priority-regexp s)
     (match-string-no-properties 2 s)))
 
+(defun org-super-agenda--get-item-entry (item)
+  "Get entry for ITEM.
+ITEM should be a string with the `org-marker' property set to a
+marker."
+  (when-with-marker-buffer (org-super-agenda--get-marker item)
+    (buffer-substring (org-entry-beginning-position)
+                      (org-entry-end-position))))
+
 ;;;; Minor mode
 
 ;;;###autoload
@@ -327,10 +335,7 @@ section name for this group."
                                 (--map (s-wrap it "\"")
                                        args)))
   :let* ((case-fold-search t))
-  :test (when-let ((marker (org-super-agenda--get-marker item))
-                   (entry (with-current-buffer (marker-buffer marker)
-                            (goto-char marker)
-                            (buffer-substring (org-entry-beginning-position) (org-entry-end-position)))))
+  :test (when-let ((entry (org-super-agenda--get-item-entry item)))
           (cl-loop for regexp in args
                    thereis (string-match-p regexp entry))))
 
@@ -344,26 +349,22 @@ section name for this group."
                                 (--map (s-wrap it "\"")
                                        args)))
   :let* ((case-fold-search t))
-  :test (when-let ((marker (org-super-agenda--get-marker item))
-                   (heading (with-current-buffer (marker-buffer marker)
-                              (goto-char marker)
-                              (org-get-heading 'no-tags 'no-todo))))
-          (cl-loop for regexp in args
-                   thereis (string-match-p regexp heading))))
+  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
+          (let ((heading (org-get-heading 'no-tags 'no-todo)))
+            (cl-loop for regexp in args
+                     thereis (string-match-p regexp heading)))))
 
 (org-super-agenda--defgroup deadline
   "Group items that have deadlines."
   :section-name "Deadline items"
-  :test (when-let ((m (org-super-agenda--get-marker item)))
-          (with-current-buffer (marker-buffer m)
-            (org-get-deadline-time m))))
+  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
+          (org-get-deadline-time (point))))
 
 (org-super-agenda--defgroup scheduled
   "Group items that are scheduled."
   :section-name "Scheduled items"
-  :test (when-let ((m (org-super-agenda--get-marker item)))
-          (with-current-buffer (marker-buffer m)
-            (org-get-scheduled-time m))))
+  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
+          (org-get-scheduled-time (point))))
 
 (with-eval-after-load 'org-habit
   (org-super-agenda--defgroup habit
@@ -371,7 +372,6 @@ section name for this group."
 Habit items have a \"STYLE: habit\" Org property."
     :section-name "Habits"
     :test (org-is-habit-p (org-super-agenda--get-marker item))))
-
 
 ;;;; Grouping functions
 
