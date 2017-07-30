@@ -298,6 +298,7 @@ Argument can be `t' (to match items with any deadline),
 `nil' (to match items that have no deadline), or `today' to
 match items whose deadline is today."
   :section-name "Deadline items"
+  :let* ((today (org-today)))
   :test (when-with-marker-buffer (org-super-agenda--get-marker item)
           (when-let ((time (org-entry-get (point) "DEADLINE")))
             (pcase (car args)
@@ -306,11 +307,11 @@ match items whose deadline is today."
               ((pred not)  ;; Has no deadline info
                (not time))
               ('past  ;; Deadline before today
-               (< (org-time-string-to-absolute time) (org-today)))
+               (< (org-time-string-to-absolute time) today))
               ('today  ;; Deadline for today
-               (= (org-today) (org-time-string-to-absolute time)))
+               (= today (org-time-string-to-absolute time)))
               ('future  ;; Deadline in the future
-               (< (org-today) (org-time-string-to-absolute time)))))))
+               (< today (org-time-string-to-absolute time)))))))
 
 (org-super-agenda--defgroup scheduled
   "Group items that are scheduled.
@@ -318,6 +319,7 @@ Argument can be `t' (to match items with any scheduled time),
 `nil' (to match items that have no scheduled time), or `today' to
 match items that are scheduled for today."
   :section-name "Scheduled items"
+  :let* ((today (org-today)))
   :test (when-with-marker-buffer (org-super-agenda--get-marker item)
           (when-let ((time (org-entry-get (point) "SCHEDULED")))
             (pcase (car args)
@@ -326,11 +328,11 @@ match items that are scheduled for today."
               ((pred not)  ;; Has no scheduled info
                (not time))
               ('past  ;; Scheduled before today
-               (< (org-time-string-to-absolute time) (org-today)))
+               (< (org-time-string-to-absolute time) today))
               ('today  ;; Scheduled for today
-               (= (org-today) (org-time-string-to-absolute time)))
+               (= today (org-time-string-to-absolute time)))
               ('future  ;; Scheduled in the future
-               (< (org-today) (org-time-string-to-absolute time)))))))
+               (< today (org-time-string-to-absolute time)))))))
 
 ;;;;; Misc
 
