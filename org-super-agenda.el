@@ -221,7 +221,8 @@ Finally a list of three items is returned, with the value
 returned by :SECTION-NAME as the first item, a list of items not
 matching the :TEST as the second, and a list of items matching as
 the third."
-  (declare (indent defun))
+  (declare (indent defun)
+           (debug (symbolp stringp body)))
   (let ((group-type (intern (concat ":" (symbol-name name))))
         (function-name (intern (concat "org-super-agenda--group-" (symbol-name name)))))
     ;; Associate the group type with this function so the dispatcher can find it
