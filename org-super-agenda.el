@@ -94,6 +94,10 @@
 (require 'dash)
 (require 's)
 
+;; I think this is the right way to do this...
+(eval-when-compile
+  (require 'org-macs))
+
 ;;;; Variables
 
 (defvar org-super-agenda-group-types nil
@@ -127,6 +131,19 @@ See readme for information."
 This is mostly useful if section headers have a highlight color,
 making it stretch across the screen."
   :type 'boolean)
+
+;;;; Macros
+
+(defmacro when-with-marker-buffer (form &rest body)
+  "When FORM is a marker, run BODY in the marker's buffer, with point starting at it."
+  (declare (indent defun))
+  (org-with-gensyms (marker)
+    `(let ((,marker ,form))
+       (when (markerp ,marker)
+         (with-current-buffer (marker-buffer ,marker)
+           (save-excursion
+             (goto-char ,marker)
+             ,@body))))))
 
 ;;;; Support functions
 
