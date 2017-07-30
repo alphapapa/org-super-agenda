@@ -278,8 +278,8 @@ section name for this group."
                         (s-join " OR "
                                 (--map (s-wrap it "\"")
                                        args)))
-  :test (when-let ((case-fold-search t)
-                   (marker (org-super-agenda--get-marker item))
+  :let* ((case-fold-search t))
+  :test (when-let ((marker (org-super-agenda--get-marker item))
                    (entry (with-current-buffer (marker-buffer marker)
                             (goto-char marker)
                             (buffer-substring (org-entry-beginning-position) (org-entry-end-position)))))
@@ -295,8 +295,8 @@ section name for this group."
                         (s-join " OR "
                                 (--map (s-wrap it "\"")
                                        args)))
-  :test (when-let ((case-fold-search t)
-                   (marker (org-super-agenda--get-marker item))
+  :let* ((case-fold-search t))
+  :test (when-let ((marker (org-super-agenda--get-marker item))
                    (heading (with-current-buffer (marker-buffer marker)
                               (goto-char marker)
                               (org-get-heading 'no-tags 'no-todo))))
