@@ -294,9 +294,11 @@ just a date) are selected."
 
 (org-super-agenda--defgroup deadline
   "Group items that have a deadline.
-Argument can be `t' (to match items with any deadline),
-`nil' (to match items that have no deadline), or `today' to
-match items whose deadline is today."
+Argument can be `t' (to match items with any deadline), `nil' (to
+match items that have no deadline), `past` (to match items with a
+deadline in the past), `today' (to match items whose deadline is
+today), or `future' (to match items with a deadline in the
+future)."
   :section-name "Deadline items"
   :let* ((today (org-today)))
   :test (when-with-marker-buffer (org-super-agenda--get-marker item)
@@ -315,9 +317,11 @@ match items whose deadline is today."
 
 (org-super-agenda--defgroup scheduled
   "Group items that are scheduled.
-Argument can be `t' (to match items with any scheduled time),
-`nil' (to match items that have no scheduled time), or `today' to
-match items that are scheduled for today."
+Argument can be `t' (to match items scheduled for any date),
+`nil' (to match items that are not schedule), `past` (to match
+items scheduled for the past), `today' (to match items scheduled
+for today), or `future' (to match items scheduled for the
+future)."
   :section-name "Scheduled items"
   :let* ((today (org-today)))
   :test (when-with-marker-buffer (org-super-agenda--get-marker item)
