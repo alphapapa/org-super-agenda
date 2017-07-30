@@ -265,6 +265,8 @@ the third."
 
 ;;;;; Date/time-related
 
+;; TODO: I guess these should be in a date-matcher macro
+
 (org-super-agenda--defgroup date
   "Group items that have a date associated.
 Argument can be `t' to match items with any date, `nil' to match
