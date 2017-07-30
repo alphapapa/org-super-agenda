@@ -286,6 +286,14 @@ date.  The `ts-date' text-property is matched against. "
           (_ ;; Oops
            (user-error "Argument to `:date' must be `t', `nil', or `today'"))))
 
+;; TODO: The :time matcher uses the 'dotime text property added by the
+;; agenda command for items that are listed in the time grid.  This is
+;; faster than checking the date strings in the other matchers, so
+;; this is the quickest way to group items that are scheduled for a
+;; certain time today.  But users will probably naturally think they
+;; should use ":scheduled today".  So maybe this should be renamed to
+;; :time-grid or something like that.
+
 (org-super-agenda--defgroup time
   "Group items that have a time associated.
 Items with an associated timestamp that has a time (rather than
