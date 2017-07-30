@@ -81,6 +81,10 @@ Here's the code for the example above.  You can test it quickly by evaluating th
 
 The groups apply to all agenda commands (at least, every one that calls =org-agenda-finalize-entries=).  You can set different groups for custom commands by setting =org-super-agenda-groups= in the custom command's =settings= list (see the description for =org-agenda-custom-commands=).  You can disable grouping by binding =org-agenda-super-groups= to nil around a call to an agenda command, or you can disable it globally by disabling the mode.
 
+*** Examples
+
+At first you might feel bewildered by all the options.  Never fear, [[examples.org][examples]] are here!
+
 *** Group selectors
 
 Each group selector takes an argument which can be a single atom or a list, e.g. =:tag= takes a string or list of strings.  Some selectors are predicates, like =:deadline= or =:habit=; for consistency, they also take an argument, but it is ignored.  

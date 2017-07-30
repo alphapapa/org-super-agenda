@@ -1,0 +1,116 @@
+
+
+* Examples
+
+There are a lot of possibilities, so here are some examples to spark your imagination.
+
+*Note:* You can test any of these examples by evaluating the whole =let= form in Emacs (or, if you open this file in Emacs, by executing the code block with =C-c C-c=.
+
+** Forward-looking
+
+Here's an example of a date-oriented, forward-looking agenda grouping.
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:name "Schedule"
+                  :time t)
+           (:name "Today"
+                  :scheduled today)
+           (:name "Habits"
+                  :habit t)
+           (:name "Due today"
+                  :deadline today)
+           (:name "Overdue"
+                  :deadline past)
+           (:name "Due soon"
+                  :deadline future)
+           (:name "Unimportant"
+                  :todo ("SOMEDAY" "MAYBE" "CHECK" "TO-READ" "TO-WATCH")
+                  :order 100)
+           (:name "Waiting..."
+                  :todo "WAITING"
+                  :order 98)
+           (:name "Scheduled earlier"
+                  :scheduled past))))
+    (org-agenda-list))
+#+END_SRC
+
+** Projects
+
+With the =:children= selector you can select items that have children.  Assuming items without children aren't considered projects, you can view projects like this:
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:name "Projects"
+                  :children t)
+           (:discard (:anything t)))))
+    (org-todo-list))
+#+END_SRC
+
+You might want to put that at the end of a daily/weekly agenda view using a custom command that runs a series of agenda commands, like this:
+
+#+BEGIN_SRC elisp
+  (let ((org-agenda-custom-commands
+         '(("u" "Super view"
+            ((agenda "" ((org-super-agenda-groups
+                          '((:name "Today"
+                                   :time t)))))
+             (todo "" ((org-agenda-overriding-header "")
+                       (org-super-agenda-groups
+                        '((:name "Projects"
+                                 :children t)
+                          (:discard (:anything t)))))))))))
+    (org-agenda nil "u"))
+#+END_SRC
+
+** Books to-read
+
+This shows =TO-READ= to-do items with the tags =:book:= or =:books:=.  Note that you could accomplish this with a standard agenda filter, and it would be faster; this is just an example of what you can do with =:discard=.
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:discard (:not (:todo "TO-READ")))
+           (:discard (:not (:tag ("book" "books")))))))
+    (org-todo-list))
+#+END_SRC
+
+Another way to write this query would be to select the items you want and discard everything else:
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:name "Books to read"
+                  :and (:todo "TO-READ" :tag ("book" "books")))
+           (:discard (:regexp ".")))))
+    (org-todo-list))
+#+END_SRC
+
+Or, since the =:regexp= selector can be slow (because it has to get the entry text for every item), you could use the =:anything= selector, which matches anything:
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:name "Books to read"
+                  :and (:todo "TO-READ" :tag ("book" "books")))
+           (:discard (:anything t)))))
+    (org-todo-list))
+#+END_SRC
+
+Or maybe you want to see entries about books, but ones that aren't to-do items.  The =:discard= selector makes it easy to ignore to-do items.
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:discard (:todo t)))))
+    (org-tags-view nil "books"))
+#+END_SRC
+
+** Emacs and Org-mode to-do items
+
+This shows all to-do items with the =:Emacs:= tag, and groups together anything related to Org.  You can see the use of the =rx= macro by backquoting the list and unquoting the =rx= form. 
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         `((:name "Org-related"
+                  :tag "Org"
+                  :regexp ("org-mode"
+                           ,(rx bow "org" eow))))))
+    (org-tags-view t "Emacs"))
+#+END_SRC
