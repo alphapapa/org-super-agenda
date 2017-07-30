@@ -256,17 +256,45 @@ Gotta buy one first, though.
                 ((agenda "" ((org-super-agenda-groups
                               '((:name "Schedule"
                                        :time t
-:date today)
+                                       :date today)
                                 (:name "Due today"
                                        :deadline today)
                                 (:name "Due soon"
                                        :deadline t)))))
                  (todo "" ((org-agenda-overriding-header "")
-(org-super-agenda-groups
+                           (org-super-agenda-groups
                             '((:name "Projects"
                                      :children t)
                               (:discard (:anything t)))))))))))
         (org-agenda nil "u")))
+
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:name "Schedule"
+                      :time t)
+               (:name "Today"
+                      :scheduled today)
+               (:name "Habits"
+                      :habit t)
+               (:name "Due today"
+                      :deadline today)
+               (:name "Overdue"
+                      :deadline past)
+               (:name "Due soon"
+                      :deadline future)
+               (:name "Unimportant"
+                      :todo ("SOMEDAY" "MAYBE" "CHECK" "TO-READ" "TO-WATCH")
+                      :order 100)
+               (:name "Waiting..."
+                      :todo "WAITING"
+                      :order 98)
+               (:name "Scheduled earlier"
+                      :scheduled past))))
+        (org-agenda nil "a")))
+
+
 #+END_SRC
 
 #+BEGIN_SRC elisp
