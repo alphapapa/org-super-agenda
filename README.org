@@ -106,7 +106,9 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 
 *Normal selectors:*
 
-+  =:children= Group items that have children.  You might use this to select items that are project top-level headings.
+These selectors take one argument alone, or multiple arguments in a list. 
+
++  =:children= Select any item that has child entries.  Argument may be =t= to match if it has any children, =nil= to match if it has no children, =todo= to match if it has children with any to-do keywords, or a string to match if it has children with certain to-do keywords.  You might use this to select items that are project top-level headings.  Be aware that this may be very slow in non-daily/weekly agenda views because of its recursive nature.
 +  =:date= Group items that have a date associated. Argument can be =t= to match items with any date, =nil= to match items without a date, or =today= to match items with today's date.
 +  =:deadline= Group items that have a deadline. Argument can be =t= (to match items with any deadline), =nil= (to match items that have no deadline), or =today= to match items whose deadline is today.
 +  =:habit= Group habit items. Habit items have a "STYLE: habit" Org property.

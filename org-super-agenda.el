@@ -145,6 +145,29 @@ making it stretch across the screen."
              (goto-char ,marker)
              ,@body))))))
 
+(cl-defmacro org-super-agenda--map-children (&key form any)
+  "Return FORM mapped across child entries of entry at point, if it has any.
+If ANY is non-nil, return as soon as FORM returns non-nil."
+  (declare (indent defun))
+  (org-with-gensyms (tree-start tree-end result all-results)
+    `(let ((,tree-start (point))
+           ,tree-end)
+       (when (org-goto-first-child)
+         (goto-char ,tree-start)
+         ,(when any
+            `(save-excursion
+               (setq ,tree-end (org-end-of-subtree))))
+         (setq ,all-results (org-map-entries (lambda ()
+                                               (let ((,result ,form))
+                                                 ,(when any
+                                                    `(when ,result
+                                                       (setq org-map-continue-from ,tree-end)))
+                                                 ,result))
+                                             nil 'tree))
+         (if ,any
+             (--any (not (null it)) ,all-results)
+           ,all-results)))))
+
 ;;;; Support functions
 
 (defsubst org-super-agenda--get-marker (s)
@@ -318,10 +341,27 @@ selector."
   :test t)
 
 (org-super-agenda--defgroup children
-  "Select any item that has child entries."
+  "Select any item that has child entries.
+Argument may be `t' to match if it has any children, `nil' to
+match if it has no children, `todo' to match if it has children
+with any to-do keywords, or a string to match if it has specific
+to-do keywords."
   :section-name "Items with children"
+  :let* ((case-fold-search t))
   :test (when-with-marker-buffer (org-super-agenda--get-marker item)
-          (org-goto-first-child)))
+          (pcase (car args)
+            ('todo ;; Match if entry has child to-dos
+             (org-super-agenda--map-children
+               :form (org-entry-is-todo-p)
+               :any t))
+            ((pred stringp)  ;; Match child to-do keywords
+             (org-super-agenda--map-children
+               :form (cl-member (org-get-todo-state) args :test #'string=)
+               :any t))
+            ('t  ;; Match if it has any children
+             (org-goto-first-child))
+            ((pred not)  ;; Match if it has no children
+             (not (org-goto-first-child))))))
 
 (with-eval-after-load 'org-habit
   (org-super-agenda--defgroup habit

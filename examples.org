@@ -58,10 +58,12 @@ You might want to put that at the end of a daily/weekly agenda view using a cust
              (todo "" ((org-agenda-overriding-header "")
                        (org-super-agenda-groups
                         '((:name "Projects"
-                                 :children t)
+                                 :children todo)
                           (:discard (:anything t)))))))))))
     (org-agenda nil "u"))
 #+END_SRC
+
+Note that the =:children= matcher may be quite slow in views like =org-todo-list= (i.e. the =todo= agenda command in the list above), especially if used to match to-do items.  It would be faster to use =org-agenda-skip-function=.  In a daily/weekly agenda it should perform well enough.
 
 ** Books to-read
 
