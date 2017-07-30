@@ -342,7 +342,7 @@ DATE', where DATE is a date string that
               ('before  ;; Before date given
                (< (org-time-string-to-absolute time) target-date))
               ('on  ;; On date given
-               (< (org-time-string-to-absolute time) target-date))
+               (= (org-time-string-to-absolute time) target-date))
               ('after  ;; After date given
                (> (org-time-string-to-absolute time) target-date))))))
 
@@ -394,7 +394,7 @@ DATE', where DATE is a date string that
               ('before  ;; Before date given
                (< (org-time-string-to-absolute time) target-date))
               ('on  ;; On date given
-               (< (org-time-string-to-absolute time) target-date))
+               (= (org-time-string-to-absolute time) target-date))
               ('after  ;; After date given
                (> (org-time-string-to-absolute time) target-date))))))
 
