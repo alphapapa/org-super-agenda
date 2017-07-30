@@ -236,9 +236,26 @@ Argument may be a string or list of strings."
 
 (org-super-agenda--defgroup todo
   "Group items that match any of the given TODO keywords.
-Argument may be a string or list of strings."
-  :section-name (concat (s-join " and " args) " items")
-  :test (cl-member (org-find-text-property-in-string 'todo-state item) args :test 'string=))
+Argument may be a string or list of strings, or `t' to match any
+keyword, or `nil' to match only non-todo items."
+  :section-name (pcase (car args)
+                  ((pred stringp) ;; To-do keyword given
+                   (concat (s-join " and " args) " items"))
+                  ('t ;; Test for any to-do keyword
+                   "Any TODO keyword")
+                  ((pred not) ;; Test for not having a to-do keyword
+                   "Non-todo items")
+                  (_ ;; Oops
+                   (user-error "Argument to `:todo' must be a string, list of strings, t, or nil")))
+  :test (pcase (car args)
+          ((pred stringp) ;; To-do keyword given
+           (cl-member (org-find-text-property-in-string 'todo-state item) args :test 'string=))
+          ('t ;; Test for any to-do keyword
+           (org-find-text-property-in-string 'todo-state item))
+          ((pred not) ;; Test for not having a to-do keyword
+           (not (org-find-text-property-in-string 'todo-state item)))
+          (_ ;; Oops
+           (user-error "Argument to `:todo' must be a string, list of strings, t, or nil"))))
 
 (org-super-agenda--defgroup priority
   "Group items that match any of the given priorities.
