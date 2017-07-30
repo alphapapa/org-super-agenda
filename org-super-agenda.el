@@ -214,6 +214,12 @@ the third."
                     else collect item into non-matching
                     finally return (list section-name non-matching matching)))))))
 
+(org-super-agenda--defgroup anything
+  "Select any item, no matter what.
+This is a catch-all, probably most useful with the `:discard'
+selector."
+  :test t)
+
 (org-super-agenda--defgroup time
   "Group items that have a time associated.
 Items with an associated timestamp that has a time (rather than

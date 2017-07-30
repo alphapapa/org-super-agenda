@@ -94,6 +94,7 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 *Special selectors*:
 
 +  =:and= Group ITEMS that match all selectors in GROUP.
++  =:anything= Select every item, no matter what.  This is probably most useful with =:discard=, because it doesn't actually test anything, so it's faster than, e.g. ~:regexp "."~, which has to get the entry text for every item.
 +  =:discard= Discard items that don't match selectors.  Any groups processed after this one will not see discarded items.  You might use this at the beginning or end of a list of groups, either to narrow down the list of items (used in combination with =:not=), or to exclude items you're not interested in.
 +  =:not= Group ITEMS that match no selectors in GROUP.
 +  =:order= A number setting the order sections will be displayed in the agenda, lowest number first.  Defaults to =0=.
