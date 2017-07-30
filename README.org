@@ -102,6 +102,7 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 
 *Normal selectors:*
 
++  =:children= Group items that have children.  You might use this to select items that are project top-level headings.
 +  =:deadline= Group items that have deadlines.
 +  =:habit= Group habit items. Habit items have a "STYLE: habit" Org property.
 +  =:heading-regexp= Group items whose headings match any of the given regular expressions.

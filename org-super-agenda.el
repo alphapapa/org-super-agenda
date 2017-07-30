@@ -237,6 +237,12 @@ This is a catch-all, probably most useful with the `:discard'
 selector."
   :test t)
 
+(org-super-agenda--defgroup children
+  "Select any item that has child entries."
+  :section-name "Items with children"
+  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
+          (org-goto-first-child)))
+
 (org-super-agenda--defgroup time
   "Group items that have a time associated.
 Items with an associated timestamp that has a time (rather than
