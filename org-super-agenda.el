@@ -35,6 +35,8 @@
 ;; agenda views, like `org-tags-view', `org-todo-list',
 ;; `org-search-view', etc.
 
+;; Here's an example which you can test by evaluating the `let' form:
+
 ;; (let ((org-super-agenda-groups
 ;;        '(;; Each group has an implicit boolean OR operator between its selectors.
 ;;          (:name "Today" ; Optionally specify section name
