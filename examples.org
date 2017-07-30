@@ -2,7 +2,7 @@
 
 * Examples
 
-There are a lot of possibilities, so here are some examples to spark your imagination.
+There are a lot of possibilities, so here are some examples to spark your imagination.  Please do *share* your own examples by posting them on the issue tracker, and I will add them here.  It will be very helpful to others to see your creativity!
 
 *Note:* You can test any of these examples by evaluating the whole =let= form in Emacs (or, if you open this file in Emacs, by executing the code block with =C-c C-c=.
 
@@ -10,7 +10,7 @@ There are a lot of possibilities, so here are some examples to spark your imagin
 
 Here's an example of a date-oriented, forward-looking agenda grouping.
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results none
   (let ((org-super-agenda-groups
          '((:name "Schedule"
                   :time t)
@@ -39,7 +39,7 @@ Here's an example of a date-oriented, forward-looking agenda grouping.
 
 With the =:children= selector you can select items that have children.  Assuming items without children aren't considered projects, you can view projects like this:
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results none
   (let ((org-super-agenda-groups
          '((:name "Projects"
                   :children t)
@@ -49,7 +49,7 @@ With the =:children= selector you can select items that have children.  Assuming
 
 You might want to put that at the end of a daily/weekly agenda view using a custom command that runs a series of agenda commands, like this:
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results none
   (let ((org-agenda-custom-commands
          '(("u" "Super view"
             ((agenda "" ((org-super-agenda-groups
@@ -67,28 +67,27 @@ Note that the =:children= matcher may be quite slow in views like =org-todo-list
 
 ** Books to-read
 
-This shows =TO-READ= to-do items with the tags =:book:= or =:books:=.  Note that you could accomplish this with a standard agenda filter, and it would be faster; this is just an example of what you can do with =:discard=.
+This shows =TO-READ= to-do items with the tags =:book:= or =:books:=.  
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results none
   (let ((org-super-agenda-groups
-         '((:discard (:not (:todo "TO-READ")))
-           (:discard (:not (:tag ("book" "books")))))))
+         '((:discard (:not  ; Is it easier to read like this?
+                      (:and
+                       (:todo "TO-READ" :tag ("book" "books"))))))))
     (org-todo-list))
 #+END_SRC
 
-Another way to write this query would be to select the items you want and discard everything else:
+Remember that items that are not matched by a group selector fall through to the next selector or to the catch-all group.  So you might think that this simpler command would work:
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results none
   (let ((org-super-agenda-groups
-         '((:name "Books to read"
-                  :and (:todo "TO-READ" :tag ("book" "books")))
-           (:discard (:regexp ".")))))
+         '((:and (:todo "TO-READ" :tag ("book" "books"))))))
     (org-todo-list))
 #+END_SRC
 
-Or, since the =:regexp= selector can be slow (because it has to get the entry text for every item), you could use the =:anything= selector, which matches anything:
+But while it would indeed group together those items, it would also display all other to-do items in the =Other items= section below, so you must =:discard= the items you don't want.  So another way to write this query would be to select the items you want and discard everything else:
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results none
   (let ((org-super-agenda-groups
          '((:name "Books to read"
                   :and (:todo "TO-READ" :tag ("book" "books")))
@@ -96,19 +95,44 @@ Or, since the =:regexp= selector can be slow (because it has to get the entry te
     (org-todo-list))
 #+END_SRC
 
-Or maybe you want to see entries about books, but ones that aren't to-do items.  The =:discard= selector makes it easy to ignore to-do items.
+Note that you could run part of this query with a standard agenda command, and it would be faster.  But since the =org-tags-view= and =org-todo-list= can only select by tags or todo-keywords, respectively, the other part of the selection must be done with grouping.  Here are two examples (note that they each produce the same results):
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results none
   (let ((org-super-agenda-groups
-         '((:discard (:todo t)))))
-    (org-tags-view nil "books"))
+         '((:discard (:not (:todo "TO-READ"))))))
+    (org-tags-view nil "books|book"))
+
+  ;; These commands produce the same results
+
+  (let ((org-super-agenda-groups
+         '((:discard (:not (:tag ("book" "books")))))))
+    (org-todo-list "TO-READ"))
+#+END_SRC
+
+Of course, the most canonical (and probably fastest) way to write this query is to use =org-search-view=, like this:
+
+#+BEGIN_SRC elisp :results none
+  (org-search-view t "+{:book\\|books:} +TO-READ")
+#+END_SRC
+
+Or if you're inputting the string manually after pressing =C-c a S=, you'd input =+{:book\|books:} +TO-READ=.  But if you're like me, and you forget the [[http://orgmode.org/worg/org-tutorials/advanced-searching.html][advanced searching syntax]], you might find these more "lispy" grouping/selecting constructs easier to use, even if they can be slower on large datasets.  
+
+And note that even if you use the built-in searching with =org-search-view=, you might still want to use this package to /group/ results, perhaps like this:
+
+#+BEGIN_SRC elisp :results none
+  (let ((org-super-agenda-groups
+         '((:name "Computer books"
+                  :tag ("computer" "computers" "programming" "software"))
+           ;; All other books would be displayed here
+           )))
+    (org-search-view t "+{:book\\|books:} +TO-READ"))
 #+END_SRC
 
 ** Emacs and Org-mode to-do items
 
 This shows all to-do items with the =:Emacs:= tag, and groups together anything related to Org.  You can see the use of the =rx= macro by backquoting the list and unquoting the =rx= form. 
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results none
   (let ((org-super-agenda-groups
          `((:name "Org-related"
                   :tag "Org"
