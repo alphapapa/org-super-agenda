@@ -103,7 +103,8 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 *Normal selectors:*
 
 +  =:children= Group items that have children.  You might use this to select items that are project top-level headings.
-+  =:deadline= Group items that have deadlines.
++  =:date= Group items that have a date associated. Argument can be =t= to match items with any date, =nil= to match items without a date, or =today= to match items with today's date.
++  =:deadline= Group items that have a deadline. Argument can be =t= (to match items with any deadline), =nil= (to match items that have no deadline), or =today= to match items whose deadline is today.
 +  =:habit= Group habit items. Habit items have a "STYLE: habit" Org property.
 +  =:heading-regexp= Group items whose headings match any of the given regular expressions.
 +  =:priority= Group items that match any of the given priorities. Argument may be a string or list of strings, which should be the priority letter, e.g. =A=.
@@ -112,7 +113,7 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 +  =:priority<= Group items that are lower than the given priority, e.g. =A=.
 +  =:priority<== Group items that are lower than or equal to the given priority, e.g. =B=.
 +  =:regexp= Group items that match any of the given regular expressions.
-+  =:scheduled= Group items that are scheduled.
++  =:scheduled= Group items that are scheduled.  Group items that are scheduled. Argument can be =t= (to match items with any scheduled time), =nil= (to match items that have no scheduled time), or =today= to match items that are scheduled for today.
 +  =:tag= Group items that match any of the given tags. Argument may be a string or list of strings.
 +  =:time= Group items that have a time associated. Items with an associated timestamp that has a time (rather than just a date) are selected.
 +  =:todo= Group items that match any of the given TODO keywords. Argument may be a string or list of strings, or =t= to match any keyword, or =nil= to match only non-todo items.

@@ -240,6 +240,69 @@ the third."
                     else collect item into non-matching
                     finally return (list section-name non-matching matching)))))))
 
+;;;;; Date/time-related
+
+(org-super-agenda--defgroup date
+  "Group items that have a date associated.
+Argument can be `t' to match items with any date, `nil' to match
+items without a date, or `today' to match items with today's
+date.  The `ts-date' text-property is matched against. "
+  :section-name "Dated items"  ; Note: this does not mean the item has a "SCHEDULED:" line
+  :let* ((today (org-today)))
+  :test (pcase (car args)
+          ('t ;; Test for any date
+           (org-find-text-property-in-string 'ts-date item))
+          ((pred not) ;; Test for not having a date
+           (not (org-find-text-property-in-string 'ts-date item)))
+          ('today  ;; Items that have a time sometime today
+           ;; TODO: Maybe I can use the ts-date property in some other places, might be faster
+           (when-let ((day (org-find-text-property-in-string 'ts-date item)))
+             (= day today)))
+          (_ ;; Oops
+           (user-error "Argument to `:date' must be `t', `nil', or `today'"))))
+
+(org-super-agenda--defgroup time
+  "Group items that have a time associated.
+Items with an associated timestamp that has a time (rather than
+just a date) are selected."
+  :section-name "Timed items"  ; Note: this does not mean the item has a "SCHEDULED:" line
+  :test (when-let ((time (org-find-text-property-in-string 'dotime item)))
+          (not (eql time 'time))))
+
+(org-super-agenda--defgroup deadline
+  "Group items that have a deadline.
+Argument can be `t' (to match items with any deadline),
+`nil' (to match items that have no deadline), or `today' to
+match items whose deadline is today."
+  :section-name "Deadline items"
+  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
+          (when-let ((time (org-entry-get (point) "DEADLINE")))
+            (pcase (car args)
+              ('t  ;; Check for any scheduled info
+               t)
+              ((pred not)  ;; Has no scheduled info
+               (not time))
+              ('today  ;; Scheduled for today
+               (= (org-today) (org-time-string-to-absolute time)))))))
+
+(org-super-agenda--defgroup scheduled
+  "Group items that are scheduled.
+Argument can be `t' (to match items with any scheduled time),
+`nil' (to match items that have no scheduled time), or `today' to
+match items that are scheduled for today."
+  :section-name "Scheduled items"
+  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
+          (when-let ((time (org-entry-get (point) "SCHEDULED")))
+            (pcase (car args)
+              ('t  ;; Check for any scheduled info
+               t)
+              ((pred not)  ;; Has no scheduled info
+               (not time))
+              ('today  ;; Scheduled for today
+               (= (org-today) (org-time-string-to-absolute time)))))))
+
+;;;;; Misc
+
 (org-super-agenda--defgroup anything
   "Select any item, no matter what.
 This is a catch-all, probably most useful with the `:discard'
@@ -252,13 +315,41 @@ selector."
   :test (when-with-marker-buffer (org-super-agenda--get-marker item)
           (org-goto-first-child)))
 
-(org-super-agenda--defgroup time
-  "Group items that have a time associated.
-Items with an associated timestamp that has a time (rather than
-just a date) are selected."
-  :section-name "Schedule"  ; Note: this does not mean the item has a "SCHEDULED:" line
-  :test (when-let ((time (org-find-text-property-in-string 'dotime item)))
-          (not (eql time 'time))))
+(with-eval-after-load 'org-habit
+  (org-super-agenda--defgroup habit
+    "Group habit items.
+Habit items have a \"STYLE: habit\" Org property."
+    :section-name "Habits"
+    :test (org-is-habit-p (org-super-agenda--get-marker item))))
+
+(org-super-agenda--defgroup heading-regexp
+  "Group items whose headings match any of the given regular expressions.
+Argument may be a string or list of strings, each of which should
+be a regular expression.  You'll probably want to override the
+section name for this group."
+  :section-name (concat "Headings matching regexps: "
+                        (s-join " OR "
+                                (--map (s-wrap it "\"")
+                                       args)))
+  :let* ((case-fold-search t))
+  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
+          (let ((heading (org-get-heading 'no-tags 'no-todo)))
+            (cl-loop for regexp in args
+                     thereis (string-match-p regexp heading)))))
+
+(org-super-agenda--defgroup regexp
+  "Group items that match any of the given regular expressions.
+Argument may be a string or list of strings, each of which should
+be a regular expression.  You'll probably want to override the
+section name for this group."
+  :section-name (concat "Items matching regexps: "
+                        (s-join " OR "
+                                (--map (s-wrap it "\"")
+                                       args)))
+  :let* ((case-fold-search t))
+  :test (when-let ((entry (org-super-agenda--get-item-entry item)))
+          (cl-loop for regexp in args
+                   thereis (string-match-p regexp entry))))
 
 (org-super-agenda--defgroup tag
   "Group items that match any of the given tags.
@@ -288,6 +379,8 @@ keyword, or `nil' to match only non-todo items."
            (not (org-find-text-property-in-string 'todo-state item)))
           (_ ;; Oops
            (user-error "Argument to `:todo' must be a string, list of strings, t, or nil"))))
+
+;;;;; Priority
 
 (org-super-agenda--defgroup priority
   "Group items that match any of the given priorities.
@@ -325,54 +418,6 @@ The string should be the priority cookie letter, e.g. \"A\".")
 (org-super-agenda--defpriority-group <=
   "Group items that are lower than or equal to the given priority."
   :comparator >=)
-
-(org-super-agenda--defgroup regexp
-  "Group items that match any of the given regular expressions.
-Argument may be a string or list of strings, each of which should
-be a regular expression.  You'll probably want to override the
-section name for this group."
-  :section-name (concat "Items matching regexps: "
-                        (s-join " OR "
-                                (--map (s-wrap it "\"")
-                                       args)))
-  :let* ((case-fold-search t))
-  :test (when-let ((entry (org-super-agenda--get-item-entry item)))
-          (cl-loop for regexp in args
-                   thereis (string-match-p regexp entry))))
-
-(org-super-agenda--defgroup heading-regexp
-  "Group items whose headings match any of the given regular expressions.
-Argument may be a string or list of strings, each of which should
-be a regular expression.  You'll probably want to override the
-section name for this group."
-  :section-name (concat "Headings matching regexps: "
-                        (s-join " OR "
-                                (--map (s-wrap it "\"")
-                                       args)))
-  :let* ((case-fold-search t))
-  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
-          (let ((heading (org-get-heading 'no-tags 'no-todo)))
-            (cl-loop for regexp in args
-                     thereis (string-match-p regexp heading)))))
-
-(org-super-agenda--defgroup deadline
-  "Group items that have deadlines."
-  :section-name "Deadline items"
-  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
-          (org-get-deadline-time (point))))
-
-(org-super-agenda--defgroup scheduled
-  "Group items that are scheduled."
-  :section-name "Scheduled items"
-  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
-          (org-get-scheduled-time (point))))
-
-(with-eval-after-load 'org-habit
-  (org-super-agenda--defgroup habit
-    "Group habit items.
-Habit items have a \"STYLE: habit\" Org property."
-    :section-name "Habits"
-    :test (org-is-habit-p (org-super-agenda--get-marker item))))
 
 ;;;; Grouping functions
 
