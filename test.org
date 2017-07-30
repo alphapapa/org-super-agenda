@@ -4,46 +4,39 @@ Rather than using my personal agenda every time I want to take a screenshot, how
 
 Will try to open the agenda view as if it was [2017-07-05 Wed]
 
-** TODO [#A] Take over the world                                     :world:
-DEADLINE: <2017-07-07 Fri>
+** TODO [#A] Take over the universe                       :universe:ambition:
+*** TODO [#A] Take over the world                                     :world:
+    DEADLINE: <2017-07-07 Fri>
 
-I'd like to be finished with this before the weekend...
+ I'd like to be finished with this before the weekend...
 
-** TODO [#A] Skype with president of Antarctica             :world:meetings:
-SCHEDULED: <2017-07-05 Wed 21:00>
+**** TODO [#A] Skype with president of Antarctica            :world:meetings:
+     SCHEDULED: <2017-07-05 Wed 21:00>
 
-Not sure what his timezone is...
+  Not sure what his timezone is...
+*** TODO [#B] Take over Mars
+**** TODO Visit Mars                                    :space:travel:planet:
+     DEADLINE: <2017-09-20 Wed -3m>
+
+  Ah, the red planet...
+*** TODO [#C] Take over the moon
+**** WAITING Visit the moon                                    :space:travel:
+     DEADLINE: <2017-08-27 Sun -2m>
+  :LOGBOOK:
+  -  State "WAITING"    from              [2017-07-24 Mon 19:01]
+  :END:
+
+  Just waiting on that callback from NASA...
+*** TODO Practice leaping tall buildings in a single bound         :personal:
+    SCHEDULED: <2017-07-05 Wed +2d>
+    :PROPERTIES:
+    :STYLE:    habit
+    :END:
+*** TODO [#B] Renew membership in supervillain club
+    DEADLINE: <2017-07-10 Mon -1w>
 
 ** TODO Order a pizza                                          :food:dinner:
 SCHEDULED: <2017-07-05 Wed 18:00>
-
-** SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
-SCHEDULED: <2017-07-05 Wed>
-:LOGBOOK:
--  State "SOMEDAY"    from "MAYBE"      [2017-07-24 Mon 18:59]
--  State "MAYBE"      from              [2017-07-24 Mon 18:58]
-:END:
-
-I mean, since no one has ever tried doing it before...
-
-** CHECK /r/emacs                                            :website:Emacs:
-DEADLINE: <2017-07-05 Wed>
-:LOGBOOK:
--  State "CHECK"      from              [2017-07-24 Mon 19:00]
-:END:
-
-** WAITING Visit the moon                                     :space:travel:
-   DEADLINE: <2017-08-27 Sun -2m>
-:LOGBOOK:
--  State "WAITING"    from              [2017-07-24 Mon 19:01]
-:END:
-
-Just waiting on that callback from NASA...
-
-** TODO Visit Mars                                            :space:travel:planet:
-DEADLINE: <2017-09-20 Wed -3m>
-
-Ah, the red planet...
 
 ** TODO [#C] Get haircut                                     :personal:@town:
 SCHEDULED: <2017-07-05 Wed>
@@ -63,21 +56,24 @@ If I don't, the frobnicator will probably fall off halfway to Mars...
 
 Gotta buy one first, though.
 
-** TODO Practice leaping tall buildings in a single bound         :personal:
-SCHEDULED: <2017-07-05 Wed +2d>
-:PROPERTIES:
-:STYLE:    habit
-:END:
+** Recurring
+*** CHECK /r/emacs                                            :website:Emacs:
+    DEADLINE: <2017-07-05 Wed +1w>
+*** TODO Shop for groceries                             :food:shopping:@town:
+    SCHEDULED: <2017-07-05 Wed +1w>
+** Ideas
+*** SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+    SCHEDULED: <2017-07-05 Wed>
+    :LOGBOOK:
+    -  State "SOMEDAY"    from "MAYBE"      [2017-07-24 Mon 18:59]
+    -  State "MAYBE"      from              [2017-07-24 Mon 18:58]
+    :END:
 
-** TODO [#B] Renew membership in supervillain club
-DEADLINE: <2017-07-10 Mon -1w>
-
-** TODO Shop for groceries                             :food:shopping:@town:
-SCHEDULED: <2017-07-05 Wed>
+    I mean, since no one has ever tried doing it before...
 
 * Code
 
-#+BEGIN_SRC elisp :results none
+  #+BEGIN_SRC elisp :results none
   ;; Setup code
   (require 'org-super-agenda)
   (org-super-agenda-mode 1)
@@ -100,121 +96,177 @@ SCHEDULED: <2017-07-05 Wed>
              (fset 'org-today (lambda () day))
              ,@body)
          (fset 'org-today orig))))
-#+END_SRC
+  #+END_SRC
 
-#+BEGIN_SRC elisp
-  (with-org-today-date "2017-07-05 00:00"
-    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
-          (org-agenda-span 'day))
-      (org-agenda-list nil)))
+  #+BEGIN_SRC elisp
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day))
+        (org-agenda-list nil)))
 
-  (with-org-today-date "2017-07-05 00:00"
-    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
-          (org-agenda-span 'day)
-          (org-super-agenda-groups
-           '(;; Each group has an implicit boolean OR operator between its selectors.
-             (:name "Today" ; Optionally specify section name
-                    :time t ; Items that have a time associated
-                    :todo "TODAY") ; Items that have this TODO keyword
-             (:name "Important"
-                    ;; Single arguments given alone
-                    :tag "bills"
-                    :priority "A")
-             ;; Set order of multiple groups at once
-             (:order-multi (2 (:name "Shopping in town"
-                                     ;; Boolean AND group matches items that match all subgroups
-                                     :and (:tag "shopping" :tag "@town"))
-                              (:name "Food-related"
-                                     ;; Multiple args given in list with implicit OR
-                                     :tag ("food" "dinner"))
-                              (:name "Personal"
-                                     :habit t
-                                     :tag "personal")
-                              (:name "Space-related (non-moon-or-planet-related)"
-                                     ;; Regexps match case-insensitively on the entire entry
-                                     :and (:regexp ("space" "NASA")
-                                                   ;; Boolean NOT also has implicit OR between selectors
-                                                   :not (:regexp "moon" :tag "planet")))))
-             ;; Groups supply their own section names when none are given
-             (:todo "WAITING" :order 8) ; Set order of this section
-             (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
-                    ;; Show this group at the end of the agenda (since it has the
-                    ;; highest number). If you specified this group last, items
-                    ;; with these todo keywords that e.g. have priority A would be
-                    ;; displayed in that group instead, because items are grouped
-                    ;; out in the order the groups are listed.
-                    :order 9)
-             (:priority<= "B"
-                          ;; Show this section after "Today" and "Important", because
-                          ;; their order is unspecified, defaulting to 0. Sections
-                          ;; are displayed lowest-number-first.
-                          :order 1)
-             ;; After the last group, the agenda will display items that didn't
-             ;; match any of these groups, with the default order position of 99
-             )))
-      (org-agenda nil "a")))
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '(;; Each group has an implicit boolean OR operator between its selectors.
+               (:name "Today" ; Optionally specify section name
+                      :time t ; Items that have a time associated
+                      :todo "TODAY") ; Items that have this TODO keyword
+               (:name "Important"
+                      ;; Single arguments given alone
+                      :tag "bills"
+                      :priority "A")
+               ;; Set order of multiple groups at once
+               (:order-multi (2 (:name "Shopping in town"
+                                       ;; Boolean AND group matches items that match all subgroups
+                                       :and (:tag "shopping" :tag "@town"))
+                                (:name "Food-related"
+                                       ;; Multiple args given in list with implicit OR
+                                       :tag ("food" "dinner"))
+                                (:name "Personal"
+                                       :habit t
+                                       :tag "personal")
+                                (:name "Space-related (non-moon-or-planet-related)"
+                                       ;; Regexps match case-insensitively on the entire entry
+                                       :and (:regexp ("space" "NASA")
+                                                     ;; Boolean NOT also has implicit OR between selectors
+                                                     :not (:regexp "moon" :tag "planet")))))
+               ;; Groups supply their own section names when none are given
+               (:todo "WAITING" :order 8) ; Set order of this section
+               (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                      ;; Show this group at the end of the agenda (since it has the
+                      ;; highest number). If you specified this group last, items
+                      ;; with these todo keywords that e.g. have priority A would be
+                      ;; displayed in that group instead, because items are grouped
+                      ;; out in the order the groups are listed.
+                      :order 9)
+               (:priority<= "B"
+                            ;; Show this section after "Today" and "Important", because
+                            ;; their order is unspecified, defaulting to 0. Sections
+                            ;; are displayed lowest-number-first.
+                            :order 1)
+               ;; After the last group, the agenda will display items that didn't
+               ;; match any of these groups, with the default order position of 99
+               )))
+        (org-agenda nil "a")))
 
-  (with-org-today-date "2017-07-05 00:00"
-    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
-          (org-agenda-span 'day)
-          (org-super-agenda-groups
-           '((:discard (:regexp "pizza"
-                                :regexp "groceries")))))
-      (org-agenda nil "a")))
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:discard (:regexp "pizza"
+                                  :regexp "groceries")))))
+        (org-agenda nil "a")))
 
-  (with-org-today-date "2017-07-05 00:00"
-    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
-          (org-agenda-span 'day)
-          (org-super-agenda-groups
-           '((:priority>= "B"))))
-      (org-agenda nil "a")))
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:priority>= "B"))))
+        (org-agenda nil "a")))
 
-  (with-org-today-date "2017-07-05 00:00"
-    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
-          (org-agenda-span 'day)
-          (org-super-agenda-groups
-           '((:priority>= "A"))))
-      (org-agenda nil "a")))
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:priority>= "A"))))
+        (org-agenda nil "a")))
 
-  (with-org-today-date "2017-07-05 00:00"
-    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
-          (org-agenda-span 'day)
-          (org-super-agenda-groups
-           '((:priority< "B" :order 100))))
-      (org-agenda nil "a")))
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:priority< "B" :order 100))))
+        (org-agenda nil "a")))
 
-  (with-org-today-date "2017-07-05 00:00"
-    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
-          (org-agenda-span 'day)
-          (org-super-agenda-groups
-           '((:priority<= "C" :order 100))))
-      (org-agenda nil "a")))
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:priority<= "C" :order 100))))
+        (org-agenda nil "a")))
 
-  (with-org-today-date "2017-07-05 00:00"
-    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
-          (org-agenda-span 'day)
-          (org-super-agenda-groups
-           '((:heading-regexp "moon"))))
-      (org-agenda nil "a")))
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:heading-regexp "moon"))))
+        (org-agenda nil "a")))
 
-  (with-org-today-date "2017-07-05 00:00"
-    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
-          (org-agenda-span 'day)
-          (org-super-agenda-groups
-           '((:name "Unprioritized"
-                    :not (:priority ("A" "B" "C"))))))
-      (org-agenda nil "a")))
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:name "Today"
+                      :time t)
+               (:name "Unprioritized"
+                      :not (:priority>= "C")
+                      :order 100))))
+        (org-agenda nil "a")))
 
-  (with-org-today-date "2017-07-05 00:00"
-    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
-          (org-agenda-span 'day)
-          (org-super-agenda-groups
-           '((:name "Today"
-                    :time t)
-             (:name "Unprioritized"
-                    :not (:priority>= "C")
-                    :order 100))))
-      (org-agenda nil "a")))
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-agenda-custom-commands
+             '(("u" "Super view"
+                ((agenda "" ((org-super-agenda-groups
+                              '((:name "Today"
+                                       :time t)))))
+                 (todo "" ((org-super-agenda-groups
+                            '((:name "Projects"
+                                     :children t)
+                              (:discard (:anything t)))))))))))
+        (org-agenda nil "u")))
+
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-agenda-custom-commands
+             '(("u" "Super view"
+                ((agenda "" ((org-super-agenda-groups
+                              '((:name "Today"
+                                       :time t
+                                       :scheduled today
+                                       :deadline today)))))
+                 (todo "" ((org-super-agenda-groups
+                            '((:name "Projects"
+                                     :children t)
+                              (:discard (:anything t)))))))))))
+        (org-agenda nil "u")))
+
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-agenda-custom-commands
+             '(("u" "Super view"
+                ((agenda "" ((org-super-agenda-groups
+                              '((:name "Today"
+                                       :time today)))))
+                 (todo "" ((org-super-agenda-groups
+                            '((:name "Projects"
+                                     :children t)
+                              (:discard (:anything t)))))))))))
+        (org-agenda nil "u")))
+
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-agenda-custom-commands
+             '(("u" "Super view"
+                ((agenda "" ((org-super-agenda-groups
+                              '((:name "Schedule"
+                                       :time t
+:date today)
+                                (:name "Due today"
+                                       :deadline today)
+                                (:name "Due soon"
+                                       :deadline t)))))
+                 (todo "" ((org-agenda-overriding-header "")
+(org-super-agenda-groups
+                            '((:name "Projects"
+                                     :children t)
+                              (:discard (:anything t)))))))))))
+        (org-agenda nil "u")))
 #+END_SRC
 
 #+BEGIN_SRC elisp

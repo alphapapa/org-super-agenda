@@ -278,12 +278,16 @@ match items whose deadline is today."
   :test (when-with-marker-buffer (org-super-agenda--get-marker item)
           (when-let ((time (org-entry-get (point) "DEADLINE")))
             (pcase (car args)
-              ('t  ;; Check for any scheduled info
+              ('t  ;; Check for any deadline info
                t)
-              ((pred not)  ;; Has no scheduled info
+              ((pred not)  ;; Has no deadline info
                (not time))
-              ('today  ;; Scheduled for today
-               (= (org-today) (org-time-string-to-absolute time)))))))
+              ('past  ;; Deadline before today
+               (< (org-time-string-to-absolute time) (org-today)))
+              ('today  ;; Deadline for today
+               (= (org-today) (org-time-string-to-absolute time)))
+              ('future  ;; Deadline in the future
+               (< (org-today) (org-time-string-to-absolute time)))))))
 
 (org-super-agenda--defgroup scheduled
   "Group items that are scheduled.
@@ -298,8 +302,12 @@ match items that are scheduled for today."
                t)
               ((pred not)  ;; Has no scheduled info
                (not time))
+              ('past  ;; Scheduled before today
+               (< (org-time-string-to-absolute time) (org-today)))
               ('today  ;; Scheduled for today
-               (= (org-today) (org-time-string-to-absolute time)))))))
+               (= (org-today) (org-time-string-to-absolute time)))
+              ('future  ;; Scheduled in the future
+               (< (org-today) (org-time-string-to-absolute time)))))))
 
 ;;;;; Misc
 
