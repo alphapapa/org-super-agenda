@@ -346,6 +346,8 @@ This is a catch-all, probably most useful with the `:discard'
 selector."
   :test t)
 
+;; TODO: Rename this to something like :family-tree and make a new
+;; one-level-deep-only :children matcher that will be much faster
 (org-super-agenda--defgroup children
   "Select any item that has child entries.
 Argument may be `t' to match if it has any children, `nil' to
