@@ -75,7 +75,8 @@
 ;;                       :order 1)
 ;;          ;; After the last group, the agenda will display items that didn't
 ;;          ;; match any of these groups, with the default order position of 99
-;;          ))))
+;;          )))
+;;   (org-agenda nil "a"))
 
 ;; You can adjust the `org-super-agenda-groups' to create as many different
 ;; groups as you like.
