@@ -110,7 +110,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 
 +  =:children= Select any item that has child entries.  Argument may be =t= to match if it has any children, =nil= to match if it has no children, =todo= to match if it has children with any to-do keywords, or a string to match if it has children with certain to-do keywords.  You might use this to select items that are project top-level headings.  Be aware that this may be very slow in non-daily/weekly agenda views because of its recursive nature.
 +  =:date= Group items that have a date associated. Argument can be =t= to match items with any date, =nil= to match items without a date, or =today= to match items with today’s date. The =ts-date= text-property is matched against.
-+  =:deadline= Group items that have a deadline. Argument can be =t= (to match items with any deadline), =nil= (to match items that have no deadline), =past= (to match items with a deadline in the past), =today= (to match items whose deadline is today), or =future= (to match items with a deadline in the future).
++  =:deadline= Group items that have a deadline. Argument can be =t= (to match items with any deadline), =nil= (to match items that have no deadline), =past= (to match items with a deadline in the past), =today= (to match items whose deadline is today), or =future= (to match items with a deadline in the future). Argument may also be given like =before DATE= or =after DATE= where DATE is a date string that =org-time-string-to-absolute= can process.
 +  =:habit= Group habit items. Habit items have a "STYLE: habit" Org property.
 +  =:heading-regexp= Group items whose headings match any of the given regular expressions.
 +  =:priority= Group items that match any of the given priorities. Argument may be a string or list of strings, which should be the priority letter, e.g. =A=.
@@ -119,7 +119,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  =:priority<= Group items that are lower than the given priority, e.g. =A=.
 +  =:priority<== Group items that are lower than or equal to the given priority, e.g. =B=.
 +  =:regexp= Group items that match any of the given regular expressions.
-+  =:scheduled= Group items that are scheduled. Argument can be =t= (to match items scheduled for any date), =nil= (to match items that are not schedule), =past= (to match items scheduled for the past), =today= (to match items scheduled for today), or =future= (to match items scheduled for the future).
++  =:scheduled= Group items that are scheduled. Argument can be =t= (to match items scheduled for any date), =nil= (to match items that are not schedule), =past= (to match items scheduled for the past), =today= (to match items scheduled for today), or =future= (to match items scheduled for the future). Argument may also be given like =before DATE= or =after DATE= where DATE is a date string that =org-time-string-to-absolute= can process.
 +  =:tag= Group items that match any of the given tags. Argument may be a string or list of strings.
 +  =:time= Group items that have a time associated. Items with an associated timestamp that has a time (rather than just a date) are selected.
 +  =:todo= Group items that match any of the given TODO keywords. Argument may be a string or list of strings, or =t= to match any keyword, or =nil= to match only non-todo items.

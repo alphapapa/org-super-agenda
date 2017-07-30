@@ -74,6 +74,10 @@ Gotta buy one first, though.
 
 * Code
 
+#+BEGIN_SRC elisp
+(org-time-string-to-absolute (org-entry-get (point) "SCHEDULED"))
+#+END_SRC
+
   #+BEGIN_SRC elisp :results none
   ;; Setup code
   (require 'org-super-agenda)
@@ -333,7 +337,12 @@ Gotta buy one first, though.
                       :scheduled past))))
         (org-agenda nil "a")))
 
-
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:scheduled (before "2017-07-06")))))
+        (org-agenda nil "a")))
 #+END_SRC
 
 #+BEGIN_SRC elisp
