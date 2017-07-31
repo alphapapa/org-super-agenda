@@ -363,7 +363,7 @@ Gotta buy one first, though.
     (let ((org-super-agenda-groups
            '((:todo "CHECK")))
           (org-agenda-files (list "~/src/org-super-agenda/test.org")))
-;; org-search-view doesn't seem to set the todo-state property, so the matcher doesn't work
+      ;; org-search-view doesn't seem to set the todo-state property, so the matcher doesn't work
       (org-search-view nil "Emacs")))
 
   (with-org-today-date "2017-07-05 00:00"
@@ -378,9 +378,39 @@ Gotta buy one first, though.
           (org-agenda-files (list "~/src/org-super-agenda/test.org")))
       (org-agenda-list nil nil 'day)))
 
+  
+
 #+END_SRC
 
 ** Misc
+
+*** Org/Emacs time string conversion
+
+#+BEGIN_SRC elisp
+  (org-time-string-to-absolute "Friday")  ; Nope
+
+  (cl-loop for date in '("last Friday"
+                         "this Friday"
+                         "next Friday"
+                         "Friday")
+           collect (date-to-day date))
+
+  (cl-loop for date in '("last Friday 00:00"
+                         "this Friday 00:00"
+                         "next Friday  00:00"
+                         "Friday  00:00")
+           collect (date-to-day date))
+
+  (cl-loop for date in '("last Friday at 00:00"
+                         "this Friday at 00:00"
+                         "next Friday at 00:00"
+                         "Friday at 00:00")
+           collect (date-to-day date))
+
+  (timezone-make-date-arpa-standard "next Friday")
+
+  (org-parse-time-string "Friday")
+#+END_SRC
 
 *** let-plist
 

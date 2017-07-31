@@ -221,7 +221,7 @@ With prefix argument ARG, turn on if positive, otherwise off."
 
 ;;;; Group selectors
 
-(cl-defmacro org-super-agenda--defgroup (name docstring &key section-name test let*)
+(cl-defmacro org-super-agenda--defgroup (name docstring &key section-name let* test)
   "Define an agenda-item group function.
 NAME is a symbol that will be appended to `org-super-agenda--group-' to
 construct the name of the group function.  A symbol like `:name'
@@ -245,7 +245,11 @@ returned by :SECTION-NAME as the first item, a list of items not
 matching the :TEST as the second, and a list of items matching as
 the third."
   (declare (indent defun)
-           (debug (symbolp stringp body)))
+           (debug (symbolp stringp
+                           &optional
+                           def-form
+                           (&rest &or symbolp (gate symbolp &optional form))
+                           form)))
   (let ((group-type (intern (concat ":" (symbol-name name))))
         (function-name (intern (concat "org-super-agenda--group-" (symbol-name name)))))
     ;; Associate the group type with this function so the dispatcher can find it
@@ -334,7 +338,9 @@ DATE', where DATE is a date string that
                    (org-today))))
          (target-date (pcase (car args)
                         ((or 'before 'on 'after)
-                         (org-time-string-to-absolute (second args))))))
+                         (or (ignore-errors (org-time-string-to-absolute (second args)))
+                             (ignore-errors (date-to-day (org-super-agenda--parse-date-to-iso8601 (second args))))
+                             (user-error "Unable to parse target date: %s" (second-args)))))))
   :test (when-with-marker-buffer (org-super-agenda--get-marker item)
           (when-let ((time (org-entry-get (point) "DEADLINE")))
             (pcase (car args)
@@ -384,9 +390,12 @@ DATE', where DATE is a date string that
   :let* ((today (pcase (car args)  ; Perhaps premature optimization
                   ((or 'past 'today 'future 'before 'on 'after)
                    (org-today))))
+         ;; Just to be clear, dates are compared as days since year 1 (i.e. as returned by `date-to-day')
          (target-date (pcase (car args)
                         ((or 'before 'on 'after)
-                         (org-time-string-to-absolute (second args))))))
+                         (or (ignore-errors (org-time-string-to-absolute (second args)))
+                             (ignore-errors (date-to-day (org-super-agenda--parse-date-to-iso8601 (second args))))
+                             (user-error "Unable to parse target date: %s" (second-args)))))))
   :test (when-with-marker-buffer (org-super-agenda--get-marker item)
           (when-let ((time (org-entry-get (point) "SCHEDULED")))
             (pcase (car args)

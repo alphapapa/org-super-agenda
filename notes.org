@@ -1037,6 +1037,68 @@ CLOSED: [2017-07-28 Fri 00:02]
 
 I just discovered the =cl-seq= library, which includes =cl-subsetp=, which might be preferable over =seq-intersection= for testing membership.
 
+** DONE Date-parser that calls out to GNU date
+CLOSED: [2017-07-30 Sun 22:25]
+:LOGBOOK:
+-  State "DONE"       from "MAYBE"      [2017-07-30 Sun 22:25]
+:END:
+
+All the built-in Emacs and Org date/time parsing code can't take something like "Friday" or "last Friday," but GNU =date= can.
+
+#+BEGIN_SRC elisp
+  (defmacro org-super-agenda--call-process (process &rest args)
+    "Return results of running PROCESS with ARGS."
+    (declare (indent defun))
+    `(with-temp-buffer
+       (unless (= 0 (call-process ,process nil t nil
+                                  ,@args))
+         ;; TODO: Add error output
+         (user-error ,(concat process " failed")))
+       (buffer-substring-no-properties (point-min) (point-max))))
+
+  (defun org-super-agenda--parse-date-to-iso8601 (string)
+    "Parse STRING with the shell `date' command and return ISO-8601 date string."
+    (org-super-agenda--call-process
+      "date" "-d" string "--iso-8601=seconds"))
+
+  (defun org-super-agenda--parse-date (string)
+    "Parse STRING with the shell `date' command and return decoded time.
+     Result is from `decode-time'."
+    (let ((date-decoded (ignore-errors
+                          (org-super-agenda--call-process
+                            "date" "-d" string "--iso-8601=seconds"))))
+      (when date-decoded
+        date-decoded)))
+
+  (org-super-agenda--parse-date "next Friday")
+  (org-super-agenda--parse-date "4 months")
+  (org-super-agenda--parse-date "opos")
+
+  (date-to-day (org-super-agenda--parse-date "4 months"))
+
+  (let ((org-super-agenda-groups
+         '((:name "Next Weekend"
+                  :and (:scheduled (after "Friday") :scheduled (before "Monday"))
+                  :and (:deadline (after "Friday") :deadline (before "Monday"))
+                  )
+(:discard (:anything t))
+        )))
+    (org-todo-list))
+  (with-org-today-date "2017-07-27 00:00"
+    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+          (org-super-agenda-groups
+           '((:scheduled (after "july 26 2017")))))
+      (org-todo-list)))
+
+  (let ((org-super-agenda-groups
+         '((:name "Monday"
+                  :and ((:scheduled past) (:scheduled future))
+
+                  )))
+        )
+    (org-todo-list))
+#+END_SRC
+
 ** CANCELED Rewrite the whole agenda after it's done instead
 CLOSED: [2017-07-28 Fri 00:11]
 :LOGBOOK:
