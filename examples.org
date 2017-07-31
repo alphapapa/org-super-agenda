@@ -12,12 +12,12 @@ Here's an example of a date-oriented, forward-looking agenda grouping.
 
 #+BEGIN_SRC elisp :results none
   (let ((org-super-agenda-groups
-         '((:name "Schedule"
+         '((:log t)
+           (:name "Schedule"
                   :time-grid t)
            (:name "Today"
                   :scheduled today)
-           (:name "Habits"
-                  :habit t)
+           (:habit t)
            (:name "Due today"
                   :deadline today)
            (:name "Overdue"

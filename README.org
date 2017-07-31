@@ -113,6 +113,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  =:deadline= Group items that have a deadline. Argument can be =t= (to match items with any deadline), =nil= (to match items that have no deadline), =past= (to match items with a deadline in the past), =today= (to match items whose deadline is today), or =future= (to match items with a deadline in the future). Argument may also be given like =before DATE= or =after DATE= where DATE is a date string that =org-time-string-to-absolute= can process.
 +  =:habit= Group habit items. Habit items have a "STYLE: habit" Org property.
 +  =:heading-regexp= Group items whose headings match any of the given regular expressions.
++  =:log= Group items from log mode.  Note that these items may also be matched by the =:time-grid= selector, so if you want these displayed in their own group, you may need to select them in a group before a group containing the =:time-grid= selector.
 +  =:priority= Group items that match any of the given priorities. Argument may be a string or list of strings, which should be the priority letter, e.g. =A=.
 +  =:priority>= Group items that are higher than the given priority, e.g. =C=.
 +  =:priority>== Group items that are higher than or equal to the given priority, e.g. =B=.
