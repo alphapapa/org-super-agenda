@@ -134,7 +134,7 @@ making it stretch across the screen."
 
 ;;;; Macros
 
-(defmacro when-with-marker-buffer (form &rest body)
+(defmacro org-super-agenda--when-with-marker-buffer (form &rest body)
   "When FORM is a marker, run BODY in the marker's buffer, with point starting at it."
   (declare (indent defun))
   (org-with-gensyms (marker)
@@ -194,7 +194,7 @@ Matches `org-priority-regexp'."
   "Get entry for ITEM.
 ITEM should be a string with the `org-marker' property set to a
 marker."
-  (when-with-marker-buffer (org-super-agenda--get-marker item)
+  (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
     (buffer-substring (org-entry-beginning-position)
                       (org-entry-end-position))))
 
@@ -335,7 +335,7 @@ DATE', where DATE is a date string that
          (target-date (pcase (car args)
                         ((or 'before 'on 'after)
                          (org-time-string-to-absolute (second args))))))
-  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
+  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
           (when-let ((time (org-entry-get (point) "DEADLINE")))
             (pcase (car args)
               ('t  ;; Check for any deadline info
@@ -387,7 +387,7 @@ DATE', where DATE is a date string that
          (target-date (pcase (car args)
                         ((or 'before 'on 'after)
                          (org-time-string-to-absolute (second args))))))
-  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
+  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
           (when-let ((time (org-entry-get (point) "SCHEDULED")))
             (pcase (car args)
               ('t  ;; Check for any scheduled info
@@ -425,16 +425,16 @@ with any to-do keywords, or a string to match if it has specific
 to-do keywords."
   :section-name "Items with children"
   :let* ((case-fold-search t))
-  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
+  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
           (pcase (car args)
             ('todo ;; Match if entry has child to-dos
              (org-super-agenda--map-children
-               :form (org-entry-is-todo-p)
-               :any t))
+              :form (org-entry-is-todo-p)
+              :any t))
             ((pred stringp)  ;; Match child to-do keywords
              (org-super-agenda--map-children
-               :form (cl-member (org-get-todo-state) args :test #'string=)
-               :any t))
+              :form (cl-member (org-get-todo-state) args :test #'string=)
+              :any t))
             ('t  ;; Match if it has any children
              (org-goto-first-child))
             ((pred not)  ;; Match if it has no children
@@ -457,7 +457,7 @@ section name for this group."
                                 (--map (s-wrap it "\"")
                                        args)))
   :let* ((case-fold-search t))
-  :test (when-with-marker-buffer (org-super-agenda--get-marker item)
+  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
           (let ((heading (org-get-heading 'no-tags 'no-todo)))
             (cl-loop for regexp in args
                      thereis (string-match-p regexp heading)))))
