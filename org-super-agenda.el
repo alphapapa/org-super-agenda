@@ -122,6 +122,10 @@ Populated automatically by `org-super-agenda--defgroup'.")
 See readme for information."
   :type 'list)
 
+(defcustom org-super-agenda-default-order 10
+  "Default order setting for agenda sections without a order."
+  :type 'integer)
+
 (defcustom org-super-agenda-unmatched-order 99
   "Default order setting for agenda section containing items unmatched by any filter."
   :type 'integer)
@@ -554,7 +558,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
         ;; Collect and insert groups
         (cl-loop for filter in org-super-agenda-groups
                  for custom-section-name = (plist-get filter :name)
-                 for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
+                 for order = (or (plist-get filter :order) org-super-agenda-default-order)  ; Lowest number first, 0 by default
                  for (auto-section-name non-matching matching) = (org-super-agenda--group-dispatch all-items filter)
                  for section-name = (or custom-section-name auto-section-name)
 
@@ -566,7 +570,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
                  finally do (setq sections (--sort (let ((o-it (plist-get it :order))
                                                          (o-other (plist-get other :order)))
                                                      (cond ((and (= o-it o-other)
-                                                                 (/= o-it 0))
+                                                                 (/= o-it org-super-agenda-unmatched-order))
                                                             ;; Sort by string only for items with a set order
                                                             (string< (plist-get it :name)
                                                                      (plist-get other :name)))
