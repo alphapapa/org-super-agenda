@@ -100,7 +100,6 @@ I just realized that, instead of copying and modifying every agenda command, I m
 CLOSED: [2017-07-23 Sun 16:50]
 :LOGBOOK:
 -  State "DONE"       from "TODO"       [2017-07-23 Sun 16:50]
-CLOCK: [2017-07-23 Sun 12:24]
 :END:
 
 +  =org-agenda-get-day-entries= is the function that "does the work" for the agenda.  If I need to build a custom command sort-of from scratch, this is probably how to start.

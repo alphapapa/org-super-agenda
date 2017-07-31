@@ -4,7 +4,7 @@
 
 There are a lot of possibilities, so here are some examples to spark your imagination.  Please do *share* your own examples by posting them on the issue tracker, and I will add them here.  It will be very helpful to others to see your creativity!
 
-*Note:* You can test any of these examples by evaluating the whole =let= form in Emacs (or, if you open this file in Emacs, by executing the code block with =C-c C-c=.
+*Note:* You can test any of these examples by evaluating the whole =let= form in Emacs (or, if you open this file in Emacs, by executing the code block with =C-c C-c=).
 
 ** Forward-looking
 
