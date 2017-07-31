@@ -38,7 +38,7 @@ Here's the code for the example above.  You can test it quickly by evaluating th
   (let ((org-super-agenda-groups
          '(;; Each group has an implicit boolean OR operator between its selectors.
            (:name "Today"  ; Optionally specify section name
-                  :time t  ; Items that have a time associated
+                  :time-grid t  ; Items that appear on the time grid
                   :todo "TODAY")  ; Items that have this TODO keyword
            (:name "Important"
                   ;; Single arguments given alone
@@ -121,7 +121,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  =:regexp= Group items that match any of the given regular expressions.
 +  =:scheduled= Group items that are scheduled. Argument can be =t= (to match items scheduled for any date), =nil= (to match items that are not schedule), =past= (to match items scheduled for the past), =today= (to match items scheduled for today), or =future= (to match items scheduled for the future). Argument may also be given like =before DATE= or =after DATE= where DATE is a date string that =org-time-string-to-absolute= can process.
 +  =:tag= Group items that match any of the given tags. Argument may be a string or list of strings.
-+  =:time= Group items that have a time associated. Items with an associated timestamp that has a time (rather than just a date) are selected.
++  =:time-grid= Group items that appear on the time grid.
 +  =:todo= Group items that match any of the given TODO keywords. Argument may be a string or list of strings, or =t= to match any keyword, or =nil= to match only non-todo items.
 
 ** Installation

@@ -13,7 +13,7 @@ Here's an example of a date-oriented, forward-looking agenda grouping.
 #+BEGIN_SRC elisp :results none
   (let ((org-super-agenda-groups
          '((:name "Schedule"
-                  :time t)
+                  :time-grid t)
            (:name "Today"
                   :scheduled today)
            (:name "Habits"
@@ -54,7 +54,7 @@ You might want to put that at the end of a daily/weekly agenda view using a cust
          '(("u" "Super view"
             ((agenda "" ((org-super-agenda-groups
                           '((:name "Today"
-                                   :time t)))))
+                                   :time-grid t)))))
              (todo "" ((org-agenda-overriding-header "")
                        (org-super-agenda-groups
                         '((:name "Projects"

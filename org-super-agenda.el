@@ -40,7 +40,7 @@
 ;; (let ((org-super-agenda-groups
 ;;        '(;; Each group has an implicit boolean OR operator between its selectors.
 ;;          (:name "Today" ; Optionally specify section name
-;;                 :time t ; Items that have a time associated
+;;                 :time-grid t ; Items that appear on the time grid
 ;;                 :todo "TODAY") ; Items that have this TODO keyword
 ;;          (:name "Important"
 ;;                 ;; Single arguments given alone
@@ -294,10 +294,11 @@ date.  The `ts-date' text-property is matched against. "
 ;; should use ":scheduled today".  So maybe this should be renamed to
 ;; :time-grid or something like that.
 
-(org-super-agenda--defgroup time
-  "Group items that have a time associated.
-Items with an associated timestamp that has a time (rather than
-just a date) are selected."
+(org-super-agenda--defgroup time-grid
+  "Group items that appear on a time grid.
+This matches the `dotime' text-property, which, if NOT set to
+`time' (I know, this gets confusing), means it WILL appear in the
+agenda time grid. "
   :section-name "Timed items"  ; Note: this does not mean the item has a "SCHEDULED:" line
   :test (when-let ((time (org-find-text-property-in-string 'dotime item)))
           (not (eql time 'time))))

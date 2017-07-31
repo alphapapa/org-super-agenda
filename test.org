@@ -115,7 +115,7 @@ Gotta buy one first, though.
                 (org-super-agenda-groups
                  '(;; Each group has an implicit boolean OR operator between its selectors.
                    (:name "Today" ; Optionally specify section name
-                          :time t ; Items that have a time associated
+                          :time-gridt ; Items that have a time associated
                           :todo "TODAY") ; Items that have this TODO keyword
                    (:name "Important"
                           ;; Single arguments given alone
@@ -203,7 +203,7 @@ Gotta buy one first, though.
                 (org-agenda-span 'day)
                 (org-super-agenda-groups
                  '((:name "Today"
-                          :time t)
+                          :time-grid t)
                    (:name "Unprioritized"
                           :not (:priority>= "C")
                           :order 100))))
@@ -216,7 +216,7 @@ Gotta buy one first, though.
                  '(("u" "Super view"
                     ((agenda "" ((org-super-agenda-groups
                                   '((:name "Today"
-                                           :time t)))))
+                                           :time-grid t)))))
                      (todo "" ((org-super-agenda-groups
                                 '((:name "Projects"
                                          :children t)
@@ -268,7 +268,7 @@ Gotta buy one first, though.
              '(("u" "Super view"
                 ((agenda "" ((org-super-agenda-groups
                               '((:name "Today"
-                                       :time t
+                                       :time-grid t
                                        :scheduled today
                                        :deadline today)))))
                  (todo "" ((org-super-agenda-groups
@@ -284,7 +284,7 @@ Gotta buy one first, though.
              '(("u" "Super view"
                 ((agenda "" ((org-super-agenda-groups
                               '((:name "Today"
-                                       :time today)))))
+                                       :time-grid today)))))
                  (todo "" ((org-super-agenda-groups
                             '((:name "Projects"
                                      :children t)
@@ -298,7 +298,7 @@ Gotta buy one first, though.
              '(("u" "Super view"
                 ((agenda "" ((org-super-agenda-groups
                               '((:name "Schedule"
-                                       :time t
+                                       :time-grid t
                                        :date today)
                                 (:name "Due today"
                                        :deadline today)
@@ -316,7 +316,7 @@ Gotta buy one first, though.
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:name "Schedule"
-                      :time t)
+                      :time-grid t)
                (:name "Today"
                       :scheduled today)
                (:name "Habits"
