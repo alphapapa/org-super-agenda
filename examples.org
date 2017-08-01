@@ -61,6 +61,19 @@ If you'd prefer them at the top of the agenda, you could use this:
     (org-agenda-list))
 #+END_SRC
 
+** Concrete dates
+
+Let's say it's approaching the start of a new school year, and you want to see all tasks with a deadline before school starts.  You might use something like this:
+
+#+BEGIN_SRC elisp :results none
+  (let ((org-super-agenda-groups
+         '((:deadline (before "2017-09-01"))
+           (:discard (:anything t)))))
+    (org-todo-list))
+#+END_SRC
+
+Of course, you could also write that as a standard agenda command with the  [[http://orgmode.org/worg/org-tutorials/advanced-searching.html][advanced searching syntax]], and it would execute faster.
+
 ** Projects
 
 With the =:children= selector you can select items that have children.  Assuming items without children aren't considered projects, you can view projects like this:
