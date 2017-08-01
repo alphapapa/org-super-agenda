@@ -40,6 +40,10 @@ CLOSED: [2017-08-01 Tue 05:20]
 
 Can probably use property or auto-group matcher, maybe refactor them.
 
+** TODO Use :filter-return?
+
+Wait, can I just use filter-return advice on =org-agenda-finalize-entries= instead of overriding it?
+
 ** TODO Make :children non-recursive
 
 The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
