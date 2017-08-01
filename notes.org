@@ -32,23 +32,15 @@ Here's my initial plan.  What I basically need to do is run the standard agenda 
 
 Now, I wonder if I should keep the name ~super-agenda~ or if something more descriptive like ~org-divided-agenda~ would be better.  Maybe ask on the mailing list...
 
-** DONE Add category matcher
-CLOSED: [2017-08-01 Tue 05:20]
-:LOGBOOK:
--  State "DONE"       from "TODO"       [2017-08-01 Tue 05:20]
-:END:
-
-Can probably use property or auto-group matcher, maybe refactor them.
-
-** TODO Use :filter-return?
+** TODO [#A] Use :filter-return?
 
 Wait, can I just use filter-return advice on =org-agenda-finalize-entries= instead of overriding it?
 
-** TODO Make :children non-recursive
+** TODO [#C] Make :children non-recursive
 
 The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
 
-** UNDERWAY Add property matcher
+** UNDERWAY [#B] Add property matcher
 :LOGBOOK:
 -  State "UNDERWAY"   from "TODO"       [2017-07-31 Mon 22:05]
 :END:
@@ -85,30 +77,30 @@ Might be handy.
 
 I could probably learn a lot from studying how this is implemented.  It's basically doing the same thing but probably in a more lispy way.
 
-** MAYBE Use org-with-point-at
+** MAYBE [#B] Advise other agenda commands for default grouping
+:LOGBOOK:
+-  State "MAYBE"      from              [2017-08-01 Tue 05:16]
+:END:
+
+For example, I'd like to have a different set of default groups for =org-tags-view= and =org-todo-list= than I have for =org-agenda-list=.  Should be able to do this with advice, although I'm not sure if it belongs in this package or my own config.
+
+** MAYBE [#C] Use org-with-point-at
 :LOGBOOK:
 -  State "MAYBE"      from              [2017-08-01 Tue 00:08]
 :END:
 
 I think I can just use this instead of my own =when-with-marker-buffer=.
 
-** MAYBE Use cl-seq
+** MAYBE [#C] Use cl-seq
 
 I just discovered the =cl-seq= library, which includes =cl-subsetp=, which might be preferable over =seq-intersection= for testing membership.
 
-** MAYBE Customize interface
+** MAYBE [#C] Customize interface
 :LOGBOOK:
 -  State "MAYBE"      from              [2017-08-01 Tue 05:15]
 :END:
 
 I might be able to use =org-agenda-custom-commands-local-options= as a guide.
-
-** MAYBE Advise other agenda commands for default grouping
-:LOGBOOK:
--  State "MAYBE"      from              [2017-08-01 Tue 05:16]
-:END:
-
-For example, I'd like to have a different set of default groups for =org-tags-view= and =org-todo-list= than I have for =org-agenda-list=.  Should be able to do this with advice, although I'm not sure if it belongs in this package or my own config.
 
 ** CANCELED Use seq
 CLOSED: [2017-07-27 Thu 02:12]
@@ -137,6 +129,15 @@ So /ideally/ we would get a patch committed to Org which would make this sort of
 In the meantime, this works well.
 
 [2017-07-28 Fri 00:11] Nope, nope, nope.  Not worth it.
+
+** DONE Add category matcher
+CLOSED: [2017-08-01 Tue 05:20]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-08-01 Tue 05:20]
+:END:
+
+Can probably use property or auto-group matcher, maybe refactor them.
+
 ** DONE Use advice and minor mode
 CLOSED: [2017-07-28 Fri 22:18]
 :LOGBOOK:
@@ -171,6 +172,7 @@ CLOSED: [2017-07-23 Sun 16:50]
 
 +  =org-agenda-list= is the function that makes the default agenda view.
      -  It seems to use ~(org-agenda-finalize-entries rtnall 'agenda)~ to return a string containing the actual items to insert.  So maybe I can just override that function, although I'm not sure if that's enough, because I don't think that function creates section headers.
+
 ** DONE Filter list according to passed arguments
 CLOSED: [2017-07-28 Fri 00:11]
 :LOGBOOK:
