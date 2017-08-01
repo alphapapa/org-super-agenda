@@ -6,7 +6,7 @@ There are a lot of possibilities, so here are some examples to spark your imagin
 
 *Note:* You can test any of these examples by evaluating the whole =let= form in Emacs (or, if you open this file in Emacs, by executing the code block with =C-c C-c=).
 
-** Automatically by groups
+** Automatically by group
 
 By setting the Org property =agenda-group= and using the =:auto-group= selector, you can automatically sort agenda items into groups.  By default, this property is inherited, so you can set it for an entire subtree of items at once.  For example, if you had this Org file:
 
@@ -43,7 +43,7 @@ And you'd get an agenda looking like this:
 
 [[screenshots/auto-group.png]]
 
-** Automatically by categories
+** Automatically by category
 
 In the same way, items can automatically be grouped by their category (which is usually the filename of the buffer they're in).
 
