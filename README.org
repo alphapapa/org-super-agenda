@@ -97,7 +97,7 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 
 *Special selectors*:
 
-Every selector requires an argument, even if it's just =t=, including =:anything=, =:auto-groups=, and =:discard=.
+Every selector requires an argument, even if it's just =t=, e.g. =:anything=, =:auto-category=, =:auto-groups=, and =:discard=.
 
 +  =:and= Group ITEMS that match all selectors in GROUP.
 +  =:anything= Select every item, no matter what.  This is probably most useful with =:discard=, because it doesn't actually test anything, so it's faster than, e.g. ~:regexp "."~, which has to get the entry text for every item.
