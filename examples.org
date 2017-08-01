@@ -1,10 +1,20 @@
 
 
-* Examples
+* Examples 
 
 There are a lot of possibilities, so here are some examples to spark your imagination.  Please do *share* your own examples by posting them on the issue tracker, and I will add them here.  It will be very helpful to others to see your creativity!
 
 *Note:* You can test any of these examples by evaluating the whole =let= form in Emacs (or, if you open this file in Emacs, by executing the code block with =C-c C-c=).
+
+** Contents                                                            :TOC:
+     - [[#automatically-by-group][Automatically by group]]
+     - [[#automatically-by-category][Automatically by category]]
+     - [[#forward-looking][Forward-looking]]
+     - [[#log-mode][Log mode]]
+     - [[#concrete-dates][Concrete dates]]
+     - [[#projects][Projects]]
+     - [[#books-to-read][Books to-read]]
+     - [[#emacs-and-org-mode-to-do-items][Emacs and Org-mode to-do items]]
 
 ** Automatically by group
 
@@ -27,6 +37,7 @@ By setting the Org property =agenda-group= and using the =:auto-group= selector,
   :PROPERTIES:
   :agenda-group: recurring
   :END:
+
   ,*** TODO Pay Internet bill
       DEADLINE: <2017-07-28 Fri>
 #+END_SRC
