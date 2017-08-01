@@ -122,6 +122,15 @@ Populated automatically by `org-super-agenda--defgroup'.")
 See readme for information."
   :type 'list)
 
+(defcustom org-super-agenda-properties-inherit t
+  "Use property inheritance when checking properties with the :auto-groups selector.
+With this enabled, you can set the \"agenda-group\" property for
+an entire subtree, and every entry below it will inherit the
+agenda group.  It seems most natural for it to be enabled, so the
+default is.  But in case of performance problems, it can be
+disabled.  This sets the INHERIT argument to `org-entry-get'."
+  :type 'boolean)
+
 (defcustom org-super-agenda-unmatched-order 99
   "Default order setting for agenda section containing items unmatched by any filter."
   :type 'integer)
@@ -555,31 +564,56 @@ The string should be the priority cookie letter, e.g. \"A\".")
 
 ;;;; Grouping functions
 
+;; TODO: cl-loop is great, but when it gets this big, it's rather ugly, and it
+;; probably scares some people away.  This should probably be refactored.
 (defun org-super-agenda--group-items (all-items)
   "Divide ALL-ITEMS into groups based on `org-super-agenda-groups'."
   (if (bound-and-true-p org-super-agenda-groups)
       ;; Transform groups
       (let ((org-super-agenda-groups (org-super-agenda--transform-groups org-super-agenda-groups)))
         ;; Collect and insert groups
-        (cl-loop for filter in org-super-agenda-groups
+        (cl-loop with section-name
+                 for filter in org-super-agenda-groups
                  for custom-section-name = (plist-get filter :name)
                  for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
                  for (auto-section-name non-matching matching) = (org-super-agenda--group-dispatch all-items filter)
-                 for section-name = (or custom-section-name auto-section-name)
 
-                 collect (list :name section-name :items matching :order order) into sections
+                 ;; Auto groups
+                 if (eql auto-section-name :auto-groups)
+                 do (setq section-name (or custom-section-name "Auto groups"))
+                 and append (cl-loop for group in matching
+                                     collect (list :name (plist-get group :name)
+                                                   :items (plist-get group :items)
+                                                   :order order))
+                 into sections
+                 and do (setq all-items non-matching)
+
+                 ;; Manual groups
+                 else
+                 do (setq section-name (or custom-section-name auto-section-name))
+                 and collect (list :name section-name :items matching :order order) into sections
                  and do (setq all-items non-matching)
 
                  ;; Sort sections by :order then :name
-                 finally do (setq non-matching (list :name "Other items" :items non-matching :order org-super-agenda-unmatched-order))
+                 finally do (setq non-matching (list :name "Other items"
+                                                     :items non-matching
+                                                     :order org-super-agenda-unmatched-order))
                  finally do (setq sections (--sort (let ((o-it (plist-get it :order))
                                                          (o-other (plist-get other :order)))
-                                                     (cond ((and (= o-it o-other)
-                                                                 (/= o-it 0))
+                                                     (cond ((and
+                                                             ;; FIXME: This is now quite ugly.  I'm not sure that all of these tests
+                                                             ;; are necessary, but at the moment it works, so I'm leaving it alone.
+                                                             (equal o-it o-other)
+                                                             (not (equal o-it 0))
+                                                             (stringp (plist-get it :name))
+                                                             (stringp (plist-get other :name)))
                                                             ;; Sort by string only for items with a set order
                                                             (string< (plist-get it :name)
                                                                      (plist-get other :name)))
-                                                           (t (< o-it o-other))))
+                                                           ((and (numberp o-it)
+                                                                 (numberp o-other))
+                                                            (< o-it o-other))
+                                                           (t nil)))
                                                    (push non-matching sections)))
                  ;; Insert sections
                  finally return (cl-loop for (_ name _ items) in sections
@@ -588,6 +622,25 @@ The string should be the priority cookie letter, e.g. \"A\".")
                                          and append items)))
     ;; No super-filters; return list unmodified
     all-items))
+
+(defun org-super-agenda--auto-group-items (all-items &rest ignore)
+  "Divide ALL-ITEMS into groups based on their AGENDA-GROUP property."
+  (cl-loop with groups = (ht-create)
+           for item in all-items
+           for group = (org-entry-get (org-super-agenda--get-marker item)
+                                      "agenda-group"
+                                      org-super-agenda-properties-inherit)
+           if group
+           do (ht-set! groups group (cons item (ht-get groups group)))
+           else collect item into non-matching
+           finally return (list :auto-groups
+                                non-matching
+                                (cl-loop for key in (sort (ht-keys groups) #'string<)
+                                         for name = (concat "Group: " key)
+                                         collect (list :name name
+                                                       :items (ht-get groups key))))))
+(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
+                                              :auto-groups #'org-super-agenda--auto-group-items))
 
 ;;;;; Dispatchers
 
@@ -608,7 +661,11 @@ see."
            append matching into all-matches
            and collect auto-section-name into names
            and do (setq items non-matching)
-           finally return (list (s-join " and " (-non-nil names)) items all-matches)))
+           for name = (if (stringp (car names))
+                          (s-join " and " (-non-nil names))
+                        ;; Probably an :auto-group
+                        (car names))
+           finally return (list name items all-matches)))
 
 ;; TODO: This works, but it seems inelegant to basically copy the
 ;; group-dispatch function.  A more pure-functional approach might be
