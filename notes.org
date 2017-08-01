@@ -969,6 +969,13 @@ Might be handy.
 
 The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
 
+** MAYBE Use org-with-point-at
+:LOGBOOK:
+-  State "MAYBE"      from              [2017-08-01 Tue 00:08]
+:END:
+
+I think I can just use this instead of my own =when-with-marker-buffer=.
+
 ** DONE Sort sections
 CLOSED: [2017-07-28 Fri 20:26]
 :LOGBOOK:
