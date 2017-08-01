@@ -32,6 +32,62 @@ Here's my initial plan.  What I basically need to do is run the standard agenda 
 
 Now, I wonder if I should keep the name ~super-agenda~ or if something more descriptive like ~org-divided-agenda~ would be better.  Maybe ask on the mailing list...
 
+** TODO Add category matcher
+
+Can probably use property or auto-group matcher, maybe refactor them.
+
+** TODO Make :children non-recursive
+
+The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
+
+** UNDERWAY Add property matcher
+:LOGBOOK:
+-  State "UNDERWAY"   from "TODO"       [2017-07-31 Mon 22:05]
+:END:
+
+Might be handy.
+
+[2017-07-31 Mon 22:05] Underway in a branch.
+
+** SOMEDAY Look at how ibuffer does grouping
+:LOGBOOK:
+-  State "SOMEDAY"    from              [2017-07-31 Mon 18:51]
+:END:
+
+[[http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html][For example]]:
+
+#+BEGIN_SRC elisp
+  (setq ibuffer-saved-filter-groups
+        '(("home"
+           ("emacs-config" (or (filename . ".emacs.d")
+                               (filename . "emacs-config")))
+           ("martinowen.net" (filename . "martinowen.net"))
+           ("Org" (or (mode . org-mode)
+                      (filename . "OrgMode")))
+           ("code" (filename . "code"))
+           ("Web Dev" (or (mode . html-mode)
+                          (mode . css-mode)))
+           ("Subversion" (name . "\*svn"))
+           ("Magit" (name . "\*magit"))
+           ("ERC" (mode . erc-mode))
+           ("Help" (or (name . "\*Help\*")
+                       (name . "\*Apropos\*")
+                       (name . "\*info\*"))))))
+#+END_SRC
+
+I could probably learn a lot from studying how this is implemented.  It's basically doing the same thing but probably in a more lispy way.
+
+** MAYBE Use org-with-point-at
+:LOGBOOK:
+-  State "MAYBE"      from              [2017-08-01 Tue 00:08]
+:END:
+
+I think I can just use this instead of my own =when-with-marker-buffer=.
+
+** MAYBE Use cl-seq
+
+I just discovered the =cl-seq= library, which includes =cl-subsetp=, which might be preferable over =seq-intersection= for testing membership.
+
 ** Testing code
 
 Moved to the [[file:test.org][test.org]] file.
@@ -77,6 +133,33 @@ This helps a lot.
                                                         0 5)))
 #+END_SRC
 
+** CANCELED Use seq
+CLOSED: [2017-07-27 Thu 02:12]
+:LOGBOOK:
+-  State "CANCELED"   from "TODO"       [2017-07-27 Thu 02:12]
+:END:
+
+Instead of writing all this custom code in =cl-loop=, I can use the new =seq= library and =seq-group-by=.
+
+Nevermind.  Sounds like a nice idea, but the tests I use don't always return just =t= or =nil=, and =seq-group-by= groups item by return value, not merely =nil= or =non-nil=.  So the order of the groups returned is not guaranteed, and the keys will vary.
+
+Then again, if I wrap the tests in ~(not (null ...))~, I can use it.  But what's the benefit then?  =cl-loop= seems verbose in comparison, but I have wasted literally hours trying to debug this, because I was confused by the inconsistent order of results from =seq-group-by=, when all I care about is =nil= or =non-nil=.  =cl-loop='s ~if ,test~ is very clearly only testing for =nil= / =non-nil=, and that's all I need.
+
+I know some people don't like the =loop= macro, because it seems non-lispy.  But lisp isn't just about sexps and parentheses, it's also about having the power to define a more purposeful language for a certain task and integrate that into your program.  And the =loop= macro is very well suited to this task.  And even though it has its own idiosyncrasies, I think I've spent less time debugging it than I spent on this.  Maybe that just means I'm a poor programmer (although, in my defense, trying to debug lists of text with thousands of characters of text-properties in Emacs that get abbreviated and wrapped and truncated on-screen...) , but I think I'm going to stick with =loop= until I actually need something that =seq-group-by= provides.
+
+** CANCELED Rewrite the whole agenda after it's done instead
+CLOSED: [2017-07-28 Fri 00:11]
+:LOGBOOK:
+-  State "CANCELED"   from "MAYBE"      [2017-07-28 Fri 00:11]
+:END:
+
+Ideally, I guess, we would let the normal agenda command finish, then work on the buffer.  But this would mean that we have to avoid non-agenda-item lines, like headers, timetables, clockreports, etc.  That would likely get messy and have edge cases.  It's nice to get the list of agenda items before they are inserted, so we can filter them to begin with, but the problem with that is that we have to make a copy of the agenda command, which will get out-of-sync with newer Org versions.
+
+So /ideally/ we would get a patch committed to Org which would make this sort of thing possible, but that would probably entail a major refactoring of much of the agenda code.  And while that might end up with a nice result, it would be an enormous amount of work, and there aren't any guarantees that Org would merge it.
+
+In the meantime, this works well.
+
+[2017-07-28 Fri 00:11] Nope, nope, nope.  Not worth it.
 ** DONE Use advice and minor mode
 CLOSED: [2017-07-28 Fri 22:18]
 :LOGBOOK:
@@ -804,20 +887,6 @@ Calls are in the sections above.
                   finally return (list section-name non-matching matching))))) 
 #+END_SRC
 
-** CANCELED Use seq
-CLOSED: [2017-07-27 Thu 02:12]
-:LOGBOOK:
--  State "CANCELED"   from "TODO"       [2017-07-27 Thu 02:12]
-:END:
-
-Instead of writing all this custom code in =cl-loop=, I can use the new =seq= library and =seq-group-by=.
-
-Nevermind.  Sounds like a nice idea, but the tests I use don't always return just =t= or =nil=, and =seq-group-by= groups item by return value, not merely =nil= or =non-nil=.  So the order of the groups returned is not guaranteed, and the keys will vary.
-
-Then again, if I wrap the tests in ~(not (null ...))~, I can use it.  But what's the benefit then?  =cl-loop= seems verbose in comparison, but I have wasted literally hours trying to debug this, because I was confused by the inconsistent order of results from =seq-group-by=, when all I care about is =nil= or =non-nil=.  =cl-loop='s ~if ,test~ is very clearly only testing for =nil= / =non-nil=, and that's all I need.
-
-I know some people don't like the =loop= macro, because it seems non-lispy.  But lisp isn't just about sexps and parentheses, it's also about having the power to define a more purposeful language for a certain task and integrate that into your program.  And the =loop= macro is very well suited to this task.  And even though it has its own idiosyncrasies, I think I've spent less time debugging it than I spent on this.  Maybe that just means I'm a poor programmer (although, in my defense, trying to debug lists of text with thousands of characters of text-properties in Emacs that get abbreviated and wrapped and truncated on-screen...) , but I think I'm going to stick with =loop= until I actually need something that =seq-group-by= provides.
-
 ** DONE Add boolean AND
 CLOSED: [2017-07-27 Thu 23:35]
 :LOGBOOK:
@@ -956,30 +1025,6 @@ CLOSED: [2017-07-27 Thu 23:46]
     (org-agenda nil "u"))
 #+END_SRC
 
-** UNDERWAY Add property matcher
-:LOGBOOK:
--  State "UNDERWAY"   from "TODO"       [2017-07-31 Mon 22:05]
-:END:
-
-Might be handy.
-
-[2017-07-31 Mon 22:05] Underway in a branch.
-
-** TODO Add category matcher
-
-Can probably use property or auto-group matcher, maybe refactor them.
-
-** TODO Make :children non-recursive
-
-The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
-
-** MAYBE Use org-with-point-at
-:LOGBOOK:
--  State "MAYBE"      from              [2017-08-01 Tue 00:08]
-:END:
-
-I think I can just use this instead of my own =when-with-marker-buffer=.
-
 ** DONE Sort sections
 CLOSED: [2017-07-28 Fri 20:26]
 :LOGBOOK:
@@ -1053,48 +1098,3 @@ CLOSED: [2017-07-28 Fri 00:02]
                             groups))))
 #+END_SRC
 
-** MAYBE Use cl-seq
-
-I just discovered the =cl-seq= library, which includes =cl-subsetp=, which might be preferable over =seq-intersection= for testing membership.
-
-** SOMEDAY Look at how ibuffer does grouping
-:LOGBOOK:
--  State "SOMEDAY"    from              [2017-07-31 Mon 18:51]
-:END:
-
-[[http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html][For example]]:
-
-#+BEGIN_SRC elisp
-  (setq ibuffer-saved-filter-groups
-        '(("home"
-           ("emacs-config" (or (filename . ".emacs.d")
-                               (filename . "emacs-config")))
-           ("martinowen.net" (filename . "martinowen.net"))
-           ("Org" (or (mode . org-mode)
-                      (filename . "OrgMode")))
-           ("code" (filename . "code"))
-           ("Web Dev" (or (mode . html-mode)
-                          (mode . css-mode)))
-           ("Subversion" (name . "\*svn"))
-           ("Magit" (name . "\*magit"))
-           ("ERC" (mode . erc-mode))
-           ("Help" (or (name . "\*Help\*")
-                       (name . "\*Apropos\*")
-                       (name . "\*info\*"))))))
-#+END_SRC
-
-I could probably learn a lot from studying how this is implemented.  It's basically doing the same thing but probably in a more lispy way.
-
-** CANCELED Rewrite the whole agenda after it's done instead
-CLOSED: [2017-07-28 Fri 00:11]
-:LOGBOOK:
--  State "CANCELED"   from "MAYBE"      [2017-07-28 Fri 00:11]
-:END:
-
-Ideally, I guess, we would let the normal agenda command finish, then work on the buffer.  But this would mean that we have to avoid non-agenda-item lines, like headers, timetables, clockreports, etc.  That would likely get messy and have edge cases.  It's nice to get the list of agenda items before they are inserted, so we can filter them to begin with, but the problem with that is that we have to make a copy of the agenda command, which will get out-of-sync with newer Org versions.
-
-So /ideally/ we would get a patch committed to Org which would make this sort of thing possible, but that would probably entail a major refactoring of much of the agenda code.  And while that might end up with a nice result, it would be an enormous amount of work, and there aren't any guarantees that Org would merge it.
-
-In the meantime, this works well.
-
-[2017-07-28 Fri 00:11] Nope, nope, nope.  Not worth it.
