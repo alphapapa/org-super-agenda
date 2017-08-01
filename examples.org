@@ -35,6 +35,32 @@ Here's an example of a date-oriented, forward-looking agenda grouping.
     (org-agenda-list))
 #+END_SRC
 
+** Log mode
+
+When the agenda log mode is activated, these groups separate out tasks that you worked on or completed today.  The ~:order-multi~ sets the ~:order~ for each subgroup to ~1~, which makes it display below any groups without a defined ~:order~.
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:order-multi (8 (:name "Done today"
+                                   :and (:regexp "State \"DONE\""
+                                                 :log t))
+                            (:name "Clocked today"
+                                   :log t))))))
+    (org-agenda-list))
+#+END_SRC
+
+If you'd prefer them at the top of the agenda, you could use this:
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:name "Done today"
+                  :and (:regexp "State \"DONE\""
+                                :log t))
+           (:name "Clocked today"
+                  :log t))))
+    (org-agenda-list))
+#+END_SRC
+
 ** Projects
 
 With the =:children= selector you can select items that have children.  Assuming items without children aren't considered projects, you can view projects like this:
