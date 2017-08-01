@@ -8,7 +8,7 @@ There are a lot of possibilities, so here are some examples to spark your imagin
 
 ** Automatically by groups
 
-By setting the Org property =agenda-group= and using the =:auto-groups= selector, you can automatically sort agenda items into groups.  By default, this property is inherited, so you can set it for an entire subtree of items at once.  For example, if you had this Org file:
+By setting the Org property =agenda-group= and using the =:auto-group= selector, you can automatically sort agenda items into groups.  By default, this property is inherited, so you can set it for an entire subtree of items at once.  For example, if you had this Org file:
 
 #+BEGIN_SRC org
   ,* Tasks
@@ -35,13 +35,13 @@ You could use an agenda command like this:
 
 #+BEGIN_SRC elisp :results none
   (let ((org-super-agenda-groups
-         '((:auto-groups t))))
+         '((:auto-group t))))
     (org-agenda-list))
 #+END_SRC
 
 And you'd get an agenda looking like this:
 
-[[screenshots/auto-groups.png]]
+[[screenshots/auto-group.png]]
 
 ** Automatically by categories
 

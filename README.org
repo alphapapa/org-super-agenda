@@ -97,12 +97,12 @@ Note that the =:not= group selector /creates/ a group with items it /does not/ m
 
 *Special selectors*:
 
-Every selector requires an argument, even if it's just =t=, e.g. =:anything=, =:auto-category=, =:auto-groups=, and =:discard=.
+Every selector requires an argument, even if it's just =t=, e.g. =:anything=, =:auto-category=, =:auto-group=, and =:discard=.
 
 +  =:and= Group ITEMS that match all selectors in GROUP.
 +  =:anything= Select every item, no matter what.  This is probably most useful with =:discard=, because it doesn't actually test anything, so it's faster than, e.g. ~:regexp "."~, which has to get the entry text for every item.
 +  =:auto-category= This automatically groups items by their category (usually the filename it's in, without the =.org= suffix).
-+  =:auto-groups= This selects items that have the =agenda-group= Org property set.  By setting this property for a subtree, every item in it will be sorted into an agenda group by that name and placed into the agenda where the =:auto-groups= selector is ([[examples.org#auto-groups][example]]).
++  =:auto-group= This selects items that have the =agenda-group= Org property set.  By setting this property for a subtree, every item in it will be sorted into an agenda group by that name and placed into the agenda where the =:auto-group= selector is ([[examples.org#auto-group][example]]).
 +  =:discard= Discard items that don't match selectors.  Any groups processed after this one will not see discarded items.  You might use this at the beginning or end of a list of groups, either to narrow down the list of items (used in combination with =:not=), or to exclude items you're not interested in.
 +  =:not= Group ITEMS that match no selectors in GROUP.
 +  =:order= A number setting the order sections will be displayed in the agenda, lowest number first.  Defaults to =0=.
