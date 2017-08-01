@@ -74,11 +74,11 @@ Here's an example of a date-oriented, forward-looking agenda grouping.
 
 ** Log mode
 
-When the agenda log mode is activated, these groups separate out tasks that you worked on or completed today.  The ~:order-multi~ sets the ~:order~ for each subgroup to ~1~, which makes it display below any groups without a defined ~:order~.
+When the agenda log mode is activated, these groups separate out tasks that you worked on or completed today.  The ~:order-multi~ sets the ~:order~ for each subgroup to ~1~, which makes it display below any groups without a defined ~:order~ (although there are no other groups in this example).
 
 #+BEGIN_SRC elisp
   (let ((org-super-agenda-groups
-         '((:order-multi (8 (:name "Done today"
+         '((:order-multi (1 (:name "Done today"
                                    :and (:regexp "State \"DONE\""
                                                  :log t))
                             (:name "Clocked today"
