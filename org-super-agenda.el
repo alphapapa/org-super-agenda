@@ -623,6 +623,12 @@ The string should be the priority cookie letter, e.g. \"A\".")
     ;; No super-filters; return list unmodified
     all-items))
 
+;;;;; Auto-grouping
+
+;; TODO: Refactor these, because they are essentially the same thing,
+;; like the regular groups do essentially the same thing.  But this
+;; already works, so I'm going to go ahead and release it.
+
 (defun org-super-agenda--auto-group-items (all-items &rest ignore)
   "Divide ALL-ITEMS into groups based on their AGENDA-GROUP property."
   (cl-loop with groups = (ht-create)
@@ -641,6 +647,24 @@ The string should be the priority cookie letter, e.g. \"A\".")
                                                        :items (ht-get groups key))))))
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
                                               :auto-groups #'org-super-agenda--auto-group-items))
+
+(defun org-super-agenda--auto-group-category (all-items &rest ignore)
+  "Divide ALL-ITEMS into groups based on their org-category property."
+  (cl-loop with categories = (ht-create)
+           for item in all-items
+           for category = (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+                            (org-get-category))
+           if category
+           do (ht-set! categories category (cons item (ht-get categories category)))
+           else collect item into non-matching
+           finally return (list :auto-groups
+                                non-matching
+                                (cl-loop for key in (sort (ht-keys categories) #'string<)
+                                         for name = (concat "Category: " key)
+                                         collect (list :name name
+                                                       :items (ht-get categories key))))))
+(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
+                                              :auto-category #'org-super-agenda--auto-group-category))
 
 ;;;;; Dispatchers
 

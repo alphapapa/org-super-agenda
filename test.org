@@ -456,6 +456,14 @@ This helps a lot.
       (org-agenda-list nil nil 'day)))
 #+END_SRC
 
+** Auto categories
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:auto-category t))))
+    (org-agenda-list nil nil 'day))
+#+END_SRC
+
 ** Misc
 
 *** let-plist
