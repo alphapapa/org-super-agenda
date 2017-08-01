@@ -965,6 +965,10 @@ Might be handy.
 
 [2017-07-31 Mon 22:05] Underway in a branch.
 
+** TODO Add category matcher
+
+Can probably use property or auto-group matcher, maybe refactor them.
+
 ** TODO Make :children non-recursive
 
 The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
