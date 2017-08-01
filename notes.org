@@ -956,9 +956,18 @@ CLOSED: [2017-07-27 Thu 23:46]
     (org-agenda nil "u"))
 #+END_SRC
 
-** TODO Add property matcher
+** UNDERWAY Add property matcher
+:LOGBOOK:
+-  State "UNDERWAY"   from "TODO"       [2017-07-31 Mon 22:05]
+:END:
 
 Might be handy.
+
+[2017-07-31 Mon 22:05] Underway in a branch.
+
+** TODO Make :children non-recursive
+
+The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
 
 ** DONE Sort sections
 CLOSED: [2017-07-28 Fri 20:26]
