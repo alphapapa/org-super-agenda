@@ -95,6 +95,13 @@ I just discovered the =cl-seq= library, which includes =cl-subsetp=, which might
 
 I might be able to use =org-agenda-custom-commands-local-options= as a guide.
 
+** MAYBE Advise other agenda commands for default grouping
+:LOGBOOK:
+-  State "MAYBE"      from              [2017-08-01 Tue 05:16]
+:END:
+
+For example, I'd like to have a different set of default groups for =org-tags-view= and =org-todo-list= than I have for =org-agenda-list=.  Should be able to do this with advice, although I'm not sure if it belongs in this package or my own config.
+
 ** CANCELED Use seq
 CLOSED: [2017-07-27 Thu 02:12]
 :LOGBOOK:
