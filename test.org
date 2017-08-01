@@ -440,6 +440,10 @@ This helps a lot.
       ;;  (switch-to-buffer (current-buffer))
       ))
 
+  (defun data-debug-show-current-line-with-properties ()
+    (interactive)
+    (data-debug-show-string-with-properties (buffer-substring (line-beginning-position) (line-end-position))))
+
   (with-current-buffer "*Org Agenda*"
     (data-debug-show-string-with-properties (seq-subseq (split-string (buffer-string) "\n")
                                                         0 5)))
