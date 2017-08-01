@@ -6,6 +6,43 @@ There are a lot of possibilities, so here are some examples to spark your imagin
 
 *Note:* You can test any of these examples by evaluating the whole =let= form in Emacs (or, if you open this file in Emacs, by executing the code block with =C-c C-c=).
 
+** Auto groups
+
+By setting the Org property =agenda-group= and using the =:auto-groups= selector, you can automatically sort agenda items into groups.  By default, this property is inherited, so you can set it for an entire subtree of items at once.  For example, if you had this Org file:
+
+#+BEGIN_SRC org
+  ,* Tasks
+  ,** TODO Take over the universe
+     DEADLINE: <2017-08-01 Tue>
+  :PROPERTIES:
+  :agenda-group: grandiose plans
+  :END:
+  ,*** TODO Take over the world
+      DEADLINE: <2017-07-29 Sat>
+  ,*** TODO Take over the moon
+      DEADLINE: <2017-07-30 Sun>
+  ,*** TODO Take over Mars
+      DEADLINE: <2017-07-31 Mon>
+  ,** Recurring
+  :PROPERTIES:
+  :agenda-group: recurring
+  :END:
+  ,*** TODO Pay Internet bill
+      DEADLINE: <2017-07-28 Fri>
+#+END_SRC
+
+You could use an agenda command like this:
+
+#+BEGIN_SRC elisp :results none
+  (let ((org-super-agenda-groups
+         '((:auto-groups t))))
+    (org-agenda-list))
+#+END_SRC
+
+And you'd get an agenda looking like this:
+
+[[screenshots/auto-groups.png]]
+
 ** Forward-looking
 
 Here's an example of a date-oriented, forward-looking agenda grouping.
