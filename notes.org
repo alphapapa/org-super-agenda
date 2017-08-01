@@ -32,7 +32,11 @@ Here's my initial plan.  What I basically need to do is run the standard agenda 
 
 Now, I wonder if I should keep the name ~super-agenda~ or if something more descriptive like ~org-divided-agenda~ would be better.  Maybe ask on the mailing list...
 
-** TODO Add category matcher
+** DONE Add category matcher
+CLOSED: [2017-08-01 Tue 05:20]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-08-01 Tue 05:20]
+:END:
 
 Can probably use property or auto-group matcher, maybe refactor them.
 
