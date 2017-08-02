@@ -504,3 +504,23 @@ I don't need this right now, but it might come in handy here or elsewhere.
          ,plist
        ,@body))
 #+END_SRC
+
+** Profiling
+
+#+BEGIN_SRC elisp :results none
+  (defmacro profile-it (times &rest body)
+    `(let (output)
+       (dolist (p '("org-super-agenda-" "map" "org-" "string-" "s-" "buffer-" "append" "delq" "map" "list" "car" "save-" "outline-" "delete-dups" "sort" "line-" "nth" "concat" "char-to-string" "rx-" "goto-" "when" "search-" "re-"))
+         (elp-instrument-package p))
+       (dotimes (x ,times)
+         ,@body)
+       (elp-results)
+       (elp-restore-all)
+       (point-min)
+       (forward-line 20)
+       (delete-region (point) (point-max))
+       (setq output (buffer-substring-no-properties (point-min) (point-max)))
+       (kill-buffer)
+       (delete-window)
+       output))
+#+END_SRC

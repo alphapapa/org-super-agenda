@@ -215,14 +215,14 @@ marker."
 With prefix argument ARG, turn on if positive, otherwise off."
   :global t
   (let ((advice-function (if org-super-agenda-mode
-                             (lambda (to fun)
+                             (lambda (to fn)
                                ;; Enable mode
-                               (advice-add to :override fun))
-                           (lambda (from fun)
+                               (advice-add to :filter-return fn))
+                           (lambda (from fn)
                              ;; Disable mode
-                             (advice-remove from fun)))))
-    (cl-loop for (target . override) in org-super-agenda-function-overrides
-             do (funcall advice-function target override))
+                             (advice-remove from fn)))))
+    (funcall advice-function #'org-agenda-finalize-entries
+             #'org-super-agenda--filter-finalize-entries)
     ;; Display message
     (if org-super-agenda-mode
         (message "org-super-agenda-mode enabled.")
@@ -775,49 +775,14 @@ actually the ORDER for the groups."
 (setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
                                                      :order-multi 'org-super-agenda--transform-group-order))
 
-;;;; Finalize function
+;;;; Finalize filter
 
-(defun org-super-agenda--finalize-entries (list &optional type)
-  "Sort, limit and concatenate the LIST of agenda items.
-The optional argument TYPE tells the agenda type."
-  ;; This function is a copy of `org-agenda-finalize-entries', with
-  ;; the only change being that it groups items with
-  ;; `org-super-agenda--group-items' before it finally returns them.
-  (let ((max-effort (cond ((listp org-agenda-max-effort)
-			   (cdr (assoc type org-agenda-max-effort)))
-			  (t org-agenda-max-effort)))
-	(max-todo (cond ((listp org-agenda-max-todos)
-			 (cdr (assoc type org-agenda-max-todos)))
-			(t org-agenda-max-todos)))
-	(max-tags (cond ((listp org-agenda-max-tags)
-			 (cdr (assoc type org-agenda-max-tags)))
-			(t org-agenda-max-tags)))
-	(max-entries (cond ((listp org-agenda-max-entries)
-			    (cdr (assoc type org-agenda-max-entries)))
-			   (t org-agenda-max-entries))))
-    (when org-agenda-before-sorting-filter-function
-      (setq list
-	    (delq nil
-		  (mapcar
-		   org-agenda-before-sorting-filter-function list))))
-    (setq list (mapcar 'org-agenda-highlight-todo list)
-	  list (mapcar 'identity (sort list 'org-entries-lessp)))
-    (when max-effort
-      (setq list (org-agenda-limit-entries
-		  list 'effort-minutes max-effort
-		  (lambda (e) (or e (if org-sort-agenda-noeffort-is-high
-					32767 -1))))))
-    (when max-todo
-      (setq list (org-agenda-limit-entries list 'todo-state max-todo)))
-    (when max-tags
-      (setq list (org-agenda-limit-entries list 'tags max-tags)))
-    (when max-entries
-      (setq list (org-agenda-limit-entries list 'org-hd-marker max-entries)))
-
-    ;; Filter with super-groups
-    (setq list (org-super-agenda--group-items list))
-
-    (mapconcat 'identity list "\n")))
+(defun org-super-agenda--filter-finalize-entries (string)
+  "Filter the return of `org-agenda-finalize-entries' through `org-super-agenda--finalize-entries'."
+  (mapconcat 'identity
+             (org-super-agenda--group-items
+              (split-string string "\n" t))
+             "\n"))
 
 ;;;; Footer
 

@@ -36,6 +36,98 @@ Now, I wonder if I should keep the name ~super-agenda~ or if something more desc
 
 Wait, can I just use filter-return advice on =org-agenda-finalize-entries= instead of overriding it?
 
+Yes, it works, but let's profile...
+
+Well, it doesn't seem slower to use =:filter-return=, so I guess we should use it!  This is great, because now we're not copying any code from Org.
+
+*** Benchmark
+
+#+BEGIN_SRC elisp
+  (profile-it 5
+              (let ((org-super-agenda-groups
+                     '((:order-multi (8 (:name "Done today"
+                                               :and (:regexp "State \"DONE\""
+                                                             :log t))
+                                        (:name "Clocked today"
+                                               :log t)))
+                       (:name "Schedule"
+                              :time-grid t
+                              :todo "TODAY")
+                       (:name "Bills"
+                              :tag "bills")
+                       (:name "Prayers"
+                              :tag "prayers"
+                              :order 3)
+                       (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                              :order 7)
+                       (:name "Personal"
+                              :habit t
+                              :tag "personal"
+                              :order 3)
+                       (:name "People"
+                              :tag ("friends" "family")
+                              :order 4)
+                       (:name "Computer"
+                              :tag ("Emacs" "Org" "computer" "computers" "Onyx" "sparky" "software" "bugs" "programming")
+                              :order 5)
+                       (:todo "WAITING"
+                              :order 6)
+                       ;; (:auto-groups t)
+                       (:priority "A" :order 1)
+                       (:priority ("B" "C") :order 2))))
+                (org-agenda-list)))
+#+END_SRC
+
+**** :override
+
+#+begin_example
+org-agenda-list                                               5           8.884669554   1.7769339108
+org-agenda-finalize                                           5           3.3452782930  0.6690556586
+org-agenda-get-day-entries                                    40          2.78929123    0.0697322807
+org-agenda-prepare                                            5           2.615082307   0.5230164614
+org-agenda-prepare-buffers                                    5           2.600693143   0.5201386286
+org-agenda-get-scheduled                                      40          1.9107706770  0.0477692669
+re-search-forward                                             10165       1.6621631180  0.0001635182
+org-refresh-category-properties                               40          0.9622059339  0.0240551483
+org-at-planning-p                                             2640        0.7469212169  0.0002829247
+org-agenda-get-deadlines                                      40          0.6566957920  0.0164173948
+re-search-backward                                            10795       0.6538935470  6.057...e-05
+org-entry-get                                                 1770        0.6271259749  0.0003543084
+org-is-habit-p                                                1745        0.6243584910  0.0003577985
+org--property-local-values                                    1750        0.6092262489  0.0003481292
+org-get-property-block                                        1755        0.5801290770  0.0003305578
+org-inlinetask-in-task-p                                      4335        0.5690890999  0.0001312777
+org-back-to-heading                                           8335        0.5312232549  6.373...e-05
+outline-back-to-heading                                       8335        0.5145584149  6.173...e-05
+org-refresh-stats-properties                                  40          0.3778483340  0.0094462083
+org-get-tags-at                                               220         0.2802401510  0.0012738188
+#+end_example
+
+**** :filter-return
+
+#+begin_example
+org-agenda-list                                               5           7.1494525670  1.4298905134
+org-agenda-get-day-entries                                    40          4.191255803   0.1047813950
+org-agenda-prepare                                            5           2.6251538089  0.5250307617
+org-agenda-prepare-buffers                                    5           2.614603167   0.5229206334
+org-at-planning-p                                             2640        2.2422132450  0.0008493231
+org-agenda-get-scheduled                                      40          1.8079526389  0.0451988159
+org-agenda-get-timestamps                                     40          1.6295731519  0.0407393287
+re-search-forward                                             10165       1.6290118519  0.0001602569
+org-refresh-category-properties                               40          0.982746159   0.0245686539
+re-search-backward                                            10795       0.6367730910  5.898...e-05
+org-agenda-get-deadlines                                      40          0.634180644   0.0158545161
+org-entry-get                                                 1770        0.5903215880  0.0003335150
+org-is-habit-p                                                1745        0.5854299620  0.0003354899
+org--property-local-values                                    1750        0.5728089089  0.0003273193
+org-get-property-block                                        1755        0.5456562839  0.0003109152
+org-inlinetask-in-task-p                                      4335        0.5273626830  0.0001216522
+org-back-to-heading                                           8335        0.5145283710  6.173...e-05
+outline-back-to-heading                                       8335        0.4984345350  5.980...e-05
+org-refresh-stats-properties                                  40          0.3778725309  0.0094468132
+org-get-tags-at                                               220         0.2745500779  0.0012479548
+#+end_example
+
 ** TODO [#C] Make :children non-recursive
 
 The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
