@@ -429,12 +429,12 @@ to-do keywords."
           (pcase (car args)
             ('todo ;; Match if entry has child to-dos
              (org-super-agenda--map-children
-              :form (org-entry-is-todo-p)
-              :any t))
+               :form (org-entry-is-todo-p)
+               :any t))
             ((pred stringp)  ;; Match child to-do keywords
              (org-super-agenda--map-children
-              :form (cl-member (org-get-todo-state) args :test #'string=)
-              :any t))
+               :form (cl-member (org-get-todo-state) args :test #'string=)
+               :any t))
             ('t  ;; Match if it has any children
              (org-goto-first-child))
             ((pred not)  ;; Match if it has no children
