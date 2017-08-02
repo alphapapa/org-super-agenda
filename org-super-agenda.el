@@ -17,12 +17,12 @@
 ;; agenda: items are no longer shown based on deadline/scheduled
 ;; timestamps, but are shown no-matter-what.
 
-;; So this package overrides the `org-agenda-finalize-entries'
-;; function, which runs just before items are inserted into agenda
-;; views.  It runs them through a set of filters that separate them
-;; into groups.  Then the groups are inserted into the agenda buffer,
-;; and any remaining items are inserted at the end.  Empty groups are
-;; not displayed.
+;; So this package filters the results from
+;; `org-agenda-finalize-entries', which runs just before items are
+;; inserted into agenda views.  It runs them through a set of filters
+;; that separate them into groups.  Then the groups are inserted into
+;; the agenda buffer, and any remaining items are inserted at the end.
+;; Empty groups are not displayed.
 
 ;; The end result is your standard daily/weekly agenda, but arranged
 ;; into groups defined by you.  You might put items with certain tags
