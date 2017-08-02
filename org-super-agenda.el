@@ -107,11 +107,6 @@ Populated automatically by `org-super-agenda--defgroup'.")
 (defvar org-super-agenda-group-transformers nil
   "List of agenda group transformers.")
 
-(defvar org-super-agenda-function-overrides
-  '((org-agenda-finalize-entries . org-super-agenda--finalize-entries))
-  "List of alists mapping agenda functions to overriding
-  functions.")
-
 (defgroup org-super-agenda nil
   "Settings for `org-super-agenda'."
   :group 'org
