@@ -141,6 +141,10 @@ Might be handy.
 
 [2017-07-31 Mon 22:05] Underway in a branch.
 
+** TODO Add effort selector
+
+Shouldn't be too hard, I think.  The date selector and macro should be similar.
+
 ** SOMEDAY Look at how ibuffer does grouping
 :LOGBOOK:
 -  State "SOMEDAY"    from              [2017-07-31 Mon 18:51]
