@@ -746,7 +746,6 @@ see."
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
                                               :not 'org-super-agenda--group-dispatch-not))
 
-;; TODO: Add example for :discard
 (defun org-super-agenda--group-dispatch-discard (items group)
   "Discard items that match GROUP.
 Any groups processed after this will not see these items."
