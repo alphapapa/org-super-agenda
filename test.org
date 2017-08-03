@@ -452,6 +452,41 @@ This helps a lot.
                                                         0 5)))
 #+END_SRC
 
+** Agenda censoring
+
+For sharing screenshots of the agenda without revealing private data.
+
+#+BEGIN_SRC elisp
+  (defun org-agenda-sharpie ()
+    "Censor the text of items in the agenda."
+    (interactive)
+    (let (regexp old-heading new-heading properties)
+      ;; Save face properties of line in agenda to reapply to changed text
+      (setq properties (text-properties-at (point)))
+
+      ;; Go to source buffer
+      (org-with-point-at (org-find-text-property-in-string 'org-marker
+                                                           (buffer-substring (line-beginning-position)
+                                                                             (line-end-position)))
+        ;; Save old heading text and ask for new text
+        (line-beginning-position)
+        (unless (org-at-heading-p)
+          ;; Not sure if necessary
+          (org-back-to-heading))
+        (setq old-heading (when (looking-at org-complex-heading-regexp)
+                            (match-string 4))))
+      (setq new-heading (read-from-minibuffer "Overwrite visible heading with: "))
+      (add-text-properties 0 (length new-heading) properties new-heading)
+      ;; Back to agenda buffer
+      (save-excursion
+        (when (and old-heading new-heading)
+          ;; Replace agenda text
+          (let ((inhibit-read-only t))
+            (goto-char (line-beginning-position))
+            (when (search-forward old-heading (line-end-position))
+              (replace-match new-heading 'fixedcase 'literal)))))))
+#+END_SRC
+
 ** Auto grouping
 
 
