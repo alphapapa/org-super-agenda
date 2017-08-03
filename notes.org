@@ -32,7 +32,11 @@ Here's my initial plan.  What I basically need to do is run the standard agenda 
 
 Now, I wonder if I should keep the name ~super-agenda~ or if something more descriptive like ~org-divided-agenda~ would be better.  Maybe ask on the mailing list...
 
-** TODO [#A] Use :filter-return?
+** DONE [#A] Use :filter-return?
+CLOSED: [2017-08-03 Thu 01:21]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-08-03 Thu 01:21]
+:END:
 
 Wait, can I just use filter-return advice on =org-agenda-finalize-entries= instead of overriding it?
 
