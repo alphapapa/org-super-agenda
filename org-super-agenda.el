@@ -645,6 +645,8 @@ The string should be the priority cookie letter, e.g. \"A\".")
 ;; like the regular groups do essentially the same thing.  But this
 ;; already works, so I'm going to go ahead and release it.
 
+;; FIXME: Do I need to nreverse the items in each group?
+
 (defun org-super-agenda--auto-group-items (all-items &rest ignore)
   "Divide ALL-ITEMS into groups based on their AGENDA-GROUP property."
   (cl-loop with groups = (ht-create)
