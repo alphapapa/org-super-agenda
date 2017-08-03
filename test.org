@@ -41,6 +41,9 @@ DEADLINE: <2017-07-15 Sat -1m>
 
 ** TODO Order a pizza                                          :food:dinner:
 SCHEDULED: <2017-07-05 Wed 18:00>
+:PROPERTIES:
+:Effort:   5
+:END:
 
 ** TODO [#C] Get haircut                                     :personal:@town:
 SCHEDULED: <2017-07-05 Wed>
@@ -466,6 +469,16 @@ This helps a lot.
   (let ((org-super-agenda-groups
          '((:auto-category t))))
     (org-agenda-list nil nil 'day))
+#+END_SRC
+
+** Effort
+
+#+BEGIN_SRC elisp
+  (with-org-today-date "2017-07-05 00:00"
+    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+          (org-super-agenda-groups
+           '((:effort< "0:06"))))
+      (org-agenda-list nil nil 'day)))
 #+END_SRC
 
 ** Misc

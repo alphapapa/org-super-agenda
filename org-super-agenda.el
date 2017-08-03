@@ -407,6 +407,26 @@ DATE', where DATE is a date string that
               ('after  ;; After date given
                (> (org-time-string-to-absolute time) target-date))))))
 
+;;;;; Effort
+
+(cl-defmacro org-super-agenda--defeffort-group (name docstring &key section-name comparator)
+  (declare (indent defun))
+  `(org-super-agenda--defgroup ,(intern (concat "effort" (symbol-name name)))
+     ,(concat docstring "\nArgument is a time-duration string, like \"5\" or \"0:05\" for 5 minutes.")
+     :section-name (concat "Effort " ,(symbol-name name) " "
+                           (s-join " or " args) " items")
+     :let* ((effort-minutes (org-duration-string-to-minutes (car args))))
+     :test (when-let ((item-effort (org-find-text-property-in-string 'effort item)))
+             (,comparator (org-duration-string-to-minutes item-effort) effort-minutes))))
+
+(org-super-agenda--defeffort-group <
+  "Group items that are less than (or equal to) the given effort."
+  :comparator <=)
+
+(org-super-agenda--defeffort-group >
+  "Group items that are higher than (or equal to) the given effort."
+  :comparator >=)
+
 ;;;;; Misc
 
 (org-super-agenda--defgroup anything
