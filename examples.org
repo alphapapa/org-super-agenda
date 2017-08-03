@@ -137,7 +137,7 @@ What if you wanted to group tasks that are due before the end of the current mon
 #+BEGIN_SRC elisp
   (-let* (((sec minute hour day month year dow dst utcoff) (decode-time))
           (last-day-of-month (calendar-last-day-of-month month year))
-          (target-date (format "%d-%02d-%d" year month last-day-of-month))
+          (target-date (format "%d-%02d-%02d" year month last-day-of-month))
           (org-super-agenda-groups
            `((:deadline (before ,target-date))
              (:discard (:anything t)))))
