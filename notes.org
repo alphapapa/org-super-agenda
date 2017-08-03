@@ -132,6 +132,10 @@ org-get-tags-at                                               220         0.2745
 
 The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
 
+** MAYBE Use [[https://github.com/VincentToups/destructuring-set][destructuring-set]]
+
+Could be useful in the loops where I use repeated ~when~ lines.
+
 ** UNDERWAY [#B] Add property matcher
 :LOGBOOK:
 -  State "UNDERWAY"   from "TODO"       [2017-07-31 Mon 22:05]
