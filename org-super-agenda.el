@@ -314,22 +314,14 @@ future).  Argument may also be given like `before DATE' or `after
 DATE', where DATE is a date string that
 `org-time-string-to-absolute' can process."
   :section-name (pcase (car args)
-                  ('t  ;; Check for any deadline info
-                   "Deadline items")
-                  ((pred not)  ;; Has no deadline info
-                   "Items without deadlines")
-                  ('past  ;; Deadline before today
-                   "Past due")
-                  ('today  ;; Deadline for today
-                   "Due today")
-                  ('future  ;; Deadline in the future
-                   "Due soon")
-                  ('before  ;; Before date given
-                   (concat "Due before " (second args)))
-                  ('on  ;; On date given
-                   (concat "Due on " (second args)))
-                  ('after  ;; After date given
-                   (concat "Due after " (second args))))
+                  ('t "Deadline items")
+                  ((pred not) "Items without deadlines")
+                  ('past "Past due")
+                  ('today "Due today")
+                  ('future "Due soon")
+                  ('before (concat "Due before " (second args)))
+                  ('on (concat "Due on " (second args)))
+                  ('after (concat "Due after " (second args))))
   :let* ((today (pcase (car args)  ; Perhaps premature optimization
                   ((or 'past 'today 'future 'before 'on 'after)
                    (org-today))))
@@ -337,24 +329,16 @@ DATE', where DATE is a date string that
                         ((or 'before 'on 'after)
                          (org-time-string-to-absolute (second args))))))
   :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
-          (when-let ((time (org-entry-get (point) "DEADLINE")))
+          (when-let ((entry-time (org-entry-get (point) "DEADLINE")))
             (pcase (car args)
-              ('t  ;; Check for any deadline info
-               t)
-              ((pred not)  ;; Has no deadline info
-               (not time))
-              ('past  ;; Deadline before today
-               (< (org-time-string-to-absolute time) today))
-              ('today  ;; Deadline for today
-               (= today (org-time-string-to-absolute time)))
-              ('future  ;; Deadline in the future
-               (< today (org-time-string-to-absolute time)))
-              ('before  ;; Before date given
-               (< (org-time-string-to-absolute time) target-date))
-              ('on  ;; On date given
-               (= (org-time-string-to-absolute time) target-date))
-              ('after  ;; After date given
-               (> (org-time-string-to-absolute time) target-date))))))
+              ('t t)  ; Has any deadline info
+              ((pred not) (not entry-time))  ; Has no deadline info
+              (comparison
+               (let ((entry-time (org-time-string-to-absolute entry-time))
+                     (compare-date (pcase comparison
+                                     ((or 'past 'today 'future) today)
+                                     ((or 'before 'on 'after) target-date))))
+                 (org-super-agenda--compare-dates comparison entry-time compare-date)))))))
 
 (org-super-agenda--defgroup scheduled
   "Group items that are scheduled.
@@ -366,22 +350,14 @@ future).  Argument may also be given like `before DATE' or `after
 DATE', where DATE is a date string that
 `org-time-string-to-absolute' can process."
   :section-name (pcase (car args)
-                  ('t  ;; Check for any deadline info
-                   "scheduled items")
-                  ((pred not)  ;; Has no deadline info
-                   "Unscheduled items ")
-                  ('past  ;; Deadline before today
-                   "Past scheduled")
-                  ('today  ;; Deadline for today
-                   "Scheduled today")
-                  ('future  ;; Deadline in the future
-                   "Scheduled soon")
-                  ('before  ;; Before date given
-                   (concat "Scheduled before " (second args)))
-                  ('on  ;; On date given
-                   (concat "Scheduled on " (second args)))
-                  ('after  ;; After date given
-                   (concat "Scheduled after " (second args))))
+                  ('t "Scheduled items")
+                  ((pred not) "Unscheduled items ")
+                  ('past "Past scheduled")
+                  ('today "Scheduled today")
+                  ('future "Scheduled soon")
+                  ('before (concat "Scheduled before " (second args)))
+                  ('on (concat "Scheduled on " (second args)))
+                  ('after (concat "Scheduled after " (second args))))
   :let* ((today (pcase (car args)  ; Perhaps premature optimization
                   ((or 'past 'today 'future 'before 'on 'after)
                    (org-today))))
@@ -389,24 +365,25 @@ DATE', where DATE is a date string that
                         ((or 'before 'on 'after)
                          (org-time-string-to-absolute (second args))))))
   :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
-          (when-let ((time (org-entry-get (point) "SCHEDULED")))
+          (when-let ((entry-time (org-entry-get (point) "SCHEDULED")))
             (pcase (car args)
-              ('t  ;; Check for any scheduled info
-               t)
-              ((pred not)  ;; Has no scheduled info
-               (not time))
-              ('past  ;; Scheduled before today
-               (< (org-time-string-to-absolute time) today))
-              ('today  ;; Scheduled for today
-               (= today (org-time-string-to-absolute time)))
-              ('future  ;; Scheduled in the future
-               (< today (org-time-string-to-absolute time)))
-              ('before  ;; Before date given
-               (< (org-time-string-to-absolute time) target-date))
-              ('on  ;; On date given
-               (= (org-time-string-to-absolute time) target-date))
-              ('after  ;; After date given
-               (> (org-time-string-to-absolute time) target-date))))))
+              ('t t)  ; Has any scheduled info
+              ((pred not) (not entry-time))  ; Has no scheduled info
+              (comparison
+               (let ((entry-time (org-time-string-to-absolute entry-time))
+                     (compare-date (pcase comparison
+                                     ((or 'past 'today 'future) today)
+                                     ((or 'before 'on 'after) target-date))))
+                 (org-super-agenda--compare-dates comparison entry-time compare-date)))))))
+
+(defun org-super-agenda--compare-dates (comparison date-a date-b)
+  "Compare DATE-A and DATE-B according to COMPARISON.
+COMPARISON should be a symbol, one of: `past' or `before',
+`today' or `on', `future' or `after'."
+  (pcase comparison
+    ((or 'past 'before) (< date-a date-b))
+    ((or 'today 'on) (= date-a date-b))
+    ((or 'future 'after) (> date-a date-b))))
 
 ;;;;; Effort
 
