@@ -13,3 +13,7 @@ Here are some more screenshots.  While the screenshot in the readme file was tak
 [[zenburn-before.png]]
 
 [[zenburn-after.png]]
+
+** Contributed screenshots
+
+[[bascht.png]]
