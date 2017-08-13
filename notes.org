@@ -136,6 +136,31 @@ org-get-tags-at                                               220         0.2745
 
 The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
 
+** MAYBE Put before/after in date strings
+:LOGBOOK:
+-  State "MAYBE"      from              [2017-08-12 Sat 22:59]
+:END:
+
+Maybe instead of:
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:deadline (before "2017-09-01"))
+           (:discard (:anything t)))))
+    (org-todo-list))
+#+END_SRC
+
+I should do:
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:deadline "before 2017-09-01")
+           (:discard (:anything t)))))
+    (org-todo-list))
+#+END_SRC
+
+Perhaps a bit less semantic, but it avoids having to use a list, and it seems pretty natural.
+
 ** MAYBE Use [[https://github.com/VincentToups/destructuring-set][destructuring-set]]
 
 Could be useful in the loops where I use repeated ~when~ lines.
