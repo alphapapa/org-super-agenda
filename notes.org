@@ -244,6 +244,26 @@ Ha - that is some serious cl-loop work. I tend towards functional approaches, so
 All this is a matter of taste, but I almost never setq in code I write. In this case it doesn't seem like you need to side effect for performance or memory reasons, so I'd refactor the code to be completely pure.
 #+END_QUOTE
 
+*** partition function
+
+[[https://github.com/TBRSS/serapeum][This CL library]] has partitioning functions:
+
+#+BEGIN_QUOTE
+The function that takes a predicate and a sequence, and returns two sequences – one sequence of the elements for which the function returns true, and one sequence of the elements for which it returns false – is (still) called partition.
+
+(partition #'oddp (iota 10))
+=> (1 3 5 7 9), (0 2 4 6 8)
+
+The generalized version of partition, which takes a number of functions and returns the items that satisfy each condition, is called partitions.
+
+(partitions (list #'primep #'evenp) (iota 10))
+=> ((2 3 5 7) (0 4 6 8)), (1 9)
+
+Items that do not belong in any partition are returned as a second value.
+#+END_QUOTE
+
+
+
 ** CANCELED Use seq
 CLOSED: [2017-07-27 Thu 02:12]
 :LOGBOOK:
