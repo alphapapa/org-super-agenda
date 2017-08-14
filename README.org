@@ -139,6 +139,16 @@ Install =org-super-agenda= from MELPA.  Then:
 2.  Set the =org-super-agenda-groups= variable.  Use the example code above as a guideline.
 3.  Start the day with confidence, knowing that nothing important has been lost in the jumble of /ahem/ overdue items.
 
+*** Manual installation
+
+If you want to install manually, you must also install these packages:
+
++  Emacs >= 25.1
++  =dash= >= 2.13
++  =ht= >=2.2
++  =org-mode= >= 9.0
++  =s= >= 1.10
+
 ** Development
 
 Contributions and feedback are welcome.
