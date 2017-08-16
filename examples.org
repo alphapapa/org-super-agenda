@@ -167,9 +167,9 @@ You might want to put that at the end of a daily/weekly agenda view using a cust
             ((agenda "" ((org-super-agenda-groups
                           '((:name "Today"
                                    :time-grid t)))))
-             (todo "" ((org-agenda-overriding-header "")
+             (todo "" ((org-agenda-overriding-header "Projects")
                        (org-super-agenda-groups
-                        '((:name "Projects"
+                        '((:name none  ; Disable super group header
                                  :children todo)
                           (:discard (:anything t)))))))))))
     (org-agenda nil "u"))

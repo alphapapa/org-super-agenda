@@ -185,9 +185,11 @@ If ANY is non-nil, return as soon as FORM returns non-nil."
 
 (defun org-super-agenda--make-agenda-header (s)
   "Return agenda header containing string S and a newline."
-  (setq s (concat " " s))
-  (org-add-props s nil 'face 'org-agenda-structure)
-  (concat "\n" s))
+  (pcase s
+    ('none "")
+    (_ (setq s (concat " " s))
+       (org-add-props s nil 'face 'org-agenda-structure)
+       (concat "\n" s))))
 
 (defsubst org-super-agenda--get-priority-cookie (s)
   "Return priority character for string S.

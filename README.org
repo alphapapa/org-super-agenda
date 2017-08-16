@@ -95,6 +95,10 @@ A group selector creates a section in the agenda containing the items it matches
 
 Note that the =:not= group selector /creates/ a group with items it /does not/ match; it can be combined with =:discard= to discard items that /don't/ match, e.g. ~(:discard (:not (:priority "A")))~ as the first selector would mean that only priority =A= items would appear in the agenda, while ~(:discard (:priority "C"))~ would mean that any priority =C= items would not appear in the agenda.
 
+*Keywords:*
+
++  =:name= Optionally, set group name header.   May be a string; or the symbol =none=, in which case no header will be inserted.  If =:name= is not set at all, the group will be named automatically.
+
 *Special selectors*:
 
 Every selector requires an argument, even if it's just =t=, e.g. =:anything=, =:auto-category=, =:auto-group=, and =:discard=.

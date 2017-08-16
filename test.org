@@ -224,6 +224,17 @@ Gotta buy one first, though.
     (with-org-today-date "2017-07-05 00:00"
       (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
             (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:name none
+                      :time-grid t)
+               (:name none
+                      :not (:priority>= "C")
+                      :order 100))))
+        (org-agenda nil "a")))
+
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+            (org-agenda-span 'day)
             (org-agenda-custom-commands
              '(("u" "Super view"
                 ((agenda "" ((org-super-agenda-groups
