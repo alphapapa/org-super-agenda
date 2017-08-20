@@ -74,6 +74,11 @@ Gotta buy one first, though.
     DEADLINE: <2017-07-05 Wed +1w>
 *** TODO Shop for groceries                             :food:shopping:@town:
     SCHEDULED: <2017-07-05 Wed +1w>
+*** Sunrise/sunset
+
+%%(diary-sunrise)
+%%(diary-sunset)
+
 ** Ideas
 *** SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
     SCHEDULED: <2017-07-05 Wed>
@@ -115,6 +120,30 @@ Gotta buy one first, though.
          (fset 'org-today orig))))
   #+END_SRC
 
+#+BEGIN_SRC elisp  :results none
+  (defun diary-sunrise ()
+    (let ((dss (diary-sunrise-sunset)))
+      (with-temp-buffer
+        (insert dss)
+        (goto-char (point-min))
+        (search-forward ",")
+        (buffer-substring (point-min) (match-beginning 0)))))
+
+  (defun diary-sunset ()
+    (let ((dss (diary-sunrise-sunset))
+          start end)
+      (with-temp-buffer
+        (insert dss)
+        (goto-char (point-min))
+        (search-forward ", ")
+        (setq start (match-end 0))
+        (search-forward " at")
+        (setq end (match-beginning 0))
+        (goto-char start)
+        (capitalize-word 1)
+        (buffer-substring start end))))
+#+END_SRC
+
   #+BEGIN_SRC elisp
     (with-org-today-date "2017-07-05 00:00"
       (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
@@ -125,7 +154,7 @@ Gotta buy one first, though.
       (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
-             '(;; Each group has an implicit boolean OR operator between its selectors.
+             `(;; Each group has an implicit boolean OR operator between its selectors.
                (:name "Today" ; Optionally specify section name
                       :time-grid t ; Items that have a time associated
                       :todo "TODAY") ; Items that have this TODO keyword
@@ -262,7 +291,7 @@ Gotta buy one first, though.
         (org-agenda nil "u")))
 
     (cl-defmacro org-super-agenda--map-children (&key test any)
-      "Return TEST mapped across child entries of entry at point, if it has any.  If ANY is non-nil, return as soon as TEST returns non-nil."
+      "Return TEST mapped across child entries of entry at point, if it has any. If ANY is non-nil, return as soon as TEST returns non-nil."
       (declare (indent defun))
       (org-with-gensyms (tree-start tree-end result)
         `(let ((,tree-start (point))
