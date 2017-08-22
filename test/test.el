@@ -108,7 +108,7 @@ buffer and do not save the results."
              (org-super-agenda--test-with-org-today-date ,date
                (let* ((org-agenda-files (list "test.org"))
                       ,(if let*
-                           `let*
+                           let*
                          `(ignore nil))
                       ,(if groups-set
                            `(org-super-agenda-groups ,groups)
