@@ -1,11 +1,14 @@
 (require 'cl-lib)
 (require 'solar)
+(require 'cal-dst)
 
 (defun org-super-agenda--test-diary-sunrise-sunset-split ()
   "Split `diary-sunrise-sunset' into sunrise, sunset, and daylight hours."
   (let* ((calendar-latitude 0)
          (calendar-longitude 0)
-         (calendar-time-zone 0)
+         (calendar-time-zone (if (dst-in-effect (date-to-day org-super-agenda--test-date))
+                                 0
+                               60))
          (string (diary-sunrise-sunset))
          (regexp (rx (group "Sunrise " (1+ (or digit ":")) (or "am" "pm")) " "
                      (group "(" (1+ alpha) ")") ", "

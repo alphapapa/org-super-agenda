@@ -18,6 +18,7 @@
 
 ;;;; Variables
 
+(defconst org-super-agenda--test-date "2017-07-05 12:00")
 (defvar org-super-agenda--test-results (ht-create))
 (defvar org-super-agenda--test-save-results nil)
 (defvar org-super-agenda--test-show-results nil)
@@ -168,7 +169,7 @@
     (&key (body '(org-agenda-list nil))
           (groups nil groups-set)
           (span 'day)
-          (date "2017-07-05 12:00")
+          (date org-super-agenda--test-date)
           let*)
   "Test BODY with GROUPS and LET* binding.
 When `org-super-agenda--test-save-results' is non-nil, save the
