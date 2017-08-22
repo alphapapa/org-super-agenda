@@ -30,10 +30,10 @@ else
 fi
 "$EMACS" -Q -batch \
          --eval "$INIT_PACKAGE_EL" \
-         -l ../org-super-agenda.el \
+         -l org-super-agenda.el \
          --eval "(setq byte-compile-error-on-warn ${ERROR_ON_WARN})" \
          -f batch-byte-compile \
-         ../org-super-agenda.el test.el
+         org-super-agenda.el test/test.el
 
 # Lint ourselves
 # Lint failures are ignored if EMACS_LINT_IGNORE is defined, so that lint
@@ -41,13 +41,13 @@ fi
 # versions have buggy imenu that reports (defvar foo) as a definition of foo.
 "$EMACS" -Q -batch \
          --eval "$INIT_PACKAGE_EL" \
-         -l ../org-super-agenda.el \
+         -l org-super-agenda.el \
          -f package-lint-batch-and-exit \
-         ../org-super-agenda.el test.el || [ -n "${EMACS_LINT_IGNORE+x}" ]
+         org-super-agenda.el test/test.el || [ -n "${EMACS_LINT_IGNORE+x}" ]
 
 # Finally, run the testsuite
 "$EMACS" -Q -batch \
          --eval "$INIT_PACKAGE_EL" \
-         -l ../org-super-agenda.el \
-         -l test.el \
+         -l org-super-agenda.el \
+         -l test/test.el \
          -f ert-run-tests-batch-and-exit
