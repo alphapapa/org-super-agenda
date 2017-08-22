@@ -267,3 +267,8 @@ buffer and do not save the results."
                             :order 98)
                      (:name "Scheduled earlier"
                             :scheduled past)))))
+
+(ert-deftest org-super-agenda--test-someday-tags-view-Emacs ()
+  (should (org-super-agenda--test-run
+           :groups '((:todo "SOMEDAY"))
+           :body (org-tags-view nil "Emacs"))))

@@ -383,4 +383,12 @@ Wednesday   5 July 2017
 
  Scheduled earlier
   test:       Sched. 2x:   meetings    TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+" 5115141188 "Headlines with TAGS match: Emacs
+Press ‘C-u r’ to search again with new search string
+
+ SOMEDAY items
+  test:       SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+
+ Other items
+  test:       CHECK /r/emacs                                     :website:Emacs:
 "))
