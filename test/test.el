@@ -4,10 +4,15 @@
 
 ;;;; Requirements
 
+(require 'cl)
+(require 'cus-edit)
+(require 'org-habit)
 (require 'org-super-agenda)
 (require 'ert)
+
 (require 'ht)
 (require 'f)
+(require 's)
 
 (load-file "diary-sunrise-sunset.el")
 
@@ -16,21 +21,22 @@
 (defvar org-super-agenda--test-results (ht-create))
 (defvar org-super-agenda--test-save-results nil)
 (defvar org-super-agenda--test-show-results nil)
+(defvar org-super-agenda--test-results-file "results.el")
 
 ;;;; Commands
 
-(defun org-super-agenda--test-update-all-tests ()
+(cl-defun org-super-agenda--test-update-all-tests (&optional &key force)
   (interactive)
-  (when (equal (read-char "Update all test results?") ?y)
-    (setq org-super-agenda--test-save-results t)
-    (save-excursion
-      (goto-char (point-min))
-      (re-search-forward "^;;;; Tests")
-      (while (re-search-forward "(org-super-agenda--test-run" nil t)
-        (goto-char (match-beginning 0))
-        (forward-sexp)
-        (eval-last-sexp nil)))
-    (setq org-super-agenda--test-save-results nil)))
+  (when (or force
+            (equal (read-char "Update all test results?  (You should only do this from the test script.) (y/n): ") ?y))
+    (when (ht? org-super-agenda--test-results)
+      (ht-clear! org-super-agenda--test-results))
+    (let ((org-super-agenda--test-save-results t))
+      (save-excursion
+        (goto-char (point-min))
+        (re-search-forward "^;;;; Tests")
+        (while (re-search-forward "(org-super-agenda--test-run" nil t)
+          (org-super-agenda--test-run-this-test))))))
 
 (defun org-super-agenda--test-save-this-test ()
   (interactive)
@@ -58,7 +64,51 @@
   (setq org-super-agenda--test-save-results (not org-super-agenda--test-save-results))
   (message "Saving results: %s" org-super-agenda--test-save-results))
 
+(defun org-super-agenda--test-load-results ()
+  (interactive)
+  (setq org-super-agenda--test-results
+        (read (f-read org-super-agenda--test-results-file)))
+  (when (ht-empty? org-super-agenda--test-results)
+    (error "Test results empty")))
+
 ;;;; Functions
+
+(cl-defun org-super-agenda--test-process-output-as-string (process &optional &key args stdin ignore-status)
+  "Return string of output of PROCESS called with ARGS and STDIN.
+  ARGS and STDIN are optional. ARGS may be a string or list of
+  strings. STDIN should be a string. If process returns non-zero
+  and IGNORE-STATUS is nil, raise `user-error' with STDERR
+  message."
+  (declare (indent defun))
+  (let* ((args (internal--listify args))
+         status))
+  (with-temp-buffer
+    (when stdin
+      (insert stdin))
+    (setq status (apply #'call-process-region (point-min) (point-max)
+                        process t '(t t) nil args))
+    (unless (or ignore-status
+                (= 0 status))
+      (user-error (concat (concat process " failed: ")
+                          (buffer-string))))
+    (buffer-string)))
+
+(defun org-super-agenda--test-diff-strings (a b)
+  (let ((file-a (make-temp-file "argh"))
+        (file-b (make-temp-file "argh")))
+    (with-temp-file file-a
+      (insert a))
+    (with-temp-file file-b
+      (insert b))
+    (with-temp-buffer
+      (insert (org-super-agenda--test-process-output-as-string "diff"
+                :args (list "-u" file-a file-b)
+                :ignore-status t))
+      (f-delete file-a)
+      (f-delete file-b)
+      (goto-char (point-min))
+      (forward-line 2)
+      (buffer-substring (point) (point-max)))))
 
 (defun org-super-agenda--test-run-this-test ()
   (save-excursion
@@ -70,15 +120,37 @@
 
 (defun org-super-agenda--test-save-result (body-groups-hash result)
   (ht-set! org-super-agenda--test-results body-groups-hash result)
-  (with-temp-file "results.el"
+  (with-temp-file org-super-agenda--test-results-file
     (insert (format "%S" org-super-agenda--test-results)))
   (message "Saved result for: %s" body-groups-hash))
 
-(defun org-super-agenda--test-load-results ()
-  (setq org-super-agenda--test-results
-        (read (f-read "results.el"))))
+(defun org-super-agenda--test-get-custom-group-members (group)
+  (let* ((subgroups (custom-group-members group t))
+         (vars (seq-difference (custom-group-members group nil) subgroups)))
+    (append (cl-loop for (sg . type) in subgroups
+                     append (org-super-agenda--test-get-custom-group-members sg))
+            (cl-loop for (var . type) in vars
+                     for sv = (car (get var 'standard-value))
+                     when sv
+                     collect (list var sv)))))
 
 ;;;; Macros
+
+(cl-defmacro org-super-agenda--test-with-redefined-functions (pairs &rest body)
+  (declare (indent defun))
+  (let* ((set-forms (cl-loop for (fn def) in pairs
+                             for orig = (intern (concat (symbol-name fn) "-orig"))
+                             collect `(setf (symbol-function ',orig) (symbol-function ',fn))
+                             collect `(setf (symbol-function ',fn) ,def)))
+         (unset-forms (cl-loop for (fn def) in pairs
+                               for orig = (intern (concat (symbol-name fn) "-orig"))
+                               collect `(setf (symbol-function ',fn) (symbol-function ',orig)))))
+    `(progn
+       (unwind-protect
+           (progn
+             ,@set-forms
+             ,@body)
+         ,@unset-forms))))
 
 (defmacro org-super-agenda--test-with-org-today-date (date &rest body)
   "Run BODY with the `org-today' function set to return simply DATE.
@@ -105,54 +177,66 @@ result to the results file.  When
 buffer and do not save the results."
   (declare (debug (form &optional listp sexp sexp stringp)))
   `(progn
-     (unless org-super-agenda--test-results
-       (org-super-agenda--test-load-results))
-     (let ((body-groups-hash (sxhash (list ',body ,groups)))
+     (org-super-agenda-mode 1)
+     (let ((body-groups-hash (secure-hash 'md5 (format "%S" (list ',body ,groups))))
            result format-time-string-orig)
-       (unwind-protect
-           (progn
-             ;; Rebind `format-time-string' so it always returns the
-             ;; same when no time is given, otherwise the "now" line
-             ;; in the time-grid depends on the real time when the
-             ;; test is run.  (For some reason, cl-labels/cl-flet
-             ;; don't work, so we have to use `setf' and
-             ;; `symbol-function'.  Might have something to do with
-             ;; lexical-binding.)
-             (setf (symbol-function 'format-time-string-orig)
-                   (symbol-function 'format-time-string))
-             (setf (symbol-function 'format-time-string)
-                   (lambda (format-string &optional time zone)
-                     (if time
-                         (format-time-string-orig format-string time zone)
-                       (concat (second (s-split " " ,date)) " "))))
-             (org-super-agenda--test-with-org-today-date ,date
-               (let* ((org-agenda-files (list "test.org"))
-                      ,@(if let*
-                            let*
-                          `((ignore nil)))
-                      ,(if groups-set
-                           `(org-super-agenda-groups ,groups)
-                         `(ignore nil))
-                      ,(if span
-                           `(org-agenda-span ',span)
-                         `(ignore nil))
-                      string)
-                 ,body
-                 ;; We ignore the text properties.  This should be the right
-                 ;; thing to do, since we never modify them.  It also makes
-                 ;; the results actually legible.
-                 (setq result (buffer-substring-no-properties 1 (point-max)))
-                 (unless org-super-agenda--test-show-results
-                   (kill-buffer))))
-             (when (and org-super-agenda--test-save-results
-                        (not org-super-agenda--test-show-results))
-               ;; Save test result
-               (org-super-agenda--test-save-result body-groups-hash result))
+
+       ;; Redefine functions
+       (org-super-agenda--test-with-redefined-functions
+         ;; Rebind `format-time-string' so it always returns the
+         ;; same when no time is given, otherwise the "now" line
+         ;; in the time-grid depends on the real time when the
+         ;; test is run.  (For some reason, cl-labels/cl-flet
+         ;; don't work, so we have to use `setf' and
+         ;; `symbol-function'.  Might have something to do with
+         ;; lexical-binding.)
+         ((format-time-string (lambda (format-string &optional time zone)
+                                (if time
+                                    (format-time-string-orig format-string time zone)
+                                  (concat (second (s-split " " ,date)) " "))))
+          (window-width (lambda ()
+                          134)))
+
+         ;; Run agenda
+         (org-super-agenda--test-with-org-today-date ,date
+           (let* (;; Set these vars so they are consistent between my config and the batch config
+                  ,@(org-super-agenda--test-get-custom-group-members 'org-agenda)
+                  ,@(org-super-agenda--test-get-custom-group-members 'org-habit)
+                  (org-agenda-window-setup 'current-window)  ; The default breaks batch tests by trying to open a new frame
+                  (org-agenda-files (list "test.org"))
+                  ,@(if let*
+                        let*
+                      `((ignore nil)))
+                  ,(if groups-set
+                       `(org-super-agenda-groups ,groups)
+                     `(ignore nil))
+                  ,(if span
+                       `(org-agenda-span ',span)
+                     `(ignore nil))
+                  string)
+             ,body
+             ;; We ignore the text properties.  This should be the right thing to do, since we
+             ;; never modify them.  It also makes the results actually legible.  NOTE: We
+             ;; could collapse the whitespace to avoid annoying discrepancies between my
+             ;; config and the default org-agenda config used in batch mode.  This is probably
+             ;; fine, because other than inserting group headers, we're not modifying any
+             ;; whitespace.  BUT that means that, when a test fails, we won't be able to
+             ;; easily see why, because there won't be any line-breaks for the diff.
+             (setq result (buffer-substring-no-properties 1 (point-max)))
              (unless org-super-agenda--test-show-results
-               ;; Don't give real test result when showing result buffer
-               (equal result (ht-get org-super-agenda--test-results body-groups-hash))))
-         ;; Reset current-time function
-         (setf (symbol-function 'format-time-string) (symbol-function 'format-time-string-orig))))))
+               (kill-buffer)))))
+
+       ;; Save test results
+       (when (and org-super-agenda--test-save-results
+                  (not org-super-agenda--test-show-results))
+         (org-super-agenda--test-save-result body-groups-hash result))
+
+       ;; Show test results
+       (unless org-super-agenda--test-show-results
+         ;; Don't give real test result when showing result buffer
+         (or (equal result (ht-get org-super-agenda--test-results body-groups-hash))
+             (error "Test failed: DIFF: %s"
+                    (org-super-agenda--test-diff-strings (ht-get org-super-agenda--test-results body-groups-hash) result)))))))
 
 ;;;; Tests
 
@@ -232,6 +316,8 @@ buffer and do not save the results."
            :groups '((:discard (:regexp "pizza"
                                         :regexp "groceries"))))))
 
+;; FIXME: Commenting out because something in my config causes a whitespace-only difference
+;; between the two agenda blocks, and I can't figure out why.
 (ert-deftest org-super-agenda--test-agenda-with-grid-and-todo-with-children ()
   (should (org-super-agenda--test-run
            :let* ((org-agenda-custom-commands

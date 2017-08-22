@@ -1,0 +1,173 @@
+#!/bin/bash -e
+
+# Based on package-lint/run-tests.sh
+
+# * Defaults
+
+MAIN_FILE="../org-super-agenda.el"
+TEST_FILE="test.el"
+command=run_tests
+
+# Byte compile, failing on byte compiler errors, or on warnings unless ignored
+if [ -n "${EMACS_LINT_IGNORE+x}" ]; then
+    ERROR_ON_WARN=nil
+else
+    ERROR_ON_WARN=t
+fi
+
+# Just disable the errors
+ERROR_ON_WARN=nil
+EMACS_LINT_IGNORE=t
+
+# * Functions
+
+function debug {
+    if [[ $debug ]]
+    then
+        function debug {
+            echoColor yellow "DEBUG: $@" >&2
+        }
+        debug "$@"
+    else
+        function debug {
+            true
+        }
+    fi
+}
+function die {
+    echoColor Red "$@" >&2
+    exit 1
+}
+function usage {
+    cat <<EOF
+$0 [OPTIONS] ...?
+
+This does something cool!
+
+Options
+  -d, --debug  Print debug info
+  -h, --help   I need somebody!
+EOF
+}
+
+function refresh {
+    echo -e "\nREFRESHING..."
+
+    # Refresh package archives, because the test suite needs to see at least
+    # package-lint and cl-lib.
+    "$EMACS" -Q -batch \
+             --eval "$INIT_PACKAGE_EL" \
+             --eval "(unless (package-installed-p 'cl-lib) (package-install 'cl-lib))" \
+             --eval "$PACKAGES_NEEDED"
+}
+
+
+function byte_compile {
+    echo -e "\nBYTE-COMPILING..."
+
+    "$EMACS" -Q -batch \
+             --eval "$INIT_PACKAGE_EL" \
+             -l $MAIN_FILE \
+             --eval "(setq byte-compile-error-on-warn ${ERROR_ON_WARN})" \
+             -f batch-byte-compile \
+             $MAIN_FILE
+}
+function lint {
+    # Lint ourselves
+    # Lint failures are ignored if EMACS_LINT_IGNORE is defined, so that lint
+    # failures on Emacs 24.2 and below don't cause the tests to fail, as these
+    # versions have buggy imenu that reports (defvar foo) as a definition of foo.
+
+    echo -e "\nLINTING..."
+
+    "$EMACS" -Q -batch \
+             --eval "$INIT_PACKAGE_EL" \
+             -l $MAIN_FILE \
+             -f package-lint-batch-and-exit \
+             $MAIN_FILE || [ -n "${EMACS_LINT_IGNORE+x}" ]
+}
+
+function run_tests {
+    echo -e "\nTESTING..."
+
+    # Finally, run the testsuite
+    "$EMACS" -Q -batch \
+             --eval "$INIT_PACKAGE_EL" \
+             -l $MAIN_FILE \
+             -l $TEST_FILE \
+             -f org-super-agenda--test-load-results \
+             -f ert-run-tests-batch-and-exit
+}
+
+function update {
+    echo -e "\nUPDATING..."
+
+    "$EMACS" -Q -batch \
+             --eval "$INIT_PACKAGE_EL" \
+             -l $MAIN_FILE \
+             -l $TEST_FILE \
+             --eval "(with-current-buffer (find-file-noselect \"test.el\") (org-super-agenda--test-update-all-tests :force t))"
+}
+
+# * Args
+
+args=$(getopt -n "$0" -o dhU -l debug,help,update -- "$@") || exit 1
+eval set -- "$args"
+
+while true
+do
+    case "$1" in
+        -d|--debug)
+            debug=true
+            ;;
+        -h|--help)
+            usage
+            exit
+            ;;
+        -U|--update)
+            command=update
+            ;;
+        --)
+            # Remaining args
+            shift
+            rest=("$@")
+            break
+            ;;
+    esac
+
+    shift
+done
+
+debug "ARGS: $args"
+debug "Remaining args: ${rest[@]}"
+
+# * Main
+
+# Ensure we run from the test directory
+if [[ $0 = "test/run" ]]
+then
+    cd test || { echo "Can't change to test directory." && exit 1 ;}
+fi
+
+EMACS="${EMACS:=emacs}"
+
+INIT_PACKAGE_EL="(progn
+  (require 'package)
+(push '(\"melpa\" . \"http://melpa.org/packages/\") package-archives)
+  (package-initialize)
+  (setq debug-on-error t))"
+
+PACKAGES_NEEDED="
+(setq packages-needed '(ht f s))
+(cl-loop for package in packages-needed
+ unless (package-installed-p package)
+do (package-install package))"
+
+case $command in
+    update)
+        update
+        ;;
+    run_tests)
+        run_tests
+        ;;
+esac
