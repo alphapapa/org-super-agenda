@@ -691,16 +691,16 @@ The string should be the priority cookie letter, e.g. \"A\".")
 ;;;;; Dispatchers
 
 (defun org-super-agenda--get-selector-fn (selector)
-  "Return function for SELECTOR.  Raise error if invalid selector."
+  "Return function for SELECTOR, or nil if special selector.
+Raise error if invalid selector."
   (cond
    ((cl-member selector org-super-agenda-special-selectors)
     ;; Special selector, so no associated function; return nil
     nil)
-   (t (or
-       ;; Valid selector: return function
-       (plist-get org-super-agenda-group-types selector)
-       ;; Invalid selector: raise error
-       (user-error "Invalid org-agenda-super-groups selector: %s" selector)))))
+   ;; Valid selector: return function
+   ((plist-get org-super-agenda-group-types selector))
+   ;; Invalid selector: raise error
+   ((user-error "Invalid org-agenda-super-groups selector: %s" selector))))
 
 (defun org-super-agenda--group-dispatch (items group)
   "Group ITEMS with the appropriate grouping functions for GROUP.
