@@ -76,8 +76,8 @@ Gotta buy one first, though.
     SCHEDULED: <2017-07-05 Wed +1w>
 *** Sunrise/sunset
 
-%%(diary-sunrise)
-%%(diary-sunset)
+%%(org-super-agenda--test-diary-sunrise)
+%%(org-super-agenda--test-diary-sunset)
 
 ** Ideas
 *** SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
@@ -146,12 +146,12 @@ Gotta buy one first, though.
 
   #+BEGIN_SRC elisp
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day))
         (org-agenda-list nil)))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              `(;; Each group has an implicit boolean OR operator between its selectors.
@@ -197,7 +197,7 @@ Gotta buy one first, though.
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:discard (:regexp "pizza"
@@ -205,42 +205,42 @@ Gotta buy one first, though.
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:priority>= "B"))))
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:priority>= "A"))))
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:priority< "B" :order 100))))
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:priority<= "C" :order 100))))
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:heading-regexp "moon"))))
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:name "Today"
@@ -251,7 +251,7 @@ Gotta buy one first, though.
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:name none
@@ -262,7 +262,7 @@ Gotta buy one first, though.
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-agenda-custom-commands
              '(("u" "Super view"
@@ -276,7 +276,7 @@ Gotta buy one first, though.
         (org-agenda nil "u")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-agenda-custom-commands
              '(("u" "Super view"
@@ -313,7 +313,7 @@ Gotta buy one first, though.
       :test (org-entry-is-todo-p))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:name "Items with child TODOs"
@@ -321,7 +321,7 @@ Gotta buy one first, though.
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:name "Items with child TODOs"
@@ -329,7 +329,7 @@ Gotta buy one first, though.
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-agenda-custom-commands
              '(("u" "Super view"
@@ -345,7 +345,7 @@ Gotta buy one first, though.
         (org-agenda nil "u")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-agenda-custom-commands
              '(("u" "Super view"
@@ -359,7 +359,7 @@ Gotta buy one first, though.
         (org-agenda nil "u")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-agenda-custom-commands
              '(("u" "Super view"
@@ -379,7 +379,7 @@ Gotta buy one first, though.
         (org-agenda nil "u")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:name "Schedule"
@@ -405,7 +405,7 @@ Gotta buy one first, though.
         (org-agenda nil "a")))
 
     (with-org-today-date "2017-07-05 00:00"
-      (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             (org-super-agenda-groups
              '((:scheduled (before "2017-07-06")))))
@@ -417,32 +417,32 @@ Gotta buy one first, though.
   (with-org-today-date "2017-07-05 00:00"
     (let ((org-super-agenda-groups
            '((:todo "WAITING")))
-          (org-agenda-files (list "~/src/org-super-agenda/test.org")))
+          (org-agenda-files (list "~/src/org-super-agenda/test/test.org")))
       (org-todo-list)))
 
   (with-org-today-date "2017-07-05 00:00"
     (let ((org-super-agenda-groups
            '((:todo "SOMEDAY")))
-          (org-agenda-files (list "~/src/org-super-agenda/test.org")))
+          (org-agenda-files (list "~/src/org-super-agenda/test/test.org")))
       (org-tags-view nil "Emacs")))
 
   (with-org-today-date "2017-07-05 00:00"
     (let ((org-super-agenda-groups
            '((:todo "CHECK")))
-          (org-agenda-files (list "~/src/org-super-agenda/test.org")))
+          (org-agenda-files (list "~/src/org-super-agenda/test/test.org")))
 ;; org-search-view doesn't seem to set the todo-state property, so the matcher doesn't work
       (org-search-view nil "Emacs")))
 
   (with-org-today-date "2017-07-05 00:00"
     (let ((org-super-agenda-groups
            '((:regexp ("moon" "mars"))))
-          (org-agenda-files (list "~/src/org-super-agenda/test.org")))
+          (org-agenda-files (list "~/src/org-super-agenda/test/test.org")))
       (org-search-view nil "space")))
 
   (with-org-today-date "2017-07-05 00:00"
     (let ((org-super-agenda-groups
            '((:todo "SOMEDAY")))
-          (org-agenda-files (list "~/src/org-super-agenda/test.org")))
+          (org-agenda-files (list "~/src/org-super-agenda/test/test.org")))
       (org-agenda-list nil nil 'day)))
 
 #+END_SRC
@@ -534,7 +534,7 @@ For sharing screenshots of the agenda without revealing private data.
   (with-org-today-date "2017-07-05 00:00"
     (let ((org-super-agenda-groups
            '((:auto-group t)))
-          (org-agenda-files (list "~/src/org-super-agenda/test.org")))
+          (org-agenda-files (list "~/src/org-super-agenda/test/test.org")))
       (org-agenda-list nil nil 'day)))
 #+END_SRC
 
@@ -550,7 +550,7 @@ For sharing screenshots of the agenda without revealing private data.
 
 #+BEGIN_SRC elisp
   (with-org-today-date "2017-07-05 00:00"
-    (-let* ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+    (-let* ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             ((sec minute hour day month year dow dst utcoff) (list 0 0 0 5 7 2017 3 t nil))
             (last-day-of-month
@@ -563,7 +563,7 @@ For sharing screenshots of the agenda without revealing private data.
       (org-todo-list)))
 
   (with-org-today-date "2017-07-05 00:00"
-    (-let* ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+    (-let* ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
             ((sec minute hour day month year dow dst utcoff) (list 0 0 0 5 7 2017 3 t nil))
             (last-day-of-month  (calendar-last-day-of-month month year))
@@ -578,7 +578,7 @@ For sharing screenshots of the agenda without revealing private data.
 
 #+BEGIN_SRC elisp
   (with-org-today-date "2017-07-05 00:00"
-    (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+    (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
           (org-super-agenda-groups
            '((:effort< "0:06"))))
       (org-agenda-list nil nil 'day)))
