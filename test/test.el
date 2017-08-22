@@ -139,3 +139,8 @@ buffer and do not save the results."
              ;; After the last group, the agenda will display items that didn't
              ;; match any of these groups, with the default order position of 99
              )))
+
+(ert-deftest org-super-agenda--test-auto-groups ()
+  (org-super-agenda--test-run
+   :body (org-agenda-list nil nil 'day)
+   :groups '((:auto-groups t))))
