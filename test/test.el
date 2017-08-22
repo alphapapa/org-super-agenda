@@ -127,9 +127,9 @@ buffer and do not save the results."
                        (concat (second (s-split " " ,date)) " "))))
              (org-super-agenda--test-with-org-today-date ,date
                (let* ((org-agenda-files (list "test.org"))
-                      ,(if let*
-                           let*
-                         `(ignore nil))
+                      ,@(if let*
+                            let*
+                          `((ignore nil)))
                       ,(if groups-set
                            `(org-super-agenda-groups ,groups)
                          `(ignore nil))
@@ -234,15 +234,15 @@ buffer and do not save the results."
 
 (ert-deftest org-super-agenda--test-agenda-with-grid-and-todo-with-children ()
   (should (org-super-agenda--test-run
-           :let* (org-agenda-custom-commands
-                  '(("u" "Super view"
-                     ((agenda "" ((org-super-agenda-groups
-                                   '((:name "Today"
-                                            :time-grid t)))))
-                      (todo "" ((org-super-agenda-groups
-                                 '((:name "Projects"
-                                          :children t)
-                                   (:discard (:anything t))))))))))
+           :let* ((org-agenda-custom-commands
+                   '(("u" "Super view"
+                      ((agenda "" ((org-super-agenda-groups
+                                    '((:name "Today"
+                                             :time-grid t)))))
+                       (todo "" ((org-super-agenda-groups
+                                  '((:name "Projects"
+                                           :children t)
+                                    (:discard (:anything t)))))))))))
            :body (org-agenda nil "u"))))
 
 (ert-deftest org-super-agenda--test-forward-looking ()
