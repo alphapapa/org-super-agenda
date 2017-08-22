@@ -171,7 +171,7 @@ If ANY is non-nil, return as soon as FORM returns non-nil."
   (declare (indent defun))
   (org-with-gensyms (tree-start tree-end result all-results)
     `(let ((,tree-start (point))
-           ,tree-end)
+           ,tree-end ,all-results)
        (when (org-goto-first-child)
          (goto-char ,tree-start)
          ,(when any
