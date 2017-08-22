@@ -32,6 +32,18 @@
         (eval-last-sexp nil)))
     (setq org-super-agenda--test-save-results nil)))
 
+(defun org-super-agenda--test-save-this-test ()
+  (interactive)
+  (let ((org-super-agenda--test-show-results nil)
+        (org-super-agenda--test-save-results t))
+    (org-super-agenda--test-run-this-test)))
+
+(defun org-super-agenda--test-show-this-test ()
+  (interactive)
+  (let ((org-super-agenda--test-show-results t)
+        (org-super-agenda--test-save-results nil))
+    (org-super-agenda--test-run-this-test)))
+
 (defun org-super-agenda--test-run-all ()
   (interactive)
   (ert-run-tests-interactively "^org-super-agenda--test-"))
@@ -47,6 +59,14 @@
   (message "Saving results: %s" org-super-agenda--test-save-results))
 
 ;;;; Functions
+
+(defun org-super-agenda--test-run-this-test ()
+  (save-excursion
+    (when (or (looking-at "(org-super-agenda--test-run")
+              (re-search-backward "(org-super-agenda--test-run" nil t))
+      (goto-char (match-beginning 0))
+      (forward-sexp)
+      (eval-last-sexp nil))))
 
 (defun org-super-agenda--test-save-result (body-groups-hash result)
   (ht-set! org-super-agenda--test-results body-groups-hash result)
