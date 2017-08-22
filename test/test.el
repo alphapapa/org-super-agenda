@@ -231,3 +231,39 @@ buffer and do not save the results."
   (should (org-super-agenda--test-run
            :groups '((:discard (:regexp "pizza"
                                         :regexp "groceries"))))))
+
+(ert-deftest org-super-agenda--test-agenda-with-grid-and-todo-with-children ()
+  (should (org-super-agenda--test-run
+           :let* (org-agenda-custom-commands
+                  '(("u" "Super view"
+                     ((agenda "" ((org-super-agenda-groups
+                                   '((:name "Today"
+                                            :time-grid t)))))
+                      (todo "" ((org-super-agenda-groups
+                                 '((:name "Projects"
+                                          :children t)
+                                   (:discard (:anything t))))))))))
+           :body (org-agenda nil "u"))))
+
+(ert-deftest org-super-agenda--test-forward-looking ()
+  (should (org-super-agenda--test-run
+           :groups '((:name "Schedule"
+                            :time-grid t)
+                     (:name "Today"
+                            :scheduled today)
+                     (:name "Habits"
+                            :habit t)
+                     (:name "Due today"
+                            :deadline today)
+                     (:name "Overdue"
+                            :deadline past)
+                     (:name "Due soon"
+                            :deadline future)
+                     (:name "Unimportant"
+                            :todo ("SOMEDAY" "MAYBE" "CHECK" "TO-READ" "TO-WATCH")
+                            :order 100)
+                     (:name "Waiting..."
+                            :todo "WAITING"
+                            :order 98)
+                     (:name "Scheduled earlier"
+                            :scheduled past)))))

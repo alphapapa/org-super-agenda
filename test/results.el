@@ -320,4 +320,67 @@ Wednesday   5 July 2017
   test:       Scheduled:   programming SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
   test:       Scheduled:   @town       TODO [#C] Get haircut    :personal:@town:
   test:       In  16 d.:   bills       TODO [#B] Internet                :bills:
+" 4985313000 "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Today
+  test:        2:02......              Sunrise (12:04 of daylight)
+              12:00......              now - - - - - - - - - - - - - - - - - - - - - - - - -
+  test:       14:07......              Sunset 
+  test:       18:00...... Scheduled:   dinner      TODO Order a pizza :food:dinner:
+
+ Other items
+  test:        personal    TODO Practice leaping tall buildings in a                      !       on::personal:
+  test:       Sched. 2x:   meetings    TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Scheduled:   @town       TODO Shop for groceries :food:shopping:@town:
+  test:       Scheduled:   @computer   TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:   programming SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:    Emacs       CHECK /r/emacs            :website:Emacs:
+  test:       Scheduled:   @town       TODO [#C] Get haircut    :personal:@town:
+  test:       In   2 d.:   world       TODO [#A] Take over the world :universe:ambition::world:
+  test:       In   5 d.:   ambition    TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  10 d.:   ambition    TODO [#A] Take over the universe :universe:ambition:
+  test:       In  16 d.:   bills       TODO [#B] Internet                :bills:
+  test:       In  27 d.:   spaceship   TODO [#A] Spaceship lease :bills:spaceship:
+  test:       In  53 d.:   travel      WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:   planet      TODO Visit Mars :universe:ambition::space:travel:planet:
+
+                                                                                                                                      
+Global list of TODO items of type: ALL
+
+ Projects
+world   test:       TODO [#A] Take over the world     :universe:ambition::world:
+ambition   test:       TODO [#A] Take over the universe      :universe:ambition:
+ambition   test:       TODO [#B] Take over Mars             :universe:ambition::
+ambition   test:       TODO [#C] Take over the moon         :universe:ambition::
+" 1091052020757672735 "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Schedule
+  test:        2:02......              Sunrise (12:04 of daylight)
+              12:00......              now - - - - - - - - - - - - - - - - - - - - - - - - -
+  test:       14:07......              Sunset 
+  test:       18:00...... Scheduled:   dinner      TODO Order a pizza :food:dinner:
+
+ Today
+  test:        personal    TODO Practice leaping tall buildings in a                      !       on::personal:
+  test:       Scheduled:   @town       TODO Shop for groceries :food:shopping:@town:
+  test:       Scheduled:   @computer   TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:   programming SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Scheduled:   @town       TODO [#C] Get haircut    :personal:@town:
+
+ Due today
+  test:       Deadline:    Emacs       CHECK /r/emacs            :website:Emacs:
+
+ Due soon
+  test:       In   2 d.:   world       TODO [#A] Take over the world :universe:ambition::world:
+  test:       In   5 d.:   ambition    TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  10 d.:   ambition    TODO [#A] Take over the universe :universe:ambition:
+  test:       In  16 d.:   bills       TODO [#B] Internet                :bills:
+  test:       In  27 d.:   spaceship   TODO [#A] Spaceship lease :bills:spaceship:
+  test:       In  53 d.:   travel      WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:   planet      TODO Visit Mars :universe:ambition::space:travel:planet:
+
+ Scheduled earlier
+  test:       Sched. 2x:   meetings    TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
 "))
