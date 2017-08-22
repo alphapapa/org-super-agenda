@@ -139,7 +139,7 @@ See readme for information."
   :type 'list)
 
 (defcustom org-super-agenda-properties-inherit t
-  "Use property inheritance when checking properties with the :auto-groups selector.
+  "Use property inheritance when checking properties with the :auto-group selector.
 With this enabled, you can set the \"agenda-group\" property for
 an entire subtree, and every entry below it will inherit the
 agenda group.  It seems most natural for it to be enabled, so the
@@ -599,7 +599,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
                  for (auto-section-name non-matching matching) = (org-super-agenda--group-dispatch all-items filter)
 
                  ;; Auto groups
-                 if (eql auto-section-name :auto-groups)
+                 if (eql auto-section-name :auto-group)
                  do (setq section-name (or custom-section-name "Auto groups"))
                  and append (cl-loop for group in matching
                                      collect (list :name (plist-get group :name)
@@ -661,14 +661,14 @@ The string should be the priority cookie letter, e.g. \"A\".")
            if group
            do (ht-set! groups group (cons item (ht-get groups group)))
            else collect item into non-matching
-           finally return (list :auto-groups
+           finally return (list :auto-group
                                 non-matching
                                 (cl-loop for key in (sort (ht-keys groups) #'string<)
                                          for name = (concat "Group: " key)
                                          collect (list :name name
                                                        :items (ht-get groups key))))))
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
-                                              :auto-groups #'org-super-agenda--auto-group-items))
+                                              :auto-group #'org-super-agenda--auto-group-items))
 
 (defun org-super-agenda--auto-group-category (all-items &rest ignore)
   "Divide ALL-ITEMS into groups based on their org-category property."

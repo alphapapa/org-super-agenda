@@ -204,7 +204,7 @@ buffer and do not save the results."
 
 (ert-deftest org-super-agenda--test-auto-groups ()
   (should (org-super-agenda--test-run
-           :groups '((:auto-groups t)))))
+           :groups '((:auto-group t)))))
 
 (ert-deftest org-super-agenda--test-discard-with-2-regexps ()
   (should (org-super-agenda--test-run

@@ -292,4 +292,32 @@ Wednesday   5 July 2017
   test:       In  27 d.:   spaceship   TODO [#A] Spaceship lease :bills:spaceship:
   test:       In  53 d.:   travel      WAITING Visit the moon :universe:ambition::space:travel:
   test:       In  77 d.:   planet      TODO Visit Mars :universe:ambition::space:travel:planet:
+" 1148778017 "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Group: bills
+  test:       In  27 d.:   spaceship   TODO [#A] Spaceship lease :bills:spaceship:
+
+ Group: plans
+  test:       In  77 d.:   planet      TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       In  53 d.:   travel      WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  10 d.:   ambition    TODO [#A] Take over the universe :universe:ambition:
+  test:       In   5 d.:   ambition    TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In   2 d.:   world       TODO [#A] Take over the world :universe:ambition::world:
+  test:       Sched. 2x:   meetings    TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:        personal    TODO Practice leaping tall buildings in a                      !       on::personal:
+
+ Group: recurring
+  test:       Deadline:    Emacs       CHECK /r/emacs            :website:Emacs:
+  test:       Scheduled:   @town       TODO Shop for groceries :food:shopping:@town:
+  test:       14:07......              Sunset 
+  test:        2:02......              Sunrise (12:04 of daylight)
+
+ Other items
+              12:00......              now - - - - - - - - - - - - - - - - - - - - - - - - -
+  test:       18:00...... Scheduled:   dinner      TODO Order a pizza :food:dinner:
+  test:       Scheduled:   @computer   TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:   programming SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Scheduled:   @town       TODO [#C] Get haircut    :personal:@town:
+  test:       In  16 d.:   bills       TODO [#B] Internet                :bills:
 "))
