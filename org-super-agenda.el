@@ -116,6 +116,11 @@
 
 ;;;; Variables
 
+(defconst org-super-agenda-special-selectors
+  '(:name :order)
+  ;; This needs to be manually updated if any are added.
+  "Special, non-grouping selectors.")
+
 (defvar org-super-agenda-group-types nil
   "List of agenda grouping keywords and associated functions.
 Populated automatically by `org-super-agenda--defgroup'.")
@@ -685,12 +690,24 @@ The string should be the priority cookie letter, e.g. \"A\".")
 
 ;;;;; Dispatchers
 
+(defun org-super-agenda--get-selector-fn (selector)
+  "Return function for SELECTOR.  Raise error if invalid selector."
+  (cond
+   ((cl-member selector org-super-agenda-special-selectors)
+    ;; Special selector, so no associated function; return nil
+    nil)
+   (t (or
+       ;; Valid selector: return function
+       (plist-get org-super-agenda-group-types selector)
+       ;; Invalid selector: raise error
+       (user-error "Invalid org-agenda-super-groups selector: %s" selector)))))
+
 (defun org-super-agenda--group-dispatch (items group)
   "Group ITEMS with the appropriate grouping functions for GROUP.
 Grouping functions are listed in `org-super-agenda-group-types', which
 see."
-  (cl-loop for (group-type args) on group by 'cddr  ; plist access
-           for fn = (plist-get org-super-agenda-group-types group-type)
+  (cl-loop for (selector args) on group by 'cddr  ; plist access
+           for fn = (org-super-agenda--get-selector-fn selector)
            ;; This double "when fn" is an ugly hack, but it lets us
            ;; use the destructuring-bind; otherwise we'd have to put
            ;; all the collection logic in a progn, or do the
@@ -718,8 +735,8 @@ see."
   ;; Used for the `:and' selector.
   (cl-loop with final-non-matches with final-matches
            with all-items = items  ; Save for later
-           for (group-type args) on group by 'cddr  ; plist access
-           for fn = (plist-get org-super-agenda-group-types group-type)
+           for (selector args) on group by 'cddr  ; plist access
+           for fn = (org-super-agenda--get-selector-fn selector)
            ;; This double "when fn" is an ugly hack, but it lets us
            ;; use the destructuring-bind; otherwise we'd have to put
            ;; all the collection logic in a progn, or do the
@@ -751,8 +768,8 @@ see."
 (defun org-super-agenda--group-dispatch-discard (items group)
   "Discard items that match GROUP.
 Any groups processed after this will not see these items."
-  (cl-loop for (group-type args) on group by 'cddr  ; plist access
-           for fn = (plist-get org-super-agenda-group-types group-type)
+  (cl-loop for (selector args) on group by 'cddr  ; plist access
+           for fn = (org-super-agenda--get-selector-fn selector)
            ;; This double "when fn" is an ugly hack, but it lets us
            ;; use the destructuring-bind; otherwise we'd have to put
            ;; all the collection logic in a progn, or do the
