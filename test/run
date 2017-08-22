@@ -39,7 +39,7 @@ function debug {
     if [[ $debug ]]
     then
         function debug {
-            echoColor yellow "DEBUG: $@" >&2
+            echo "DEBUG: $@" >&2
         }
         debug "$@"
     else
@@ -49,7 +49,7 @@ function debug {
     fi
 }
 function die {
-    echoColor Red "$@" >&2
+    echo "$@" >&2
     exit 1
 }
 function usage {
@@ -157,6 +157,11 @@ debug "ARGS: $args"
 debug "Remaining args: ${rest[@]}"
 
 # * Main
+
+# Print date/time information since Travis seems to be an hour off
+debug=t
+debug "Local time: $(date)"
+debug "UTC: $(date --utc)"
 
 # Ensure we run from the test directory
 if [[ $0 = "test/run" ]]

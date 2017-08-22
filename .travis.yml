@@ -24,7 +24,7 @@ matrix:
     - env: EVM_EMACS=emacs-git-snapshot-travis
 
 script:
-  lsb_release -a && test/run
+  lsb_release -a && test/run --debug
 
 # Local Variables:
 # indent-tabs-mode: nil
