@@ -242,9 +242,9 @@ With prefix argument ARG, turn on if positive, otherwise off."
     (funcall advice-function #'org-agenda-finalize-entries
              #'org-super-agenda--filter-finalize-entries)
     ;; Display message
-    (if org-super-agenda-mode
-        (message "org-super-agenda-mode enabled.")
-      (message "org-super-agenda-mode disabled."))))
+    (message (if org-super-agenda-mode
+                 "org-super-agenda-mode enabled."
+               "org-super-agenda-mode disabled."))))
 
 ;;;; Group selectors
 
