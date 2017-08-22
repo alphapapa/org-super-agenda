@@ -27,9 +27,10 @@
 ;;;; Commands
 
 (cl-defun org-super-agenda--test-update-all-tests (&optional &key force)
+  "Save the result of all tests to the results file."
   (interactive)
   (when (or force
-            (equal (read-char "Update all test results?  (You should only do this from the test script.) (y/n): ") ?y))
+            (equal (read-char "Update all test results? (y/n): ") ?y))
     (when (ht? org-super-agenda--test-results)
       (ht-clear! org-super-agenda--test-results))
     (let ((org-super-agenda--test-save-results t))
@@ -40,32 +41,26 @@
           (org-super-agenda--test-run-this-test))))))
 
 (defun org-super-agenda--test-save-this-test ()
+  "Save the result of this test."
   (interactive)
   (let ((org-super-agenda--test-show-results nil)
         (org-super-agenda--test-save-results t))
     (org-super-agenda--test-run-this-test)))
 
 (defun org-super-agenda--test-show-this-test ()
+  "Show the agenda buffer for this test."
   (interactive)
   (let ((org-super-agenda--test-show-results t)
         (org-super-agenda--test-save-results nil))
     (org-super-agenda--test-run-this-test)))
 
 (defun org-super-agenda--test-run-all ()
+  "Run all tests with ERT."
   (interactive)
   (ert-run-tests-interactively "^org-super-agenda--test-"))
 
-(defun org-super-agenda--test-toggle-show-results ()
-  (interactive)
-  (setq org-super-agenda--test-show-results (not org-super-agenda--test-show-results))
-  (message "Showing result: %s" org-super-agenda--test-show-results))
-
-(defun org-super-agenda--test-toggle-save-results ()
-  (interactive)
-  (setq org-super-agenda--test-save-results (not org-super-agenda--test-save-results))
-  (message "Saving results: %s" org-super-agenda--test-save-results))
-
 (defun org-super-agenda--test-load-results ()
+  "Load saved results from results file."
   (interactive)
   (setq org-super-agenda--test-results
         (read (f-read org-super-agenda--test-results-file)))
@@ -76,10 +71,10 @@
 
 (cl-defun org-super-agenda--test-process-output-as-string (process &optional &key args stdin ignore-status)
   "Return string of output of PROCESS called with ARGS and STDIN.
-  ARGS and STDIN are optional. ARGS may be a string or list of
-  strings. STDIN should be a string. If process returns non-zero
-  and IGNORE-STATUS is nil, raise `user-error' with STDERR
-  message."
+ARGS and STDIN are optional. ARGS may be a string or list of
+strings. STDIN should be a string. If process returns non-zero
+and IGNORE-STATUS is nil, raise `user-error' with STDERR
+message."
   (declare (indent defun))
   (let* ((args (internal--listify args))
          status))
@@ -95,6 +90,7 @@
     (buffer-string)))
 
 (defun org-super-agenda--test-diff-strings (a b)
+  "Compare strings A and B using the \"diff\" utility."
   (let ((file-a (make-temp-file "argh"))
         (file-b (make-temp-file "argh")))
     (with-temp-file file-a
@@ -111,21 +107,19 @@
       (forward-line 2)
       (buffer-substring (point) (point-max)))))
 
-(defun org-super-agenda--test-run-this-test ()
-  (save-excursion
-    (when (or (looking-at "(org-super-agenda--test-run")
-              (re-search-backward "(org-super-agenda--test-run" nil t))
-      (goto-char (match-beginning 0))
-      (forward-sexp)
-      (eval-last-sexp nil))))
-
 (defun org-super-agenda--test-save-result (body-groups-hash result)
+  "Save RESULT to `org-super-agenda--test-results' with key BODY-GROUPS-HASH."
   (ht-set! org-super-agenda--test-results body-groups-hash result)
   (with-temp-file org-super-agenda--test-results-file
     (insert (format "%S" org-super-agenda--test-results)))
   (message "Saved result for: %s" body-groups-hash))
 
 (defun org-super-agenda--test-get-custom-group-members (group)
+  "Return a list of (VAR STANDARD-VALUE) forms for the customization group GROUP.
+Sub-groups of GROUP are recursed into.  The resulting list is
+suitable for splicing into a `let' binding form to temporarily
+set every variable in GROUP to its standard, un-customized
+value."
   (let* ((subgroups (custom-group-members group t))
          (vars (seq-difference (custom-group-members group nil) subgroups)))
     (append (cl-loop for (sg . type) in subgroups
@@ -137,13 +131,17 @@
 
 ;;;; Macros
 
-(cl-defmacro org-super-agenda--test-with-redefined-functions (pairs &rest body)
+(cl-defmacro org-super-agenda--test-with-redefined-functions (fns &rest body)
+  "Run BODY with functions redefined according to FNS.
+FNS should be a list of (FUNCTION-NAME FUNCTION-BODY) lists.
+This is helpful when, for whatever reason, `cl-flet' and
+`cl-labels' don't work."
   (declare (indent defun))
-  (let* ((set-forms (cl-loop for (fn def) in pairs
+  (let* ((set-forms (cl-loop for (fn def) in fns
                              for orig = (intern (concat (symbol-name fn) "-orig"))
                              collect `(setf (symbol-function ',orig) (symbol-function ',fn))
                              collect `(setf (symbol-function ',fn) ,def)))
-         (unset-forms (cl-loop for (fn def) in pairs
+         (unset-forms (cl-loop for (fn def) in fns
                                for orig = (intern (concat (symbol-name fn) "-orig"))
                                collect `(setf (symbol-function ',fn) (symbol-function ',orig)))))
     `(progn
@@ -228,8 +226,7 @@ buffer and do not save the results."
                (kill-buffer)))))
 
        ;; Save test results
-       (when (and org-super-agenda--test-save-results
-                  (not org-super-agenda--test-show-results))
+       (when org-super-agenda--test-save-results
          (org-super-agenda--test-save-result body-groups-hash result))
 
        ;; Show test results
@@ -317,8 +314,6 @@ buffer and do not save the results."
            :groups '((:discard (:regexp "pizza"
                                         :regexp "groceries"))))))
 
-;; FIXME: Commenting out because something in my config causes a whitespace-only difference
-;; between the two agenda blocks, and I can't figure out why.
 (ert-deftest org-super-agenda--test-agenda-with-grid-and-todo-with-children ()
   (should (org-super-agenda--test-run
            :let* ((org-agenda-custom-commands
