@@ -22,16 +22,16 @@ EMACS_LINT_IGNORE=t
 EMACS="${EMACS:=emacs}"
 
 INIT_PACKAGE_EL="(progn
-  (require 'package)
+(require 'package)
 (push '(\"melpa\" . \"http://melpa.org/packages/\") package-archives)
-  (package-initialize)
-  (setq debug-on-error t))"
+(package-initialize)
+(package-refresh-contents)
+(setq debug-on-error t))"
 
 PACKAGES_NEEDED="
-(setq packages-needed '(ht f s dash))
-(cl-loop for package in packages-needed
- unless (package-installed-p package)
-do (package-install package))"
+(cl-loop for package in '(ht f s dash)
+         unless (package-installed-p package)
+         do (package-install package))"
 
 # * Functions
 
@@ -107,6 +107,7 @@ function run_tests {
     # Finally, run the testsuite
     "$EMACS" -Q -batch \
              --eval "$INIT_PACKAGE_EL" \
+             --eval "$PACKAGES_NEEDED" \
              -l $MAIN_FILE \
              -l $TEST_FILE \
              -f org-super-agenda--test-load-results \
