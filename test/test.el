@@ -25,7 +25,8 @@
     (setq org-super-agenda--test-save-results t)
     (save-excursion
       (goto-char (point-min))
-      (while (re-search-forward "(org-super-agenda--test-run")
+      (re-search-forward "^;;;; Tests")
+      (while (re-search-forward "(org-super-agenda--test-run" nil t)
         (goto-char (match-beginning 0))
         (forward-sexp)
         (eval-last-sexp nil)))
