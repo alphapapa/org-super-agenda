@@ -19,6 +19,20 @@ fi
 ERROR_ON_WARN=nil
 EMACS_LINT_IGNORE=t
 
+EMACS="${EMACS:=emacs}"
+
+INIT_PACKAGE_EL="(progn
+  (require 'package)
+(push '(\"melpa\" . \"http://melpa.org/packages/\") package-archives)
+  (package-initialize)
+  (setq debug-on-error t))"
+
+PACKAGES_NEEDED="
+(setq packages-needed '(ht f s dash))
+(cl-loop for package in packages-needed
+ unless (package-installed-p package)
+do (package-install package))"
+
 # * Functions
 
 function debug {
@@ -148,20 +162,6 @@ if [[ $0 = "test/run" ]]
 then
     cd test || { echo "Can't change to test directory." && exit 1 ;}
 fi
-
-EMACS="${EMACS:=emacs}"
-
-INIT_PACKAGE_EL="(progn
-  (require 'package)
-(push '(\"melpa\" . \"http://melpa.org/packages/\") package-archives)
-  (package-initialize)
-  (setq debug-on-error t))"
-
-PACKAGES_NEEDED="
-(setq packages-needed '(ht f s))
-(cl-loop for package in packages-needed
- unless (package-installed-p package)
-do (package-install package))"
 
 case $command in
     update)
