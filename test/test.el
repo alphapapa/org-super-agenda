@@ -159,9 +159,9 @@ value."
 
 (cl-defmacro org-super-agenda--test-with-redefined-functions (fns &rest body)
   "Run BODY with functions redefined according to FNS.
-FNS should be a list of (FUNCTION-NAME FUNCTION-BODY) lists.
-This is helpful when, for whatever reason, `cl-flet' and
-`cl-labels' don't work."
+FNS should be a list of (FUNCTION-NAME FUNCTION-BODY) lists,
+where FUNCTION-BODY is a lambda form.  This is helpful when, for
+whatever reason, `cl-flet' and `cl-labels' don't work."
   (declare (indent defun))
   (let* ((set-forms (cl-loop for (fn def) in fns
                              for orig = (intern (concat (symbol-name fn) "-orig"))
