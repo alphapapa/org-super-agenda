@@ -65,7 +65,7 @@ EOF
 }
 
 function refresh {
-    echo -e "\nREFRESHING..."
+    debug "REFRESHING..."
 
     # Refresh package archives, because the test suite needs to see at least
     # package-lint and cl-lib.
@@ -77,7 +77,7 @@ function refresh {
 
 
 function byte_compile {
-    echo -e "\nBYTE-COMPILING..."
+    debug "BYTE-COMPILING..."
 
     "$EMACS" -Q -batch \
              --eval "$INIT_PACKAGE_EL" \
@@ -92,7 +92,7 @@ function lint {
     # failures on Emacs 24.2 and below don't cause the tests to fail, as these
     # versions have buggy imenu that reports (defvar foo) as a definition of foo.
 
-    echo -e "\nLINTING..."
+    debug "LINTING..."
 
     "$EMACS" -Q -batch \
              --eval "$INIT_PACKAGE_EL" \
@@ -102,9 +102,8 @@ function lint {
 }
 
 function run_tests {
-    echo -e "\nTESTING..."
+    debug "TESTING..."
 
-    # Finally, run the testsuite
     "$EMACS" -Q -batch \
              --eval "$INIT_PACKAGE_EL" \
              --eval "$PACKAGES_NEEDED" \
@@ -115,7 +114,7 @@ function run_tests {
 }
 
 function update {
-    echo -e "\nUPDATING..."
+    debug "UPDATING..."
 
     "$EMACS" -Q -batch \
              --eval "$INIT_PACKAGE_EL" \
@@ -166,7 +165,7 @@ debug "UTC: $(date --utc)"
 # Ensure we run from the test directory
 if [[ $0 = "test/run" ]]
 then
-    cd test || { echo "Can't change to test directory." && exit 1 ;}
+    cd test || die "Can't change to test directory."
 fi
 
 case $command in
