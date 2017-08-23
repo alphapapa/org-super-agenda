@@ -161,7 +161,7 @@ making it stretch across the screen."
 
 (defmacro org-super-agenda--when-with-marker-buffer (form &rest body)
   "When FORM is a marker, run BODY in the marker's buffer, with point starting at it."
-  (declare (indent defun))
+  (declare (indent defun) (debug (form body)))
   (org-with-gensyms (marker)
     `(let ((,marker ,form))
        (when (markerp ,marker)
