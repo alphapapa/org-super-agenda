@@ -56,11 +56,16 @@
 
 (defun org-super-agenda--test-run-this-test ()
   (save-excursion
-    (when (or (looking-at "(org-super-agenda--test-run")
-              (re-search-backward "(org-super-agenda--test-run" nil t))
-      (goto-char (match-beginning 0))
-      (forward-sexp)
-      (eval-last-sexp nil))))
+    (unless (bolp)
+      (beginning-of-defun))
+    (let ((eod (save-excursion
+                 (end-of-defun)
+                 (point))))
+      (when (re-search-forward "(org-super-agenda--test-run" nil t)
+        (unless (> (point) eod)
+          (goto-char (match-beginning 0))
+          (forward-sexp)
+          (eval-last-sexp nil))))))
 
 (defun org-super-agenda--test-run-all ()
   "Run all tests with ERT."
