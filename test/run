@@ -107,6 +107,7 @@ function run_tests {
     "$EMACS" -Q -batch \
              --eval "$INIT_PACKAGE_EL" \
              --eval "$PACKAGES_NEEDED" \
+             --eval "(message \"Org version: %s\" (org-version))" \
              -l $MAIN_FILE \
              -l $TEST_FILE \
              -f org-super-agenda--test-load-results \
