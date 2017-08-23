@@ -9,6 +9,7 @@
 (require 'org-habit)
 (require 'org-super-agenda)
 (require 'ert)
+(require 'seq)
 
 (require 'ht)
 (require 'f)
