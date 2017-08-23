@@ -356,16 +356,17 @@ DATE', where DATE is a date string that
                         ((or 'before 'on 'after)
                          (org-time-string-to-absolute (second args))))))
   :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
-          (when-let ((entry-time (org-entry-get (point) "DEADLINE")))
+          (let ((entry-time (org-entry-get (point) "DEADLINE")))
             (pcase (car args)
-              ('t t)  ; Has any deadline info
+              ('t entry-time)  ; Has any deadline info
               ((pred not) (not entry-time))  ; Has no deadline info
               (comparison
-               (let ((entry-time (org-time-string-to-absolute entry-time))
-                     (compare-date (pcase comparison
-                                     ((or 'past 'today 'future) today)
-                                     ((or 'before 'on 'after) target-date))))
-                 (org-super-agenda--compare-dates comparison entry-time compare-date)))))))
+               (when entry-time
+                 (let ((entry-time (org-time-string-to-absolute entry-time))
+                       (compare-date (pcase comparison
+                                       ((or 'past 'today 'future) today)
+                                       ((or 'before 'on 'after) target-date))))
+                   (org-super-agenda--compare-dates comparison entry-time compare-date))))))))
 
 (org-super-agenda--defgroup scheduled
   "Group items that are scheduled.
@@ -392,16 +393,17 @@ DATE', where DATE is a date string that
                         ((or 'before 'on 'after)
                          (org-time-string-to-absolute (second args))))))
   :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
-          (when-let ((entry-time (org-entry-get (point) "SCHEDULED")))
+          (let ((entry-time (org-entry-get (point) "SCHEDULED")))
             (pcase (car args)
-              ('t t)  ; Has any scheduled info
+              ('t entry-time)  ; Has any scheduled info
               ((pred not) (not entry-time))  ; Has no scheduled info
               (comparison
-               (let ((entry-time (org-time-string-to-absolute entry-time))
-                     (compare-date (pcase comparison
-                                     ((or 'past 'today 'future) today)
-                                     ((or 'before 'on 'after) target-date))))
-                 (org-super-agenda--compare-dates comparison entry-time compare-date)))))))
+               (when entry-time
+                 (let ((entry-time (org-time-string-to-absolute entry-time))
+                       (compare-date (pcase comparison
+                                       ((or 'past 'today 'future) today)
+                                       ((or 'before 'on 'after) target-date))))
+                   (org-super-agenda--compare-dates comparison entry-time compare-date))))))))
 
 (defun org-super-agenda--compare-dates (comparison date-a date-b)
   "Compare DATE-A and DATE-B according to COMPARISON.
