@@ -45,7 +45,9 @@
   (interactive)
   (let ((org-super-agenda--test-show-results nil)
         (org-super-agenda--test-save-results t))
-    (org-super-agenda--test-run-this-test)))
+    (org-super-agenda--test-run-this-test)
+    ;; Re-eval the ERT test
+    (org-super-agenda--test-ert-def-this-test)))
 
 (defun org-super-agenda--test-show-this-test ()
   "Show the agenda buffer for this test."
@@ -66,6 +68,13 @@
           (goto-char (match-beginning 0))
           (forward-sexp)
           (eval-last-sexp nil))))))
+
+(defun org-super-agenda--test-ert-def-this-test ()
+  (save-excursion
+    (unless (bolp)
+      (beginning-of-defun))
+    (forward-char 1)
+    (eval-defun nil)))
 
 (defun org-super-agenda--test-run-all ()
   "Run all tests with ERT."
@@ -104,6 +113,9 @@ message."
 
 (defun org-super-agenda--test-diff-strings (a b)
   "Compare strings A and B using the \"diff\" utility."
+  (cl-loop for s in (list a b)
+           unless (stringp s)
+           do (error "Unable to diff non-string: %s is: %s" (symbol-name s) s))
   (let ((file-a (make-temp-file "argh"))
         (file-b (make-temp-file "argh")))
     (with-temp-file file-a
@@ -184,14 +196,14 @@ This is helpful when, for whatever reason, `cl-flet' and
           let*)
   "Test BODY with GROUPS and LET* binding.
 When `org-super-agenda--test-save-results' is non-nil, save the
-result to the results file.  When
+new-result to the results file.  When
 `org-super-agenda--test-show-results' is non-nil, show the agenda
 buffer and do not save the results."
   (declare (debug (form &optional listp sexp sexp stringp)))
   `(progn
      (org-super-agenda-mode 1)
      (let ((body-groups-hash (secure-hash 'md5 (format "%S" (list ',body ,groups))))
-           result format-time-string-orig)
+           new-result format-time-string-orig)
 
        ;; Redefine functions
        (org-super-agenda--test-with-redefined-functions
@@ -206,6 +218,10 @@ buffer and do not save the results."
                                 (if time
                                     (format-time-string-orig format-string time zone)
                                   (concat (second (s-split " " ,date)) " "))))
+          (frame-width
+           ;; FIXME: This should be fixed to use window-width in Org 9.1
+           (lambda ()
+             134))
           (window-width (lambda ()
                           134)))
 
@@ -215,6 +231,7 @@ buffer and do not save the results."
                   ,@(org-super-agenda--test-get-custom-group-members 'org-agenda)
                   ,@(org-super-agenda--test-get-custom-group-members 'org-habit)
                   (org-agenda-window-setup 'current-window)  ; The default breaks batch tests by trying to open a new frame
+                  (org-agenda-start-with-log-mode nil)  ; Set this by default, in case it's set to t in my running Emacs instance
                   (org-agenda-files (list "test.org"))
                   ,@(if let*
                         let*
@@ -234,20 +251,24 @@ buffer and do not save the results."
              ;; fine, because other than inserting group headers, we're not modifying any
              ;; whitespace.  BUT that means that, when a test fails, we won't be able to
              ;; easily see why, because there won't be any line-breaks for the diff.
-             (setq result (buffer-substring-no-properties 1 (point-max)))
+             (setq new-result (buffer-substring-no-properties 1 (point-max)))
              (unless org-super-agenda--test-show-results
                (kill-buffer)))))
 
        ;; Save test results
        (when org-super-agenda--test-save-results
-         (org-super-agenda--test-save-result body-groups-hash result))
+         (org-super-agenda--test-save-result body-groups-hash new-result))
 
        ;; Show test results
        (unless org-super-agenda--test-show-results
-         ;; Don't give real test result when showing result buffer
-         (or (equal result (ht-get org-super-agenda--test-results body-groups-hash))
-             (error "Test failed: DIFF: %s"
-                    (org-super-agenda--test-diff-strings (ht-get org-super-agenda--test-results body-groups-hash) result)))))))
+         ;; Don't give real test result when showing new-result buffer
+         (let ((stored-result (ht-get org-super-agenda--test-results body-groups-hash)))
+           (or (equal stored-result new-result)
+               (unless (and stored-result new-result)
+                 (error "Empty result for body:%s\nSTORED-RESULT:%s\nNEW-RESULT:%s"
+                        body-groups-hash stored-result new-result))
+               (error "Test failed for body:%s DIFF: %s" body-groups-hash
+                      (org-super-agenda--test-diff-strings stored-result new-result))))))))
 
 ;;;; Tests
 
@@ -374,6 +395,7 @@ buffer and do not save the results."
 
 (ert-deftest org-super-agenda--test-:children-nil ()
   (should (org-super-agenda--test-run
+           ;; DONE: Works.
            ;; FIXME: Says "with children" when nil, but works
            ;; correctly otherwise.
            :groups '((:children nil)))))
@@ -385,46 +407,58 @@ buffer and do not save the results."
 
 (ert-deftest org-super-agenda--test-:children-todo ()
   (should (org-super-agenda--test-run
+           ;; DONE: Works.
            ;; FIXME: Doesn't say that the children are TODO items
            :groups '((:children todo)))))
 
 (ert-deftest org-super-agenda--test-:children-string ()
   (should (org-super-agenda--test-run
-           ;; FIXME: pick a string
-           :groups '((:children "string")))))
+           ;; DONE: Works.  (This groups items that have child tasks
+           ;; with the "WAITING" keyword, so the "WAITING" task is not
+           ;; in the group, but its parent is.)
+           :groups '((:children "WAITING")))))
 
 (ert-deftest org-super-agenda--test-:date ()
   (should (org-super-agenda--test-run
            ;; FIXME: Note that `ts-date' property is unset with,
            ;; e.g. `org-todo-list', so that selector won't have any
            ;; effect then.
-           ;; TODO: Come up with a way to test :date,
-           ;; because in the daily/weekly agenda, every item has a
-           ;; date, so it's redundant.
-           :groups '((:date t))
-           :body (org-todo-list))))
+
+           ;; TODO: Come up with a way to test :date, because in the
+           ;; daily/weekly agenda, every item has a date, so it's
+           ;; redundant.  I already know that it works to test the
+           ;; `ts-date' property, but I'd like a more meaningful test.
+           :groups '((:date t)))))
 
 (ert-deftest org-super-agenda--test-:deadline-t ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
            :groups '((:deadline t)))))
 (ert-deftest org-super-agenda--test-:deadline-nil ()
   (should (org-super-agenda--test-run
-           :groups '((:deadline nil)))))
+           :groups '((:deadline nil))
+           :body (org-todo-list))))
 (ert-deftest org-super-agenda--test-:deadline-past ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:deadline past)))))
+           :groups '((:deadline past))
+           :date "2017-07-06 12:00")))
 (ert-deftest org-super-agenda--test-:deadline-today ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
            :groups '((:deadline today)))))
 (ert-deftest org-super-agenda--test-:deadline-future ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
            :groups '((:deadline future)))))
 (ert-deftest org-super-agenda--test-:deadline-before ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:deadline before)))))
+           :groups '((:deadline (before "2017-07-10"))))))
 (ert-deftest org-super-agenda--test-:deadline-after ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:deadline after)))))
+           :groups '((:deadline (after "2017-07-10"))))))
 
 (ert-deftest org-super-agenda--test-:effort< ()
   ;; DONE: Works.
@@ -441,65 +475,132 @@ buffer and do not save the results."
            :groups '((:habit t)))))
 
 (ert-deftest org-super-agenda--test-:heading-regexp ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:heading-regexp)))))
+           :groups '((:heading-regexp "moon")))))
+
 (ert-deftest org-super-agenda--test-:log ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:log)))))
+           :groups '((:log t))
+           :let* ((org-agenda-show-log t)))))
+
 (ert-deftest org-super-agenda--test-:priority ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:priority)))))
+           :groups '((:priority "A")))))
 (ert-deftest org-super-agenda--test-:priority> ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:priority>)))))
+           :groups '((:priority> "B")))))
 (ert-deftest org-super-agenda--test-:priority>= ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:priority>=)))))
+           :groups '((:priority>= "B")))))
 (ert-deftest org-super-agenda--test-:priority< ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:priority<)))))
+           :groups '((:priority< "A")))))
 (ert-deftest org-super-agenda--test-:priority<= ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:priority<=)))))
+           :groups '((:priority<= "B")))))
+
 (ert-deftest org-super-agenda--test-:regexp ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:regexp)))))
-(ert-deftest org-super-agenda--test-:scheduled ()
+           :groups '((:regexp "take over")))))
+
+(ert-deftest org-super-agenda--test-:scheduled-t ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:scheduled)))))
+           :groups '((:scheduled t)))))
+(ert-deftest org-super-agenda--test-:scheduled-nil ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:scheduled nil)))))
+(ert-deftest org-super-agenda--test-:scheduled-past ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:scheduled past)))))
+(ert-deftest org-super-agenda--test-:scheduled-today ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:scheduled today)))))
+(ert-deftest org-super-agenda--test-:scheduled-future ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :date "2017-07-04 12:00"
+           :span 2
+           :groups '((:scheduled future)))))
+(ert-deftest org-super-agenda--test-:scheduled-before ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:scheduled (before "2017-07-05"))))))
+(ert-deftest org-super-agenda--test-:scheduled-after ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:scheduled (after "2017-07-04"))))))
+
 (ert-deftest org-super-agenda--test-:tag ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:tag)))))
+           :groups '((:tag "space")))))
+
 (ert-deftest org-super-agenda--test-:time-grid ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:time-grid)))))
+           :groups '((:time-grid t)))))
+
 (ert-deftest org-super-agenda--test-:todo ()
+;; DONE: Works.
   (should (org-super-agenda--test-run
            :groups '((:todo "WAITING")))))
 
 ;;;;;; Special selectors
 
 (ert-deftest org-super-agenda--test-:and ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:and)))))
+           :groups '((:and (:regexp "Take over" :todo "TODO"))))))
+
 (ert-deftest org-super-agenda--test-:anything ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:anything)))))
+           :groups '((:anything t)))))
+
 (ert-deftest org-super-agenda--test-:auto-category ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:auto-category)))))
+           :groups '((:auto-category t)))))
+
 (ert-deftest org-super-agenda--test-:auto-group ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:auto-group)))))
+           :groups '((:auto-group t)))))
+
 (ert-deftest org-super-agenda--test-:discard ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:discard)))))
+           :groups '((:discard (:anything t))))))
+
 (ert-deftest org-super-agenda--test-:not ()
+  ;; FIXME: The :not selector causes auto-generated group names to be incorrect.
+  ;; DONE: Works otherwise.
   (should (org-super-agenda--test-run
-           :groups '((:not)))))
+           :groups '((:not (:todo t))))))
+
 (ert-deftest org-super-agenda--test-:order ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:order)))))
+           :groups '((:name "Last"
+                            :order 100
+                            :todo "WAITING")))))
+
 (ert-deftest org-super-agenda--test-:order-multi ()
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:order-multi)))))
+           :groups '((:order-multi (100
+                                    (:todo "WAITING")
+                                    (:name "Not TODOs"
+                                           :not (:todo t))))))))

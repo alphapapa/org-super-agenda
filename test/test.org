@@ -41,6 +41,15 @@ DEADLINE: <2017-07-15 Sat -1m>
 *** TODO [#B] Renew membership in supervillain club
     DEADLINE: <2017-07-10 Mon -1w>
 
+*** DONE [#B] Learn universal sign language
+CLOSED: [2017-07-05 Wed 03:02]
+:PROPERTIES:
+:ID:       729de245-75fa-43b4-845a-57af61109485
+:END:
+:LOGBOOK:
+-  CLOSING NOTE [2017-07-05 Wed 03:02] \\
+   All done!
+:END:
 ** TODO Order a pizza                                          :food:dinner:
 SCHEDULED: <2017-07-05 Wed 18:00>
 :PROPERTIES:
@@ -76,6 +85,9 @@ Gotta buy one first, though.
     DEADLINE: <2017-07-05 Wed +1w>
 *** TODO Shop for groceries                             :food:shopping:@town:
     SCHEDULED: <2017-07-05 Wed +1w>
+    :PROPERTIES:
+    :Effort:   30
+    :END:
 *** Sunrise/sunset
 
 %%(org-super-agenda--test-diary-sunrise)
