@@ -33,6 +33,24 @@ PACKAGES_NEEDED="
          unless (package-installed-p package)
          do (package-install package))"
 
+# Since package-install refuses to install a package that's already
+# installed, and package-reinstall can't delete the built-in Org
+# package, we have to fool it into thinking Org isn't installed by
+# binding package--builtins and package--builtin-versions to nil.
+UPDATE_ORG_IF_NEEDED="
+(unless (version<= \"9.0\" (org-version))
+  (let (package--builtins package--builtin-versions)
+    (package-install 'org)))"
+
+# Workaround weird indentation bug in Emacs shell-script-mode.  It
+# sees the single-quotes in the vars above and thinks that there is an
+# open single-quoted string, and it cascades down and affects the
+# indentation later in the file.  Apparently we need to keep an even
+# number of single-quotes.  But that's not all: it's also related to
+# whether the variable itself contains a newline.  Weird.
+FAKE_VAR="
+(something 'something)"
+
 # * Functions
 
 function debug {
@@ -102,16 +120,29 @@ function lint {
 }
 
 function run_tests {
+    update_org
+
     debug "TESTING..."
 
     "$EMACS" -Q -batch \
-             --eval "$INIT_PACKAGE_EL" \
-             --eval "$PACKAGES_NEEDED" \
              --eval "(message \"Org version: %s\" (org-version))" \
              -l $MAIN_FILE \
              -l $TEST_FILE \
              -f org-super-agenda--test-load-results \
              -f ert-run-tests-batch-and-exit
+}
+
+function update_org {
+    # Make sure Org 9.0+ is installed
+
+    debug "Updating Org..."
+
+    "$EMACS" -Q -batch \
+             --eval "$INIT_PACKAGE_EL" \
+             --eval "$PACKAGES_NEEDED" \
+             --eval "(message \"Org version: %s\" (org-version))" \
+             --eval "$UPDATE_ORG_IF_NEEDED" \
+             --eval "(message \"Org version: %s\" (org-version))"
 }
 
 function update {
