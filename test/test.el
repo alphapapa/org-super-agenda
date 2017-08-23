@@ -54,6 +54,14 @@
         (org-super-agenda--test-save-results nil))
     (org-super-agenda--test-run-this-test)))
 
+(defun org-super-agenda--test-run-this-test ()
+  (save-excursion
+    (when (or (looking-at "(org-super-agenda--test-run")
+              (re-search-backward "(org-super-agenda--test-run" nil t))
+      (goto-char (match-beginning 0))
+      (forward-sexp)
+      (eval-last-sexp nil))))
+
 (defun org-super-agenda--test-run-all ()
   "Run all tests with ERT."
   (interactive)
