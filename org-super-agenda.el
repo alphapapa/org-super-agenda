@@ -598,9 +598,9 @@ The string should be the priority cookie letter, e.g. \"A\".")
                  for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
                  for (auto-section-name non-matching matching) = (org-super-agenda--group-dispatch all-items filter)
 
-                 ;; Auto groups
-                 if (eql auto-section-name :auto-group)
-                 do (setq section-name (or custom-section-name "Auto groups"))
+                 ;; Auto category/group
+                 if (cl-member auto-section-name '(:auto-group :auto-category))
+                 do (setq section-name (or custom-section-name "Auto category/group"))
                  and append (cl-loop for group in matching
                                      collect (list :name (plist-get group :name)
                                                    :items (plist-get group :items)
@@ -679,7 +679,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
            if category
            do (ht-set! categories category (cons item (ht-get categories category)))
            else collect item into non-matching
-           finally return (list :auto-groups
+           finally return (list :auto-category
                                 non-matching
                                 (cl-loop for key in (sort (ht-keys categories) #'string<)
                                          for name = (concat "Category: " key)
