@@ -177,7 +177,7 @@ This is helpful when, for whatever reason, `cl-flet' and
        (fset 'org-today orig))))
 
 (cl-defmacro org-super-agenda--test-run
-    (&key (body '(org-agenda-list nil))
+    (&key (body '(org-agenda-list))
           (groups nil groups-set)
           (span 'day)
           (date org-super-agenda--test-date)
@@ -250,6 +250,8 @@ buffer and do not save the results."
                     (org-super-agenda--test-diff-strings (ht-get org-super-agenda--test-results body-groups-hash) result)))))))
 
 ;;;; Tests
+
+;;;;; Complex
 
 (ert-deftest org-super-agenda--test-no-groups ()
   (should (org-super-agenda--test-run
@@ -367,3 +369,137 @@ buffer and do not save the results."
   (should (org-super-agenda--test-run
            :groups '((:todo "SOMEDAY"))
            :body (org-tags-view nil "Emacs"))))
+
+;;;;; Single-selector
+
+(ert-deftest org-super-agenda--test-:children-nil ()
+  (should (org-super-agenda--test-run
+           ;; FIXME: Says "with children" when nil, but works
+           ;; correctly otherwise.
+           :groups '((:children nil)))))
+
+(ert-deftest org-super-agenda--test-:children-t ()
+  ;; DONE Works.
+  (should (org-super-agenda--test-run
+           :groups '((:children t)))))
+
+(ert-deftest org-super-agenda--test-:children-todo ()
+  (should (org-super-agenda--test-run
+           ;; FIXME: Doesn't say that the children are TODO items
+           :groups '((:children todo)))))
+
+(ert-deftest org-super-agenda--test-:children-string ()
+  (should (org-super-agenda--test-run
+           ;; FIXME: pick a string
+           :groups '((:children "string")))))
+
+(ert-deftest org-super-agenda--test-:date ()
+  (should (org-super-agenda--test-run
+           ;; FIXME: Note that `ts-date' property is unset with,
+           ;; e.g. `org-todo-list', so that selector won't have any
+           ;; effect then.
+           ;; TODO: Come up with a way to test :date,
+           ;; because in the daily/weekly agenda, every item has a
+           ;; date, so it's redundant.
+           :groups '((:date t))
+           :body (org-todo-list))))
+
+(ert-deftest org-super-agenda--test-:deadline-t ()
+  (should (org-super-agenda--test-run
+           :groups '((:deadline t)))))
+(ert-deftest org-super-agenda--test-:deadline-nil ()
+  (should (org-super-agenda--test-run
+           :groups '((:deadline nil)))))
+(ert-deftest org-super-agenda--test-:deadline-past ()
+  (should (org-super-agenda--test-run
+           :groups '((:deadline past)))))
+(ert-deftest org-super-agenda--test-:deadline-today ()
+  (should (org-super-agenda--test-run
+           :groups '((:deadline today)))))
+(ert-deftest org-super-agenda--test-:deadline-future ()
+  (should (org-super-agenda--test-run
+           :groups '((:deadline future)))))
+(ert-deftest org-super-agenda--test-:deadline-before ()
+  (should (org-super-agenda--test-run
+           :groups '((:deadline before)))))
+(ert-deftest org-super-agenda--test-:deadline-after ()
+  (should (org-super-agenda--test-run
+           :groups '((:deadline after)))))
+
+(ert-deftest org-super-agenda--test-:effort< ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:effort< "5")))))
+(ert-deftest org-super-agenda--test-:effort> ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:effort> "5")))))
+
+(ert-deftest org-super-agenda--test-:habit ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:habit t)))))
+
+(ert-deftest org-super-agenda--test-:heading-regexp ()
+  (should (org-super-agenda--test-run
+           :groups '((:heading-regexp)))))
+(ert-deftest org-super-agenda--test-:log ()
+  (should (org-super-agenda--test-run
+           :groups '((:log)))))
+(ert-deftest org-super-agenda--test-:priority ()
+  (should (org-super-agenda--test-run
+           :groups '((:priority)))))
+(ert-deftest org-super-agenda--test-:priority> ()
+  (should (org-super-agenda--test-run
+           :groups '((:priority>)))))
+(ert-deftest org-super-agenda--test-:priority>= ()
+  (should (org-super-agenda--test-run
+           :groups '((:priority>=)))))
+(ert-deftest org-super-agenda--test-:priority< ()
+  (should (org-super-agenda--test-run
+           :groups '((:priority<)))))
+(ert-deftest org-super-agenda--test-:priority<= ()
+  (should (org-super-agenda--test-run
+           :groups '((:priority<=)))))
+(ert-deftest org-super-agenda--test-:regexp ()
+  (should (org-super-agenda--test-run
+           :groups '((:regexp)))))
+(ert-deftest org-super-agenda--test-:scheduled ()
+  (should (org-super-agenda--test-run
+           :groups '((:scheduled)))))
+(ert-deftest org-super-agenda--test-:tag ()
+  (should (org-super-agenda--test-run
+           :groups '((:tag)))))
+(ert-deftest org-super-agenda--test-:time-grid ()
+  (should (org-super-agenda--test-run
+           :groups '((:time-grid)))))
+(ert-deftest org-super-agenda--test-:todo ()
+  (should (org-super-agenda--test-run
+           :groups '((:todo "WAITING")))))
+
+;;;;;; Special selectors
+
+(ert-deftest org-super-agenda--test-:and ()
+  (should (org-super-agenda--test-run
+           :groups '((:and)))))
+(ert-deftest org-super-agenda--test-:anything ()
+  (should (org-super-agenda--test-run
+           :groups '((:anything)))))
+(ert-deftest org-super-agenda--test-:auto-category ()
+  (should (org-super-agenda--test-run
+           :groups '((:auto-category)))))
+(ert-deftest org-super-agenda--test-:auto-group ()
+  (should (org-super-agenda--test-run
+           :groups '((:auto-group)))))
+(ert-deftest org-super-agenda--test-:discard ()
+  (should (org-super-agenda--test-run
+           :groups '((:discard)))))
+(ert-deftest org-super-agenda--test-:not ()
+  (should (org-super-agenda--test-run
+           :groups '((:not)))))
+(ert-deftest org-super-agenda--test-:order ()
+  (should (org-super-agenda--test-run
+           :groups '((:order)))))
+(ert-deftest org-super-agenda--test-:order-multi ()
+  (should (org-super-agenda--test-run
+           :groups '((:order-multi)))))

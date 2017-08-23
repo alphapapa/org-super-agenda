@@ -90,6 +90,12 @@ Gotta buy one first, though.
     :END:
 
     I mean, since no one has ever tried doing it before...
+*** SOMEDAY Write a symphony                                        :music:
+:PROPERTIES:
+:agenda-group: plans
+:END:
+
+I don't know when I'll get to this, so it's undated.
 
 * Code
 

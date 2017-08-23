@@ -343,4 +343,425 @@ Press ‘C-u r’ to search again with new search string
 
  Other items
   test:       CHECK /r/emacs                                     :website:Emacs:
+" "d7ecf5df25d6f48a495bb3ccb6155750" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Items with children
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+" "84707384ccd38b60a0a4e9eac4518546" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Effort < 5 items
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+" "33c10e8cf8bd527b6bbbed79d8d31102" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Effort > 5 items
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+" "9dabc540bde7467f2420825009ed415d" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Habits
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+" "51a5664a5a65a46a38b52d518844dd08" "Day-agenda (W27):
+Wednesday   5 July 2017
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+" "058c509f9682c9ca22b2d957a424cc3a" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Today
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+
+ Other items
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+
+ Unprioritized
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+" "13536e49bcb060ed28acff8973142571" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Today
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+
+ Important
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+
+ Priority <= B items
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+
+ Personal
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+
+ Shopping in town
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+
+ Space-related (non-moon-or-planet-related)
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+
+ WAITING items
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+
+ SOMEDAY and TO-READ and CHECK and TO-WATCH and WATCHING items
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+
+ Other items
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+" "68a5caa9a1fdb3a9eeafae3c4012fdef" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Priority >= B items
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+" "b17e122ace42555727a88ee2183604de" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+
+ Priority < B items
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+" "5849168f96990d377b5625fb77639140" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Headings matching regexps: \"moon\"
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+" "9a64858c09e3a83c5b1294956c8f2417" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Schedule
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+
+ Today
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+
+ Due today
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+
+ Due soon
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+
+ Scheduled earlier
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+" "557a038702186c757149a6670ac86df3" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+" "aaabba819c6e2977e19e782f5d07069c" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Group: bills
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+
+ Group: plans
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+
+ Group: recurring
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       19:07...... Sunset 
+  test:        7:02...... Sunrise (12:04 of daylight)
+
+ Other items
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+              20:00...... ----------------
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
 "))
