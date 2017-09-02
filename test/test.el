@@ -161,37 +161,24 @@ value."
 
 ;;;; Macros
 
-(cl-defmacro org-super-agenda--test-with-redefined-functions (fns &rest body)
+(cl-defmacro org-super-agenda--test-with-mock-functions (fns &rest body)
   "Run BODY with functions redefined according to FNS.
 FNS should be a list of (FUNCTION-NAME FUNCTION-BODY) lists,
-where FUNCTION-BODY is a lambda form.  This is helpful when, for
-whatever reason, `cl-flet' and `cl-labels' don't work."
+where FUNCTION-BODY is a lambda form."
   (declare (indent defun))
-  (let* ((set-forms (cl-loop for (fn def) in fns
-                             for orig = (intern (concat (symbol-name fn) "-orig"))
-                             collect `(setf (symbol-function ',orig) (symbol-function ',fn))
-                             collect `(setf (symbol-function ',fn) ,def)))
-         (unset-forms (cl-loop for (fn def) in fns
-                               for orig = (intern (concat (symbol-name fn) "-orig"))
-                               collect `(setf (symbol-function ',fn) (symbol-function ',orig)))))
-    `(progn
-       (unwind-protect
-           (progn
-             ,@set-forms
-             ,@body)
-         ,@unset-forms))))
+  `(cl-letf ,(cl-loop for (fn def) in fns
+                      collect `((symbol-function ',fn)
+                                ,def))
+     ,@body))
 
 (defmacro org-super-agenda--test-with-org-today-date (date &rest body)
   "Run BODY with the `org-today' function set to return simply DATE.
   DATE should be a date-time string (both date and time must be included)."
   (declare (indent defun))
-  `(let ((day (date-to-day ,date))
-         (orig (symbol-function 'org-today)))
-     (unwind-protect
-         (progn
-           (fset 'org-today (lambda () day))
-           ,@body)
-       (fset 'org-today orig))))
+  `(org-super-agenda--test-with-mock-functions
+     ((org-today (lambda ()
+                   ,(date-to-day date))))
+     ,@body))
 
 (cl-defmacro org-super-agenda--test-run
     (&key (body '(org-agenda-list))
@@ -208,10 +195,10 @@ buffer and do not save the results."
   `(progn
      (org-super-agenda-mode 1)
      (let ((body-groups-hash (secure-hash 'md5 (format "%S" (list ',body ,groups))))
-           new-result format-time-string-orig)
+           new-result)
 
        ;; Redefine functions
-       (org-super-agenda--test-with-redefined-functions
+       (org-super-agenda--test-with-mock-functions
          ;; Rebind `format-time-string' so it always returns the
          ;; same when no time is given, otherwise the "now" line
          ;; in the time-grid depends on the real time when the
@@ -219,7 +206,8 @@ buffer and do not save the results."
          ;; don't work, so we have to use `setf' and
          ;; `symbol-function'.  Might have something to do with
          ;; lexical-binding.)
-         ((format-time-string (lambda (format-string &optional time zone)
+         ((format-time-string-orig (symbol-function 'format-time-string))
+          (format-time-string (lambda (format-string &optional time zone)
                                 (if time
                                     (format-time-string-orig format-string time zone)
                                   (concat (second (s-split " " ,date)) " "))))
