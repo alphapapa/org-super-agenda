@@ -34,7 +34,8 @@
             (equal (read-char "Update all test results? (y/n): ") ?y))
     (when (ht? org-super-agenda--test-results)
       (ht-clear! org-super-agenda--test-results))
-    (let ((org-super-agenda--test-save-results t))
+    (let ((write-region-inhibit-fsync t) ; Don't fsync every time the result file is written, makes it slow
+          (org-super-agenda--test-save-results t))
       (save-excursion
         (goto-char (point-min))
         (re-search-forward "^;;;; Tests")
@@ -136,8 +137,11 @@ message."
 (defun org-super-agenda--test-save-result (body-groups-hash result)
   "Save RESULT to `org-super-agenda--test-results' with key BODY-GROUPS-HASH."
   (ht-set! org-super-agenda--test-results body-groups-hash result)
-  (with-temp-file org-super-agenda--test-results-file
-    (insert (format "%S" org-super-agenda--test-results)))
+  (let ((print-level 999999)
+        (print-length 999999))
+    ;; Set these, otherwise the formatted hash table will be truncated
+    (with-temp-file org-super-agenda--test-results-file
+      (insert (format "%S" org-super-agenda--test-results))))
   (message "Saved result for: %s" body-groups-hash))
 
 (defun org-super-agenda--test-get-custom-group-members (group)
