@@ -428,9 +428,15 @@ buffer and do not save the results."
   (should (org-super-agenda--test-run
            :groups '((:deadline t)))))
 (ert-deftest org-super-agenda--test-:deadline-nil ()
+  ;; DONE: Works.  I don't remember why I have this one using
+  ;; `org-todo-list', but I'll leave it.
   (should (org-super-agenda--test-run
            :groups '((:deadline nil))
            :body (org-todo-list))))
+(ert-deftest org-super-agenda--test-:deadline-nil-agenda ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:deadline nil)))))
 (ert-deftest org-super-agenda--test-:deadline-past ()
   ;; DONE: Works.
   (should (org-super-agenda--test-run

@@ -554,6 +554,37 @@ Available with ‘N r’: (0)[ALL] (1)TODO (2)TODAY (3)NEXT (4)STARTED (5)IN-PRO
   test:       TODO [#B] Renew membership in supervillain club :universe:ambition::
   test:       TODO [#B] Internet                                         :bills:
   test:       CHECK /r/emacs                                     :website:Emacs:
+" "cbdd3df02e72a6e19324d3deb216a3f4" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Items without deadlines
+  test:        7:02...... Sunrise (12:04 of daylight)
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+  test:       19:07...... Sunset 
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+
+ Other items
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+              18:00...... ----------------
+              20:00...... ----------------
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
 " "ddac843a693ca34480e961856deb18c1" "Day-agenda (W27):
 Thursday    6 July 2017
 
