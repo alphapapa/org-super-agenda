@@ -304,7 +304,7 @@ date.  The `ts-date' text-property is matched against. "
   :test (pcase (car args)
           ('t ;; Test for any date
            (org-find-text-property-in-string 'ts-date item))
-          ((pred not) ;; Test for not having a date
+          ('nil ;; Test for not having a date
            (not (org-find-text-property-in-string 'ts-date item)))
           ('today  ;; Items that have a time sometime today
            ;; TODO: Maybe I can use the ts-date property in some other places, might be faster
@@ -342,7 +342,7 @@ DATE', where DATE is a date string that
 `org-time-string-to-absolute' can process."
   :section-name (pcase (car args)
                   ('t "Deadline items")
-                  ((pred not) "Items without deadlines")
+                  ('nil "Items without deadlines")
                   ('past "Past due")
                   ('today "Due today")
                   ('future "Due soon")
@@ -359,7 +359,7 @@ DATE', where DATE is a date string that
           (let ((entry-time (org-entry-get (point) "DEADLINE")))
             (pcase (car args)
               ('t entry-time)  ; Has any deadline info
-              ((pred not) (not entry-time))  ; Has no deadline info
+              ('nil (not entry-time))  ; Has no deadline info
               (comparison
                (when entry-time
                  (let ((entry-time (org-time-string-to-absolute entry-time))
@@ -379,7 +379,7 @@ DATE', where DATE is a date string that
 `org-time-string-to-absolute' can process."
   :section-name (pcase (car args)
                   ('t "Scheduled items")
-                  ((pred not) "Unscheduled items ")
+                  ('nil "Unscheduled items ")
                   ('past "Past scheduled")
                   ('today "Scheduled today")
                   ('future "Scheduled soon")
@@ -396,7 +396,7 @@ DATE', where DATE is a date string that
           (let ((entry-time (org-entry-get (point) "SCHEDULED")))
             (pcase (car args)
               ('t entry-time)  ; Has any scheduled info
-              ((pred not) (not entry-time))  ; Has no scheduled info
+              ('nil (not entry-time))  ; Has no scheduled info
               (comparison
                (when entry-time
                  (let ((entry-time (org-time-string-to-absolute entry-time))
@@ -464,7 +464,7 @@ to-do keywords."
                :any t))
             ('t  ;; Match if it has any children
              (org-goto-first-child))
-            ((pred not)  ;; Match if it has no children
+            ('nil  ;; Match if it has no children
              (not (org-goto-first-child))))))
 
 (with-eval-after-load 'org-habit
@@ -531,7 +531,7 @@ keyword, or `nil' to match only non-todo items."
                    (concat (s-join " and " args) " items"))
                   ('t ;; Test for any to-do keyword
                    "Any TODO keyword")
-                  ((pred not) ;; Test for not having a to-do keyword
+                  ('nil ;; Test for not having a to-do keyword
                    "Non-todo items")
                   (_ ;; Oops
                    (user-error "Argument to `:todo' must be a string, list of strings, t, or nil")))
@@ -540,7 +540,7 @@ keyword, or `nil' to match only non-todo items."
            (cl-member (org-find-text-property-in-string 'todo-state item) args :test 'string=))
           ('t ;; Test for any to-do keyword
            (org-find-text-property-in-string 'todo-state item))
-          ((pred not) ;; Test for not having a to-do keyword
+          ('nil ;; Test for not having a to-do keyword
            (not (org-find-text-property-in-string 'todo-state item)))
           (_ ;; Oops
            (user-error "Argument to `:todo' must be a string, list of strings, t, or nil"))))
