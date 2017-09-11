@@ -283,6 +283,14 @@ File: README.info,  Node: Keywords,  Next: Special selectors,  Up: Group selecto
      Optionally, set group name header.  May be a string; or the symbol
      ‘none’, in which case no header will be inserted.  If ‘:name’ is
      not set at all, the group will be named automatically.
+‘‘:face’’
+     A _face_ to apply to items in the group.  If _face_ is a plist
+     containing ‘:append t’, it will be appended.  See function
+     ‘add-face-text-property’.
+‘‘:transformer’’
+     Used to transform item strings before display.  Either a function
+     called with one argument, the item string, or a sexp, in which case
+     the item string is bound to ‘it’.
 
 
 File: README.info,  Node: Special selectors,  Next: Normal selectors,  Prev: Keywords,  Up: Group selectors
@@ -452,6 +460,8 @@ File: README.info,  Node: 11-pre,  Next: 101,  Up: Changelog
 ===========
 
 *Additions*
+   • Keyword ‘:face’, used to apply faces to items in groups.
+   • Keyword ‘:transformer’, used to transform items in groups.
    • Option ‘org-super-agenda-header-separator’, which can, e.g.  be set
      to an empty string for a more compact view.  (Thanks to Sébastien
      Delafond (https://github.com/sdelafond).)
@@ -533,16 +543,16 @@ Node: Usage3254
 Node: Examples4230
 Node: Group selectors7715
 Node: Keywords8904
-Node: Special selectors9244
-Node: Normal selectors10997
-Node: Tips15346
-Node: Changelog16197
-Node: 11-pre16365
-Node: 10116665
-Node: 10017006
-Node: Development17111
-Node: Bugs17503
-Node: Credits18142
+Node: Special selectors9645
+Node: Normal selectors11398
+Node: Tips15747
+Node: Changelog16598
+Node: 11-pre16766
+Node: 10117204
+Node: 10017545
+Node: Development17650
+Node: Bugs18042
+Node: Credits18681
 
 End Tag Table
 

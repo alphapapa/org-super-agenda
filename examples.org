@@ -10,6 +10,7 @@ There are a lot of possibilities, so here are some examples to spark your imagin
 :PROPERTIES:
 :TOC:      siblings
 :END:
+    -  [[#apply-faces-and-transformations][Apply faces and transformations]]
     -  [[#automatically-by-group][Automatically by group]]
     -  [[#automatically-by-category][Automatically by category]]
     -  [[#forward-looking][Forward-looking]]
@@ -20,6 +21,29 @@ There are a lot of possibilities, so here are some examples to spark your imagin
     -  [[#emacs-and-org-mode-to-do-items][Emacs and Org-mode to-do items]]
     -  [[#automatically-fold-certain-groups-with-origami][Automatically fold certain groups with Origami]]
     -  [[#contributed-examples][Contributed examples]]
+
+** Apply faces and transformations
+
+The ~:face~ and ~:transformer~ keywords can be used to apply faces to items in groups, or transform their strings before display.  For example:
+
+#+BEGIN_SRC elisp
+  (let ((org-agenda-span 'day)
+        (org-super-agenda-groups
+         '((:name "Time grid items in all-uppercase with RosyBrown1 foreground"
+                  :time-grid t
+                  :transformer (--> it
+                                    (upcase it)
+                                    (propertize it 'face '(:foreground "RosyBrown1"))))
+           (:name "Priority >= C items underlined, on black background"
+                  :face (:background "black" :underline t)
+                  :not (:priority>= "C")
+                  :order 100))))
+    (org-agenda nil "a"))
+#+END_SRC
+
+[[images/screenshots/faces-and-transformations.png]]
+
+Of course, this is a contrived example, but you get the idea.
 
 ** Automatically by group
 :PROPERTIES:

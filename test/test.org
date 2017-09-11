@@ -171,13 +171,34 @@ I don't know when I'll get to this, so it's undated.
 *Note:* Removing tests from here as they're added to =test.el=.
 
   #+BEGIN_SRC elisp
-    
 
-    
-    
+    (org-super-agenda--test-with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/emacs/org-super-agenda/test/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:name "Time grid items in all-uppercase with RosyBrown1 foreground"
+                      :time-grid t
+                      :transformer (--> it
+                                        (upcase it)
+                                        (propertize it 'face '(:foreground "RosyBrown1"))))
+               (:name "Priority >= C items underlined, on black background"
+                      :face (:background "black" :underline t)
+                      :not (:priority>= "C")
+                      :order 100))))
+        (org-agenda nil "a")))
+    (org-super-agenda--test-with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/emacs/org-super-agenda/test/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:name none
+                      :time-grid t)
+               (:name "Should be all-uppercase RosyBrown1 on black"
+                      :face (:background "black" :foreground "RosyBrown1")
+                      :transformer #'upcase
+                      :not (:priority>= "C")
+                      :order 100))))
+        (org-agenda nil "a")))
 
-    
-    
     (with-org-today-date "2017-07-05 00:00"
       (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
             (org-agenda-span 'day)
@@ -188,11 +209,6 @@ I don't know when I'll get to this, so it's undated.
                       :not (:priority>= "C")
                       :order 100))))
         (org-agenda nil "a")))
-
-        
-    
-
-    
 
     (with-org-today-date "2017-07-05 00:00"
       (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
@@ -259,8 +275,6 @@ I don't know when I'll get to this, so it's undated.
                                      :children t)
                               (:discard (:anything t)))))))))))
         (org-agenda nil "u")))
-
-    
 
     (with-org-today-date "2017-07-05 00:00"
       (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))

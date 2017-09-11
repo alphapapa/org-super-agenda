@@ -157,6 +157,8 @@ Note that the ~:not~ group selector /creates/ a group with items it /does not/ m
 *** Keywords
 
 +  =:name= :: Optionally, set group name header.   May be a string; or the symbol ~none~, in which case no header will be inserted.  If ~:name~ is not set at all, the group will be named automatically.
++  ~:face~ :: A /face/ to apply to items in the group.  If /face/ is a plist containing ~:append t~, it will be appended.  See function ~add-face-text-property~.
++  ~:transformer~ :: Used to transform item strings before display.  Either a function called with one argument, the item string, or a sexp, in which case the item string is bound to ~it~.
 
 *** Special selectors
 
@@ -209,6 +211,8 @@ These selectors take one argument alone, or multiple arguments in a list.
 ** 1.1-pre
 
 *Additions*
++  Keyword ~:face~, used to apply faces to items in groups.
++  Keyword ~:transformer~, used to transform items in groups.
 +  Option ~org-super-agenda-header-separator~, which can, e.g. be set to an empty string for a more compact view.  (Thanks to [[https://github.com/sdelafond][Sébastien Delafond]].)
 
 ** 1.0.1
