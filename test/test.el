@@ -546,6 +546,11 @@ buffer and do not save the results."
   (should (org-super-agenda--test-run
            :groups '((:tag "space")))))
 
+(ert-deftest org-super-agenda--test-:tag-with-inheritance ()
+  (should (org-super-agenda--test-run
+           :let* ((org-agenda-use-tag-inheritance t))
+           :groups '((:tag "universe")))))
+
 (ert-deftest org-super-agenda--test-:time-grid ()
   ;; DONE: Works.
   (should (org-super-agenda--test-run

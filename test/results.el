@@ -1521,4 +1521,35 @@ Wednesday   5 July 2017
 
  WAITING items
   test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+" "0352606d24f0d0cd4d82148a8ade088e" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Items tagged with: universe
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
 "))
