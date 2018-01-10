@@ -702,7 +702,7 @@ Raise error if invalid selector."
    ;; Valid selector: return function
    ((plist-get org-super-agenda-group-types selector))
    ;; Invalid selector: raise error
-   ((user-error "Invalid org-agenda-super-groups selector: %s" selector))))
+   ((user-error "Invalid org-super-agenda-groups selector: %s" selector))))
 
 (defun org-super-agenda--group-dispatch (items group)
   "Group ITEMS with the appropriate grouping functions for GROUP.
