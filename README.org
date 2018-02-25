@@ -171,6 +171,7 @@ If you find this useful, I'd appreciate if you would share a screenshot or two o
 ** Credits
 
 +  Thanks to [[https://github.com/balajisivaraman][Balaji Sivaraman]] for contributing the =:category= selector.
++  Thanks to [[https://github.com/hmw42][Michael Welle]] for contributing the customizable =auto-group= Org property name.
 
 ** License
 
