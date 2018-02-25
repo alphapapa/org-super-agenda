@@ -138,6 +138,10 @@ Populated automatically by `org-super-agenda--defgroup'.")
 See readme for information."
   :type 'list)
 
+(defcustom org-super-agenda-group-property-name "agenda-group"
+  "The name of the Org property used by the :auto-group selector to figure out the agenda group name an item is sorted into."
+  :type 'string)
+
 (defcustom org-super-agenda-properties-inherit t
   "Use property inheritance when checking properties with the :auto-group selector.
 With this enabled, you can set the \"agenda-group\" property for
@@ -658,7 +662,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
   (cl-loop with groups = (ht-create)
            for item in all-items
            for group = (org-entry-get (org-super-agenda--get-marker item)
-                                      "agenda-group"
+				      org-super-agenda-group-property-name
                                       org-super-agenda-properties-inherit)
            if group
            do (ht-set! groups group (cons item (ht-get groups group)))
