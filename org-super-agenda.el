@@ -651,8 +651,6 @@ The string should be the priority cookie letter, e.g. \"A\".")
 ;; like the regular groups do essentially the same thing.  But this
 ;; already works, so I'm going to go ahead and release it.
 
-;; FIXME: Do I need to nreverse the items in each group?
-
 (defun org-super-agenda--auto-group-items (all-items &rest ignore)
   "Divide ALL-ITEMS into groups based on their AGENDA-GROUP property."
   (cl-loop with groups = (ht-create)
@@ -668,7 +666,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
                                 (cl-loop for key in (sort (ht-keys groups) #'string<)
                                          for name = (concat "Group: " key)
                                          collect (list :name name
-                                                       :items (ht-get groups key))))))
+                                                       :items (nreverse (ht-get groups key)))))))
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
                                               :auto-group #'org-super-agenda--auto-group-items))
 
