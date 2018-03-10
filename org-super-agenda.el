@@ -139,7 +139,7 @@ See readme for information."
   :type 'list)
 
 (defcustom org-super-agenda-group-property-name "agenda-group"
-  "The name of the Org property used by the :auto-group selector to figure out the agenda group name an item is sorted into."
+  "Name of the Org property used by the :auto-group selector."
   :type 'string)
 
 (defcustom org-super-agenda-properties-inherit t

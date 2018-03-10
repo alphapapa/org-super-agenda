@@ -55,11 +55,7 @@ And you'd get an agenda looking like this:
 
 [[screenshots/auto-group.png]]
 
-The property name can be customized. This becomes handy if you already
-have, for instance, an Org property named =ProjectId= attached to your
-items. Instead of duplicating this Org property and renaming it to
-=agenda-group=, you can set =org-super-agenda-group-property-name= to
-an appropriate value:
+The property name can be customized. This becomes handy if you already have, for instance, an Org property named =ProjectId= attached to your items. Instead of duplicating this Org property and renaming it to =agenda-group=, you can set =org-super-agenda-group-property-name= to an appropriate value:
 
 #+BEGIN_SRC elisp :results none
   (let ((org-super-agenda-group-property-name "ProjectId")
@@ -68,8 +64,7 @@ an appropriate value:
     (org-agenda-list))
 #+END_SRC
 
-This causes the =:auto-group= selector to sort your agenda items into
-groups that reflect your =ProjectIds=.
+This causes the =:auto-group= selector to sort your agenda items into groups that reflect your =ProjectIds=.
 
 ** Automatically by category
 
