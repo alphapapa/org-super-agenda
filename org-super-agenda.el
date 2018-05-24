@@ -157,6 +157,10 @@ This is mostly useful if section headers have a highlight color,
 making it stretch across the screen."
   :type 'boolean)
 
+(defcustom org-super-agenda-match-whole-tag-inheritance nil
+  "Match the whole tag inheritance for tags group."
+  :type 'boolean)
+
 ;;;; Macros
 
 (defmacro org-super-agenda--when-with-marker-buffer (form &rest body)
@@ -198,10 +202,6 @@ If ANY is non-nil, return as soon as FORM returns non-nil."
 (defsubst org-super-agenda--get-marker (s)
   "Return `org-marker' text properties of string S."
   (org-find-text-property-in-string 'org-marker s))
-
-(defsubst org-super-agenda--get-tags (s)
-  "Return list of tags in agenda item string S."
-  (org-find-text-property-in-string 'tags s))
 
 (defun org-super-agenda--make-agenda-header (s)
   "Return agenda header containing string S and a newline."
@@ -520,7 +520,9 @@ section name for this group."
   "Group items that match any of the given tags.
 Argument may be a string or list of strings."
   :section-name (concat "Items tagged with: " (s-join " OR " args))
-  :test (seq-intersection (org-super-agenda--get-tags item) args 'cl-equalp))
+  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+            (seq-intersection (org-get-tags-at (point) org-super-agenda-match-whole-tag-inheritance)
+                              args 'cl-equalp)))
 
 (org-super-agenda--defgroup todo
   "Group items that match any of the given TODO keywords.
