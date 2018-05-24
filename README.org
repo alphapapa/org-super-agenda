@@ -30,7 +30,11 @@ There are also a few [[screenshots/index.org][more screenshots]].
 
 ** Usage
 
-After installing, run the command =org-super-agenda-mode=, then set the variable =org-super-agenda-groups= as desired.  The variable should be a list of groups.  Then run an agenda command, and the entries will be grouped!
+1.  Enable =org-super-agenda-mode=.
+2.  Set the variable =org-super-agenda-groups= as desired (see example below). 
+    *Note:* In order for groups to be automatically applied to all agenda buffers, =org-super-agenda-groups= must be set in the global scope (e.g. with =setq= in your init file).  It can also be =let=-bound in lisp code that calls =org-agenda= commands.
+3.  Run an Org agenda command.
+4.  Start the day with confidence, knowing that nothing important has been lost in the jumble of /ahem/ overdue items.
 
 Here's the code for the example above.  You can test it quickly by evaluating this form:
 
@@ -137,11 +141,9 @@ These selectors take one argument alone, or multiple arguments in a list.
 
 ** Installation
 
-Install =org-super-agenda= from MELPA.  Then:
+*** MELPA
 
-1.  Add to your init file: ~(use-package org-super-agenda :config (org-super-agenda-mode))~.
-2.  Set the =org-super-agenda-groups= variable.  Use the example code above as a guideline.
-3.  Start the day with confidence, knowing that nothing important has been lost in the jumble of /ahem/ overdue items.
+Just install the package and you're done.
 
 *** Manual installation
 
@@ -152,6 +154,8 @@ If you want to install manually, you must also install these packages:
 +  =ht= >=2.2
 +  =org-mode= >= 9.0
 +  =s= >= 1.10
+
+Then put =org-super-agenda.el= in your =load-path=, and eval =(require 'org-super-agenda)=.
 
 ** Development
 
