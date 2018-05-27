@@ -662,7 +662,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
   (cl-loop with groups = (ht-create)
            for item in all-items
            for group = (org-entry-get (org-super-agenda--get-marker item)
-				      org-super-agenda-group-property-name
+                                      org-super-agenda-group-property-name
                                       org-super-agenda-properties-inherit)
            if group
            do (ht-set! groups group (cons item (ht-get groups group)))
