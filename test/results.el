@@ -24,7 +24,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "058c509f9682c9ca22b2d957a424cc3a" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -57,7 +57,7 @@ Wednesday   5 July 2017
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "68a5caa9a1fdb3a9eeafae3c4012fdef" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -88,7 +88,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "b17e122ace42555727a88ee2183604de" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -116,7 +116,7 @@ Wednesday   5 July 2017
   test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Priority < B items
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
@@ -150,7 +150,38 @@ Wednesday   5 July 2017
   test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+" "bdf434fecfd6d6caabbad5f3a81f6dbe" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Items categorized as: buildings
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica                             :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world                                                     :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe                                                         :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor                                                  :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
+  test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
+  test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
 " "13536e49bcb060ed28acff8973142571" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -178,7 +209,7 @@ Wednesday   5 July 2017
   test:       In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
 
  Personal
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
 
  Shopping in town
@@ -209,7 +240,7 @@ Wednesday   5 July 2017
   test:       In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Group: recurring
   test:        7:02...... Sunrise (12:04 of daylight)
@@ -257,7 +288,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "d95da46d97ef2e37c2bbbfb86bb617bd" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -288,7 +319,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
 ======================================================================================================================================
 Global list of TODO items of type: ALL
@@ -319,7 +350,7 @@ Wednesday   5 July 2017
   test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Due today
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
@@ -361,7 +392,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Other items
                8:00...... ----------------
@@ -404,7 +435,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "6cfa224f6d819f962ea31fb20de2181a" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -435,7 +466,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "bb5a5ce08d57e8e5be4e76dca211e6b2" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -466,7 +497,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "a5d5ec41b0386dd27208263048ff64c3" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -485,7 +516,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
@@ -528,7 +559,7 @@ Wednesday   5 July 2017
   test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "ee86c7d11d20c4894e7956db5efce309" "Global list of TODO items of type: ALL
 Available with ‘N r’: (0)[ALL] (1)TODO (2)TODAY (3)NEXT (4)STARTED (5)IN-PROGRESS (6)UNDERWAY (7)WAITING (8)SOMEDAY (9)MAYBE (10)CHECK
                       (11)DONE (12)CANCELED
@@ -536,7 +567,7 @@ Available with ‘N r’: (0)[ALL] (1)TODO (2)TODAY (3)NEXT (4)STARTED (5)IN-PRO
  Items without deadlines
   test:       TODO [#A] Skype with president of Antarctica                                         :universe:ambition::world:meetings:
   test:       TODO [#B] Take over Mars                                                                            :universe:ambition::
-  test:       TODO Practice leaping tall buildings in a single bound                                     :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall buildings in a single bound                                     :universe:ambition::personal:
   test:       TODO Order a pizza                                                                                         :food:dinner:
   test:       TODO [#B] Fix flux capacitor                                                              :spaceship:shopping:@computer:
   test:       TODO Shop for groceries                                                                            :food:shopping:@town:
@@ -566,7 +597,7 @@ Wednesday   5 July 2017
   test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Other items
                8:00...... ----------------
@@ -615,7 +646,7 @@ Thursday    6 July 2017
   test:       In  52 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  76 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Sched. 1x:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "af5b3c274733aae92612434ba95ed42d" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -646,7 +677,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "d8cc45c0e5a9f8199ba056952be3af81" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -677,7 +708,7 @@ Wednesday   5 July 2017
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "063aedfdb354e78e01d3834c07c875c1" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -708,7 +739,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "f113bb20262b0522aaae8edaebd3ac89" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -739,7 +770,7 @@ Wednesday   5 July 2017
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
   test:       In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "84707384ccd38b60a0a4e9eac4518546" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -770,7 +801,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "33c10e8cf8bd527b6bbbed79d8d31102" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -801,12 +832,12 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "9dabc540bde7467f2420825009ed415d" "Day-agenda (W27):
 Wednesday   5 July 2017
 
  Habits
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
@@ -861,7 +892,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "def625677821c807ab1067145e01eb85" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -892,7 +923,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "c7027cf8f1596a955f9c7c920ec5533f" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -923,7 +954,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "5a2f369dd8727fe3d035ae8e8507fa39" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -954,7 +985,7 @@ Wednesday   5 July 2017
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "5f2234d07da4e316071438ae9855385d" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -985,7 +1016,7 @@ Wednesday   5 July 2017
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "20c8c2660dc7744e35ee5f0b5f46366d" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -1016,7 +1047,7 @@ Wednesday   5 July 2017
   test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "77442d5066ebb933c5fccffb0d2d176c" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -1027,7 +1058,7 @@ Wednesday   5 July 2017
   test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
@@ -1078,7 +1109,7 @@ Wednesday   5 July 2017
   test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "71db41d793baea390f752ac2d59904fc" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -1109,7 +1140,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "83da93dd441d2a536f0c079f7f785ab6" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -1119,7 +1150,7 @@ Wednesday   5 July 2017
   test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
@@ -1207,7 +1238,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "1e3c5925ea15bb2d61002b6a22321350" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -1217,7 +1248,7 @@ Wednesday   5 July 2017
   test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
@@ -1269,7 +1300,7 @@ Wednesday   5 July 2017
   test:       In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
   test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "0352606d24f0d0cd4d82148a8ade088e" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -1280,7 +1311,7 @@ Wednesday   5 July 2017
   test:       In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
@@ -1331,7 +1362,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "e776260ec3c301b08132c6b542b56c39" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -1362,7 +1393,7 @@ Wednesday   5 July 2017
   test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "1321033015d27892fdd80c360c94563e" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -1393,7 +1424,7 @@ Wednesday   5 July 2017
   test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "1ddbb96d38fccc4a44677f0a2240ebe2" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -1422,12 +1453,14 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "8ed1f2b47728ab28a7fe99c884837803" "Day-agenda (W27):
 Wednesday   5 July 2017
 
+ Category: buildings
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+
  Category: test
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
@@ -1487,7 +1520,7 @@ Wednesday   5 July 2017
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "5b9aa7554529be07a15dd72b24ca59bc" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -1515,7 +1548,7 @@ Wednesday   5 July 2017
   test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Last
   test:       In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
@@ -1536,7 +1569,7 @@ Wednesday   5 July 2017
   test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   test:       In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-  test:       TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+  buildings:  TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 
  Not TODOs
   test:        7:02...... Sunrise (12:04 of daylight)

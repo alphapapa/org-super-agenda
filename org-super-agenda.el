@@ -522,6 +522,15 @@ Argument may be a string or list of strings."
   :section-name (concat "Items tagged with: " (s-join " OR " args))
   :test (seq-intersection (org-super-agenda--get-tags item) args 'cl-equalp))
 
+(org-super-agenda--defgroup category
+  "Group items that match any of the given categories.
+Argument may be a string or list of strings."
+  :section-name (concat "Items categorized as: " (s-join " OR " args))
+  :test (cl-member (org-super-agenda--when-with-marker-buffer
+                     (org-super-agenda--get-marker item)
+                     (org-get-category))
+                   args :test 'string=))
+
 (org-super-agenda--defgroup todo
   "Group items that match any of the given TODO keywords.
 Argument may be a string or list of strings, or `t' to match any
