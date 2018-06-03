@@ -10,6 +10,7 @@ Will try to open the agenda view as if it was [2017-07-05 Wed]
 DEADLINE: <2017-07-15 Sat -1m>
 :PROPERTIES:
 :agenda-group: plans
+:CATEGORY: ambition
 :END:
 *** TODO [#A] Take over the world                                     :world:
     DEADLINE: <2017-07-07 Fri>
@@ -94,6 +95,9 @@ Gotta buy one first, though.
 %%(org-super-agenda--test-diary-sunset)
 
 ** Ideas
+:PROPERTIES:
+:CATEGORY: ideas
+:END:
 *** SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
     SCHEDULED: <2017-07-05 Wed>
     :LOGBOOK:

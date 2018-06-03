@@ -390,6 +390,13 @@ buffer and do not save the results."
 
 ;;;;; Single-selector
 
+(ert-deftest org-super-agenda--test-:category ()
+  (should (org-super-agenda--test-run
+           :groups '((:category "ideas")))))
+(ert-deftest org-super-agenda--test-:category-multi ()
+  (should (org-super-agenda--test-run
+           :groups '((:category ("ambition" "ideas"))))))
+
 (ert-deftest org-super-agenda--test-:children-nil ()
   (should (org-super-agenda--test-run
            ;; DONE: Works.

@@ -120,6 +120,7 @@ Every selector requires an argument, even if it's just =t=, e.g. =:anything=, =:
 
 These selectors take one argument alone, or multiple arguments in a list. 
 
++  =:category= Group items that match any of the given categories.  Argument may be a string or list of strings.
 +  =:children= Select any item that has child entries.  Argument may be =t= to match if it has any children, =nil= to match if it has no children, =todo= to match if it has children with any to-do keywords, or a string to match if it has children with certain to-do keywords.  You might use this to select items that are project top-level headings.  Be aware that this may be very slow in non-daily/weekly agenda views because of its recursive nature.
 +  =:date= Group items that have a date associated. Argument can be =t= to match items with any date, =nil= to match items without a date, or =today= to match items with today’s date. The =ts-date= text-property is matched against.
 +  =:deadline= Group items that have a deadline. Argument can be =t= (to match items with any deadline), =nil= (to match items that have no deadline), =past= (to match items with a deadline in the past), =today= (to match items whose deadline is today), or =future= (to match items with a deadline in the future). Argument may also be given like =before DATE= or =after DATE= where DATE is a date string that =org-time-string-to-absolute= can process.
@@ -166,6 +167,10 @@ If you find this useful, I'd appreciate if you would share a screenshot or two o
 *** Bugs
 
 + The =org-search-view= agenda command does not seem to set the =todo-state= text property for items it finds, so the =:todo= selector doesn't work with it.  We should be able to work around this by getting the todo state for each item manually, but we have to make sure that we only do that when necessary, otherwise it might be slow.  And I wouldn't be surprised if there are other selectors that don't work with this or other commands, but =org-agenda-list= should work fine, and =org-tags-view= and =org-todo-list= seem to work.
+
+** Credits
+
++  Thanks to [[https://github.com/balajisivaraman][Balaji Sivaraman]] for contributing the =:category= selector.
 
 ** License
 
