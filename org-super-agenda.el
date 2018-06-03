@@ -442,7 +442,7 @@ This is a catch-all, probably most useful with the `:discard'
 selector."
   :test t)
 
-;; TODO: Rename this to something like :family-tree and make a new
+;; TODO: Rename this to something like :descendants and make a new
 ;; one-level-deep-only :children matcher that will be much faster
 (org-super-agenda--defgroup children
   "Select any item that has child entries.
