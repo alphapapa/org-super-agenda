@@ -11,7 +11,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -42,7 +42,7 @@ Wednesday   5 July 2017
               20:00...... ----------------
 
  Other items
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -62,7 +62,7 @@ Wednesday   5 July 2017
 Wednesday   5 July 2017
 
  Priority >= B items
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -104,7 +104,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -138,7 +138,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -170,7 +170,7 @@ Wednesday   5 July 2017
  Important
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
   test:       In  16 d.:  TODO [#B] Internet                             :bills:
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
 
@@ -203,7 +203,7 @@ Wednesday   5 July 2017
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
 
  Group: plans
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
@@ -245,7 +245,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -275,7 +275,7 @@ Wednesday   5 July 2017
               20:00...... ----------------
 
  Other items
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -334,7 +334,7 @@ Wednesday   5 July 2017
   test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
 
  Scheduled earlier
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
 " "5db2acc8c5a09927fa8b6246b9480d69" "Headlines with TAGS match: Emacs
 Press ‘C-u r’ to search again with new search string
 
@@ -350,7 +350,7 @@ Wednesday   5 July 2017
   test:        7:02...... Sunrise (12:04 of daylight)
   test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
   test:       19:07...... Sunset 
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
   test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
@@ -393,7 +393,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
   test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
@@ -424,7 +424,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
   test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
@@ -454,7 +454,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
@@ -472,7 +472,7 @@ Wednesday   5 July 2017
 
  Dated items
   test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -523,7 +523,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
   test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
@@ -561,7 +561,7 @@ Wednesday   5 July 2017
   test:        7:02...... Sunrise (12:04 of daylight)
   test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
   test:       19:07...... Sunset 
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
   test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
@@ -602,19 +602,19 @@ Thursday    6 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 3x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   1 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In   9 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  26 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
-  test:       Sched. 2x:  TODO Order a pizza                       :food:dinner:
-  test:       Sched. 2x:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
-  test:       Sched. 2x:  TODO Shop for groceries          :food:shopping:@town:
-  test:       Sched. 2x:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Sched. 1x:  TODO Order a pizza                       :food:dinner:
+  test:       Sched. 1x:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Sched. 1x:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Sched. 1x:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
   test:       In   4 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
   test:       In  15 d.:  TODO [#B] Internet                             :bills:
   test:       In  52 d.:  WAITING Visit the moon :universe:ambition::space:travel:
   test:       In  76 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
-  test:       Sched. 2x:  TODO [#C] Get haircut                 :personal:@town:
+  test:       Sched. 1x:  TODO [#C] Get haircut                 :personal:@town:
   test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
 " "af5b3c274733aae92612434ba95ed42d" "Day-agenda (W27):
 Wednesday   5 July 2017
@@ -634,7 +634,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -671,7 +671,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
   test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
@@ -697,7 +697,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
@@ -731,7 +731,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
   test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
@@ -757,7 +757,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -789,7 +789,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -820,7 +820,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -848,7 +848,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -866,7 +866,7 @@ Wednesday   5 July 2017
 Wednesday   5 July 2017
 
  Priority A items
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -897,7 +897,7 @@ Wednesday   5 July 2017
 Wednesday   5 July 2017
 
  Priority > B items
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -945,7 +945,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -976,7 +976,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -1006,7 +1006,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
   test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
@@ -1022,7 +1022,7 @@ Wednesday   5 July 2017
 
  Scheduled items
   test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
   test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
@@ -1073,7 +1073,7 @@ Wednesday   5 July 2017
   test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
               18:00...... ----------------
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
   test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
   test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
@@ -1083,7 +1083,7 @@ Wednesday   5 July 2017
 Wednesday   5 July 2017
 
  Past scheduled
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
 
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
@@ -1132,7 +1132,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -1181,7 +1181,7 @@ Wednesday   5 July 2017
 Wednesday   5 July 2017
 
  Scheduled before 2017-07-05
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
 
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
@@ -1230,7 +1230,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -1258,7 +1258,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -1270,6 +1270,37 @@ Wednesday   5 July 2017
   test:       In  16 d.:  TODO [#B] Internet                             :bills:
   test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
   test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+" "0352606d24f0d0cd4d82148a8ade088e" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Items tagged with: universe
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
 " "879ba0d574a1508626d749a02eb5e91c" "Day-agenda (W27):
 Wednesday   5 July 2017
 
@@ -1287,7 +1318,7 @@ Wednesday   5 July 2017
               20:00...... ----------------
 
  Other items
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -1319,7 +1350,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -1352,7 +1383,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
   test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
   test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
@@ -1378,7 +1409,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -1409,7 +1440,7 @@ Wednesday   5 July 2017
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       19:07...... Sunset 
   test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
   test:        7:02...... Sunrise (12:04 of daylight)
@@ -1443,7 +1474,7 @@ Wednesday   5 July 2017
 
  Other items
   test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -1472,7 +1503,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -1493,7 +1524,7 @@ Wednesday   5 July 2017
 
  Other items
   test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       Sched. 1x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
   test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
@@ -1521,35 +1552,4 @@ Wednesday   5 July 2017
 
  WAITING items
   test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
-" "0352606d24f0d0cd4d82148a8ade088e" "Day-agenda (W27):
-Wednesday   5 July 2017
-
- Items tagged with: universe
-  test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
-  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
-  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
-  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
-  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
-  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
-  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
-
- Other items
-  test:        7:02...... Sunrise (12:04 of daylight)
-               8:00...... ----------------
-              10:00...... ----------------
-              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
-              12:00...... ----------------
-              14:00...... ----------------
-              16:00...... ----------------
-  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
-              18:00...... ----------------
-  test:       19:07...... Sunset 
-              20:00...... ----------------
-  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
-  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
-  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
-  test:       Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
-  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
-  test:       In  16 d.:  TODO [#B] Internet                             :bills:
-  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
 "))

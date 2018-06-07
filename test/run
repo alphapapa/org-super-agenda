@@ -23,9 +23,9 @@ EMACS="${EMACS:=emacs}"
 
 INIT_PACKAGE_EL="(progn
 (require 'package)
-(push '(\"melpa\" . \"http://melpa.org/packages/\") package-archives)
+(setq package-archives '((\"gnu\" . \"https://elpa.gnu.org/packages/\")
+                         (\"melpa\" . \"https://melpa.org/packages/\")))
 (package-initialize)
-(package-refresh-contents)
 (setq debug-on-error t))"
 
 # PACKAGES_NEEDED="
@@ -134,7 +134,7 @@ function update {
     debug "UPDATING..."
 
     "$EMACS" -Q -batch \
-             --eval "$INIT_PACKAGE_EL" \
+             --eval "(message \"Org version: %s\" (org-version))" \
              -l $MAIN_FILE \
              -l $TEST_FILE \
              --eval "(with-current-buffer (find-file-noselect \"test.el\") (org-super-agenda--test-update-all-tests :force t))"

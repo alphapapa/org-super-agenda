@@ -211,21 +211,23 @@ buffer and do not save the results."
                                 (if time
                                     (format-time-string-orig format-string time zone)
                                   (concat (second (s-split " " ,date)) " "))))
-          (frame-width
-           ;; FIXME: This should be fixed to use window-width in Org 9.1
-           (lambda ()
-             134))
+          (frame-width (lambda ()
+                         134))
           (window-width (lambda ()
-                          134)))
+                          134))
+          ;; Org after 2017-08-08 uses `window-text-width'
+          (window-text-width (lambda ()
+                               134)))
 
          ;; Run agenda
          (org-super-agenda--test-with-org-today-date ,date
-           (let* (;; Set these vars so they are consistent between my config and the batch config
+           (let* ( ;; Set these vars so they are consistent between my config and the batch config
                   ,@(org-super-agenda--test-get-custom-group-members 'org-agenda)
                   ,@(org-super-agenda--test-get-custom-group-members 'org-habit)
-                  (org-agenda-window-setup 'current-window)  ; The default breaks batch tests by trying to open a new frame
-                  (org-agenda-start-with-log-mode nil)  ; Set this by default, in case it's set to t in my running Emacs instance
+                  (org-agenda-window-setup 'current-window) ; The default breaks batch tests by trying to open a new frame
+                  (org-agenda-start-with-log-mode nil) ; Set this by default, in case it's set to t in my running Emacs instance
                   (org-agenda-files (list "test.org"))
+                  (org-agenda-tags-column -80)
                   ,@(if let*
                         let*
                       `((ignore nil)))
