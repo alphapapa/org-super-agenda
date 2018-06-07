@@ -203,19 +203,19 @@ Wednesday   5 July 2017
   test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
 
  Group: plans
-  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
-  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
-  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
-  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
-  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
-  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
   test:       Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition::world:meetings:
+  test:       In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  test:       In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  test:       In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+  test:       In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+  test:       TODO Practice leaping tall                     !       :universe:ambition::personal:
 
  Group: recurring
-  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
-  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
-  test:       19:07...... Sunset 
   test:        7:02...... Sunrise (12:04 of daylight)
+  test:       19:07...... Sunset 
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
 
  Other items
                8:00...... ----------------
@@ -1553,6 +1553,3 @@ Wednesday   5 July 2017
   test:       In  16 d.:  TODO [#B] Internet                             :bills:
   test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
 "))
-;; Local Variables:
-;; before-save-hook: nil
-;; End:
