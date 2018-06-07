@@ -227,7 +227,6 @@ buffer and do not save the results."
                   (org-agenda-window-setup 'current-window) ; The default breaks batch tests by trying to open a new frame
                   (org-agenda-start-with-log-mode nil) ; Set this by default, in case it's set to t in my running Emacs instance
                   (org-agenda-files (list "test.org"))
-                  (org-agenda-tags-column -80)
                   ,@(if let*
                         let*
                       `((ignore nil)))

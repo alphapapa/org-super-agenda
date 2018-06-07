@@ -15,7 +15,7 @@
 (development
  ;; NOTE: We load org-plus-contrib because that's the only way to load a version of Org different
  ;; than the one included with Emacs.  See <https://github.com/cask/cask/issues/169>.
- (depends-on "org-plus-contrib" "9.0")
+ (depends-on "org-plus-contrib" "9.1")
  (depends-on "f")
  (depends-on "ecukes")
  (depends-on "ert-runner")
