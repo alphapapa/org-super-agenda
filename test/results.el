@@ -1553,3 +1553,6 @@ Wednesday   5 July 2017
   test:       In  16 d.:  TODO [#B] Internet                             :bills:
   test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
 "))
+;; Local Variables:
+;; before-save-hook: nil
+;; End:
