@@ -699,6 +699,9 @@ Raise error if invalid selector."
     nil)
    ;; Valid selector: return function
    ((plist-get org-super-agenda-group-types selector))
+   ((eq selector :habit)
+    ;; :habit selector used but `org-habit' not loaded
+    (user-error "Please `require' the `org-habit' library to use the :habit selector"))
    ;; Invalid selector: raise error
    ((user-error "Invalid org-super-agenda-groups selector: %s" selector))))
 
