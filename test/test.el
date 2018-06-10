@@ -292,6 +292,10 @@ buffer and do not save the results."
   (should (org-super-agenda--test-run
            :groups '((:heading-regexp "moon")))))
 
+(ert-deftest org-super-agenda--test-category-regexp ()
+  (should (org-super-agenda--test-run
+           :groups '((:category "buildings")))))
+
 (ert-deftest org-super-agenda--test-main-example ()
   (should (org-super-agenda--test-run
            :groups '(;; Each group has an implicit boolean OR operator between its selectors.

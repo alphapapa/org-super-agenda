@@ -37,6 +37,7 @@ DEADLINE: <2017-07-15 Sat -1m>
     SCHEDULED: <2017-07-05 Wed +2d>
     :PROPERTIES:
     :STYLE:    habit
+    :CATEGORY:  buildings
     :END:
 *** TODO [#B] Renew membership in supervillain club
     DEADLINE: <2017-07-10 Mon -1w>
