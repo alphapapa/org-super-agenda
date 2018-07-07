@@ -81,6 +81,9 @@
 (defun org-super-agenda--test-run-all ()
   "Run all tests with ERT."
   (interactive)
+  (when (ht-empty? org-super-agenda--test-results)
+    (message "Loading test results...")
+    (org-super-agenda--test-load-results))
   (ert-run-tests-interactively "^org-super-agenda--test-"))
 
 (defun org-super-agenda--test-load-results ()
