@@ -261,7 +261,7 @@ buffer and do not save the results."
                (unless (and stored-result new-result)
                  (error "Empty result for body:%s\nSTORED-RESULT:%s\nNEW-RESULT:%s"
                         body-groups-hash stored-result new-result))
-               (error "Test failed for body:%s\nDIFF: %s" body-groups-hash
+               (error "Test failed for body:%s\nDIFF:\n %s" body-groups-hash
                       (org-super-agenda--test-diff-strings stored-result new-result))))))))
 
 ;;;; Tests
