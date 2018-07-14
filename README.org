@@ -140,6 +140,11 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  =:time-grid= Group items that appear on the time grid.
 +  =:todo= Group items that match any of the given TODO keywords. Argument may be a string or list of strings, or =t= to match any keyword, or =nil= to match only non-todo items.
 
+*** Tips
+
++  Group headers use the keymap =org-super-agenda-header-map=, allowing you to bind keys in that map which will take effect when point is on a header.
+     -  For example, [[https://github.com/gregsexton/origami.el][origami]] works with =org-super-agenda= buffers without any extra configuration.  Just activate =origami-mode= in the agenda buffer and use the command =origami-toggle-node= to fold groups.  You can bind, e.g. =TAB= to that command in the header map, and then you can easily collapse groups as if they were an outline.  You might even fold some automatically ([[examples.org#automatically-fold-certain-groups-with-origami][example]]).
+
 ** Installation
 
 *** MELPA

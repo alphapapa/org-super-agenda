@@ -264,6 +264,35 @@ This shows all to-do items with the =:Emacs:= tag, and groups together anything 
     (org-tags-view t "Emacs"))
 #+END_SRC
 
+** Automatically fold certain groups with Origami
+
+The [[https://github.com/gregsexton/origami.el][origami]] package works "out-of-the-box" with =org-super-agenda=.  Just activate =origami-mode= in the agenda buffer and use the command =origami-toggle-node= to fold groups.  You can bind, e.g. =TAB= to that command in the header map, and then you can easily collapse groups as if they were an outline.
+
+You could even fold certain groups by default, perhaps like this (this ~use-package~ form should probably go inside a ~(use-package org-super-agenda ...)~ form's ~:config~ section):
+
+#+BEGIN_SRC elisp
+  (use-package origami
+    :general (:keymaps 'org-super-agenda-header-map
+                       "TAB" #'origami-toggle-node)
+    :config
+
+    (defvar ap/org-super-agenda-auto-show-groups
+      '("Schedule" "Bills" "Priority A items" "Priority B items"))
+
+    (defun ap/org-super-agenda-origami-fold-default ()
+      "Fold certain groups by default in Org Super Agenda buffer."
+      (forward-line 3)
+      (cl-loop do (origami-forward-toggle-node (current-buffer) (point))
+               while (origami-forward-fold-same-level (current-buffer) (point)))
+      (--each ap/org-super-agenda-auto-show-groups
+        (goto-char (point-min))
+        (when (re-search-forward (rx-to-string `(seq bol " " ,it)) nil t)
+          (origami-show-node (current-buffer) (point)))))
+
+    :hook ((org-agenda-mode . origami-mode)
+           (org-agenda-finalize . ap/org-super-agenda-origami-fold-default)))
+#+END_SRC
+
 ** Contributed examples
 
 *** [[https://github.com/bascht][Sebastian Schulze]]
