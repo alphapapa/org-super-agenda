@@ -259,6 +259,10 @@ With prefix argument ARG, turn on if positive, otherwise off."
                              (advice-remove from fn)))))
     (funcall advice-function #'org-agenda-finalize-entries
              #'org-super-agenda--filter-finalize-entries)
+    ;; Add variable to list of variables (see issue #22).
+    (if org-super-agenda-mode
+        (add-to-list 'org-agenda-local-vars 'org-super-agenda-groups)
+      (setq org-agenda-local-vars (remove 'org-super-agenda-groups org-agenda-local-vars)))
     ;; Display message
     (message (if org-super-agenda-mode
                  "org-super-agenda-mode enabled."
