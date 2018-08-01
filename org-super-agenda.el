@@ -541,7 +541,7 @@ section name for this group."
 (org-super-agenda--defgroup tag
   "Group items that match any of the given tags.
 Argument may be a string or list of strings."
-  :section-name (concat "Items tagged with: " (s-join " OR " args))
+  :section-name (concat "Tags: " (s-join " OR " args))
   :test (seq-intersection (org-super-agenda--get-tags item) args 'cl-equalp))
 
 (org-super-agenda--defgroup category
