@@ -497,17 +497,35 @@ Habit items have a \"STYLE: habit\" Org property."
     :test (org-is-habit-p (org-super-agenda--get-marker item))))
 
 (org-super-agenda--defgroup log
-  "Group items from log mode.
-Note that these items may also be matched by the :time-grid
-selector, so if you want these displayed in their own group, you
-may need to select them in a group before a group containing the
+  "Group Agenda Log Mode items.
+Argument may be `close' or `closed' to select items closed today;
+`clock' or `clocked' to select items clocked today; `changed' or
+`state' to select items whose to-do state was changed today; `t'
+to select any logged item, or `nil' to select any non-logged
+item.  (See also variable `org-agenda-log-mode-items'.)  Note
+that these items may also be matched by the :time-grid selector,
+so if you want these displayed in their own group, you may need
+to select them in a group before a group containing the
 :time-grid selector."
-  :section-name "Log"
+  :section-name (pcase (car args)
+                  ((or 'close 'closed) "Log: Closed")
+                  ((or 'clock 'clocked) "Log: Clocked")
+                  ((or 'changed 'state) "Log: State changed")
+                  ('t "Logged")
+                  ('nil "Not logged"))
   ;; I don't know why the property's value is a string instead of a
   ;; symbol, because `org-agenda-log-mode-items' is a list of symbols.
-  :test (cl-member (org-find-text-property-in-string 'type item)
-                   '("closed" "clock" "state")
-                   :test #'string=))
+
+  ;; TODO: Rather than hard-coding these strings and symbols, it would be good to get them smartly
+  ;; from `org-agenda-log-mode-items', but I don't want to give up accepting both e.g. `close' and
+  ;; `closed', because it's easily confusing and error-prone without that flexibility.
+  :test (let ((value (org-find-text-property-in-string 'type item)))
+          (pcase (car args)
+            ((or 'close 'closed) (string= value "closed"))
+            ((or 'clock 'clocked) (string= value "clock"))
+            ((or 'changed 'state) (string= value "state"))
+            ('t (cl-member value '("closed" "clock" "state") :test #'string=))
+            ('nil (not (cl-member value '("closed" "clock" "state") :test #'string=))))))
 
 (org-super-agenda--defgroup heading-regexp
   "Group items whose headings match any of the given regular expressions.
