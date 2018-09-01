@@ -165,6 +165,7 @@ Perhaps a bit less semantic, but it avoids having to use a list, and it seems pr
 
 Could be useful in the loops where I use repeated ~when~ lines.
 
+[2018-08-03 Fri 18:05]  dash.el has =-setq= now.
 ** UNDERWAY [#B] Add property matcher
 :LOGBOOK:
 -  State "UNDERWAY"   from "TODO"       [2017-07-31 Mon 22:05]
