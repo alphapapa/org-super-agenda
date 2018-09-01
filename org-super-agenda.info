@@ -1,0 +1,478 @@
+This is README.info, produced by makeinfo version 5.2 from README.texi.
+
+INFO-DIR-SECTION Emacs
+START-INFO-DIR-ENTRY
+* Org Super Agenda: (org-super-agenda). Flexible grouping for the Org Agenda.
+END-INFO-DIR-ENTRY
+
+
+File: README.info,  Node: Top,  Next: Introduction,  Up: (dir)
+
+org-super-agenda
+****************
+
+* Menu:
+
+* Introduction::
+* Usage::
+* Installation::
+* Development::
+* Credits::
+* License::
+
+— The Detailed Node Listing —
+
+
+Usage
+
+* Examples::
+* Group selectors::
+* Tips::
+
+
+Group selectors
+
+* Keywords::
+* Special selectors::
+* Normal selectors::
+
+Installation
+
+* MELPA::
+* Manual installation::
+
+
+
+Development
+
+* Bugs::
+
+
+File: README.info,  Node: Introduction,  Next: Usage,  Prev: Top,  Up: Top
+
+1 Introduction
+**************
+
+This package lets you "supercharge" your Org daily/weekly agenda.  The
+idea is to group items into sections, rather than having them all in one
+big list.
+
+   Now you can sort-of do this already with custom agenda commands, but
+when you do that, you lose the daily/weekly aspect of the agenda: items
+are no longer shown based on deadline/scheduled timestamps, but are
+shown no-matter-what.
+
+   So this package filters the results from
+‘org-agenda-finalize-entries’, which runs just before items are inserted
+into agenda views.  It runs them through a set of filters that separate
+them into groups.  Then the groups are inserted into the agenda buffer,
+and any remaining items are inserted at the end.  Empty groups are not
+displayed.
+
+   The end result is your standard daily/weekly agenda, but arranged
+into groups defined by you.  You might put items with certain tags in
+one group, habits in another group, items with certain todo keywords in
+another, and items with certain priorities in another.  The
+possibilities are only limited by the grouping functions.
+
+   The primary use of this package is for the daily/weekly agenda, made
+by the ‘org-agenda-list’ command, but it also works for other agenda
+views, like ‘org-tags-view’, ‘org-todo-list’, ‘org-search-view’, etc.
+
+   Here’s what a normal agenda looks like:
+
+   Here’s what the "super" agenda looks like:
+
+   There are also a few .
+
+
+File: README.info,  Node: Usage,  Next: Installation,  Prev: Introduction,  Up: Top
+
+2 Usage
+*******
+
+  1. Enable ‘org-super-agenda-mode’.
+  2. Set the variable ‘org-super-agenda-groups’ as desired (see example
+     below).  *Note:* In order for groups to be automatically applied to
+     all agenda buffers, ‘org-super-agenda-groups’ must be set in the
+     global scope (e.g.  with ‘setq’ in your init file, or using the
+     customization interface).  It can also be ‘let’-bound in lisp code
+     that calls ‘org-agenda’ commands.
+  3. Run an Org agenda command.
+  4. Start the day with confidence, knowing that nothing important has
+     been lost in the jumble of _ahem_ overdue items.
+
+   Here’s the code for the example above.  You can test it quickly by
+evaluating this form:
+
+     (let ((org-super-agenda-groups
+            '(;; Each group has an implicit boolean OR operator between its selectors.
+              (:name "Today"  ; Optionally specify section name
+                     :time-grid t  ; Items that appear on the time grid
+                     :todo "TODAY")  ; Items that have this TODO keyword
+              (:name "Important"
+                     ;; Single arguments given alone
+                     :tag "bills"
+                     :priority "A")
+              ;; Set order of multiple groups at once
+              (:order-multi (2 (:name "Shopping in town"
+                                      ;; Boolean AND group matches items that match all subgroups
+                                      :and (:tag "shopping" :tag "@town"))
+                               (:name "Food-related"
+                                      ;; Multiple args given in list with implicit OR
+                                      :tag ("food" "dinner"))
+                               (:name "Personal"
+                                      :habit t
+                                      :tag "personal")
+                               (:name "Space-related (non-moon-or-planet-related)"
+                                      ;; Regexps match case-insensitively on the entire entry
+                                      :and (:regexp ("space" "NASA")
+                                                    ;; Boolean NOT also has implicit OR between selectors
+                                                    :not (:regexp "moon" :tag "planet")))))
+              ;; Groups supply their own section names when none are given
+              (:todo "WAITING" :order 8)  ; Set order of this section
+              (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                     ;; Show this group at the end of the agenda (since it has the
+                     ;; highest number). If you specified this group last, items
+                     ;; with these todo keywords that e.g. have priority A would be
+                     ;; displayed in that group instead, because items are grouped
+                     ;; out in the order the groups are listed.
+                     :order 9)
+              (:priority<= "B"
+                           ;; Show this section after "Today" and "Important", because
+                           ;; their order is unspecified, defaulting to 0. Sections
+                           ;; are displayed lowest-number-first.
+                           :order 1)
+              ;; After the last group, the agenda will display items that didn't
+              ;; match any of these groups, with the default order position of 99
+              )))
+       (org-agenda nil "a"))
+
+   The groups apply to all agenda commands (at least, every one that
+calls ‘org-agenda-finalize-entries’).  You can set different groups for
+custom commands by setting ‘org-super-agenda-groups’ in the custom
+command’s ‘settings’ list (see the description for
+‘org-agenda-custom-commands’).  You can disable grouping by binding
+‘org-agenda-super-groups’ to nil around a call to an agenda command, or
+you can disable it globally by disabling the mode.
+
+* Menu:
+
+* Examples::
+* Group selectors::
+* Tips::
+
+
+File: README.info,  Node: Examples,  Next: Group selectors,  Up: Usage
+
+2.1 Examples
+============
+
+At first you might feel bewildered by all the options.  Never fear, are
+here!
+
+
+File: README.info,  Node: Group selectors,  Next: Tips,  Prev: Examples,  Up: Usage
+
+2.2 Group selectors
+===================
+
+Each group selector takes an argument which can be a single atom or a
+list, e.g.  ‘:tag’ takes a string or list of strings.  Some selectors
+are predicates, like ‘:deadline’ or ‘:habit’; for consistency, they also
+take an argument, but it is ignored.
+
+   A group selector creates a section in the agenda containing the items
+it matches, and any items it doesn’t match are passed to the next group
+selector.
+
+   ‘:discard’ is a special exception to this: it simply discards any
+items it matches, and passes through the rest to the next group
+selector.
+
+   Note that the ‘:not’ group selector _creates_ a group with items it
+_does not_ match; it can be combined with ‘:discard’ to discard items
+that _don’t_ match, e.g.  ‘(:discard (:not (:priority "A")))’ as the
+first selector would mean that only priority ‘A’ items would appear in
+the agenda, while ‘(:discard (:priority "C"))’ would mean that any
+priority ‘C’ items would not appear in the agenda.
+
+* Menu:
+
+* Keywords::
+* Special selectors::
+* Normal selectors::
+
+
+File: README.info,  Node: Keywords,  Next: Special selectors,  Up: Group selectors
+
+2.2.1 Keywords
+--------------
+
+‘:name’
+     Optionally, set group name header.  May be a string; or the symbol
+     ‘none’, in which case no header will be inserted.  If ‘:name’ is
+     not set at all, the group will be named automatically.
+
+
+File: README.info,  Node: Special selectors,  Next: Normal selectors,  Prev: Keywords,  Up: Group selectors
+
+2.2.2 Special selectors
+-----------------------
+
+Every selector requires an argument, even if it’s just ‘t’, e.g.
+‘:anything’, ‘:auto-category’, ‘:auto-group’, and ‘:discard’.
+
+‘:and’
+     Group ITEMS that match all selectors in GROUP.
+‘:anything’
+     Select every item, no matter what.  This is probably most useful
+     with ‘:discard’, because it doesn’t actually test anything, so it’s
+     faster than, e.g.  ‘:regexp "."’, which has to get the entry text
+     for every item.
+‘:auto-category’
+     This automatically groups items by their category (usually the
+     filename it’s in, without the .org suffix).
+‘:auto-group’
+     This selects items that have the agenda-group Org property set.  By
+     setting this property for a subtree, every item in it will be
+     sorted into an agenda group by that name and placed into the agenda
+     where the ‘:auto-group’ selector is ().
+‘:discard’
+     Discard items that don’t match selectors.  Any groups processed
+     after this one will not see discarded items.  You might use this at
+     the beginning or end of a list of groups, either to narrow down the
+     list of items (used in combination with ‘:not’), or to exclude
+     items you’re not interested in.
+‘:not’
+     Group ITEMS that match no selectors in GROUP.
+‘:order’
+     A number setting the order sections will be displayed in the
+     agenda, lowest number first.  Defaults to 0.
+‘:order-multi’
+     Set the order of multiple groups at once, like ‘(:order-multi (2
+     (groupA) (groupB) ...))’ to set the order of these groups to 2.
+
+
+File: README.info,  Node: Normal selectors,  Prev: Special selectors,  Up: Group selectors
+
+2.2.3 Normal selectors
+----------------------
+
+These selectors take one argument alone, or multiple arguments in a
+list.
+
+‘:category’
+     Group items that match any of the given categories.  Argument may
+     be a string or list of strings.
+‘:children’
+     Select any item that has child entries.  Argument may be ‘t’ to
+     match if it has any children, ‘nil’ to match if it has no children,
+     ‘todo’ to match if it has children with any to-do keywords, or a
+     string to match if it has children with certain to-do keywords.
+     You might use this to select items that are project top-level
+     headings.  Be aware that this may be very slow in non-daily/weekly
+     agenda views because of its recursive nature.
+‘:date’
+     Group items that have a date associated.  Argument can be t to
+     match items with any date, nil to match items without a date, or
+     today to match items with today’s date.  The ts-date text-property
+     is matched against.
+‘:deadline’
+     Group items that have a deadline.  Argument can be ‘t’ (to match
+     items with any deadline), ‘nil’ (to match items that have no
+     deadline), ‘past’ (to match items with a deadline in the past),
+     ‘today’ (to match items whose deadline is today), or ‘future’ (to
+     match items with a deadline in the future).  Argument may also be
+     given like ‘before DATE’ or ‘after DATE’ where DATE is a date
+     string that ‘org-time-string-to-absolute’ can process.
+‘:effort<’
+     Group items that are less than (or equal to) the given effort.
+     Argument is a time-duration string, like ‘5’ or ‘0:05’ for 5
+     minutes.
+‘:effort>’
+     Group items that are higher than (or equal to) the given effort.
+     Argument is a time-duration string, like ‘5’ or ‘0:05’ for 5
+     minutes.
+‘:habit’
+     Group habit items (items which have a STYLE: habit Org property).
+‘:heading-regexp’
+     Group items whose headings match any of the given regular
+     expressions.
+‘:log’
+     Group Agenda Log Mode items.  Argument may be ‘close’ or ‘closed’
+     to select items closed today; ‘clock’ or ‘clocked’ to select items
+     clocked today; ‘changed’ or ‘state’ to select items whose to-do
+     state was changed today; ‘t’ to select any logged item, or ‘nil’ to
+     select any non-logged item.  (See also variable
+     ‘org-agenda-log-mode-items’.)  Note that these items may also be
+     matched by the ‘:time-grid’ selector, so if you want these
+     displayed in their own group, you may need to select them in a
+     group before a group containing the ‘:time-grid’ selector.
+‘:priority’
+     Group items that match any of the given priorities.  Argument may
+     be a string or list of strings, which should be the priority
+     letter, e.g.  ‘A’.
+‘:priority>’
+     Group items that are higher than the given priority, e.g.  ‘C’.
+‘:priority>=’
+     Group items that are higher than or equal to the given priority,
+     e.g.  ‘B’.
+‘:priority<’
+     Group items that are lower than the given priority, e.g.  ‘A’.
+‘:priority<=’
+     Group items that are lower than or equal to the given priority,
+     e.g.  ‘B’.
+‘:regexp’
+     Group items that match any of the given regular expressions.
+‘:scheduled’
+     Group items that are scheduled.  Argument can be ‘t’ (to match
+     items scheduled for any date), ‘nil’ (to match items that are not
+     schedule), ‘past’ (to match items scheduled for the past), ‘today’
+     (to match items scheduled for today), or ‘future’ (to match items
+     scheduled for the future).  Argument may also be given like ‘before
+     DATE’ or ‘after DATE’ where DATE is a date string that
+     ‘org-time-string-to-absolute’ can process.
+‘:tag’
+     Group items that match any of the given tags.  Argument may be a
+     string or list of strings.
+‘:time-grid’
+     Group items that appear on the time grid.
+‘:todo’
+     Group items that match any of the given TODO keywords.  Argument
+     may be a string or list of strings, or ‘t’ to match any keyword, or
+     ‘nil’ to match only non-todo items.
+
+
+File: README.info,  Node: Tips,  Prev: Group selectors,  Up: Usage
+
+2.3 Tips
+========
+
+   • An *note info page: (org-super-agenda)Top. is included, with the
+     contents of this readme file.
+   • Group headers use the keymap org-super-agenda-header-map, allowing
+     you to bind keys in that map which will take effect when point is
+     on a header.
+        • For example, origami
+          (https://github.com/gregsexton/origami.el) works with
+          org-super-agenda buffers without any extra configuration.
+          Just activate origami-mode in the agenda buffer and use the
+          command origami-toggle-node to fold groups.  You can bind,
+          e.g.  TAB to that command in the header map, and then you can
+          easily collapse groups as if they were an outline.  You might
+          even fold some automatically ().
+
+
+File: README.info,  Node: Installation,  Next: Development,  Prev: Usage,  Up: Top
+
+3 Installation
+**************
+
+* Menu:
+
+* MELPA::
+* Manual installation::
+
+
+File: README.info,  Node: MELPA,  Next: Manual installation,  Up: Installation
+
+3.1 MELPA
+=========
+
+Just install the package and you’re done.
+
+
+File: README.info,  Node: Manual installation,  Prev: MELPA,  Up: Installation
+
+3.2 Manual installation
+=======================
+
+If you want to install manually, you must also install these packages:
+
+   • Emacs >= 25.1
+   • dash >= 2.13
+   • ht >=2.2
+   • org-mode >= 9.0
+   • s >= 1.10
+
+   Then put org-super-agenda.el in your load-path, and eval
+(require 'org-super-agenda).
+
+
+File: README.info,  Node: Development,  Next: Credits,  Prev: Installation,  Up: Top
+
+4 Development
+*************
+
+Contributions and feedback are welcome.
+
+   If you find this useful, I’d appreciate if you would share a
+screenshot or two of your agenda views using it (minus any private data,
+of course).  I’d like to get ideas for how to better organize my agenda.
+:)
+
+* Menu:
+
+* Bugs::
+
+
+File: README.info,  Node: Bugs,  Up: Development
+
+4.1 Bugs
+========
+
+   • The org-search-view agenda command does not seem to set the
+     todo-state text property for items it finds, so the :todo selector
+     doesn’t work with it.  We should be able to work around this by
+     getting the todo state for each item manually, but we have to make
+     sure that we only do that when necessary, otherwise it might be
+     slow.  And I wouldn’t be surprised if there are other selectors
+     that don’t work with this or other commands, but org-agenda-list
+     should work fine, and org-tags-view and org-todo-list seem to work.
+
+
+File: README.info,  Node: Credits,  Next: License,  Prev: Development,  Up: Top
+
+5 Credits
+*********
+
+   • Thanks to Balaji Sivaraman (https://github.com/balajisivaraman) for
+     contributing the :category selector.
+   • Thanks to Michael Welle (https://github.com/hmw42) for contributing
+     the customizable auto-group Org property name.
+
+
+File: README.info,  Node: License,  Prev: Credits,  Up: Top
+
+6 License
+*********
+
+GPLv3+
+
+
+
+Tag Table:
+Node: Top215
+Node: Introduction645
+Node: Usage2172
+Node: Examples6237
+Node: Group selectors6417
+Node: Keywords7606
+Node: Special selectors7946
+Node: Normal selectors9699
+Node: Tips14048
+Node: Installation14899
+Node: MELPA15060
+Node: Manual installation15208
+Node: Development15599
+Node: Bugs15994
+Node: Credits16633
+Node: License16982
+
+End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:
