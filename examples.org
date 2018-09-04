@@ -53,7 +53,7 @@ You could use an agenda command like this:
 
 And you'd get an agenda looking like this:
 
-[[screenshots/auto-group.png]]
+[[images/screenshots/auto-group.png]]
 
 The property name can be customized. This becomes handy if you already have, for instance, an Org property named =ProjectId= attached to your items. Instead of duplicating this Org property and renaming it to =agenda-group=, you can set =org-super-agenda-group-property-name= to an appropriate value:
 
@@ -297,7 +297,7 @@ You could even fold certain groups by default, perhaps like this (this ~use-pack
 
 *** [[https://github.com/bascht][Sebastian Schulze]]
 
-[[screenshots/bascht.png]]
+[[images/screenshots/bascht.png]]
 
 #+BEGIN_SRC elisp
   (org-super-agenda-groups

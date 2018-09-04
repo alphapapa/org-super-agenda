@@ -2,6 +2,8 @@
 
 #+PROPERTY: LOGGING nil
 
+#+HTML: <a href="https://alphapapa.github.io/dont-tread-on-emacs/"><img src="images/dont-tread-on-emacs-150.png" align="right"></a>
+
 * Introduction
 
 This package lets you "supercharge" your Org daily/weekly agenda.  The idea is to group items into sections, rather than having them all in one big list.
@@ -16,13 +18,13 @@ The primary use of this package is for the daily/weekly agenda, made by the ~org
 
 Here's what a normal agenda looks like:
 
-[[screenshot-before.png]]
+[[images/screenshots/screenshot-before.png]]
 
 Here's what the "super" agenda looks like:
 
-[[screenshot-after.png]]
+[[images/screenshots/screenshot-after.png]]
 
-There are also a few [[screenshots/index.org][more screenshots]].
+There are also a few [[images/screenshots/index.org][more screenshots]].
 
 ** COMMENT Tasks                                                  :noexport:
 
