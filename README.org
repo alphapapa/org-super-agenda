@@ -3,7 +3,7 @@
 #+PROPERTY: LOGGING nil
 
 #+HTML: <a href="https://alphapapa.github.io/dont-tread-on-emacs/"><img src="images/dont-tread-on-emacs-150.png" align="right"></a>
-#+HTML: <a href="https://melpa.org/#/org-super-agenda"><img src="https://melpa.org/packages/org-super-agenda-badge.svg"></a>
+#+HTML: <a href="https://melpa.org/#/org-super-agenda"><img src="https://melpa.org/packages/org-super-agenda-badge.svg"></a> <a href="https://stable.melpa.org/#/org-super-agenda"><img src="https://stable.melpa.org/packages/org-super-agenda-badge.svg"></a>
 
 * Introduction
 
@@ -30,6 +30,24 @@ There are also a few [[images/screenshots/index.org][more screenshots]].
 ** COMMENT Tasks                                                  :noexport:
 
 *** TODO Figure out how to exclude screenshots from info page but not GitHub rendering
+
+* Installation
+
+** MELPA
+
+Just install the =org-super-agenda= package!
+
+** Manual installation
+
+If you want to install manually, you must also install these packages:
+
++  Emacs >= 25.1
++  =dash= >= 2.13
++  =ht= >=2.2
++  =org-mode= >= 9.0
++  =s= >= 1.10
+
+Then put =org-super-agenda.el= in your =load-path=, and eval =(require 'org-super-agenda)=.
 
 * Usage
 
@@ -153,23 +171,11 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  Group headers use the keymap =org-super-agenda-header-map=, allowing you to bind keys in that map which will take effect when point is on a header.
      -  For example, [[https://github.com/gregsexton/origami.el][origami]] works with =org-super-agenda= buffers without any extra configuration.  Just activate =origami-mode= in the agenda buffer and use the command =origami-toggle-node= to fold groups.  You can bind, e.g. =TAB= to that command in the header map, and then you can easily collapse groups as if they were an outline.  You might even fold some automatically ([[examples.org#automatically-fold-certain-groups-with-origami][example]]).
 
-* Installation
+* Changelog
 
-** MELPA
+** 1.0.0
 
-Just install the package and you're done.
-
-** Manual installation
-
-If you want to install manually, you must also install these packages:
-
-+  Emacs >= 25.1
-+  =dash= >= 2.13
-+  =ht= >=2.2
-+  =org-mode= >= 9.0
-+  =s= >= 1.10
-
-Then put =org-super-agenda.el= in your =load-path=, and eval =(require 'org-super-agenda)=.
+First tagged version.
 
 * Development
 
@@ -180,7 +186,6 @@ If you find this useful, I'd appreciate if you would share a screenshot or two o
 ** Bugs
 
 + The =org-search-view= agenda command does not seem to set the =todo-state= text property for items it finds, so the =:todo= selector doesn't work with it.  We should be able to work around this by getting the todo state for each item manually, but we have to make sure that we only do that when necessary, otherwise it might be slow.  And I wouldn't be surprised if there are other selectors that don't work with this or other commands, but =org-agenda-list= should work fine, and =org-tags-view= and =org-todo-list= seem to work.
-
 * Credits
 
 +  Thanks to [[https://github.com/balajisivaraman][Balaji Sivaraman]] for contributing the =:category= selector.

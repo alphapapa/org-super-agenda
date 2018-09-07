@@ -14,13 +14,21 @@ org-super-agenda
 * Menu:
 
 * Introduction::
-* Usage::
 * Installation::
+* Usage::
+* Changelog::
 * Development::
 * Credits::
 * License::
 
 — The Detailed Node Listing —
+
+
+Installation
+
+* MELPA::
+* Manual installation::
+
 
 
 Usage
@@ -36,11 +44,9 @@ Group selectors
 * Special selectors::
 * Normal selectors::
 
-Installation
+Changelog
 
-* MELPA::
-* Manual installation::
-
+* 1.0.0: 100. 
 
 
 Development
@@ -48,7 +54,7 @@ Development
 * Bugs::
 
 
-File: README.info,  Node: Introduction,  Next: Usage,  Prev: Top,  Up: Top
+File: README.info,  Node: Introduction,  Next: Installation,  Prev: Top,  Up: Top
 
 1 Introduction
 **************
@@ -86,9 +92,45 @@ views, like ‘org-tags-view’, ‘org-todo-list’, ‘org-search-view’, etc
    There are also a few .
 
 
-File: README.info,  Node: Usage,  Next: Installation,  Prev: Introduction,  Up: Top
+File: README.info,  Node: Installation,  Next: Usage,  Prev: Introduction,  Up: Top
 
-2 Usage
+2 Installation
+**************
+
+* Menu:
+
+* MELPA::
+* Manual installation::
+
+
+File: README.info,  Node: MELPA,  Next: Manual installation,  Up: Installation
+
+2.1 MELPA
+=========
+
+Just install the org-super-agenda package!
+
+
+File: README.info,  Node: Manual installation,  Prev: MELPA,  Up: Installation
+
+2.2 Manual installation
+=======================
+
+If you want to install manually, you must also install these packages:
+
+   • Emacs >= 25.1
+   • dash >= 2.13
+   • ht >=2.2
+   • org-mode >= 9.0
+   • s >= 1.10
+
+   Then put org-super-agenda.el in your load-path, and eval
+(require 'org-super-agenda).
+
+
+File: README.info,  Node: Usage,  Next: Changelog,  Prev: Installation,  Up: Top
+
+3 Usage
 *******
 
   1. Enable ‘org-super-agenda-mode’.
@@ -165,7 +207,7 @@ you can disable it globally by disabling the mode.
 
 File: README.info,  Node: Examples,  Next: Group selectors,  Up: Usage
 
-2.1 Examples
+3.1 Examples
 ============
 
 At first you might feel bewildered by all the options.  Never fear, are
@@ -174,7 +216,7 @@ here!
 
 File: README.info,  Node: Group selectors,  Next: Tips,  Prev: Examples,  Up: Usage
 
-2.2 Group selectors
+3.2 Group selectors
 ===================
 
 Each group selector takes an argument which can be a single atom or a
@@ -206,7 +248,7 @@ priority ‘C’ items would not appear in the agenda.
 
 File: README.info,  Node: Keywords,  Next: Special selectors,  Up: Group selectors
 
-2.2.1 Keywords
+3.2.1 Keywords
 --------------
 
 ‘:name’
@@ -217,7 +259,7 @@ File: README.info,  Node: Keywords,  Next: Special selectors,  Up: Group selecto
 
 File: README.info,  Node: Special selectors,  Next: Normal selectors,  Prev: Keywords,  Up: Group selectors
 
-2.2.2 Special selectors
+3.2.2 Special selectors
 -----------------------
 
 Every selector requires an argument, even if it’s just ‘t’, e.g.
@@ -256,7 +298,7 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
 
 File: README.info,  Node: Normal selectors,  Prev: Special selectors,  Up: Group selectors
 
-2.2.3 Normal selectors
+3.2.3 Normal selectors
 ----------------------
 
 These selectors take one argument alone, or multiple arguments in a
@@ -346,7 +388,7 @@ list.
 
 File: README.info,  Node: Tips,  Prev: Group selectors,  Up: Usage
 
-2.3 Tips
+3.3 Tips
 ========
 
    • An *note info page: (org-super-agenda)Top. is included, with the
@@ -364,45 +406,27 @@ File: README.info,  Node: Tips,  Prev: Group selectors,  Up: Usage
           even fold some automatically ().
 
 
-File: README.info,  Node: Installation,  Next: Development,  Prev: Usage,  Up: Top
+File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 
-3 Installation
-**************
+4 Changelog
+***********
 
 * Menu:
 
-* MELPA::
-* Manual installation::
+* 1.0.0: 100. 
 
 
-File: README.info,  Node: MELPA,  Next: Manual installation,  Up: Installation
+File: README.info,  Node: 100,  Up: Changelog
 
-3.1 MELPA
+4.1 1.0.0
 =========
 
-Just install the package and you’re done.
+First tagged version.
 
 
-File: README.info,  Node: Manual installation,  Prev: MELPA,  Up: Installation
+File: README.info,  Node: Development,  Next: Credits,  Prev: Changelog,  Up: Top
 
-3.2 Manual installation
-=======================
-
-If you want to install manually, you must also install these packages:
-
-   • Emacs >= 25.1
-   • dash >= 2.13
-   • ht >=2.2
-   • org-mode >= 9.0
-   • s >= 1.10
-
-   Then put org-super-agenda.el in your load-path, and eval
-(require 'org-super-agenda).
-
-
-File: README.info,  Node: Development,  Next: Credits,  Prev: Installation,  Up: Top
-
-4 Development
+5 Development
 *************
 
 Contributions and feedback are welcome.
@@ -419,7 +443,7 @@ of course).  I’d like to get ideas for how to better organize my agenda.
 
 File: README.info,  Node: Bugs,  Up: Development
 
-4.1 Bugs
+5.1 Bugs
 ========
 
    • The org-search-view agenda command does not seem to set the
@@ -434,7 +458,7 @@ File: README.info,  Node: Bugs,  Up: Development
 
 File: README.info,  Node: Credits,  Next: License,  Prev: Development,  Up: Top
 
-5 Credits
+6 Credits
 *********
 
    • Thanks to Balaji Sivaraman (https://github.com/balajisivaraman) for
@@ -445,7 +469,7 @@ File: README.info,  Node: Credits,  Next: License,  Prev: Development,  Up: Top
 
 File: README.info,  Node: License,  Prev: Credits,  Up: Top
 
-6 License
+7 License
 *********
 
 GPLv3+
@@ -454,21 +478,23 @@ GPLv3+
 
 Tag Table:
 Node: Top215
-Node: Introduction645
-Node: Usage2172
-Node: Examples6237
-Node: Group selectors6417
-Node: Keywords7606
-Node: Special selectors7946
-Node: Normal selectors9699
-Node: Tips14048
-Node: Installation14899
-Node: MELPA15060
-Node: Manual installation15208
-Node: Development15599
-Node: Bugs15994
-Node: Credits16633
-Node: License16982
+Node: Introduction687
+Node: Installation2221
+Node: MELPA2383
+Node: Manual installation2530
+Node: Usage2921
+Node: Examples6983
+Node: Group selectors7163
+Node: Keywords8352
+Node: Special selectors8692
+Node: Normal selectors10445
+Node: Tips14794
+Node: Changelog15645
+Node: 10015778
+Node: Development15871
+Node: Bugs16263
+Node: Credits16902
+Node: License17251
 
 End Tag Table
 
