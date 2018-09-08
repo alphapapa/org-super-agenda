@@ -170,6 +170,10 @@ This is mostly useful if section headers have a highlight color,
 making it stretch across the screen."
   :type 'boolean)
 
+(defcustom org-super-agenda-header-separator "\n"
+  "String inserted before group headers."
+  :type 'string)
+
 ;;;; Macros
 
 (defmacro org-super-agenda--when-with-marker-buffer (form &rest body)
@@ -221,7 +225,8 @@ If ANY is non-nil, return as soon as FORM returns non-nil."
   (org-find-text-property-in-string 'tags s))
 
 (defun org-super-agenda--make-agenda-header (s)
-  "Return agenda header containing string S and a newline."
+  "Return agenda header containing string S.
+Prepended with `org-super-agenda-header-separator'."
   (pcase s
     ('none "")
     (_ (setq s (concat " " s))
@@ -231,7 +236,7 @@ If ANY is non-nil, return as soon as FORM returns non-nil."
                       ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
                       ;; we'll use both.
                       'local-map org-super-agenda-header-map)
-       (concat "\n" s))))
+       (concat org-super-agenda-header-separator s))))
 
 (defsubst org-super-agenda--get-priority-cookie (s)
   "Return priority character for string S.

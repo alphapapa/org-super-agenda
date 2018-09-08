@@ -207,7 +207,8 @@ These selectors take one argument alone, or multiple arguments in a list.
 
 ** 1.1-pre
 
-Nothing new yet!
+*Additions*
++  Option ~org-super-agenda-header-separator~, which can, e.g. be set to an empty string for a more compact view.  (Thanks to [[https://github.com/sdelafond][Sébastien Delafond]].)
 
 ** 1.0.1
 
