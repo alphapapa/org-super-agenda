@@ -6,6 +6,9 @@
 #+HTML: <a href="https://melpa.org/#/org-super-agenda"><img src="https://melpa.org/packages/org-super-agenda-badge.svg"></a> <a href="https://stable.melpa.org/#/org-super-agenda"><img src="https://stable.melpa.org/packages/org-super-agenda-badge.svg"></a>
 
 * Introduction
+:PROPERTIES:
+:TOC:      ignore
+:END:
 
 This package lets you "supercharge" your Org daily/weekly agenda.  The idea is to group items into sections, rather than having them all in one big list.
 
@@ -16,6 +19,23 @@ So this package filters the results from ~org-agenda-finalize-entries~, which ru
 The end result is your standard daily/weekly agenda, but arranged into groups defined by you.  You might put items with certain tags in one group, habits in another group, items with certain todo keywords in another, and items with certain priorities in another.  The possibilities are only limited by the grouping functions.
 
 The primary use of this package is for the daily/weekly agenda, made by the ~org-agenda-list~ command, but it also works for other agenda views, like ~org-tags-view~, ~org-todo-list~, ~org-search-view~, etc.
+
+* Contents
+:PROPERTIES:
+:TOC:      this
+:END:
+  -  [[#screenshots][Screenshots]]
+  -  [[#installation][Installation]]
+  -  [[#usage][Usage]]
+    -  [[#examples][Examples]]
+    -  [[#group-selectors][Group selectors]]
+    -  [[#tips][Tips]]
+  -  [[#changelog][Changelog]]
+
+* Screenshots
+:PROPERTIES:
+:TOC:      0
+:END:
 
 Here's what a normal agenda looks like:
 
@@ -28,10 +48,16 @@ Here's what the "super" agenda looks like:
 There are also a few [[images/screenshots/index.org][more screenshots]].
 
 ** COMMENT Tasks                                                  :noexport:
+:PROPERTIES:
+:ID:       4ff94c53-a5c3-47ec-8bcb-76909f37ca2f
+:END:
 
 *** TODO Figure out how to exclude screenshots from info page but not GitHub rendering
 
 * Installation
+:PROPERTIES:
+:TOC:      0
+:END:
 
 ** MELPA
 
@@ -50,6 +76,9 @@ If you want to install manually, you must also install these packages:
 Then put =org-super-agenda.el= in your =load-path=, and eval =(require 'org-super-agenda)=.
 
 * Usage
+:PROPERTIES:
+:TOC:      1
+:END:
 
 1.  Enable ~org-super-agenda-mode~.
 2.  Set the variable ~org-super-agenda-groups~ as desired (see example below). 
@@ -57,7 +86,11 @@ Then put =org-super-agenda.el= in your =load-path=, and eval =(require 'org-supe
 3.  Run an Org agenda command.
 4.  Start the day with confidence, knowing that nothing important has been lost in the jumble of /ahem/ overdue items.
 
-Here's the code for the example above.  You can test it quickly by evaluating this form:
+** Examples
+
+At first you might feel bewildered by all the options.  Never fear, [[examples.org][examples]] are here!
+
+Here's the code for the screenshots above.  You can test it quickly by evaluating this code block:
 
 #+BEGIN_SRC elisp
   (let ((org-super-agenda-groups
@@ -105,10 +138,6 @@ Here's the code for the example above.  You can test it quickly by evaluating th
 #+END_SRC
 
 The groups apply to all agenda commands (at least, every one that calls ~org-agenda-finalize-entries~).  You can set different groups for custom commands by setting ~org-super-agenda-groups~ in the custom command's ~settings~ list (see the description for ~org-agenda-custom-commands~).  You can disable grouping by binding ~org-agenda-super-groups~ to nil around a call to an agenda command, or you can disable it globally by disabling the mode.
-
-** Examples
-
-At first you might feel bewildered by all the options.  Never fear, [[examples.org][examples]] are here!
 
 *** COMMENT Tasks                                                :noexport:
 
@@ -172,12 +201,18 @@ These selectors take one argument alone, or multiple arguments in a list.
      -  For example, [[https://github.com/gregsexton/origami.el][origami]] works with =org-super-agenda= buffers without any extra configuration.  Just activate =origami-mode= in the agenda buffer and use the command =origami-toggle-node= to fold groups.  You can bind, e.g. =TAB= to that command in the header map, and then you can easily collapse groups as if they were an outline.  You might even fold some automatically ([[examples.org#automatically-fold-certain-groups-with-origami][example]]).
 
 * Changelog
+:PROPERTIES:
+:TOC:      0
+:END:
 
 ** 1.0.0
 
 First tagged version.
 
 * Development
+:PROPERTIES:
+:TOC:      ignore
+:END:
 
 Contributions and feedback are welcome.
 
@@ -187,19 +222,34 @@ If you find this useful, I'd appreciate if you would share a screenshot or two o
 
 + The =org-search-view= agenda command does not seem to set the =todo-state= text property for items it finds, so the =:todo= selector doesn't work with it.  We should be able to work around this by getting the todo state for each item manually, but we have to make sure that we only do that when necessary, otherwise it might be slow.  And I wouldn't be surprised if there are other selectors that don't work with this or other commands, but =org-agenda-list= should work fine, and =org-tags-view= and =org-todo-list= seem to work.
 * Credits
+:PROPERTIES:
+:TOC:      ignore
+:END:
 
 +  Thanks to [[https://github.com/balajisivaraman][Balaji Sivaraman]] for contributing the =:category= selector.
 +  Thanks to [[https://github.com/hmw42][Michael Welle]] for contributing the customizable =auto-group= Org property name.
 
 * License
+:PROPERTIES:
+:TOC:      ignore
+:END:
 
 GPLv3+
 
-* Export Setup                                                     :noexport:
+* COMMENT Export Setup                                             :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
 
 # Much borrowed from Org's =org-manual.org=.
 
 #+OPTIONS: broken-links:t *:t
+
+** COMMENT Tasks
+
+*** TODO Exclude contents from info page
+
+Not sure how to do this without also excluding it from the GitHub rendering.
 
 ** Info export options
 
@@ -214,6 +264,7 @@ GPLv3+
 ** File-local variables
 
 # Local Variables:
+# before-save-hook: org-make-toc
 # after-save-hook: (lambda nil (when (and (require 'ox-texinfo nil t) (org-texinfo-export-to-info)) (delete-file "README.texi") (rename-file "README.info" "org-super-agenda.info" t)))
 # org-export-initial-scope: buffer
 # End:

@@ -14,6 +14,8 @@ org-super-agenda
 * Menu:
 
 * Introduction::
+* Contents::
+* Screenshots::
 * Installation::
 * Usage::
 * Changelog::
@@ -22,6 +24,8 @@ org-super-agenda
 * License::
 
 — The Detailed Node Listing —
+
+
 
 
 Installation
@@ -54,7 +58,7 @@ Development
 * Bugs::
 
 
-File: README.info,  Node: Introduction,  Next: Installation,  Prev: Top,  Up: Top
+File: README.info,  Node: Introduction,  Next: Contents,  Prev: Top,  Up: Top
 
 1 Introduction
 **************
@@ -85,16 +89,30 @@ possibilities are only limited by the grouping functions.
 by the ‘org-agenda-list’ command, but it also works for other agenda
 views, like ‘org-tags-view’, ‘org-todo-list’, ‘org-search-view’, etc.
 
-   Here’s what a normal agenda looks like:
+
+File: README.info,  Node: Contents,  Next: Screenshots,  Prev: Introduction,  Up: Top
+
+2 Contents
+**********
+
+   • • • 
+        • • • • 
+
+File: README.info,  Node: Screenshots,  Next: Installation,  Prev: Contents,  Up: Top
+
+3 Screenshots
+*************
+
+Here’s what a normal agenda looks like:
 
    Here’s what the "super" agenda looks like:
 
    There are also a few .
 
 
-File: README.info,  Node: Installation,  Next: Usage,  Prev: Introduction,  Up: Top
+File: README.info,  Node: Installation,  Next: Usage,  Prev: Screenshots,  Up: Top
 
-2 Installation
+4 Installation
 **************
 
 * Menu:
@@ -105,7 +123,7 @@ File: README.info,  Node: Installation,  Next: Usage,  Prev: Introduction,  Up: 
 
 File: README.info,  Node: MELPA,  Next: Manual installation,  Up: Installation
 
-2.1 MELPA
+4.1 MELPA
 =========
 
 Just install the org-super-agenda package!
@@ -113,7 +131,7 @@ Just install the org-super-agenda package!
 
 File: README.info,  Node: Manual installation,  Prev: MELPA,  Up: Installation
 
-2.2 Manual installation
+4.2 Manual installation
 =======================
 
 If you want to install manually, you must also install these packages:
@@ -130,7 +148,7 @@ If you want to install manually, you must also install these packages:
 
 File: README.info,  Node: Usage,  Next: Changelog,  Prev: Installation,  Up: Top
 
-3 Usage
+5 Usage
 *******
 
   1. Enable ‘org-super-agenda-mode’.
@@ -144,8 +162,23 @@ File: README.info,  Node: Usage,  Next: Changelog,  Prev: Installation,  Up: Top
   4. Start the day with confidence, knowing that nothing important has
      been lost in the jumble of _ahem_ overdue items.
 
-   Here’s the code for the example above.  You can test it quickly by
-evaluating this form:
+* Menu:
+
+* Examples::
+* Group selectors::
+* Tips::
+
+
+File: README.info,  Node: Examples,  Next: Group selectors,  Up: Usage
+
+5.1 Examples
+============
+
+At first you might feel bewildered by all the options.  Never fear, are
+here!
+
+   Here’s the code for the screenshots above.  You can test it quickly
+by evaluating this code block:
 
      (let ((org-super-agenda-groups
             '(;; Each group has an implicit boolean OR operator between its selectors.
@@ -198,25 +231,10 @@ command’s ‘settings’ list (see the description for
 ‘org-agenda-super-groups’ to nil around a call to an agenda command, or
 you can disable it globally by disabling the mode.
 
-* Menu:
-
-* Examples::
-* Group selectors::
-* Tips::
-
-
-File: README.info,  Node: Examples,  Next: Group selectors,  Up: Usage
-
-3.1 Examples
-============
-
-At first you might feel bewildered by all the options.  Never fear, are
-here!
-
 
 File: README.info,  Node: Group selectors,  Next: Tips,  Prev: Examples,  Up: Usage
 
-3.2 Group selectors
+5.2 Group selectors
 ===================
 
 Each group selector takes an argument which can be a single atom or a
@@ -248,7 +266,7 @@ priority ‘C’ items would not appear in the agenda.
 
 File: README.info,  Node: Keywords,  Next: Special selectors,  Up: Group selectors
 
-3.2.1 Keywords
+5.2.1 Keywords
 --------------
 
 ‘:name’
@@ -259,7 +277,7 @@ File: README.info,  Node: Keywords,  Next: Special selectors,  Up: Group selecto
 
 File: README.info,  Node: Special selectors,  Next: Normal selectors,  Prev: Keywords,  Up: Group selectors
 
-3.2.2 Special selectors
+5.2.2 Special selectors
 -----------------------
 
 Every selector requires an argument, even if it’s just ‘t’, e.g.
@@ -298,7 +316,7 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
 
 File: README.info,  Node: Normal selectors,  Prev: Special selectors,  Up: Group selectors
 
-3.2.3 Normal selectors
+5.2.3 Normal selectors
 ----------------------
 
 These selectors take one argument alone, or multiple arguments in a
@@ -388,7 +406,7 @@ list.
 
 File: README.info,  Node: Tips,  Prev: Group selectors,  Up: Usage
 
-3.3 Tips
+5.3 Tips
 ========
 
    • An *note info page: (org-super-agenda)Top. is included, with the
@@ -408,7 +426,7 @@ File: README.info,  Node: Tips,  Prev: Group selectors,  Up: Usage
 
 File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 
-4 Changelog
+6 Changelog
 ***********
 
 * Menu:
@@ -418,7 +436,7 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 
 File: README.info,  Node: 100,  Up: Changelog
 
-4.1 1.0.0
+6.1 1.0.0
 =========
 
 First tagged version.
@@ -426,7 +444,7 @@ First tagged version.
 
 File: README.info,  Node: Development,  Next: Credits,  Prev: Changelog,  Up: Top
 
-5 Development
+7 Development
 *************
 
 Contributions and feedback are welcome.
@@ -443,7 +461,7 @@ of course).  I’d like to get ideas for how to better organize my agenda.
 
 File: README.info,  Node: Bugs,  Up: Development
 
-5.1 Bugs
+7.1 Bugs
 ========
 
    • The org-search-view agenda command does not seem to set the
@@ -458,7 +476,7 @@ File: README.info,  Node: Bugs,  Up: Development
 
 File: README.info,  Node: Credits,  Next: License,  Prev: Development,  Up: Top
 
-6 Credits
+8 Credits
 *********
 
    • Thanks to Balaji Sivaraman (https://github.com/balajisivaraman) for
@@ -469,7 +487,7 @@ File: README.info,  Node: Credits,  Next: License,  Prev: Development,  Up: Top
 
 File: README.info,  Node: License,  Prev: Credits,  Up: Top
 
-7 License
+9 License
 *********
 
 GPLv3+
@@ -478,23 +496,25 @@ GPLv3+
 
 Tag Table:
 Node: Top215
-Node: Introduction687
-Node: Installation2221
-Node: MELPA2383
-Node: Manual installation2530
-Node: Usage2921
-Node: Examples6983
-Node: Group selectors7163
-Node: Keywords8352
-Node: Special selectors8692
-Node: Normal selectors10445
-Node: Tips14794
-Node: Changelog15645
-Node: 10015778
-Node: Development15871
-Node: Bugs16263
-Node: Credits16902
-Node: License17251
+Node: Introduction718
+Node: Contents2126
+Node: Screenshots2279
+Node: Installation2516
+Node: MELPA2677
+Node: Manual installation2824
+Node: Usage3215
+Node: Examples3982
+Node: Group selectors7467
+Node: Keywords8656
+Node: Special selectors8996
+Node: Normal selectors10749
+Node: Tips15098
+Node: Changelog15949
+Node: 10016082
+Node: Development16175
+Node: Bugs16567
+Node: Credits17206
+Node: License17555
 
 End Tag Table
 
