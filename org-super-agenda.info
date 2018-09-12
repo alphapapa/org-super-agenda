@@ -1,5 +1,6 @@
 This is README.info, produced by makeinfo version 5.2 from README.texi.
 
+GPLv3+
 INFO-DIR-SECTION Emacs
 START-INFO-DIR-ENTRY
 * Org Super Agenda: (org-super-agenda). Flexible grouping for the Org Agenda.
@@ -11,6 +12,8 @@ File: README.info,  Node: Top,  Next: Introduction,  Up: (dir)
 org-super-agenda
 ****************
 
+GPLv3+
+
 * Menu:
 
 * Introduction::
@@ -21,7 +24,6 @@ org-super-agenda
 * Changelog::
 * Development::
 * Credits::
-* License::
 
 — The Detailed Node Listing —
 
@@ -474,7 +476,7 @@ File: README.info,  Node: Bugs,  Up: Development
      should work fine, and org-tags-view and org-todo-list seem to work.
 
 
-File: README.info,  Node: Credits,  Next: License,  Prev: Development,  Up: Top
+File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 8 Credits
 *********
@@ -484,37 +486,28 @@ File: README.info,  Node: Credits,  Next: License,  Prev: Development,  Up: Top
    • Thanks to Michael Welle (https://github.com/hmw42) for contributing
      the customizable auto-group Org property name.
 
-
-File: README.info,  Node: License,  Prev: Credits,  Up: Top
-
-9 License
-*********
-
-GPLv3+
-
 
 
 Tag Table:
-Node: Top215
-Node: Introduction718
-Node: Contents2126
-Node: Screenshots2279
-Node: Installation2516
-Node: MELPA2677
-Node: Manual installation2824
-Node: Usage3215
-Node: Examples3982
-Node: Group selectors7467
-Node: Keywords8656
-Node: Special selectors8996
-Node: Normal selectors10749
-Node: Tips15098
-Node: Changelog15949
-Node: 10016082
-Node: Development16175
-Node: Bugs16567
-Node: Credits17206
-Node: License17555
+Node: Top222
+Node: Introduction721
+Node: Contents2129
+Node: Screenshots2282
+Node: Installation2519
+Node: MELPA2680
+Node: Manual installation2827
+Node: Usage3218
+Node: Examples3985
+Node: Group selectors7470
+Node: Keywords8659
+Node: Special selectors8999
+Node: Normal selectors10752
+Node: Tips15101
+Node: Changelog15952
+Node: 10016085
+Node: Development16178
+Node: Bugs16570
+Node: Credits17209
 
 End Tag Table
 

@@ -232,6 +232,7 @@ If you find this useful, I'd appreciate if you would share a screenshot or two o
 * License
 :PROPERTIES:
 :TOC:      ignore
+:COPYING:  t
 :END:
 
 GPLv3+
@@ -263,8 +264,11 @@ Not sure how to do this without also excluding it from the GitHub rendering.
 
 ** File-local variables
 
+# NOTE: Setting org-comment-string buffer-locally is a nasty hack to work around GitHub's org-ruby's HTML rendering, which does not respect noexport tags.  The only way to hide this tree from its output is to use the COMMENT keyword, but that prevents Org from processing the export options declared in it.  So since these file-local variables don't affect org-ruby, wet set org-comment-string to an unused keyword, which prevents Org from deleting this tree from the export buffer, which allows it to find the export options in it.  And since org-export does respect the noexport tag, the tree is excluded from the info page.
+
 # Local Variables:
 # before-save-hook: org-make-toc
 # after-save-hook: (lambda nil (when (and (require 'ox-texinfo nil t) (org-texinfo-export-to-info)) (delete-file "README.texi") (rename-file "README.info" "org-super-agenda.info" t)))
 # org-export-initial-scope: buffer
+# org-comment-string: "NOTCOMMENT"
 # End:
