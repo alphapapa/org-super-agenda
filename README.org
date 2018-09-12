@@ -173,6 +173,11 @@ These selectors take one argument alone, or multiple arguments in a list.
 
 * Changelog
 
+** 1.0.1
+
+*Fixes*
++  Initialize ~org-super-agenda-header-map~ to a copy of ~org-agenda-mode-map~.  (Fixes [[https://github.com/alphapapa/org-super-agenda/issues/50][#50]].  Thanks to [[https://github.com/yiufung][Yiufung Cheong]].)
+
 ** 1.0.0
 
 First tagged version.
