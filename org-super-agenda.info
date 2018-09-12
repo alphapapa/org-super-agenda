@@ -52,7 +52,9 @@ Group selectors
 
 Changelog
 
+* 1.0.1: 101. 
 * 1.0.0: 100. 
+
 
 
 Development
@@ -433,12 +435,25 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 
 * Menu:
 
+* 1.0.1: 101. 
 * 1.0.0: 100. 
 
 
-File: README.info,  Node: 100,  Up: Changelog
+File: README.info,  Node: 101,  Next: 100,  Up: Changelog
 
-6.1 1.0.0
+6.1 1.0.1
+=========
+
+*Fixes*
+   • Initialize ‘org-super-agenda-header-map’ to a copy of
+     ‘org-agenda-mode-map’.  (Fixes #50
+     (https://github.com/alphapapa/org-super-agenda/issues/50).  Thanks
+     to Yiufung Cheong (https://github.com/yiufung).)
+
+
+File: README.info,  Node: 100,  Prev: 101,  Up: Changelog
+
+6.2 1.0.0
 =========
 
 First tagged version.
@@ -490,24 +505,25 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction721
-Node: Contents2129
-Node: Screenshots2282
-Node: Installation2519
-Node: MELPA2680
-Node: Manual installation2827
-Node: Usage3218
-Node: Examples3985
-Node: Group selectors7470
-Node: Keywords8659
-Node: Special selectors8999
-Node: Normal selectors10752
-Node: Tips15101
-Node: Changelog15952
-Node: 10016085
-Node: Development16178
-Node: Bugs16570
-Node: Credits17209
+Node: Introduction737
+Node: Contents2145
+Node: Screenshots2298
+Node: Installation2535
+Node: MELPA2696
+Node: Manual installation2843
+Node: Usage3234
+Node: Examples4001
+Node: Group selectors7486
+Node: Keywords8675
+Node: Special selectors9015
+Node: Normal selectors10768
+Node: Tips15117
+Node: Changelog15968
+Node: 10116116
+Node: 10016442
+Node: Development16547
+Node: Bugs16939
+Node: Credits17578
 
 End Tag Table
 

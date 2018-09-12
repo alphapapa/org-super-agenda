@@ -2,7 +2,7 @@
 
 ;; Author: Adam Porter <adam@alphapapa.net>
 ;; Url: http://github.com/alphapapa/org-super-agenda
-;; Version: 1.0.0
+;; Version: 1.0.1
 ;; Package-Requires: ((emacs "25.1") (s "1.10.0") (dash "2.13") (org "9.0") (ht "2.2"))
 ;; Keywords: hypermedia, outlines, Org, agenda
 
@@ -128,10 +128,14 @@ Populated automatically by `org-super-agenda--defgroup'.")
 (defvar org-super-agenda-group-transformers nil
   "List of agenda group transformers.")
 
-(defvar org-super-agenda-header-map (make-sparse-keymap)
+(defvar org-super-agenda-header-map (copy-keymap org-agenda-mode-map)
   "Keymap applied to agenda group headers.
-This is useful to, e.g. use `origami' to fold group headings by
-binding a key to `origami-toggle-node' in this map.")
+This is initialized to a copy of `org-agenda-mode-map'; changes
+made to that map after this variable is defined will not be
+included.  This map is useful for binding commands which apply
+only with point on the group headers (e.g. use `origami' to fold
+group headings by binding a key to `origami-toggle-node' in this
+map).")
 
 (defgroup org-super-agenda nil
   "Settings for `org-super-agenda'."

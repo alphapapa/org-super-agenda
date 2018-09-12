@@ -205,6 +205,11 @@ These selectors take one argument alone, or multiple arguments in a list.
 :TOC:      0
 :END:
 
+** 1.0.1
+
+*Fixes*
++  Initialize ~org-super-agenda-header-map~ to a copy of ~org-agenda-mode-map~.  (Fixes [[https://github.com/alphapapa/org-super-agenda/issues/50][#50]].  Thanks to [[https://github.com/yiufung][Yiufung Cheong]].)
+
 ** 1.0.0
 
 First tagged version.
@@ -245,12 +250,6 @@ GPLv3+
 # Much borrowed from Org's =org-manual.org=.
 
 #+OPTIONS: broken-links:t *:t
-
-** COMMENT Tasks
-
-*** TODO Exclude contents from info page
-
-Not sure how to do this without also excluding it from the GitHub rendering.
 
 ** Info export options
 
