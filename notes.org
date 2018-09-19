@@ -136,6 +136,10 @@ org-get-tags-at                                               220         0.2745
 
 The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
 
+** TODO [#B] Define customization types for group selectors
+
+E.g. [[info:elisp#Defining%20New%20Types][info:elisp#Defining New Types]].  This would make it possible to configure grouping with the customization UI.  Maybe it would also make it possible to verify that groups are configured correctly.  And maybe the customization types could be defined easily with the macros we're already using.
+
 ** MAYBE Put before/after in date strings
 :LOGBOOK:
 -  State "MAYBE"      from              [2017-08-12 Sat 22:59]
