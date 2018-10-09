@@ -46,6 +46,7 @@ Group selectors
 
 Changelog
 
+* 1.0.3: 103. 
 * 1.0.2: 102. 
 * 1.0.1: 101. 
 * 1.0.0: 100. 
@@ -416,14 +417,25 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 
 * Menu:
 
+* 1.0.3: 103. 
 * 1.0.2: 102. 
 * 1.0.1: 101. 
 * 1.0.0: 100. 
 
 
-File: README.info,  Node: 102,  Next: 101,  Up: Changelog
+File: README.info,  Node: 103,  Next: 102,  Up: Changelog
 
-4.1 1.0.2
+4.1 1.0.3
+=========
+
+*Fixed*
+   • Require ‘seq’ library.  (Fixes #54.  Thanks to Rick Hanson
+     (https://github.com/cryptorick).)
+
+
+File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
+
+4.2 1.0.2
 =========
 
 *Fixed*
@@ -432,7 +444,7 @@ File: README.info,  Node: 102,  Next: 101,  Up: Changelog
 
 File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
-4.2 1.0.1
+4.3 1.0.1
 =========
 
 *Fixes*
@@ -444,7 +456,7 @@ File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
 File: README.info,  Node: 100,  Prev: 101,  Up: Changelog
 
-4.3 1.0.0
+4.4 1.0.0
 =========
 
 First tagged version.
@@ -504,25 +516,26 @@ GPLv3+
 
 Tag Table:
 Node: Top215
-Node: Introduction718
-Node: Installation2252
-Node: MELPA2414
-Node: Manual installation2561
-Node: Usage2952
-Node: Examples7014
-Node: Group selectors7194
-Node: Keywords8383
-Node: Special selectors8723
-Node: Normal selectors10476
-Node: Tips14825
-Node: Changelog15676
-Node: 10215839
-Node: 10115961
-Node: 10016299
-Node: Development16404
-Node: Bugs16796
-Node: Credits17435
-Node: License17784
+Node: Introduction733
+Node: Installation2267
+Node: MELPA2429
+Node: Manual installation2576
+Node: Usage2967
+Node: Examples7029
+Node: Group selectors7209
+Node: Keywords8398
+Node: Special selectors8738
+Node: Normal selectors10491
+Node: Tips14840
+Node: Changelog15691
+Node: 10315869
+Node: 10216069
+Node: 10116203
+Node: 10016541
+Node: Development16646
+Node: Bugs17038
+Node: Credits17677
+Node: License18026
 
 End Tag Table
 

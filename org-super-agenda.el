@@ -2,7 +2,7 @@
 
 ;; Author: Adam Porter <adam@alphapapa.net>
 ;; Url: http://github.com/alphapapa/org-super-agenda
-;; Version: 1.0.2
+;; Version: 1.0.3
 ;; Package-Requires: ((emacs "25.1") (s "1.10.0") (dash "2.13") (org "9.0") (ht "2.2"))
 ;; Keywords: hypermedia, outlines, Org, agenda
 
@@ -109,6 +109,7 @@
 (require 'dash)
 (require 's)
 (require 'ht)
+(require 'seq)
 
 ;; I think this is the right way to do this...
 (eval-when-compile
