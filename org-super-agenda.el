@@ -174,6 +174,11 @@ making it stretch across the screen."
   "String inserted before group headers."
   :type 'string)
 
+;;;; Faces
+
+(defface org-super-agenda-header '((t (:inherit org-agenda-structure)))
+  "Face used in agenda for `org-super-agenda' group name header.")
+
 ;;;; Macros
 
 (defmacro org-super-agenda--when-with-marker-buffer (form &rest body)
@@ -230,7 +235,7 @@ Prepended with `org-super-agenda-header-separator'."
   (pcase s
     ('none "")
     (_ (setq s (concat " " s))
-       (org-add-props s nil 'face 'org-agenda-structure
+       (org-add-props s nil 'face 'org-super-agenda-header
                       'keymap org-super-agenda-header-map
                       ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
                       ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so

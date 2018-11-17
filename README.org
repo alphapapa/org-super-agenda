@@ -214,6 +214,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  Keyword ~:face~, used to apply faces to items in groups.
 +  Keyword ~:transformer~, used to transform items in groups.
 +  Option ~org-super-agenda-header-separator~, which can, e.g. be set to an empty string for a more compact view.  (Thanks to [[https://github.com/sdelafond][Sébastien Delafond]].)
++  Face ~org-super-agenda-header~, which can be used to customize group headers.  (Thanks to [[https://github.com/cslux][Christian Schwarzgruber]].)
 
 ** 1.0.1
 

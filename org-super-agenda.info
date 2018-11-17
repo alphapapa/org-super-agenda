@@ -465,6 +465,9 @@ File: README.info,  Node: 11-pre,  Next: 101,  Up: Changelog
    • Option ‘org-super-agenda-header-separator’, which can, e.g.  be set
      to an empty string for a more compact view.  (Thanks to Sébastien
      Delafond (https://github.com/sdelafond).)
+   • Face ‘org-super-agenda-header’, which can be used to customize
+     group headers.  (Thanks to Christian Schwarzgruber
+     (https://github.com/cslux).)
 
 
 File: README.info,  Node: 101,  Next: 100,  Prev: 11-pre,  Up: Changelog
@@ -548,11 +551,11 @@ Node: Normal selectors11398
 Node: Tips15747
 Node: Changelog16598
 Node: 11-pre16766
-Node: 10117204
-Node: 10017545
-Node: Development17650
-Node: Bugs18042
-Node: Credits18681
+Node: 10117368
+Node: 10017709
+Node: Development17814
+Node: Bugs18206
+Node: Credits18845
 
 End Tag Table
 
