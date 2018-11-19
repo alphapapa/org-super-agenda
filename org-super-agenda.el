@@ -444,6 +444,111 @@ DATE', where DATE is a date string that
                                        ((or 'before 'on 'after) target-date))))
                    (org-super-agenda--compare-dates comparison entry-time compare-date))))))))
 
+(cl-defun org-super-agenda--gnu-date-to-timestamp (s &key (zero-hour t))
+  "Return Unix timestamp for date S, converted with GNU \"date\"."
+  (shell-command-to-string (format "date --rfc-3339=seconds --date \"%s\""
+                                   (if zero-hour
+                                       (concat s " 00:00")
+                                     s))))
+
+(defun org-super-agenda--absolute-date (s)
+  "FIXME"
+  (or (ignore-errors
+        (org-time-string-to-absolute s))
+      (org-time-string-to-absolute
+       (shell-command-to-string (format "date --rfc-3339=seconds --date \"%s\""
+                                        (if (not (s-contains? (rx space) s))
+                                            ;; No time: set to 00:00
+                                            (concat s " 00:00")
+                                          s))))))
+
+(org-super-agenda--defgroup closed
+  "Group items that are closed.
+Argument can be `t' (to match items closed for any date),
+`nil' (to match items that are not schedule), `past` (to match
+items closed for the past), `today' (to match items closed
+for today), or `future' (to match items closed for the
+future).  Argument may also be given like `before DATE' or `after
+DATE', where DATE is a date string that
+`org-time-string-to-absolute' can process."
+  :section-name (pcase (car args)
+                  ('t "Closed items")
+                  ('nil "Unclosed items ")
+                  ('past "Past closed")
+                  ('today "Closed today")
+                  ('future "Closed soon")
+                  ('before (concat "Closed before " (second args)))
+                  ('on (concat "Closed on " (second args)))
+                  ('after (concat "Closed after " (second args)))
+                  ('between (format "Closed between %s and %s" (second args) (third args))))
+  :let* ((today (pcase (car args)       ; Perhaps premature optimization
+                  ((or 'past 'today 'future 'before 'on 'after)
+                   (org-today))))
+         (target-absolute (pcase (car args)
+                            ((or 'before 'on 'after)
+                             (org-super-agenda--absolute-date (second args)))
+                            ('between
+                             (list (org-super-agenda--absolute-date (second args))
+                                   (org-super-agenda--absolute-date (third args)))))))
+  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+          (let ((entry-time (org-entry-get (point) "CLOSED")))
+            (pcase (car args)
+              ('t entry-time)           ; Has any closed info
+              ('nil (not entry-time))   ; Has no closed info
+              (comparator (when entry-time
+                            (let ((entry-absolute (org-time-string-to-absolute entry-time)))
+                              (pcase comparator
+                                ((or 'past 'today 'future)
+                                 (org-super-agenda--compare-dates comparator entry-absolute today))
+                                ((or 'before 'on 'after)
+                                 (org-super-agenda--compare-dates comparator entry-absolute target-absolute))
+                                ('between
+                                 (and (>= entry-absolute (car target-absolute))
+                                      (<= entry-absolute (second target-absolute))))))))))))
+(org-super-agenda--defgroup deadline
+  "Group items that are deadline.
+Argument can be `t' (to match items deadline for any date),
+`nil' (to match items that are not schedule), `past` (to match
+items deadline for the past), `today' (to match items deadline
+for today), or `future' (to match items deadline for the
+future).  Argument may also be given like `before DATE' or `after
+DATE', where DATE is a date string that
+`org-time-string-to-absolute' can process."
+  :section-name (pcase (car args)
+                  ('t "Deadline items")
+                  ('nil "Undeadline items ")
+                  ('past "Past deadline")
+                  ('today "Deadline today")
+                  ('future "Deadline soon")
+                  ('before (concat "Deadline before " (second args)))
+                  ('on (concat "Deadline on " (second args)))
+                  ('after (concat "Deadline after " (second args)))
+                  ('between (format "Deadline between %s and %s" (second args) (third args))))
+  :let* ((today (pcase (car args)       ; Perhaps premature optimization
+                  ((or 'past 'today 'future 'before 'on 'after)
+                   (org-today))))
+         (target-absolute (pcase (car args)
+                            ((or 'before 'on 'after)
+                             (org-super-agenda--absolute-date (second args)))
+                            ('between
+                             (list (org-super-agenda--absolute-date (second args))
+                                   (org-super-agenda--absolute-date (third args)))))))
+  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+          (let ((entry-time (org-entry-get (point) "DEADLINE")))
+            (pcase (car args)
+              ('t entry-time)           ; Has any deadline info
+              ('nil (not entry-time))   ; Has no deadline info
+              (comparator (when entry-time
+                            (let ((entry-absolute (org-time-string-to-absolute entry-time)))
+                              (pcase comparator
+                                ((or 'past 'today 'future)
+                                 (org-super-agenda--compare-dates comparator entry-absolute today))
+                                ((or 'before 'on 'after)
+                                 (org-super-agenda--compare-dates comparator entry-absolute target-absolute))
+                                ('between
+                                 (and (>= entry-absolute (car target-absolute))
+                                      (<= entry-absolute (second target-absolute))))))))))))
+
 (defun org-super-agenda--compare-dates (comparison date-a date-b)
   "Compare DATE-A and DATE-B according to COMPARISON.
 COMPARISON should be a symbol, one of: `past' or `before',
