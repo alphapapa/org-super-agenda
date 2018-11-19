@@ -303,7 +303,10 @@ returned by :SECTION-NAME as the first item, a list of items not
 matching the :TEST as the second, and a list of items matching as
 the third."
   (declare (indent defun)
-           (debug (symbolp stringp body)))
+           (debug (&define symbolp stringp
+                           &rest [&or [":section-name" [&or stringp def-form]]
+                                      [":test" def-form]
+                                      [":let*" (&rest &or symbolp (gate symbolp &optional def-form))]])))
   (let ((group-type (intern (concat ":" (symbol-name name))))
         (function-name (intern (concat "org-super-agenda--group-" (symbol-name name)))))
     ;; Associate the group type with this function so the dispatcher can find it
