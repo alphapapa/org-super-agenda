@@ -35,12 +35,22 @@
     (when (ht? org-super-agenda--test-results)
       (ht-clear! org-super-agenda--test-results))
     (let ((write-region-inhibit-fsync t) ; Don't fsync every time the result file is written, makes it slow
-          (org-super-agenda--test-save-results t))
+          (org-super-agenda--test-save-results t)
+          (progress-reporter (make-progress-reporter "Running test " 0
+                                                     (save-excursion
+                                                       (goto-char (point-min))(re-search-forward "^;;;; Tests")
+                                                       (cl-loop while (re-search-forward "(org-super-agenda--test-run" nil t)
+                                                                count t))
+                                                     0 0 0)))
       (save-excursion
         (goto-char (point-min))
         (re-search-forward "^;;;; Tests")
-        (while (re-search-forward "(org-super-agenda--test-run" nil t)
-          (org-super-agenda--test-run-this-test))))))
+        (cl-loop for i from 0
+                 while (re-search-forward "(org-super-agenda--test-run" nil t)
+                 do (progn
+                      (progress-reporter-update progress-reporter i)
+                      (cl-letf (((symbol-function #'message) (symbol-function #'ignore)))
+                        (org-super-agenda--test-run-this-test))))))))
 
 (defun org-super-agenda--test-save-this-test ()
   "Save the result of this test."
