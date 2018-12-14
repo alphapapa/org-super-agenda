@@ -27,7 +27,7 @@
 
 ;;;; Commands
 
-(cl-defun org-super-agenda--test-update-all-tests (&optional &key force)
+(cl-defun org-super-agenda--test-update-all-tests (&key force)
   "Save the result of all tests to the results file."
   (interactive)
   (when (or force
