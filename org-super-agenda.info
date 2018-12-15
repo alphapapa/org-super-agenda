@@ -53,6 +53,7 @@ Group selectors
 Changelog
 
 * 1.1-pre: 11-pre. 
+* 1.0.2: 102. 
 * 1.0.1: 101. 
 * 1.0.0: 100. 
 
@@ -450,11 +451,12 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 * Menu:
 
 * 1.1-pre: 11-pre. 
+* 1.0.2: 102. 
 * 1.0.1: 101. 
 * 1.0.0: 100. 
 
 
-File: README.info,  Node: 11-pre,  Next: 101,  Up: Changelog
+File: README.info,  Node: 11-pre,  Next: 102,  Up: Changelog
 
 6.1 1.1-pre
 ===========
@@ -470,9 +472,18 @@ File: README.info,  Node: 11-pre,  Next: 101,  Up: Changelog
      (https://github.com/cslux).)
 
 
-File: README.info,  Node: 101,  Next: 100,  Prev: 11-pre,  Up: Changelog
+File: README.info,  Node: 102,  Next: 101,  Prev: 11-pre,  Up: Changelog
 
-6.2 1.0.1
+6.2 1.0.2
+=========
+
+*Fixed*
+   • Byte-compiler warnings.
+
+
+File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
+
+6.3 1.0.1
 =========
 
 *Fixes*
@@ -484,7 +495,7 @@ File: README.info,  Node: 101,  Next: 100,  Prev: 11-pre,  Up: Changelog
 
 File: README.info,  Node: 100,  Prev: 101,  Up: Changelog
 
-6.3 1.0.0
+6.4 1.0.0
 =========
 
 First tagged version.
@@ -536,26 +547,27 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction757
-Node: Contents2165
-Node: Screenshots2318
-Node: Installation2555
-Node: MELPA2716
-Node: Manual installation2863
-Node: Usage3254
-Node: Examples4230
-Node: Group selectors7715
-Node: Keywords8904
-Node: Special selectors9645
-Node: Normal selectors11398
-Node: Tips15747
-Node: Changelog16598
-Node: 11-pre16766
-Node: 10117368
-Node: 10017709
-Node: Development17814
-Node: Bugs18206
-Node: Credits18845
+Node: Introduction772
+Node: Contents2180
+Node: Screenshots2333
+Node: Installation2570
+Node: MELPA2731
+Node: Manual installation2878
+Node: Usage3269
+Node: Examples4245
+Node: Group selectors7730
+Node: Keywords8919
+Node: Special selectors9660
+Node: Normal selectors11413
+Node: Tips15762
+Node: Changelog16613
+Node: 11-pre16796
+Node: 10217398
+Node: 10117535
+Node: 10017873
+Node: Development17978
+Node: Bugs18370
+Node: Credits19009
 
 End Tag Table
 

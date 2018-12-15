@@ -455,7 +455,7 @@ COMPARISON should be a symbol, one of: `past' or `before',
 
 ;;;;; Effort
 
-(cl-defmacro org-super-agenda--defeffort-group (name docstring &key section-name comparator)
+(cl-defmacro org-super-agenda--defeffort-group (name docstring &key comparator)
   (declare (indent defun))
   `(org-super-agenda--defgroup ,(intern (concat "effort" (symbol-name name)))
      ,(concat docstring "\nArgument is a time-duration string, like \"5\" or \"0:05\" for 5 minutes.")
@@ -618,7 +618,7 @@ e.g. \"A\" or (\"B\" \"C\")."
   :section-name (concat "Priority " (s-join " and " args) " items")
   :test (cl-member (org-super-agenda--get-priority-cookie item) args :test 'string=))
 
-(cl-defmacro org-super-agenda--defpriority-group (name docstring &key section-name comparator)
+(cl-defmacro org-super-agenda--defpriority-group (name docstring &key comparator)
   (declare (indent defun))
   `(org-super-agenda--defgroup ,(intern (concat "priority" (symbol-name name)))
      ,(concat docstring "\nArgument is a string; it may also be a list of
