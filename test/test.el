@@ -510,6 +510,12 @@ buffer and do not save the results."
            :groups '((:log t))
            :let* ((org-agenda-show-log t)))))
 
+(ert-deftest org-super-agenda--test-:pred ()
+  ;; FIXME: Test.
+  (should (org-super-agenda--test-run
+           :groups '((:pred (lambda (item)
+                              (s-contains? "moon" item)))))))
+
 (ert-deftest org-super-agenda--test-:priority ()
   ;; DONE: Works.
   (should (org-super-agenda--test-run

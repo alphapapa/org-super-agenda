@@ -576,6 +576,29 @@ section name for this group."
             (cl-loop for regexp in args
                      thereis (string-match-p regexp heading)))))
 
+(org-super-agenda--defgroup pred
+  "Group items that match a predicate.
+Argument can be one or a list of functions, to match items that
+return non-nil for any function.
+
+Each predicate is called with a single argument: the agenda item
+being tested, as a string.  Agenda-related attributes will have
+been applied to the string as text-properties.  Use
+`describe-text-properties' in an agenda buffer to see what's
+available."
+  :section-name (concat "Predicate: "
+                        (cl-labels ((to-string (arg)
+                                               (pcase-exhaustive arg
+                                                 ;; FIXME: What if the lambda's byte-compiled?
+                                                 (`(lambda . ,_) "Lambda")
+                                                 ((pred functionp) (symbol-name arg))
+                                                 ((pred listp) (s-join " OR " (-map #'to-string arg))))))
+                          (to-string args)))
+  :test (pcase args
+          ((pred functionp) (funcall args item))
+          (_ (cl-loop for fn in args
+                      thereis (funcall fn item)))))
+
 (org-super-agenda--defgroup regexp
   "Group items that match any of the given regular expressions.
 Argument may be a string or list of strings, each of which should

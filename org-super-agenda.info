@@ -396,6 +396,9 @@ list.
      matched by the ‘:time-grid’ selector, so if you want these
      displayed in their own group, you may need to select them in a
      group before a group containing the ‘:time-grid’ selector.
+‘‘:pred’’
+     Group items if any of the given predicate functions return non-nil
+     when called with each item as a string from the agenda buffer ().
 ‘:priority’
      Group items that match any of the given priorities.  Argument may
      be a string or list of strings, which should be the priority
@@ -482,6 +485,9 @@ File: README.info,  Node: 11-pre,  Next: 102,  Up: Changelog
      applying items to a function.
    • Selector ‘:file-path’, which groups items by regular expressions
      matched against their buffers’ filename paths.
+   • Selector ‘:pred’, which matches if any of the given predicate
+     functions return non-nil when called with the item string from the
+     agenda buffer.
 
    *Internal*
    • Refactor auto-groups with macro.
@@ -574,15 +580,15 @@ Node: Group selectors7730
 Node: Keywords8919
 Node: Special selectors9660
 Node: Normal selectors11695
-Node: Tips16165
-Node: Changelog17016
-Node: 11-pre17199
-Node: 10218100
-Node: 10118237
-Node: 10018575
-Node: Development18680
-Node: Bugs19072
-Node: Credits19711
+Node: Tips16326
+Node: Changelog17177
+Node: 11-pre17360
+Node: 10218426
+Node: 10118563
+Node: 10018901
+Node: Development19006
+Node: Bugs19398
+Node: Credits20037
 
 End Tag Table
 

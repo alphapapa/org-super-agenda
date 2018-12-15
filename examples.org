@@ -14,6 +14,7 @@ There are a lot of possibilities, so here are some examples to spark your imagin
     -  [[#automatically-by-group][Automatically by group]]
     -  [[#automatically-by-category][Automatically by category]]
     -  [[#automatically-by-mapping-a-function][Automatically by mapping a function]]
+    -  [[#by-predicate][By predicate]]
     -  [[#forward-looking][Forward-looking]]
     -  [[#log-mode][Log mode]]
     -  [[#concrete-dates][Concrete dates]]
@@ -138,6 +139,27 @@ You could also use a function name symbol (note that, since the list is already 
 #+END_SRC
 
 Of course, this example could be more easily written by using the ~:file-path~ selector, but you get the idea.
+
+** By predicate
+
+You can also use one or more arbitrary predicate functions, including lambdas.  Note that, since the group list is already quoted, function name symbols are not quoted again, nor is ~#'~ used.
+
+#+BEGIN_SRC elisp
+  (defun pizza-p (item)
+    (s-matches? "pizza" item))
+
+  (let ((org-super-agenda-groups
+         '((:pred pizza-p))))
+    (org-agenda-list))
+
+  (let ((org-super-agenda-groups
+         '((:pred (pizza-p
+                   (lambda (item)
+                     (s-matches? "Skype" item)))))))
+    (org-agenda-list))
+#+END_SRC
+
+Of course, this example would be better written using the ~:regexp~ selector, but you get the idea (better examples would be appreciated).
 
 ** Forward-looking
 
