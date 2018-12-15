@@ -471,6 +471,9 @@ File: README.info,  Node: 11-pre,  Next: 102,  Up: Changelog
      group headers.  (Thanks to Christian Schwarzgruber
      (https://github.com/cslux).)
 
+   *Internal*
+   • Refactor auto-groups with macro.
+
 
 File: README.info,  Node: 102,  Next: 101,  Prev: 11-pre,  Up: Changelog
 
@@ -562,12 +565,12 @@ Node: Normal selectors11413
 Node: Tips15762
 Node: Changelog16613
 Node: 11-pre16796
-Node: 10217398
-Node: 10117535
-Node: 10017873
-Node: Development17978
-Node: Bugs18370
-Node: Credits19009
+Node: 10217453
+Node: 10117590
+Node: 10017928
+Node: Development18033
+Node: Bugs18425
+Node: Credits19064
 
 End Tag Table
 

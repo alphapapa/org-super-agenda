@@ -727,46 +727,69 @@ The string should be the priority cookie letter, e.g. \"A\".")
 
 ;;;;; Auto-grouping
 
-;; TODO: Refactor these, because they are essentially the same thing,
-;; like the regular groups do essentially the same thing.  But this
-;; already works, so I'm going to go ahead and release it.
+(cl-defmacro org-super-agenda--def-auto-group (name docstring-ending
+                                                    &key keyword key-form (header-form 'key))
+  "Define an auto-grouping function.
 
-(defun org-super-agenda--auto-group-items (all-items &rest ignore)
-  "Divide ALL-ITEMS into groups based on their AGENDA-GROUP property."
-  (cl-loop with groups = (ht-create)
-           for item in all-items
-           for group = (org-entry-get (org-super-agenda--get-marker item)
-                                      org-super-agenda-group-property-name
-                                      org-super-agenda-properties-inherit)
-           if group
-           do (ht-set! groups group (cons item (ht-get groups group)))
-           else collect item into non-matching
-           finally return (list :auto-group
-                                non-matching
-                                (cl-loop for key in (sort (ht-keys groups) #'string<)
-                                         for name = (concat "Group: " key)
-                                         collect (list :name name
-                                                       :items (nreverse (ht-get groups key)))))))
-(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
-                                              :auto-group #'org-super-agenda--auto-group-items))
+The function will be named `org-super-agenda--auto-group-NAME'.
 
-(defun org-super-agenda--auto-group-category (all-items &rest ignore)
-  "Divide ALL-ITEMS into groups based on their org-category property."
-  (cl-loop with categories = (ht-create)
-           for item in all-items
-           for category = (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
-                            (org-get-category))
-           if category
-           do (ht-set! categories category (cons item (ht-get categories category)))
-           else collect item into non-matching
-           finally return (list :auto-category
-                                non-matching
-                                (cl-loop for key in (sort (ht-keys categories) #'string<)
-                                         for name = (concat "Category: " key)
-                                         collect (list :name name
-                                                       :items (ht-get categories key))))))
-(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
-                                              :auto-category #'org-super-agenda--auto-group-category))
+The docstring will be, \"Divide ALL-ITEMS into groups based on DOCSTRING_ENDING.\".
+
+The selector keyword will be `:auto-NAME'.
+
+Items will be grouped by the value of KEY-FORM evaluated for each
+item, with the variable `item' bound to the string from the
+agenda buffer.
+
+The groups' headers will be the value of HEADER-FORM, evaluated
+for each group after items are grouped, with the variable `key'
+bound to the group's key.  The form defaults to `key'.
+
+In the body of the function, the variable `all-items' will be
+bound to all agenda items being grouped, and `args' to the rest
+of the arguments to the function."
+  (declare (indent defun))
+  (cl-labels ((form-contains (form symbol)
+                             (cl-typecase form
+                               (atom (eq form symbol))
+                               (list (or (form-contains (car form) symbol)
+                                         (form-contains (cdr form) symbol))))))
+    (let* ((fn-name (intern (format "org-super-agenda--auto-group-%s" name)))
+           (docstring (format "Divide ALL-ITEMS into groups based on %s." docstring-ending))
+           (keyword (or keyword (intern (format ":auto-%s" name))))
+           (fn-args (if (or (form-contains key-form 'args)
+                            (form-contains header-form 'args))
+                        '(all-items &rest args)
+                      '(all-items &rest _args))))
+      `(progn
+         (defun ,fn-name ,fn-args
+           ,docstring
+           (cl-loop with groups = (ht-create)
+                    for item in all-items
+                    for key = ,key-form
+                    if key
+                    do (ht-set! groups key (cons item (ht-get groups key)))
+                    else collect item into non-matching
+                    finally return (list ,keyword
+                                         non-matching
+                                         (cl-loop for key in (sort (ht-keys groups) #'string<)
+                                                  for name = ,header-form
+                                                  collect (list :name name
+                                                                :items (nreverse (ht-get groups key)))))))
+         (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
+                                                       ,keyword #',fn-name))))))
+
+(org-super-agenda--def-auto-group items "their AGENDA-GROUP property"
+  :keyword :auto-group
+  :key-form (org-entry-get (org-super-agenda--get-marker item)
+                           org-super-agenda-group-property-name
+                           org-super-agenda-properties-inherit)
+  :header-form (concat "Group: " key))
+
+(org-super-agenda--def-auto-group category "their org-category property"
+  :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+              (org-get-category))
+  :header-form (concat "Category: " key))
 
 ;;;;; Dispatchers
 
