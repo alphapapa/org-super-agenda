@@ -378,6 +378,9 @@ list.
      Group items that are higher than (or equal to) the given effort.
      Argument is a time-duration string, like ‘5’ or ‘0:05’ for 5
      minutes.
+‘‘:file-path’’
+     Group items whose buffers’ filename paths match any of the given
+     regular expressions.
 ‘:habit’
      Group habit items (items which have a STYLE: habit Org property).
 ‘:heading-regexp’
@@ -477,6 +480,8 @@ File: README.info,  Node: 11-pre,  Next: 102,  Up: Changelog
      (https://github.com/cslux).)
    • Selector ‘:auto-map’, which groups items by the value returned when
      applying items to a function.
+   • Selector ‘:file-path’, which groups items by regular expressions
+     matched against their buffers’ filename paths.
 
    *Internal*
    • Refactor auto-groups with macro.
@@ -569,15 +574,15 @@ Node: Group selectors7730
 Node: Keywords8919
 Node: Special selectors9660
 Node: Normal selectors11695
-Node: Tips16044
-Node: Changelog16895
-Node: 11-pre17078
-Node: 10217849
-Node: 10117986
-Node: 10018324
-Node: Development18429
-Node: Bugs18821
-Node: Credits19460
+Node: Tips16165
+Node: Changelog17016
+Node: 11-pre17199
+Node: 10218100
+Node: 10118237
+Node: 10018575
+Node: Development18680
+Node: Bugs19072
+Node: Credits19711
 
 End Tag Table
 

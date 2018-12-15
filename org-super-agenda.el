@@ -513,6 +513,23 @@ Habit items have a \"STYLE: habit\" Org property."
     :section-name "Habits"
     :test (org-is-habit-p (org-super-agenda--get-marker item))))
 
+(org-super-agenda--defgroup file-path
+  "Group items by file path.
+Argument can be `t' to match items from files at any
+path (i.e. all items from file-backed buffers), `nil' to match
+items from non-file-backed buffers, or one or a list of regexp
+strings to match against file paths."
+  :section-name (concat "File path: " (s-join " OR " args))
+  :test (-when-let* ((marker (or (get-text-property 0 'org-marker item)
+                                 (get-text-property 0 'org-hd-marker item)))
+                     (file-path (->> marker marker-buffer buffer-file-name)))
+          (pcase args
+            ('t t)
+            ('nil nil)
+            ((pred stringp) (s-matches? args file-path))
+            (_ (cl-loop for path in args
+                        thereis (s-matches? path file-path))))))
+
 (org-super-agenda--defgroup log
   "Group Agenda Log Mode items.
 Argument may be `close' or `closed' to select items closed today;

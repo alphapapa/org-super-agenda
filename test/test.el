@@ -489,6 +489,11 @@ buffer and do not save the results."
   (should (org-super-agenda--test-run
            :groups '((:effort> "5")))))
 
+(ert-deftest org-super-agenda--test-:file-path ()
+  ;; FIXME: Test.
+  (should (org-super-agenda--test-run
+           :groups '((:file-path "/test/")))))
+
 (ert-deftest org-super-agenda--test-:habit ()
   ;; DONE: Works.
   (should (org-super-agenda--test-run

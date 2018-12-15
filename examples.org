@@ -137,6 +137,8 @@ You could also use a function name symbol (note that, since the list is already 
     (org-agenda-list))
 #+END_SRC
 
+Of course, this example could be more easily written by using the ~:file-path~ selector, but you get the idea.
+
 ** Forward-looking
 
 Here's an example of a date-oriented, forward-looking agenda grouping.

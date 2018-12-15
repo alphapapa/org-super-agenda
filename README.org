@@ -184,6 +184,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  =:deadline= :: Group items that have a deadline. Argument can be ~t~ (to match items with any deadline), ~nil~ (to match items that have no deadline), ~past~ (to match items with a deadline in the past), ~today~ (to match items whose deadline is today), or ~future~ (to match items with a deadline in the future). Argument may also be given like ~before DATE~ or ~after DATE~ where DATE is a date string that ~org-time-string-to-absolute~ can process.
 +  =:effort<= :: Group items that are less than (or equal to) the given effort. Argument is a time-duration string, like ~5~ or ~0:05~ for 5 minutes.
 +  =:effort>= :: Group items that are higher than (or equal to) the given effort. Argument is a time-duration string, like ~5~ or ~0:05~ for 5 minutes.
++  ~:file-path~ :: Group items whose buffers' filename paths match any of the given regular expressions.
 +  =:habit= :: Group habit items (items which have a =STYLE: habit= Org property).
 +  =:heading-regexp= :: Group items whose headings match any of the given regular expressions.
 +  =:log= :: Group Agenda Log Mode items.  Argument may be ~close~ or ~closed~ to select items closed today; ~clock~ or ~clocked~ to select items clocked today; ~changed~ or ~state~ to select items whose to-do state was changed today; ~t~ to select any logged item, or ~nil~ to select any non-logged item.  (See also variable ~org-agenda-log-mode-items~.)  Note that these items may also be matched by the ~:time-grid~ selector, so if you want these displayed in their own group, you may need to select them in a group before a group containing the ~:time-grid~ selector.
@@ -217,6 +218,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  Option ~org-super-agenda-header-separator~, which can, e.g. be set to an empty string for a more compact view.  (Thanks to [[https://github.com/sdelafond][Sébastien Delafond]].)
 +  Face ~org-super-agenda-header~, which can be used to customize group headers.  (Thanks to [[https://github.com/cslux][Christian Schwarzgruber]].)
 +  Selector ~:auto-map~, which groups items by the value returned when applying items to a function.
++  Selector ~:file-path~, which groups items by regular expressions matched against their buffers' filename paths.
 
 *Internal*
 +  Refactor auto-groups with macro.
