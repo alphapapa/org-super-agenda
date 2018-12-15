@@ -681,7 +681,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
                         (add-face-text-property 0 (length it) face append it)))
 
                  ;; Auto category/group
-                 if (cl-member auto-section-name '(:auto-group :auto-category))
+                 if (cl-member auto-section-name '(:auto-group :auto-category :auto-map))
                  do (setq section-name (or custom-section-name "Auto category/group"))
                  and append (cl-loop for group in matching
                                      collect (list :name (plist-get group :name)
@@ -790,6 +790,10 @@ of the arguments to the function."
   :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
               (org-get-category))
   :header-form (concat "Category: " key))
+
+(org-super-agenda--def-auto-group map "the value returned by calling function ARGS with each item.  The function should return a string to be used as the grouping key and as the header for its group"
+  :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+              (funcall (car args) item)))
 
 ;;;;; Dispatchers
 

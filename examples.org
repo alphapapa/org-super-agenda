@@ -13,6 +13,7 @@ There are a lot of possibilities, so here are some examples to spark your imagin
     -  [[#apply-faces-and-transformations][Apply faces and transformations]]
     -  [[#automatically-by-group][Automatically by group]]
     -  [[#automatically-by-category][Automatically by category]]
+    -  [[#automatically-by-mapping-a-function][Automatically by mapping a function]]
     -  [[#forward-looking][Forward-looking]]
     -  [[#log-mode][Log mode]]
     -  [[#concrete-dates][Concrete dates]]
@@ -103,6 +104,36 @@ In the same way, items can automatically be grouped by their category (which is 
 #+BEGIN_SRC elisp
   (let ((org-super-agenda-groups
          '((:auto-category t))))
+    (org-agenda-list))
+#+END_SRC
+
+** Automatically by mapping a function
+
+This example groups items by the name of the directory their file is in:
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:auto-map (lambda (item)
+                        (-when-let* ((marker (or (get-text-property 0 'org-marker item)
+                                                 (get-text-property 0 'org-hd-marker item)))
+                                     (file-path (->> marker marker-buffer buffer-file-name))
+                                     (directory-name (->> file-path file-name-directory directory-file-name file-name-nondirectory)))
+                          (concat "Directory: " directory-name)))))))
+    (org-agenda-list))
+#+END_SRC
+
+You could also use a function name symbol (note that, since the list is already quoted, the symbol is not quoted again, nor is ~#'~ used):
+
+#+BEGIN_SRC elisp
+  (defun item-dir-name (item)
+    (-when-let* ((marker (or (get-text-property 0 'org-marker item)
+                             (get-text-property 0 'org-hd-marker item)))
+                 (file-path (->> marker marker-buffer buffer-file-name))
+                 (directory-name (->> file-path file-name-directory directory-file-name file-name-nondirectory)))
+      (concat "Directory: " directory-name)))
+
+  (let ((org-super-agenda-groups
+         '((:auto-map item-dir-name))))
     (org-agenda-list))
 #+END_SRC
 

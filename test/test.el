@@ -604,6 +604,13 @@ buffer and do not save the results."
   (should (org-super-agenda--test-run
            :groups '((:auto-group t)))))
 
+(ert-deftest org-super-agenda--test-:auto-map ()
+  ;; FIXME: Test.
+  (should (org-super-agenda--test-run
+           :groups '((:auto-map (lambda (item)
+                                  (when (s-contains? "a" item)
+                                    (upcase item))))))))
+
 (ert-deftest org-super-agenda--test-:discard ()
   ;; DONE: Works.
   (should (org-super-agenda--test-run

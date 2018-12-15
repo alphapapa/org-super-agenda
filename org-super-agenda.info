@@ -317,6 +317,11 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      setting this property for a subtree, every item in it will be
      sorted into an agenda group by that name and placed into the agenda
      where the ‘:auto-group’ selector is ().
+‘‘:auto-map’’
+     This automatically groups items by the value returned when applying
+     each item to the given function as a string from the agenda buffer
+     ().  The function should return a string to be used as the grouping
+     key and as the header for its group.
 ‘:discard’
      Discard items that don’t match selectors.  Any groups processed
      after this one will not see discarded items.  You might use this at
@@ -470,6 +475,8 @@ File: README.info,  Node: 11-pre,  Next: 102,  Up: Changelog
    • Face ‘org-super-agenda-header’, which can be used to customize
      group headers.  (Thanks to Christian Schwarzgruber
      (https://github.com/cslux).)
+   • Selector ‘:auto-map’, which groups items by the value returned when
+     applying items to a function.
 
    *Internal*
    • Refactor auto-groups with macro.
@@ -561,16 +568,16 @@ Node: Examples4245
 Node: Group selectors7730
 Node: Keywords8919
 Node: Special selectors9660
-Node: Normal selectors11413
-Node: Tips15762
-Node: Changelog16613
-Node: 11-pre16796
-Node: 10217453
-Node: 10117590
-Node: 10017928
-Node: Development18033
-Node: Bugs18425
-Node: Credits19064
+Node: Normal selectors11695
+Node: Tips16044
+Node: Changelog16895
+Node: 11-pre17078
+Node: 10217849
+Node: 10117986
+Node: 10018324
+Node: Development18429
+Node: Bugs18821
+Node: Credits19460
 
 End Tag Table
 
