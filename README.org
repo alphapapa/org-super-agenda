@@ -173,6 +173,11 @@ These selectors take one argument alone, or multiple arguments in a list.
 
 * Changelog
 
+** 1.0.2
+
+*Fixed*
++  Byte-compiler warnings.
+
 ** 1.0.1
 
 *Fixes*

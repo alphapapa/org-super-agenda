@@ -46,6 +46,7 @@ Group selectors
 
 Changelog
 
+* 1.0.2: 102. 
 * 1.0.1: 101. 
 * 1.0.0: 100. 
 
@@ -415,13 +416,23 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 
 * Menu:
 
+* 1.0.2: 102. 
 * 1.0.1: 101. 
 * 1.0.0: 100. 
 
 
-File: README.info,  Node: 101,  Next: 100,  Up: Changelog
+File: README.info,  Node: 102,  Next: 101,  Up: Changelog
 
-4.1 1.0.1
+4.1 1.0.2
+=========
+
+*Fixed*
+   • Byte-compiler warnings.
+
+
+File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
+
+4.2 1.0.1
 =========
 
 *Fixes*
@@ -433,7 +444,7 @@ File: README.info,  Node: 101,  Next: 100,  Up: Changelog
 
 File: README.info,  Node: 100,  Prev: 101,  Up: Changelog
 
-4.2 1.0.0
+4.3 1.0.0
 =========
 
 First tagged version.
@@ -493,24 +504,25 @@ GPLv3+
 
 Tag Table:
 Node: Top215
-Node: Introduction703
-Node: Installation2237
-Node: MELPA2399
-Node: Manual installation2546
-Node: Usage2937
-Node: Examples6999
-Node: Group selectors7179
-Node: Keywords8368
-Node: Special selectors8708
-Node: Normal selectors10461
-Node: Tips14810
-Node: Changelog15661
-Node: 10115809
-Node: 10016135
-Node: Development16240
-Node: Bugs16632
-Node: Credits17271
-Node: License17620
+Node: Introduction718
+Node: Installation2252
+Node: MELPA2414
+Node: Manual installation2561
+Node: Usage2952
+Node: Examples7014
+Node: Group selectors7194
+Node: Keywords8383
+Node: Special selectors8723
+Node: Normal selectors10476
+Node: Tips14825
+Node: Changelog15676
+Node: 10215839
+Node: 10115961
+Node: 10016299
+Node: Development16404
+Node: Bugs16796
+Node: Credits17435
+Node: License17784
 
 End Tag Table
 
