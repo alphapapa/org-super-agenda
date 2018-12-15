@@ -710,7 +710,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
                  do (setq matching (-map (pcase transformer
                                            (`(function ,transformer) transformer)
                                            ((pred symbolp) transformer)
-                                           (otherwise `(lambda (it) ,transformer)))
+                                           (_ `(lambda (it) ,transformer)))
                                          matching))
 
                  ;; Face
