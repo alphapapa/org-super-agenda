@@ -958,6 +958,22 @@ actually the ORDER for the groups."
 (setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
                                                      :order-multi 'org-super-agenda--transform-group-order))
 
+;;;; Functions for :auto-map
+
+(defun org-super-agenda--dir-name (item)
+  "Return ITEM's directory name, prepended with \"Directory: \", or nil if none."
+  ;; MAYBE: We could check for base buffers in the case of indirect buffers.
+  (-when-let* ((file-path (->> (org-super-agenda--get-marker item) marker-buffer buffer-file-name))
+               (directory-name (->> file-path file-name-directory directory-file-name file-name-nondirectory)))
+    (concat "Directory: " directory-name)))
+
+(defun org-super-agenda--parent-heading (item)
+  "Return ITEM's parent heading, or nil if none.
+ITEM should be an agenda string with markers in text properties."
+  (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+    (when (org-up-heading-safe)
+      (org-get-heading 'notags 'notodo))))
+
 ;;;; Finalize filter
 
 (defun org-super-agenda--filter-finalize-entries (string)

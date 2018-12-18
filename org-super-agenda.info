@@ -49,6 +49,7 @@ Group selectors
 * Keywords::
 * Special selectors::
 * Normal selectors::
+* ‘:auto-map’ helper functions: ‘auto-map’ helper functions. 
 
 Changelog
 
@@ -273,6 +274,7 @@ priority ‘C’ items would not appear in the agenda.
 * Keywords::
 * Special selectors::
 * Normal selectors::
+* ‘:auto-map’ helper functions: ‘auto-map’ helper functions. 
 
 
 File: README.info,  Node: Keywords,  Next: Special selectors,  Up: Group selectors
@@ -338,7 +340,7 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      (groupA) (groupB) ...))’ to set the order of these groups to 2.
 
 
-File: README.info,  Node: Normal selectors,  Prev: Special selectors,  Up: Group selectors
+File: README.info,  Node: Normal selectors,  Next: ‘auto-map’ helper functions,  Prev: Special selectors,  Up: Group selectors
 
 5.2.3 Normal selectors
 ----------------------
@@ -434,6 +436,21 @@ list.
      ‘nil’ to match only non-todo items.
 
 
+File: README.info,  Node: ‘auto-map’ helper functions,  Prev: Normal selectors,  Up: Group selectors
+
+5.2.4 ‘:auto-map’ helper functions
+----------------------------------
+
+These functions can be passed to the ‘:auto-map’ selector to easily
+group items by certain attributes:
+
+‘‘org-super-agenda--dir-name’’
+     Return the item’s directory name, prepended with Directory:, or nil
+     if none.
+‘‘org-super-agenda--parent-heading’’
+     Return the item’s parent heading, or nil if none.
+
+
 File: README.info,  Node: Tips,  Prev: Group selectors,  Up: Usage
 
 5.3 Tips
@@ -488,6 +505,9 @@ File: README.info,  Node: 11-pre,  Next: 102,  Up: Changelog
    • Selector ‘:pred’, which matches if any of the given predicate
      functions return non-nil when called with the item string from the
      agenda buffer.
+   • Helper functions for the ‘:auto-map’ selector:
+     ‘org-super-agenda--dir-name’ and
+     ‘org-super-agenda--parent-heading’.
 
    *Internal*
    • Refactor auto-groups with macro.
@@ -568,27 +588,28 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction772
-Node: Contents2180
-Node: Screenshots2333
-Node: Installation2570
-Node: MELPA2731
-Node: Manual installation2878
-Node: Usage3269
-Node: Examples4245
-Node: Group selectors7730
-Node: Keywords8919
-Node: Special selectors9660
-Node: Normal selectors11695
-Node: Tips16326
-Node: Changelog17177
-Node: 11-pre17360
-Node: 10218426
-Node: 10118563
-Node: 10018901
-Node: Development19006
-Node: Bugs19398
-Node: Credits20037
+Node: Introduction842
+Node: Contents2250
+Node: Screenshots2403
+Node: Installation2640
+Node: MELPA2801
+Node: Manual installation2948
+Node: Usage3339
+Node: Examples4315
+Node: Group selectors7800
+Node: Keywords9059
+Node: Special selectors9800
+Node: Normal selectors11835
+Node: ‘auto-map’ helper functions16506
+Node: Tips17028
+Node: Changelog17879
+Node: 11-pre18062
+Node: 10219273
+Node: 10119410
+Node: 10019748
+Node: Development19853
+Node: Bugs20245
+Node: Credits20884
 
 End Tag Table
 

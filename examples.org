@@ -123,22 +123,15 @@ This example groups items by the name of the directory their file is in:
     (org-agenda-list))
 #+END_SRC
 
-You could also use a function name symbol (note that, since the list is already quoted, the symbol is not quoted again, nor is ~#'~ used):
+Conveniently, a function is already defined which does that, so you can simply pass the function name (note that, since the list is already quoted, the symbol is not quoted again, nor is ~#'~ used):
 
 #+BEGIN_SRC elisp
-  (defun item-dir-name (item)
-    (-when-let* ((marker (or (get-text-property 0 'org-marker item)
-                             (get-text-property 0 'org-hd-marker item)))
-                 (file-path (->> marker marker-buffer buffer-file-name))
-                 (directory-name (->> file-path file-name-directory directory-file-name file-name-nondirectory)))
-      (concat "Directory: " directory-name)))
-
   (let ((org-super-agenda-groups
-         '((:auto-map item-dir-name))))
+         '((:auto-map org-super-agenda--dir-name))))
     (org-agenda-list))
 #+END_SRC
 
-Of course, this example could be more easily written by using the ~:file-path~ selector, but you get the idea.
+This example could also be written by using the ~:file-path~ selector, which would return the whole path.
 
 ** By predicate
 
