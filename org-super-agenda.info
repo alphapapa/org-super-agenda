@@ -323,7 +323,7 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      This automatically groups items by the value returned when applying
      each item to the given function as a string from the agenda buffer
      ().  The function should return a string to be used as the grouping
-     key and as the header for its group.
+     key and as the header for its group.  Some are provided.
 ‘‘:auto-property’’
      This automatically groups items by the value of the given property
      ().
@@ -602,17 +602,17 @@ Node: Examples4315
 Node: Group selectors7800
 Node: Keywords9059
 Node: Special selectors9800
-Node: Normal selectors11943
-Node: ‘auto-map’ helper functions16614
-Node: Tips17136
-Node: Changelog17987
-Node: 11-pre18170
-Node: 10219381
-Node: 10119518
-Node: 10019856
-Node: Development19961
-Node: Bugs20353
-Node: Credits20992
+Node: Normal selectors11963
+Node: ‘auto-map’ helper functions16634
+Node: Tips17156
+Node: Changelog18007
+Node: 11-pre18190
+Node: 10219401
+Node: 10119538
+Node: 10019876
+Node: Development19981
+Node: Bugs20373
+Node: Credits21012
 
 End Tag Table
 
