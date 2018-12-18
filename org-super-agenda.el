@@ -125,6 +125,10 @@
   "List of agenda grouping keywords and associated functions.
 Populated automatically by `org-super-agenda--defgroup'.")
 
+(defvar org-super-agenda-auto-selector-keywords nil
+  "Keywords used as auto-grouping selectors.
+Populated automatically by `org-super-agenda--def-auto-group'.")
+
 (defvar org-super-agenda-group-transformers nil
   "List of agenda group transformers.")
 
@@ -721,7 +725,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
                         (add-face-text-property 0 (length it) face append it)))
 
                  ;; Auto category/group
-                 if (cl-member auto-section-name '(:auto-group :auto-category :auto-map))
+                 if (cl-member auto-section-name org-super-agenda-auto-selector-keywords)
                  do (setq section-name (or custom-section-name "Auto category/group"))
                  and append (cl-loop for group in matching
                                      collect (list :name (plist-get group :name)
@@ -817,7 +821,8 @@ of the arguments to the function."
                                                   collect (list :name name
                                                                 :items (nreverse (ht-get groups key)))))))
          (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
-                                                       ,keyword #',fn-name))))))
+                                                       ,keyword #',fn-name))
+         (add-to-list 'org-super-agenda-auto-selector-keywords ,keyword)))))
 
 (org-super-agenda--def-auto-group items "their AGENDA-GROUP property"
   :keyword :auto-group
