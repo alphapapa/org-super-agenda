@@ -960,6 +960,8 @@ actually the ORDER for the groups."
 
 ;;;; Functions for :auto-map
 
+;; TODO: Allow these to be referenced without the full function name.
+
 (defun org-super-agenda--dir-name (item)
   "Return ITEM's directory name, prepended with \"Directory: \", or nil if none."
   ;; MAYBE: We could check for base buffers in the case of indirect buffers.
