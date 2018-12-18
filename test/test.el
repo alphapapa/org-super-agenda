@@ -352,6 +352,11 @@ buffer and do not save the results."
   (should (org-super-agenda--test-run
            :groups '((:auto-group t)))))
 
+(ert-deftest org-super-agenda--test-auto-property ()
+  ;; FIXME: Works, but need to save result after upgrading Org.
+  (should (org-super-agenda--test-run
+           :groups '((:auto-property "agenda-group")))))
+
 (ert-deftest org-super-agenda--test-discard-with-2-regexps ()
   (should (org-super-agenda--test-run
            :groups '((:discard (:regexp "pizza"

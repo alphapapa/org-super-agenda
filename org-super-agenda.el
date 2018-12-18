@@ -840,6 +840,12 @@ of the arguments to the function."
   :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
               (funcall (car args) item)))
 
+(org-super-agenda--def-auto-group property "the given property"
+  :key-form (org-entry-get (org-super-agenda--get-marker item)
+                           (car args)
+                           org-super-agenda-properties-inherit)
+  :header-form (format "%s: %s" (car args) key))
+
 ;;;;; Dispatchers
 
 (defun org-super-agenda--get-selector-fn (selector)

@@ -14,6 +14,7 @@ There are a lot of possibilities, so here are some examples to spark your imagin
     -  [[#automatically-by-group][Automatically by group]]
     -  [[#automatically-by-category][Automatically by category]]
     -  [[#automatically-by-mapping-a-function][Automatically by mapping a function]]
+    -  [[#automatically-by-property][Automatically by property]]
     -  [[#by-predicate][By predicate]]
     -  [[#forward-looking][Forward-looking]]
     -  [[#log-mode][Log mode]]
@@ -98,6 +99,8 @@ The property name can be customized. This becomes handy if you already have, for
 
 This causes the =:auto-group= selector to sort your agenda items into groups that reflect your =ProjectIds=.
 
+*Note:* This selector might become obsolete in the future.  A more flexible way to group by properties is the [[#automatically-by-property][:auto-property]] selector.
+
 ** Automatically by category
 
 In the same way, items can automatically be grouped by their category (which is usually the filename of the buffer they're in).
@@ -132,6 +135,16 @@ Conveniently, a function is already defined which does that, so you can simply p
 #+END_SRC
 
 This example could also be written by using the ~:file-path~ selector, which would return the whole path.
+
+** Automatically by property
+
+This example groups items by the value of their =ProjectId= property (a more flexible way to group by property than [[#automatically-by-group][this example]]):
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:auto-property "ProjectId"))))
+    (org-agenda-list))
+#+END_SRC
 
 ** By predicate
 
