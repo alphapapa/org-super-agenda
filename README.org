@@ -167,8 +167,10 @@ Every selector requires an argument, even if it's just ~t~, e.g. ~:anything~, ~:
 +  =:and= :: Group ITEMS that match all selectors in GROUP.
 +  =:anything= :: Select every item, no matter what.  This is probably most useful with ~:discard~, because it doesn't actually test anything, so it's faster than, e.g. ~:regexp "."~, which has to get the entry text for every item.
 +  =:auto-category= :: This automatically groups items by their category (usually the filename it's in, without the =.org= suffix).
++  ~:auto-dir-name~ :: This automatically groups items by the directory name of their source buffer.
 +  =:auto-group= :: This selects items that have the =agenda-group= Org property set.  By setting this property for a subtree, every item in it will be sorted into an agenda group by that name and placed into the agenda where the ~:auto-group~ selector is ([[examples.org#automatically-by-group][example]]).
-+  ~:auto-map~ :: This automatically groups items by the value returned when applying each item to the given function as a string from the agenda buffer ([[examples.org#automatically-by-mapping-a-function][example]]).  The function should return a string to be used as the grouping key and as the header for its group.  Some [[#auto-map-helper-functions][helper functions]] are provided.
++  ~:auto-map~ :: This automatically groups items by the value returned when applying each item to the given function as a string from the agenda buffer ([[examples.org#automatically-by-mapping-a-function][example]]).  The function should return a string to be used as the grouping key and as the header for its group.
++  ~:auto-parent~ :: This automatically groups items by their parent heading.  This is surprisingly handy, especially if you group tasks hierarchically by project and use agenda restrictions to limit the agenda to a subtree.
 +  ~:auto-property~ :: This automatically groups items by the value of the given property ([[examples.org#automatically-by-property][example]]).
 +  =:discard= :: Discard items that don't match selectors.  Any groups processed after this one will not see discarded items.  You might use this at the beginning or end of a list of groups, either to narrow down the list of items (used in combination with ~:not~), or to exclude items you're not interested in.
 +  =:not= :: Group ITEMS that match no selectors in GROUP.
@@ -201,13 +203,6 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  =:time-grid= :: Group items that appear on the time grid.
 +  =:todo= :: Group items that match any of the given TODO keywords.  Argument may be a string or list of strings, or ~t~ to match any keyword, or ~nil~ to match only non-todo items.
 
-*** ~:auto-map~ helper functions
-
-These functions can be passed to the ~:auto-map~ selector to easily group items by certain attributes:
-
-+  ~org-super-agenda--dir-name~ :: Return the item's directory name, prepended with =Directory:=, or nil if none.
-+  ~org-super-agenda--parent-heading~ :: Return the item's parent heading, or nil if none.
-
 ** Tips
 
 +  An [[info:org-super-agenda][info page]] is included, with the contents of this readme file.
@@ -229,7 +224,8 @@ These functions can be passed to the ~:auto-map~ selector to easily group items 
 +  Selector ~:auto-map~, which groups items by the value returned when applying items to a function.
 +  Selector ~:file-path~, which groups items by regular expressions matched against their buffers' filename paths.
 +  Selector ~:pred~, which matches if any of the given predicate functions return non-nil when called with the item string from the agenda buffer.
-+  Helper functions for the ~:auto-map~ selector: ~org-super-agenda--dir-name~ and ~org-super-agenda--parent-heading~.
++  Selector ~:auto-dir-name~, which groups items by the directory name of their source buffer.
++  Selector ~:auto-parent~, which groups items by their parent heading.
 
 *Internal*
 +  Refactor auto-groups with macro.

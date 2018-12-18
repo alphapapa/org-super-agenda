@@ -49,7 +49,6 @@ Group selectors
 * Keywords::
 * Special selectors::
 * Normal selectors::
-* ‘:auto-map’ helper functions: ‘auto-map’ helper functions. 
 
 Changelog
 
@@ -275,7 +274,6 @@ priority ‘C’ items would not appear in the agenda.
 * Keywords::
 * Special selectors::
 * Normal selectors::
-* ‘:auto-map’ helper functions: ‘auto-map’ helper functions. 
 
 
 File: README.info,  Node: Keywords,  Next: Special selectors,  Up: Group selectors
@@ -315,6 +313,9 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
 ‘:auto-category’
      This automatically groups items by their category (usually the
      filename it’s in, without the .org suffix).
+‘‘:auto-dir-name’’
+     This automatically groups items by the directory name of their
+     source buffer.
 ‘:auto-group’
      This selects items that have the agenda-group Org property set.  By
      setting this property for a subtree, every item in it will be
@@ -324,7 +325,12 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      This automatically groups items by the value returned when applying
      each item to the given function as a string from the agenda buffer
      ().  The function should return a string to be used as the grouping
-     key and as the header for its group.  Some are provided.
+     key and as the header for its group.
+‘‘:auto-parent’’
+     This automatically groups items by their parent heading.  This is
+     surprisingly handy, especially if you group tasks hierarchically by
+     project and use agenda restrictions to limit the agenda to a
+     subtree.
 ‘‘:auto-property’’
      This automatically groups items by the value of the given property
      ().
@@ -344,7 +350,7 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      (groupA) (groupB) ...))’ to set the order of these groups to 2.
 
 
-File: README.info,  Node: Normal selectors,  Next: ‘auto-map’ helper functions,  Prev: Special selectors,  Up: Group selectors
+File: README.info,  Node: Normal selectors,  Prev: Special selectors,  Up: Group selectors
 
 5.2.3 Normal selectors
 ----------------------
@@ -440,21 +446,6 @@ list.
      ‘nil’ to match only non-todo items.
 
 
-File: README.info,  Node: ‘auto-map’ helper functions,  Prev: Normal selectors,  Up: Group selectors
-
-5.2.4 ‘:auto-map’ helper functions
-----------------------------------
-
-These functions can be passed to the ‘:auto-map’ selector to easily
-group items by certain attributes:
-
-‘‘org-super-agenda--dir-name’’
-     Return the item’s directory name, prepended with Directory:, or nil
-     if none.
-‘‘org-super-agenda--parent-heading’’
-     Return the item’s parent heading, or nil if none.
-
-
 File: README.info,  Node: Tips,  Prev: Group selectors,  Up: Usage
 
 5.3 Tips
@@ -510,9 +501,10 @@ File: README.info,  Node: 11-pre,  Next: 103,  Up: Changelog
    • Selector ‘:pred’, which matches if any of the given predicate
      functions return non-nil when called with the item string from the
      agenda buffer.
-   • Helper functions for the ‘:auto-map’ selector:
-     ‘org-super-agenda--dir-name’ and
-     ‘org-super-agenda--parent-heading’.
+   • Selector ‘:auto-dir-name’, which groups items by the directory name
+     of their source buffer.
+   • Selector ‘:auto-parent’, which groups items by their parent
+     heading.
 
    *Internal*
    • Refactor auto-groups with macro.
@@ -603,29 +595,28 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction857
-Node: Contents2265
-Node: Screenshots2418
-Node: Installation2655
-Node: MELPA2816
-Node: Manual installation2963
-Node: Usage3354
-Node: Examples4330
-Node: Group selectors7815
-Node: Keywords9074
-Node: Special selectors9815
-Node: Normal selectors11978
-Node: ‘auto-map’ helper functions16649
-Node: Tips17171
-Node: Changelog18022
-Node: 11-pre18220
-Node: 10319431
-Node: 10219646
-Node: 10119780
-Node: 10020118
-Node: Development20223
-Node: Bugs20615
-Node: Credits21254
+Node: Introduction787
+Node: Contents2195
+Node: Screenshots2348
+Node: Installation2585
+Node: MELPA2746
+Node: Manual installation2893
+Node: Usage3284
+Node: Examples4260
+Node: Group selectors7745
+Node: Keywords8934
+Node: Special selectors9675
+Node: Normal selectors12182
+Node: Tips16813
+Node: Changelog17664
+Node: 11-pre17862
+Node: 10319121
+Node: 10219336
+Node: 10119470
+Node: 10019808
+Node: Development19913
+Node: Bugs20305
+Node: Credits20944
 
 End Tag Table
 
