@@ -234,6 +234,11 @@ These functions can be passed to the ~:auto-map~ selector to easily group items 
 *Internal*
 +  Refactor auto-groups with macro.
 
+** 1.0.3
+
+*Fixed*
++  Require ~seq~ library.  (Fixes #54.  Thanks to [[https://github.com/cryptorick][Rick Hanson]].)
+
 ** 1.0.2
 
 *Fixed*
@@ -260,6 +265,7 @@ If you find this useful, I'd appreciate if you would share a screenshot or two o
 ** Bugs
 
 + The =org-search-view= agenda command does not seem to set the =todo-state= text property for items it finds, so the =:todo= selector doesn't work with it.  We should be able to work around this by getting the todo state for each item manually, but we have to make sure that we only do that when necessary, otherwise it might be slow.  And I wouldn't be surprised if there are other selectors that don't work with this or other commands, but =org-agenda-list= should work fine, and =org-tags-view= and =org-todo-list= seem to work.
+
 * Credits
 :PROPERTIES:
 :TOC:      ignore

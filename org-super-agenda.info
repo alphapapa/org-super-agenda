@@ -54,6 +54,7 @@ Group selectors
 Changelog
 
 * 1.1-pre: 11-pre. 
+* 1.0.3: 103. 
 * 1.0.2: 102. 
 * 1.0.1: 101. 
 * 1.0.0: 100. 
@@ -482,12 +483,13 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 * Menu:
 
 * 1.1-pre: 11-pre. 
+* 1.0.3: 103. 
 * 1.0.2: 102. 
 * 1.0.1: 101. 
 * 1.0.0: 100. 
 
 
-File: README.info,  Node: 11-pre,  Next: 102,  Up: Changelog
+File: README.info,  Node: 11-pre,  Next: 103,  Up: Changelog
 
 6.1 1.1-pre
 ===========
@@ -516,9 +518,19 @@ File: README.info,  Node: 11-pre,  Next: 102,  Up: Changelog
    • Refactor auto-groups with macro.
 
 
-File: README.info,  Node: 102,  Next: 101,  Prev: 11-pre,  Up: Changelog
+File: README.info,  Node: 103,  Next: 102,  Prev: 11-pre,  Up: Changelog
 
-6.2 1.0.2
+6.2 1.0.3
+=========
+
+*Fixed*
+   • Require ‘seq’ library.  (Fixes #54.  Thanks to Rick Hanson
+     (https://github.com/cryptorick).)
+
+
+File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
+
+6.3 1.0.2
 =========
 
 *Fixed*
@@ -527,7 +539,7 @@ File: README.info,  Node: 102,  Next: 101,  Prev: 11-pre,  Up: Changelog
 
 File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
-6.3 1.0.1
+6.4 1.0.1
 =========
 
 *Fixes*
@@ -539,7 +551,7 @@ File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
 File: README.info,  Node: 100,  Prev: 101,  Up: Changelog
 
-6.4 1.0.0
+6.5 1.0.0
 =========
 
 First tagged version.
@@ -591,28 +603,29 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction842
-Node: Contents2250
-Node: Screenshots2403
-Node: Installation2640
-Node: MELPA2801
-Node: Manual installation2948
-Node: Usage3339
-Node: Examples4315
-Node: Group selectors7800
-Node: Keywords9059
-Node: Special selectors9800
-Node: Normal selectors11963
-Node: ‘auto-map’ helper functions16634
-Node: Tips17156
-Node: Changelog18007
-Node: 11-pre18190
-Node: 10219401
-Node: 10119538
-Node: 10019876
-Node: Development19981
-Node: Bugs20373
-Node: Credits21012
+Node: Introduction857
+Node: Contents2265
+Node: Screenshots2418
+Node: Installation2655
+Node: MELPA2816
+Node: Manual installation2963
+Node: Usage3354
+Node: Examples4330
+Node: Group selectors7815
+Node: Keywords9074
+Node: Special selectors9815
+Node: Normal selectors11978
+Node: ‘auto-map’ helper functions16649
+Node: Tips17171
+Node: Changelog18022
+Node: 11-pre18220
+Node: 10319431
+Node: 10219646
+Node: 10119780
+Node: 10020118
+Node: Development20223
+Node: Bugs20615
+Node: Credits21254
 
 End Tag Table
 

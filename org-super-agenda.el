@@ -109,6 +109,7 @@
 (require 'dash)
 (require 's)
 (require 'ht)
+(require 'seq)
 
 ;; I think this is the right way to do this...
 (eval-when-compile
