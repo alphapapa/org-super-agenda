@@ -331,6 +331,8 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      surprisingly handy, especially if you group tasks hierarchically by
      project and use agenda restrictions to limit the agenda to a
      subtree.
+‘:auto-todo’
+     This automatically groups items by their to-do keyword.
 ‘‘:auto-property’’
      This automatically groups items by the value of the given property
      ().
@@ -505,6 +507,7 @@ File: README.info,  Node: 11-pre,  Next: 103,  Up: Changelog
      of their source buffer.
    • Selector ‘:auto-parent’, which groups items by their parent
      heading.
+   • Selector :auto-todo, which groups items by their to-do keyword.
 
    *Internal*
    • Refactor auto-groups with macro.
@@ -606,17 +609,17 @@ Node: Examples4260
 Node: Group selectors7745
 Node: Keywords8934
 Node: Special selectors9675
-Node: Normal selectors12182
-Node: Tips16813
-Node: Changelog17664
-Node: 11-pre17862
-Node: 10319121
-Node: 10219336
-Node: 10119470
-Node: 10019808
-Node: Development19913
-Node: Bugs20305
-Node: Credits20944
+Node: Normal selectors12260
+Node: Tips16891
+Node: Changelog17742
+Node: 11-pre17940
+Node: 10319270
+Node: 10219485
+Node: 10119619
+Node: 10019957
+Node: Development20062
+Node: Bugs20454
+Node: Credits21093
 
 End Tag Table
 

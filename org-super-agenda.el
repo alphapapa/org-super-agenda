@@ -847,6 +847,11 @@ of the arguments to the function."
                            org-super-agenda-properties-inherit)
   :header-form (format "%s: %s" (car args) key))
 
+(org-super-agenda--def-auto-group todo "their to-do keyword"
+  :keyword :auto-todo
+  :key-form (org-find-text-property-in-string 'todo-state item)
+  :header-form (concat "To-do: " key))
+
 (org-super-agenda--def-auto-group dir-name "their parent heading"
   :key-form (-when-let* ((file-path (->> (org-super-agenda--get-marker item) marker-buffer buffer-file-name))
                          (directory-name (->> file-path file-name-directory directory-file-name file-name-nondirectory)))
