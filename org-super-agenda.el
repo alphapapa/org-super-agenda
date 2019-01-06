@@ -841,6 +841,10 @@ of the arguments to the function."
   :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
               (funcall (car args) item)))
 
+(org-super-agenda--def-auto-group priority "their priority"
+  :key-form (org-super-agenda--get-priority-cookie item)
+  :header-form (format "Priority: %s" key))
+
 (org-super-agenda--def-auto-group property "the given property"
   :key-form (org-entry-get (org-super-agenda--get-marker item)
                            (car args)

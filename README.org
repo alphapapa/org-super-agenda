@@ -172,6 +172,7 @@ Every selector requires an argument, even if it's just ~t~, e.g. ~:anything~, ~:
 +  ~:auto-map~ :: This automatically groups items by the value returned when applying each item to the given function as a string from the agenda buffer ([[examples.org#automatically-by-mapping-a-function][example]]).  The function should return a string to be used as the grouping key and as the header for its group.
 +  ~:auto-parent~ :: This automatically groups items by their parent heading.  This is surprisingly handy, especially if you group tasks hierarchically by project and use agenda restrictions to limit the agenda to a subtree.
 +  =:auto-todo= :: This automatically groups items by their to-do keyword.
++  =:auto-priority= :: This automatically groups items by their priority.
 +  ~:auto-property~ :: This automatically groups items by the value of the given property ([[examples.org#automatically-by-property][example]]).
 +  =:discard= :: Discard items that don't match selectors.  Any groups processed after this one will not see discarded items.  You might use this at the beginning or end of a list of groups, either to narrow down the list of items (used in combination with ~:not~), or to exclude items you're not interested in.
 +  =:not= :: Group ITEMS that match no selectors in GROUP.
@@ -228,6 +229,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  Selector ~:auto-dir-name~, which groups items by the directory name of their source buffer.
 +  Selector ~:auto-parent~, which groups items by their parent heading.
 +  Selector =:auto-todo=, which groups items by their to-do keyword.
++  Selector =:auto-priority=, which groups items by their priority.
 
 *Internal*
 +  Refactor auto-groups with macro.

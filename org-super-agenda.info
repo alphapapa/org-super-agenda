@@ -333,6 +333,8 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      subtree.
 ‘:auto-todo’
      This automatically groups items by their to-do keyword.
+‘:auto-priority’
+     This automatically groups items by their priority.
 ‘‘:auto-property’’
      This automatically groups items by the value of the given property
      ().
@@ -508,6 +510,7 @@ File: README.info,  Node: 11-pre,  Next: 103,  Up: Changelog
    • Selector ‘:auto-parent’, which groups items by their parent
      heading.
    • Selector :auto-todo, which groups items by their to-do keyword.
+   • Selector :auto-priority, which groups items by their priority.
 
    *Internal*
    • Refactor auto-groups with macro.
@@ -609,17 +612,17 @@ Node: Examples4260
 Node: Group selectors7745
 Node: Keywords8934
 Node: Special selectors9675
-Node: Normal selectors12260
-Node: Tips16891
-Node: Changelog17742
-Node: 11-pre17940
-Node: 10319270
-Node: 10219485
-Node: 10119619
-Node: 10019957
-Node: Development20062
-Node: Bugs20454
-Node: Credits21093
+Node: Normal selectors12337
+Node: Tips16968
+Node: Changelog17819
+Node: 11-pre18017
+Node: 10319417
+Node: 10219632
+Node: 10119766
+Node: 10020104
+Node: Development20209
+Node: Bugs20601
+Node: Credits21240
 
 End Tag Table
 
