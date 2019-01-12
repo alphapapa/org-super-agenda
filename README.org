@@ -216,7 +216,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 :TOC:      0
 :END:
 
-** 1.1-pre
+** 1.1
 
 *Additions*
 +  Keyword ~:face~, used to apply faces to items in groups.
