@@ -165,6 +165,10 @@ default is.  But in case of performance problems, it can be
 disabled.  This sets the INHERIT argument to `org-entry-get'."
   :type 'boolean)
 
+(defcustom org-super-agenda-unmatched-name "Other items"
+  "Default name for agenda section containing items unmatched by any filter."
+  :type 'string)
+
 (defcustom org-super-agenda-unmatched-order 99
   "Default order setting for agenda section containing items unmatched by any filter."
   :type 'integer)
@@ -742,7 +746,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
                  and do (setq all-items non-matching)
 
                  ;; Sort sections by :order then :name
-                 finally do (setq non-matching (list :name "Other items"
+                 finally do (setq non-matching (list :name org-super-agenda-unmatched-name
                                                      :items non-matching
                                                      :order org-super-agenda-unmatched-order))
                  finally do (setq sections (--sort (let ((o-it (plist-get it :order))
