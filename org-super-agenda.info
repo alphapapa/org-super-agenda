@@ -511,6 +511,9 @@ File: README.info,  Node: 11-pre,  Next: 103,  Up: Changelog
      heading.
    • Selector :auto-todo, which groups items by their to-do keyword.
    • Selector :auto-priority, which groups items by their priority.
+   • Option ‘org-super-agenda-unmatched-name’, used to change the name
+     of the unmatched group.  (Thanks to Marcin Swieczkowski
+     (https://github.com/m-cat).)
 
    *Internal*
    • Refactor auto-groups with macro.
@@ -616,13 +619,13 @@ Node: Normal selectors12337
 Node: Tips16968
 Node: Changelog17819
 Node: 11-pre18017
-Node: 10319417
-Node: 10219632
-Node: 10119766
-Node: 10020104
-Node: Development20209
-Node: Bugs20601
-Node: Credits21240
+Node: 10319589
+Node: 10219804
+Node: 10119938
+Node: 10020276
+Node: Development20381
+Node: Bugs20773
+Node: Credits21412
 
 End Tag Table
 

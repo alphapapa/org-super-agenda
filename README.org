@@ -230,7 +230,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  Selector ~:auto-parent~, which groups items by their parent heading.
 +  Selector =:auto-todo=, which groups items by their to-do keyword.
 +  Selector =:auto-priority=, which groups items by their priority.
-+  Option ~org-super-agenda-unmatched-name~, used to change the name of the unmatched group.
++  Option ~org-super-agenda-unmatched-name~, used to change the name of the unmatched group.  (Thanks to [[https://github.com/m-cat][Marcin Swieczkowski]].)
 
 *Internal*
 +  Refactor auto-groups with macro.
