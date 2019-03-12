@@ -183,8 +183,10 @@ making it stretch across the screen."
   :type 'boolean)
 
 (defcustom org-super-agenda-header-separator "\n"
-  "String inserted before group headers."
-  :type 'string)
+  "Separator inserted before group headers.
+If a string, a newline is added.  If a character, it is repeated
+to fill window width, and a newline is added."
+  :type '(choice character string))
 
 (defcustom org-super-agenda-date-format "%e %B %Y"
   "Format string for date headers.
@@ -257,18 +259,27 @@ A and B are Org timestamp elements."
 
 (defun org-super-agenda--make-agenda-header (s)
   "Return agenda header containing string S.
-Prepended with `org-super-agenda-header-separator'."
+If `none', return empty string.  Otherwise, return S prepended
+with `org-super-agenda-header-separator', which see.  S has the
+face `org-super-agenda-header' appended, and the text properties
+`keymap' and `local-map' set to the value of
+`org-super-agenda-header-map', which see."
   (pcase s
     ('none "")
-    (_ (setq s (concat " " s))
-       (add-face-text-property 0 (length s) 'org-super-agenda-header t s)
-       (org-add-props s nil
-         'keymap org-super-agenda-header-map
-         ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
-         ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
-         ;; we'll use both.
-         'local-map org-super-agenda-header-map)
-       (concat org-super-agenda-header-separator s))))
+    (_ (let ((separator (cl-etypecase org-super-agenda-header-separator
+                          (character (concat (s-repeat (window-width) org-super-agenda-header-separator)
+                                             "\n"))
+                          (string org-super-agenda-header-separator))))
+         (setq s (concat " " s))
+         (add-face-text-property 0 (length s) 'org-super-agenda-header t s)
+         (org-add-props s nil
+           'keymap org-super-agenda-header-map
+           ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
+           ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
+           ;; we'll use both.
+           'local-map org-super-agenda-header-map)
+         ;; Don't apply faces and properties to the separator part of the string.
+         (concat separator s)))))
 
 (defsubst org-super-agenda--get-priority-cookie (s)
   "Return priority character for string S.

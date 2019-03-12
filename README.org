@@ -225,6 +225,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  Selector ~:auto-ts~, which groups items by the date of their latest timestamp anywhere in the entry, formatted according to variable ~org-super-agenda-date-format~.
 +  Option ~org-super-agenda-date-format~, used to format date headers in the ~:auto-date~ selector.
 +  To-do keyword faces are applied to keywords in group headers.
++  Option =org-super-agenda-header-separator= may also be a character, which is automatically repeated to the window width.  (Thanks to [[https://github.com/sheepduke][YUE Daian]].)
 
 *Changed*
 +  Group headers face is now appended to face list instead of overriding it.

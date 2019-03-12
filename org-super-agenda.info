@@ -512,6 +512,9 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
    • Option ‘org-super-agenda-date-format’, used to format date headers
      in the ‘:auto-date’ selector.
    • To-do keyword faces are applied to keywords in group headers.
+   • Option org-super-agenda-header-separator may also be a character,
+     which is automatically repeated to the window width.  (Thanks to
+     YUE Daian (https://github.com/sheepduke).)
 
    *Changed*
    • Group headers face is now appended to face list instead of
@@ -686,16 +689,16 @@ Node: Normal selectors12756
 Node: Tips17387
 Node: Changelog18238
 Node: 12-pre18463
-Node: 11119532
-Node: 1119705
-Node: 10321277
-Node: 10221488
-Node: 10121622
-Node: 10021960
-Node: Development22065
-Node: Bugs22467
-Node: Tests23120
-Node: Credits23439
+Node: 11119723
+Node: 1119896
+Node: 10321468
+Node: 10221679
+Node: 10121813
+Node: 10022151
+Node: Development22256
+Node: Bugs22658
+Node: Tests23311
+Node: Credits23630
 
 End Tag Table
 
