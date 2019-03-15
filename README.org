@@ -218,7 +218,8 @@ These selectors take one argument alone, or multiple arguments in a list.
 
 ** 1.2-pre
 
-Nothing yet.
+*Fixed*
++  =:children todo= group selection ([[https://github.com/alphapapa/org-super-agenda/issues/75][#75]]).  (Thanks to [[https://github.com/bleggett][Ben Leggett]].)
 
 ** 1.1.1
 

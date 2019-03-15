@@ -204,25 +204,26 @@ making it stretch across the screen."
 (cl-defmacro org-super-agenda--map-children (&key form any)
   "Return FORM mapped across child entries of entry at point, if it has any.
 If ANY is non-nil, return as soon as FORM returns non-nil."
-  (declare (indent defun))
-  (org-with-gensyms (tree-start tree-end result all-results)
-    `(let ((,tree-start (point))
-           ,tree-end ,all-results)
-       (when (org-goto-first-child)
-         (goto-char ,tree-start)
-         ,(when any
-            `(save-excursion
-               (setq ,tree-end (org-end-of-subtree))))
-         (setq ,all-results (org-map-entries (lambda ()
-                                               (let ((,result ,form))
-                                                 ,(when any
-                                                    `(when ,result
-                                                       (setq org-map-continue-from ,tree-end)))
-                                                 ,result))
-                                             nil 'tree))
-         (if ,any
-             (--any (not (null it)) ,all-results)
-           ,all-results)))))
+  (declare (indent defun)
+           (debug (":form" form [&optional ":any" sexp])))
+  (org-with-gensyms (tree-start result all-results region-beginning region-end)
+    `(save-excursion
+       (save-restriction
+         (let ((,tree-start (point))
+               ,all-results)
+           (when (org-goto-first-child)
+             (narrow-to-region (point) (save-excursion
+                                         (goto-char ,tree-start)
+                                         (org-end-of-subtree)))
+             (goto-char (point-min))
+             (setq ,all-results
+                   (cond (,any (cl-loop thereis ,form
+                                        while (outline-next-heading)))
+                         (t (cl-loop collect ,form
+                                     while (outline-next-heading)))))
+             (if ,any
+                 (--any (not (null it)) ,all-results)
+               ,all-results)))))))
 
 ;;;; Support functions
 
