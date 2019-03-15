@@ -52,6 +52,7 @@ Group selectors
 
 Changelog
 
+* 1.2-pre: 12-pre. 
 * 1.1.1: 111. 
 * 1.1: 11. 
 * 1.0.3: 103. 
@@ -478,6 +479,7 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 
 * Menu:
 
+* 1.2-pre: 12-pre. 
 * 1.1.1: 111. 
 * 1.1: 11. 
 * 1.0.3: 103. 
@@ -486,9 +488,17 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 * 1.0.0: 100. 
 
 
-File: README.info,  Node: 111,  Next: 11,  Up: Changelog
+File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
 
-6.1 1.1.1
+6.1 1.2-pre
+===========
+
+Nothing yet.
+
+
+File: README.info,  Node: 111,  Next: 11,  Prev: 12-pre,  Up: Changelog
+
+6.2 1.1.1
 =========
 
 *Fixed*
@@ -497,7 +507,7 @@ File: README.info,  Node: 111,  Next: 11,  Up: Changelog
 
 File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
 
-6.2 1.1
+6.3 1.1
 =======
 
 *Additions*
@@ -532,7 +542,7 @@ File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
 
 File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
-6.3 1.0.3
+6.4 1.0.3
 =========
 
 *Fixed*
@@ -542,7 +552,7 @@ File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
 File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
-6.4 1.0.2
+6.5 1.0.2
 =========
 
 *Fixed*
@@ -551,7 +561,7 @@ File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
 File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
-6.5 1.0.1
+6.6 1.0.1
 =========
 
 *Fixes*
@@ -563,7 +573,7 @@ File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
 File: README.info,  Node: 100,  Prev: 101,  Up: Changelog
 
-6.6 1.0.0
+6.7 1.0.0
 =========
 
 First tagged version.
@@ -615,29 +625,30 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction794
-Node: Contents2202
-Node: Screenshots2355
-Node: Installation2592
-Node: MELPA2753
-Node: Manual installation2900
-Node: Usage3291
-Node: Examples4267
-Node: Group selectors7752
-Node: Keywords8941
-Node: Special selectors9682
-Node: Normal selectors12344
-Node: Tips16975
-Node: Changelog17826
-Node: 11118031
-Node: 1118189
-Node: 10319761
-Node: 10219972
-Node: 10120106
-Node: 10020444
-Node: Development20549
-Node: Bugs20941
-Node: Credits21580
+Node: Introduction814
+Node: Contents2222
+Node: Screenshots2375
+Node: Installation2612
+Node: MELPA2773
+Node: Manual installation2920
+Node: Usage3311
+Node: Examples4287
+Node: Group selectors7772
+Node: Keywords8961
+Node: Special selectors9702
+Node: Normal selectors12364
+Node: Tips16995
+Node: Changelog17846
+Node: 12-pre18071
+Node: 11118174
+Node: 1118347
+Node: 10319919
+Node: 10220130
+Node: 10120264
+Node: 10020602
+Node: Development20707
+Node: Bugs21099
+Node: Credits21738
 
 End Tag Table
 
