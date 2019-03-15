@@ -491,7 +491,10 @@ File: README.info,  Node: 12-pre,  Next: 11,  Up: Changelog
 6.1 1.2-pre
 ===========
 
-Nothing yet.
+*Fixed*
+   • :children todo group selection (#75
+     (https://github.com/alphapapa/org-super-agenda/issues/75)).
+     (Thanks to Ben Leggett (https://github.com/bleggett).)
 
 
 File: README.info,  Node: 11,  Next: 103,  Prev: 12-pre,  Up: Changelog
@@ -629,14 +632,14 @@ Node: Normal selectors12349
 Node: Tips16980
 Node: Changelog17831
 Node: 12-pre18041
-Node: 1118143
-Node: 10319718
-Node: 10219929
-Node: 10120063
-Node: 10020401
-Node: Development20506
-Node: Bugs20898
-Node: Credits21537
+Node: 1118306
+Node: 10319881
+Node: 10220092
+Node: 10120226
+Node: 10020564
+Node: Development20669
+Node: Bugs21061
+Node: Credits21700
 
 End Tag Table
 
