@@ -296,7 +296,10 @@ of `org-super-agenda-header-map', which see."
            ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
            ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
            ;; we'll use both.
-           'local-map org-super-agenda-header-map)
+           'local-map org-super-agenda-header-map
+           'org-super-agenda-header t)
+         (org-add-props org-super-agenda-header-separator nil
+           'org-super-agenda-header t)
          ;; Don't apply faces and properties to the separator part of the string.
          (concat separator header)))))
 
@@ -321,15 +324,27 @@ marker."
   "Global minor mode to group items in Org agenda views according to `org-super-agenda-groups'.
 With prefix argument ARG, turn on if positive, otherwise off."
   :global t
-  (let ((advice-function (if org-super-agenda-mode
-                             (lambda (to fn)
-                               ;; Enable mode
-                               (advice-add to :filter-return fn))
-                           (lambda (from fn)
-                             ;; Disable mode
-                             (advice-remove from fn)))))
-    (funcall advice-function #'org-agenda-finalize-entries
+  (let ((advice-function-filter-return (if org-super-agenda-mode
+                                           (lambda (to fn)
+                                             ;; Enable mode
+                                             (advice-add to :filter-return fn))
+                                         (lambda (from fn)
+                                           ;; Disable mode
+                                           (advice-remove from fn))))
+        (advice-function-after (if org-super-agenda-mode
+                                   (lambda (to fn)
+                                     ;; Enable mode
+                                     (advice-add to :after fn))
+                                 (lambda (from fn)
+                                   ;; Disable mode
+                                   (advice-remove from fn)))))
+    (funcall advice-function-filter-return #'org-agenda-finalize-entries
              #'org-super-agenda--filter-finalize-entries)
+    (funcall advice-function-after #'org-agenda-filter-apply
+             #'org-super-agenda--hide-or-show-groups)
+    (funcall advice-function-after #'org-agenda-finalize
+             #'org-super-agenda--hide-or-show-groups)
+
     ;; Add variable to list of variables (see issue #22).
     (if org-super-agenda-mode
         (add-to-list 'org-agenda-local-vars 'org-super-agenda-groups)
@@ -1188,6 +1203,51 @@ STRING should be that returned by `org-agenda-finalize-entries'"
        org-super-agenda--group-items
        (-remove #'s-blank-str? it)
        (s-join "\n" it)))
+
+;;;; Hide/Show filter
+(defun org-super-agenda--hide-or-show-groups (&rest _)
+  "Hide/Show any empty/non-empty groups after `org-agenda-filter-apply',
+`org-agenda-remove-filter' or `org-agenda-redo' was called."
+  (let ((inhibit-read-only t) start end nohide)
+    (save-excursion
+      (goto-char (point-min))
+      (cl-loop until (and (eobp)
+                          ;; Maybe a group at the end needs to be hidden, so iterate one more time if end is `non-nil'
+                          (not end))
+               do
+               (cond
+                 ((or (org-get-at-bol 'org-super-agenda-header) (eobp))
+
+                  (when (and start end)
+                    (save-excursion
+                      (cl-loop with until = (point)
+                               with beg = nil
+                               with end = nil
+                               with props = `(invisible org-filtered org-filter-type org-super-agenda-header)
+                               initially do (goto-char start)
+                               while (< (point) until)
+                               do
+                               (beginning-of-line 2)
+                               (unless (or (org-get-at-bol 'org-agenda-structural-header)
+                                           (org-get-at-bol 'org-agenda-date-header)
+                                           (org-get-at-bol 'type))
+                                 (setq beg (1- (point-at-bol))
+                                       end (point-at-eol))
+                                   (if nohide
+                                       (remove-text-properties beg end props)
+                                     (add-text-properties beg end props)))
+                               finally (setq nohide nil))))
+
+                  (setq start (1- (point)) ;; Always one less than point.
+                        end (next-single-property-change (point) 'org-super-agenda-header))
+
+                  ;; When `end' is `nil', we are very likly at the end of the buffer.
+                  (when end (goto-char end)))
+
+                 ((and (org-get-at-bol 'type) (not (org-get-at-bol 'invisible)))
+                  ;; There was at least one task of the group visible.
+                  (setq nohide t)))
+               (beginning-of-line 2)))))
 
 ;;;; Footer
 
