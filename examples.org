@@ -1,15 +1,14 @@
-
-
-* Examples 
+#+TITLE: Examples
 
 There are a lot of possibilities, so here are some examples to spark your imagination.  Please do *share* your own examples by posting them on the issue tracker, and I will add them here.  It will be very helpful to others to see your creativity!
 
 *Note:* You can test any of these examples by evaluating the whole =let= form in Emacs (or, if you open this file in Emacs, by executing the code block with =C-c C-c=).
 
-** Contents
+* Contents
 :PROPERTIES:
-:TOC:      siblings
+:TOC:  this
 :END:
+  -  [[#feature-examples][Feature examples]]
     -  [[#apply-faces-and-transformations][Apply faces and transformations]]
     -  [[#automatically-by-group][Automatically by group]]
     -  [[#automatically-by-category][Automatically by category]]
@@ -23,7 +22,9 @@ There are a lot of possibilities, so here are some examples to spark your imagin
     -  [[#books-to-read][Books to-read]]
     -  [[#emacs-and-org-mode-to-do-items][Emacs and Org-mode to-do items]]
     -  [[#automatically-fold-certain-groups-with-origami][Automatically fold certain groups with Origami]]
-    -  [[#contributed-examples][Contributed examples]]
+  -  [[#contributed-examples][Contributed examples]]
+
+* Feature examples
 
 ** Apply faces and transformations
 
@@ -384,28 +385,105 @@ You could even fold certain groups by default, perhaps like this (this ~use-pack
            (org-agenda-finalize . ap/org-super-agenda-origami-fold-default)))
 #+END_SRC
 
-** Contributed examples
+* Contributed examples
 :PROPERTIES:
 :TOC:      0
 :END:
 
-*** [[https://github.com/bascht][Sebastian Schulze]]
+** [[https://github.com/bascht][Sebastian Schulze]]
 
 [[images/screenshots/bascht.png]]
 
 #+BEGIN_SRC elisp
-  (org-super-agenda-groups
-   '((:name "Next Items"
-            :time-grid t
-            :tag ("NEXT" "outbox"))
-     (:name "Important"
-            :priority "A")
-     (:name "Quick Picks"
-            :effort< "0:30")
-     (:priority<= "B"
-                  :scheduled future
-                  :order 1)))
+  (setq org-super-agenda-groups
+        '((:name "Next Items"
+                 :time-grid t
+                 :tag ("NEXT" "outbox"))
+          (:name "Important"
+                 :priority "A")
+          (:name "Quick Picks"
+                 :effort< "0:30")
+          (:priority<= "B"
+                       :scheduled future
+                       :order 1)))
 #+END_SRC
+
+** [[https://github.com/zaen323][zaen323]]
+
+[[images/screenshots/zaen323.png]]
+
+#+BEGIN_SRC elisp
+  (setq spacemacs-theme-org-agenda-height nil
+        org-agenda-time-grid '((daily today require-timed) "----------------------" nil)
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-include-deadlines t
+        org-agenda-include-diary t
+        org-agenda-block-separator nil
+        org-agenda-compact-blocks t
+        org-agenda-start-with-log-mode t)
+
+  (setq org-agenda-custom-commands
+        '(("z" "Super zaen view"
+           ((agenda "" ((org-agenda-span 'day)
+                        (org-super-agenda-groups
+                         '((:name "Today"
+                                  :time-grid t
+                                  :date today
+                                  :todo "TODAY"
+                                  :scheduled today
+                                  :order 1)))))
+            (alltodo "" ((org-agenda-overriding-header "")
+                         (org-super-agenda-groups
+                          '((:name "Next to do"
+                                   :todo "NEXT"
+                                   :order 1)
+                            (:name "Important"
+                                   :tag "Important"
+                                   :priority "A"
+                                   :order 6)
+                            (:name "Due Today"
+                                   :deadline today
+                                   :order 2)
+                            (:name "Due Soon"
+                                   :deadline future
+                                   :order 8)
+                            (:name "Overdue"
+                                   :deadline past
+                                   :order 7)
+                            (:name "Assignments"
+                                   :tag "Assignment"
+                                   :order 10)
+                            (:name "Issues"
+                                   :tag "Issue"
+                                   :order 12)
+                            (:name "Projects"
+                                   :tag "Project"
+                                   :order 14)
+                            (:name "Emacs"
+                                   :tag "Emacs"
+                                   :order 13)
+                            (:name "Research"
+                                   :tag "Research"
+                                   :order 15)
+                            (:name "To read"
+                                   :tag "Read"
+                                   :order 30)
+                            (:name "Waiting"
+                                   :todo "WAITING"
+                                   :order 20)
+                            (:name "trivial"
+                                   :priority<= "C"
+                                   :tag ("Trivial" "Unimportant")
+                                   :todo ("SOMEDAY" )
+                                   :order 90)
+                            (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
+#+END_SRC
+
+* COMMENT Footer                                                   :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
 
 # Local Variables:
 # before-save-hook: org-make-toc
