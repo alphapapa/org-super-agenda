@@ -142,6 +142,11 @@ only with point on the group headers (e.g. use `origami' to fold
 group headings by binding a key to `origami-toggle-node' in this
 map).")
 
+(defvar org-super-agenda-header-props
+  ('face 'org-super-agenda-header
+         'org-agenda-structural-header t)
+  "List of properties that will be added to the headers of org-super-agenda.")
+
 (defgroup org-super-agenda nil
   "Settings for `org-super-agenda'."
   :group 'org
@@ -245,12 +250,12 @@ Prepended with `org-super-agenda-header-separator'."
   (pcase s
     ('none "")
     (_ (setq s (concat " " s))
-       (org-add-props s nil 'face 'org-super-agenda-header
                       'keymap org-super-agenda-header-map
                       ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
                       ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
                       ;; we'll use both.
                       'local-map org-super-agenda-header-map)
+       (org-add-props s org-super-agenda-header-props
        (concat org-super-agenda-header-separator s))))
 
 (defsubst org-super-agenda--get-priority-cookie (s)
