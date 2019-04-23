@@ -193,6 +193,12 @@ to fill window width, and a newline is added."
 See `format-time-string'."
   :type 'string)
 
+(defcustom org-super-agenda-header-properties
+  '(face org-super-agenda-header
+         org-agenda-structural-header t)
+  "Text properties added to group headers."
+  :type 'plist)
+
 ;;;; Faces
 
 (defface org-super-agenda-header '((t (:inherit org-agenda-structure)))
@@ -272,7 +278,7 @@ face `org-super-agenda-header' appended, and the text properties
                           (string org-super-agenda-header-separator))))
          (setq s (concat " " s))
          (add-face-text-property 0 (length s) 'org-super-agenda-header t s)
-         (org-add-props s nil
+         (org-add-props s org-super-agenda-header-properties
            'keymap org-super-agenda-header-map
            ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
            ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
