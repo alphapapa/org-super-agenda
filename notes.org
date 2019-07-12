@@ -165,6 +165,35 @@ I should do:
 
 Perhaps a bit less semantic, but it avoids having to use a list, and it seems pretty natural.
 
+** MAYBE [#B] Rewrite some loops to not use =cl-loop=
+:LOGBOOK:
+-  State "MAYBE"      from              [2019-07-12 Fri 07:08]
+:END:
+
+[2019-07-12 Fri 07:08]  For example:
+
+#+BEGIN_SRC elisp
+  (defun org-super-agenda--group-dispatch-and (items group)
+    "Group ITEMS that match all selectors in GROUP."
+    ;; Used for the `:and' selector.
+    (let (matches names)
+      ;; Note that "." syntax is not used in the `-when-let*' binding form here, because it would prevent
+      ;; matching the last two elements of group. This is non-intuitive to me, but that's how it works.
+      (while (-when-let* (((selector args) group)
+                          (fn (org-super-agenda--get-selector-fn selector)))
+               (-let (((auto-section-name _ matching) (funcall fn items args)))
+                 (push matching matches)
+                 (push auto-section-name names)))
+        (setf group (cddr group)))
+      (setf matches (cl-reduce #'seq-intersection matches))
+      (list (s-join " AND " (-non-nil (nreverse names)))
+            ;; Non-matches
+            (seq-difference items matches)
+            matches)))
+#+END_SRC
+
+This passes the tests, and it's fewer lines of code than the =cl-loop=-based function it replaces.  I'd like to benchmark it sometime to see if it's faster.
+
 ** MAYBE Use [[https://github.com/VincentToups/destructuring-set][destructuring-set]]
 
 Could be useful in the loops where I use repeated ~when~ lines.
