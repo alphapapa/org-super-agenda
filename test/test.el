@@ -354,17 +354,18 @@ buffer and do not save the results."
            :groups '((:auto-group t)))))
 
 (ert-deftest org-super-agenda--test-auto-property ()
-  ;; FIXME: Works, but need to save result after upgrading Org.
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
            :groups '((:auto-property "agenda-group")))))
 
 (ert-deftest org-super-agenda--test-auto-parent ()
-  ;; FIXME: Works, but need to save result after upgrading Org.
+  ;; DONE: Works.
+  ;; TODO: This is really useful.  It should be an example in the docs.
   (should (org-super-agenda--test-run
            :groups '((:auto-parent t)))))
 
 (ert-deftest org-super-agenda--test-auto-dir-name ()
-  ;; FIXME: Works, but need to save result after upgrading Org.
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
            :groups '((:auto-dir-name t)))))
 
@@ -426,8 +427,6 @@ buffer and do not save the results."
 (ert-deftest org-super-agenda--test-:children-nil ()
   (should (org-super-agenda--test-run
            ;; DONE: Works.
-           ;; FIXME: Says "with children" when nil, but works
-           ;; correctly otherwise.
            :groups '((:children nil)))))
 
 (ert-deftest org-super-agenda--test-:children-t ()
@@ -438,7 +437,6 @@ buffer and do not save the results."
 (ert-deftest org-super-agenda--test-:children-todo ()
   (should (org-super-agenda--test-run
            ;; DONE: Works.
-           ;; FIXME: Doesn't say that the children are TODO items
            :groups '((:children todo)))))
 
 (ert-deftest org-super-agenda--test-:children-string ()
@@ -506,7 +504,7 @@ buffer and do not save the results."
            :groups '((:effort> "5")))))
 
 (ert-deftest org-super-agenda--test-:file-path ()
-  ;; FIXME: Test.
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
            :groups '((:file-path "/test/")))))
 
@@ -527,7 +525,7 @@ buffer and do not save the results."
            :let* ((org-agenda-show-log t)))))
 
 (ert-deftest org-super-agenda--test-:pred ()
-  ;; FIXME: Test.
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
            :groups '((:pred (lambda (item)
                               (s-contains? "moon" item)))))))
@@ -605,7 +603,7 @@ buffer and do not save the results."
            :groups '((:time-grid t)))))
 
 (ert-deftest org-super-agenda--test-:todo ()
-;; DONE: Works.
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
            :groups '((:todo "WAITING")))))
 
@@ -632,11 +630,13 @@ buffer and do not save the results."
            :groups '((:auto-group t)))))
 
 (ert-deftest org-super-agenda--test-:auto-map ()
-  ;; FIXME: Test.
+  ;; DONE: Works.
   (should (org-super-agenda--test-run
            :groups '((:auto-map (lambda (item)
-                                  (when (s-contains? "a" item)
-                                    (upcase item))))))))
+				  (when-let* ((pos (text-property-not-all 0 (length item)
+									  'face nil item)))
+                                    (format "Face: %s"
+					    (get-text-property pos 'face item)))))))))
 
 (ert-deftest org-super-agenda--test-:discard ()
   ;; DONE: Works.
