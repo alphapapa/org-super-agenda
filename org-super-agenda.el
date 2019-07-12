@@ -212,18 +212,13 @@ If ANY is non-nil, return as soon as FORM returns non-nil."
          (let ((,tree-start (point))
                ,all-results)
            (when (org-goto-first-child)
-             (narrow-to-region (point) (save-excursion
-                                         (goto-char ,tree-start)
-                                         (org-end-of-subtree)))
+             (goto-char ,tree-start)
+             (org-narrow-to-subtree)
              (goto-char (point-min))
-             (setq ,all-results
-                   (cond (,any (cl-loop thereis ,form
-                                        while (outline-next-heading)))
-                         (t (cl-loop collect ,form
-                                     while (outline-next-heading)))))
-             (if ,any
-                 (--any (not (null it)) ,all-results)
-               ,all-results)))))))
+             (cond (,any (cl-loop thereis ,form
+                                  while (outline-next-heading)))
+                   (t (cl-loop collect ,form
+                               while (outline-next-heading))))))))))
 
 ;;;; Support functions
 
