@@ -21,12 +21,17 @@ EMACS_LINT_IGNORE=t
 
 EMACS="${EMACS:=emacs}"
 
-INIT_PACKAGE_EL="(progn
-(require 'package)
-(setq package-archives '((\"gnu\" . \"https://elpa.gnu.org/packages/\")
-                         (\"melpa\" . \"https://melpa.org/packages/\")))
-(package-initialize)
-(setq debug-on-error t))"
+# NOTE: The code in this variable does initialize the package system, but
+# it does so using e.g. ~/.emacs.d/elpa, not the project .cask directory,
+# so it should not be used except for e.g. debugging.  Failure to
+# understand this may lead to version confusion and hair-pulling.
+
+# INIT_PACKAGE_EL="(progn
+# (require 'package)
+# (setq package-archives '((\"gnu\" . \"https://elpa.gnu.org/packages/\")
+#                          (\"melpa\" . \"https://melpa.org/packages/\")))
+# (package-initialize)
+# (setq debug-on-error t))"
 
 # PACKAGES_NEEDED="
 # (cl-loop for package in '(ht f s dash)
@@ -88,7 +93,6 @@ function refresh {
     # Refresh package archives, because the test suite needs to see at least
     # package-lint and cl-lib.
     "$EMACS" -Q -batch \
-             --eval "$INIT_PACKAGE_EL" \
              --eval "(unless (package-installed-p 'cl-lib) (package-install 'cl-lib))" \
              --eval "$PACKAGES_NEEDED"
 }
@@ -98,7 +102,6 @@ function byte_compile {
     debug "BYTE-COMPILING..."
 
     "$EMACS" -Q -batch \
-             --eval "$INIT_PACKAGE_EL" \
              -l $MAIN_FILE \
              --eval "(setq byte-compile-error-on-warn ${ERROR_ON_WARN})" \
              -f batch-byte-compile \
@@ -113,7 +116,6 @@ function lint {
     debug "LINTING..."
 
     "$EMACS" -Q -batch \
-             --eval "$INIT_PACKAGE_EL" \
              -l $MAIN_FILE \
              -f package-lint-batch-and-exit \
              $MAIN_FILE || [ -n "${EMACS_LINT_IGNORE+x}" ]
