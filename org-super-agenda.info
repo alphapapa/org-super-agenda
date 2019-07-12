@@ -52,6 +52,7 @@ Group selectors
 
 Changelog
 
+* 1.1.1: 111. 
 * 1.1: 11. 
 * 1.0.3: 103. 
 * 1.0.2: 102. 
@@ -477,6 +478,7 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 
 * Menu:
 
+* 1.1.1: 111. 
 * 1.1: 11. 
 * 1.0.3: 103. 
 * 1.0.2: 102. 
@@ -484,9 +486,18 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 * 1.0.0: 100. 
 
 
-File: README.info,  Node: 11,  Next: 103,  Up: Changelog
+File: README.info,  Node: 111,  Next: 11,  Up: Changelog
 
-6.1 1.1
+6.1 1.1.1
+=========
+
+*Fixed*
+   • Selector :auto-dir-name did not handle items without markers
+
+
+File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
+
+6.2 1.1
 =======
 
 *Additions*
@@ -521,7 +532,7 @@ File: README.info,  Node: 11,  Next: 103,  Up: Changelog
 
 File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
-6.2 1.0.3
+6.3 1.0.3
 =========
 
 *Fixed*
@@ -531,7 +542,7 @@ File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
 File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
-6.3 1.0.2
+6.4 1.0.2
 =========
 
 *Fixed*
@@ -540,7 +551,7 @@ File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
 File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
-6.4 1.0.1
+6.5 1.0.1
 =========
 
 *Fixes*
@@ -552,7 +563,7 @@ File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
 File: README.info,  Node: 100,  Prev: 101,  Up: Changelog
 
-6.5 1.0.0
+6.6 1.0.0
 =========
 
 First tagged version.
@@ -604,28 +615,29 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction779
-Node: Contents2187
-Node: Screenshots2340
-Node: Installation2577
-Node: MELPA2738
-Node: Manual installation2885
-Node: Usage3276
-Node: Examples4252
-Node: Group selectors7737
-Node: Keywords8926
-Node: Special selectors9667
-Node: Normal selectors12329
-Node: Tips16960
-Node: Changelog17811
-Node: 1118001
-Node: 10319561
-Node: 10219772
-Node: 10119906
-Node: 10020244
-Node: Development20349
-Node: Bugs20741
-Node: Credits21380
+Node: Introduction794
+Node: Contents2202
+Node: Screenshots2355
+Node: Installation2592
+Node: MELPA2753
+Node: Manual installation2900
+Node: Usage3291
+Node: Examples4267
+Node: Group selectors7752
+Node: Keywords8941
+Node: Special selectors9682
+Node: Normal selectors12344
+Node: Tips16975
+Node: Changelog17826
+Node: 11118031
+Node: 1118189
+Node: 10319761
+Node: 10219972
+Node: 10120106
+Node: 10020444
+Node: Development20549
+Node: Bugs20941
+Node: Credits21580
 
 End Tag Table
 

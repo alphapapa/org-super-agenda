@@ -2,7 +2,7 @@
 
 ;; Author: Adam Porter <adam@alphapapa.net>
 ;; Url: http://github.com/alphapapa/org-super-agenda
-;; Version: 1.1
+;; Version: 1.1.1
 ;; Package-Requires: ((emacs "25.1") (s "1.10.0") (dash "2.13") (org "9.0") (ht "2.2"))
 ;; Keywords: hypermedia, outlines, Org, agenda
 
@@ -861,7 +861,8 @@ of the arguments to the function."
   :header-form (concat "To-do: " key))
 
 (org-super-agenda--def-auto-group dir-name "their parent heading"
-  :key-form (-when-let* ((file-path (->> (org-super-agenda--get-marker item) marker-buffer buffer-file-name))
+  :key-form (-when-let* ((marker (org-super-agenda--get-marker item))
+                         (file-path (->> marker marker-buffer buffer-file-name))
                          (directory-name (->> file-path file-name-directory directory-file-name file-name-nondirectory)))
               (concat "Directory: " directory-name)))
 
