@@ -499,7 +499,11 @@ Argument may be `t' to match if it has any children, `nil' to
 match if it has no children, `todo' to match if it has children
 with any to-do keywords, or a string to match if it has specific
 to-do keywords."
-  :section-name "Items with children"
+  :section-name (pcase (car args)
+                  ('todo "Items with child to-dos")
+                  ((pred stringp) (concat "Items with children " (car args)))
+                  ('t "Items with children")
+                  ('nil "Items without children"))
   :let* ((case-fold-search t))
   :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
           (pcase (car args)

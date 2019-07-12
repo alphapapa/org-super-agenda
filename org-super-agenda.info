@@ -497,6 +497,7 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
    • :children todo group selection (#75
      (https://github.com/alphapapa/org-super-agenda/issues/75)).
      (Thanks to Ben Leggett (https://github.com/bleggett).)
+   • :children group headings.
 
 
 File: README.info,  Node: 111,  Next: 11,  Prev: 12-pre,  Up: Changelog
@@ -643,15 +644,15 @@ Node: Normal selectors12364
 Node: Tips16995
 Node: Changelog17846
 Node: 12-pre18071
-Node: 11118337
-Node: 1118510
-Node: 10320082
-Node: 10220293
-Node: 10120427
-Node: 10020765
-Node: Development20870
-Node: Bugs21262
-Node: Credits21901
+Node: 11118370
+Node: 1118543
+Node: 10320115
+Node: 10220326
+Node: 10120460
+Node: 10020798
+Node: Development20903
+Node: Bugs21295
+Node: Credits21934
 
 End Tag Table
 
