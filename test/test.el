@@ -49,6 +49,7 @@
                  while (re-search-forward "(ert-deftest " nil t)
                  do (progn
                       (progress-reporter-update progress-reporter i)
+                      (message (buffer-substring (point) (point-at-eol)))
                       (cl-letf (((symbol-function #'message) (symbol-function #'ignore)))
                         (org-super-agenda--test-run-this-test))))))))
 
