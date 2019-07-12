@@ -31,7 +31,7 @@
   "Save the result of all tests to the results file."
   (interactive)
   (when (or force
-            (equal (read-char "Update all test results? (y/n): ") ?y))
+            (yes-or-no-p "Update all test results? "))
     (when (ht? org-super-agenda--test-results)
       (ht-clear! org-super-agenda--test-results))
     (let ((write-region-inhibit-fsync t) ; Don't fsync every time the result file is written, makes it slow
