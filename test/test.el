@@ -39,14 +39,14 @@
           (progress-reporter (make-progress-reporter "Running test " 0
                                                      (save-excursion
                                                        (goto-char (point-min))(re-search-forward "^;;;; Tests")
-                                                       (cl-loop while (re-search-forward "(org-super-agenda--test-run" nil t)
+                                                       (cl-loop while (re-search-forward "(ert-deftest " nil t)
                                                                 count t))
                                                      0 0 0)))
       (save-excursion
         (goto-char (point-min))
         (re-search-forward "^;;;; Tests")
         (cl-loop for i from 0
-                 while (re-search-forward "(org-super-agenda--test-run" nil t)
+                 while (re-search-forward "(ert-deftest " nil t)
                  do (progn
                       (progress-reporter-update progress-reporter i)
                       (cl-letf (((symbol-function #'message) (symbol-function #'ignore)))
