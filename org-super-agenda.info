@@ -65,6 +65,7 @@ Changelog
 Development
 
 * Bugs::
+* Tests::
 
 
 File: README.info,  Node: Introduction,  Next: Contents,  Prev: Top,  Up: Top
@@ -601,9 +602,10 @@ of course).  I’d like to get ideas for how to better organize my agenda.
 * Menu:
 
 * Bugs::
+* Tests::
 
 
-File: README.info,  Node: Bugs,  Up: Development
+File: README.info,  Node: Bugs,  Next: Tests,  Up: Development
 
 7.1 Bugs
 ========
@@ -616,6 +618,19 @@ File: README.info,  Node: Bugs,  Up: Development
      slow.  And I wouldn’t be surprised if there are other selectors
      that don’t work with this or other commands, but org-agenda-list
      should work fine, and org-tags-view and org-todo-list seem to work.
+
+
+File: README.info,  Node: Tests,  Prev: Bugs,  Up: Development
+
+7.2 Tests
+=========
+
+It’s easy to run the tests:
+
+  1. Install Cask (https://github.com/cask/cask).
+  2. From the repo root directory, run cask install, which installs
+     Emacs and package dependencies into the .cask directory.
+  3. Run make test.
 
 
 File: README.info,  Node: Credits,  Prev: Development,  Up: Top
@@ -632,30 +647,31 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction814
-Node: Contents2222
-Node: Screenshots2375
-Node: Installation2612
-Node: MELPA2773
-Node: Manual installation2920
-Node: Usage3311
-Node: Examples4287
-Node: Group selectors7772
-Node: Keywords8961
-Node: Special selectors9702
-Node: Normal selectors12364
-Node: Tips16995
-Node: Changelog17846
-Node: 12-pre18071
-Node: 11118420
-Node: 1118593
-Node: 10320165
-Node: 10220376
-Node: 10120510
-Node: 10020848
-Node: Development20953
-Node: Bugs21345
-Node: Credits21984
+Node: Introduction824
+Node: Contents2232
+Node: Screenshots2385
+Node: Installation2622
+Node: MELPA2783
+Node: Manual installation2930
+Node: Usage3321
+Node: Examples4297
+Node: Group selectors7782
+Node: Keywords8971
+Node: Special selectors9712
+Node: Normal selectors12374
+Node: Tips17005
+Node: Changelog17856
+Node: 12-pre18081
+Node: 11118430
+Node: 1118603
+Node: 10320175
+Node: 10220386
+Node: 10120520
+Node: 10020858
+Node: Development20963
+Node: Bugs21365
+Node: Tests22018
+Node: Credits22337
 
 End Tag Table
 
