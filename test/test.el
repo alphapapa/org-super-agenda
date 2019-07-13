@@ -132,8 +132,9 @@ message."
   (cl-loop for s in (list a b)
            unless (stringp s)
            do (error "Unable to diff non-string: %s is: %s" (symbol-name s) s))
-  (let ((file-a (make-temp-file "argh"))
-        (file-b (make-temp-file "argh")))
+  (let* ((write-region-inhibit-fsync t)
+         (file-a (make-temp-file "argh"))
+         (file-b (make-temp-file "argh")))
     (with-temp-file file-a
       (insert a))
     (with-temp-file file-b
