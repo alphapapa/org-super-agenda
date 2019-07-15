@@ -358,7 +358,38 @@ the third."
 
 ;;;;; Date/time-related
 
-;; TODO: I guess these should be in a date-matcher macro
+(cl-defmacro org-super-agenda--defgroup-with-time-tests (name docstring &key section-name test-property let*)
+  "Define an agenda-item group function based on time info.
+
+:TEST-PROPERTY is the property string on which to run the tests.
+It can be one of the special properties like `TIMESTAMP',
+`SCHEDULED' or `DEADLINE', but it can also be a user-defined
+property like `CREATED'.
+
+For more information on the other parameters, see
+`org-super-agenda--defgroup'."
+  (declare (indent defun))
+  `(org-super-agenda--defgroup ,name
+       ,docstring
+     :section-name ,section-name
+     :let* ((today (pcase (car args)  ; Perhaps premature optimization
+                     ((or 'past 'today 'future 'before 'on 'after)
+                      (org-today))))
+            (target-date (pcase (car args)
+                           ((or 'before 'on 'after)
+                            (org-time-string-to-absolute (second args))))))
+     :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+               (let ((entry-time (org-entry-get (point) ,test-property)))
+                 (pcase (car args)
+                   ('t entry-time)         ; Has any timestamp
+                   ('nil (not entry-time)) ; Has no timestamp
+                   (comparison
+                    (when entry-time
+                      (let ((entry-time (org-time-string-to-absolute entry-time))
+                            (compare-date (pcase comparison
+                                            ((or 'past 'today 'future) today)
+                                            ((or 'before 'on 'after) target-date))))
+                        (org-super-agenda--compare-dates comparison entry-time compare-date)))))))))
 
 (org-super-agenda--defgroup time-grid
   "Group items that appear on a time grid.
