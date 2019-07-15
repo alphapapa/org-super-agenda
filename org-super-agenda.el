@@ -944,16 +944,29 @@ of the arguments to the function."
   "Return function for SELECTOR, or nil if special selector.
 Raise error if invalid selector."
   (cond
-   ((cl-member selector org-super-agenda-special-selectors)
-    ;; Special selector, so no associated function; return nil
-    nil)
-   ;; Valid selector: return function
-   ((plist-get org-super-agenda-group-types selector))
-   ((eq selector :habit)
-    ;; :habit selector used but `org-habit' not loaded
-    (user-error "Please `require' the `org-habit' library to use the :habit selector"))
-   ;; Invalid selector: raise error
-   ((user-error "Invalid org-super-agenda-groups selector: %s" selector))))
+    ((cl-member selector org-super-agenda-special-selectors)
+     ;; Special selector, so no associated function; return nil
+     nil)
+    ;; Valid selector: return function
+    ((plist-get org-super-agenda-group-types selector))
+    ((eq selector :habit)
+     ;; :habit selector used but `org-habit' not loaded
+     (user-error "Please `require' the `org-habit' library to use the :habit selector"))
+    ;; Deprecated selector: raise warning
+    ((when-let ((new-selector (alist-get selector
+                                         org-super-agenda-deprecated-selectors-alist)))
+       (let ((old (symbol-name selector))
+             (new (symbol-name new-selector)))
+         (display-warning 'org-super-agenda
+                          (concat "Deprecated selector, please use `" new
+                                  "' instead of `" old "'"))
+         (plist-get org-super-agenda-group-types new-selector))))
+    ;; Invalid selector: raise error
+    ((user-error "Invalid org-super-agenda-groups selector: %s" selector))))
+
+(defvar org-super-agenda-deprecated-selectors-alist
+  '((:date . :timestamp))
+  "Alist of deprecated selectors and their replacements.")
 
 (defun org-super-agenda--group-dispatch (items group)
   "Group ITEMS with the appropriate grouping functions for GROUP.
