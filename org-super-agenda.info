@@ -371,14 +371,6 @@ list.
      You might use this to select items that are project top-level
      headings.  Be aware that this may be very slow in non-daily/weekly
      agenda views because of its recursive nature.
-‘:timestamp’
-     Group items that have a timestamp.  Argument can be ‘t’ (to match
-     items with any timestamp), ‘nil’ (to match items that have no
-     timestamp), ‘past’ (to match items with a timestamp in the past),
-     ‘today’ (to match items whose timestamp is today), or ‘future’ (to
-     match items with a timestamp in the future).  Argument may also be
-     given like ‘before DATE’ or ‘after DATE’ where ‘DATE’ is a date
-     string that ‘org-time-string-to-absolute’ can process.
 ‘:deadline’
      Group items that have a deadline.  Argument can be ‘t’ (to match
      items with any deadline), ‘nil’ (to match items that have no
@@ -445,6 +437,14 @@ list.
      string or list of strings.
 ‘:time-grid’
      Group items that appear on the time grid.
+‘:timestamp’
+     Group items that have a timestamp.  Argument can be ‘t’ (to match
+     items with any timestamp), ‘nil’ (to match items that have no
+     timestamp), ‘past’ (to match items with a timestamp in the past),
+     ‘today’ (to match items whose timestamp is today), or ‘future’ (to
+     match items with a timestamp in the future).  Argument may also be
+     given like ‘before DATE’ or ‘after DATE’ where ‘DATE’ is a date
+     string that ‘org-time-string-to-absolute’ can process.
 ‘:todo’
      Group items that match any of the given TODO keywords.  Argument
      may be a string or list of strings, or ‘t’ to match any keyword, or
