@@ -335,6 +335,7 @@ returned by :SECTION-NAME as the first item, a list of items not
 matching the :TEST as the second, and a list of items matching as
 the third."
   (declare (indent defun)
+           (doc-string 2)
            (debug (&define symbolp stringp
                            &rest [&or [":section-name" [&or stringp def-form]]
                                       [":test" def-form]
@@ -368,7 +369,8 @@ property like `CREATED'.
 
 For more information on the other parameters, see
 `org-super-agenda--defgroup'."
-  (declare (indent defun))
+  (declare (indent defun)
+           (doc-string 2))
   `(org-super-agenda--defgroup ,name
        ,docstring
      :section-name ,section-name
