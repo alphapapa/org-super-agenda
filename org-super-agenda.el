@@ -411,8 +411,8 @@ agenda time-grid. "
               ;; the time-grid.  Yes, this is confusing.  :)
               (not (eql it 'time)))))
 
-(org-super-agenda--defgroup date
-  "Group items that have a timestamp.
+(org-super-agenda--defgroup-with-time-tests date
+    "Group items that have a timestamp.
 Argument can be `t' (to match items with any timestamp),
 `nil' (to match items that have no timestamp), `past' (to match
 items with a timestamp in the past), `today' (to match items
@@ -429,27 +429,10 @@ a timestamp in the future).  Argument may also be given like
                   ('before (concat "Timestamps before " (second args)))
                   ('on (concat "Timestamps on " (second args)))
                   ('after (concat "Timestamps after  " (second args))))
-  :let* ((today (pcase (car args)  ; Perhaps premature optimization
-                  ((or 'past 'today 'future 'before 'on 'after)
-                   (org-today))))
-         (target-date (pcase (car args)
-                        ((or 'before 'on 'after)
-                         (org-time-string-to-absolute (second args))))))
-  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
-          (let ((entry-time (org-entry-get (point) "TIMESTAMP")))
-            (pcase (car args)
-              ('t entry-time)  ; Has any timestamp
-              ('nil (not entry-time))  ; Has no timestamp
-              (comparison
-               (when entry-time
-                 (let ((entry-time (org-time-string-to-absolute entry-time))
-                       (compare-date (pcase comparison
-                                       ((or 'past 'today 'future) today)
-                                       ((or 'before 'on 'after) target-date))))
-                   (org-super-agenda--compare-dates comparison entry-time compare-date))))))))
+  :test-property "TIMESTAMP")
 
-(org-super-agenda--defgroup deadline
-  "Group items that have a deadline.
+(org-super-agenda--defgroup-with-time-tests deadline
+    "Group items that have a deadline.
 Argument can be `t' (to match items with any deadline), `nil' (to
 match items that have no deadline), `past` (to match items with a
 deadline in the past), `today' (to match items whose deadline is
@@ -466,26 +449,9 @@ DATE', where DATE is a date string that
                   ('before (concat "Due before " (second args)))
                   ('on (concat "Due on " (second args)))
                   ('after (concat "Due after " (second args))))
-  :let* ((today (pcase (car args)  ; Perhaps premature optimization
-                  ((or 'past 'today 'future 'before 'on 'after)
-                   (org-today))))
-         (target-date (pcase (car args)
-                        ((or 'before 'on 'after)
-                         (org-time-string-to-absolute (second args))))))
-  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
-          (let ((entry-time (org-entry-get (point) "DEADLINE")))
-            (pcase (car args)
-              ('t entry-time)  ; Has any deadline info
-              ('nil (not entry-time))  ; Has no deadline info
-              (comparison
-               (when entry-time
-                 (let ((entry-time (org-time-string-to-absolute entry-time))
-                       (compare-date (pcase comparison
-                                       ((or 'past 'today 'future) today)
-                                       ((or 'before 'on 'after) target-date))))
-                   (org-super-agenda--compare-dates comparison entry-time compare-date))))))))
+  :test-property "DEADLINE")
 
-(org-super-agenda--defgroup scheduled
+(org-super-agenda--defgroup-with-time-tests scheduled
   "Group items that are scheduled.
 Argument can be `t' (to match items scheduled for any date),
 `nil' (to match items that are not schedule), `past` (to match
@@ -503,24 +469,7 @@ DATE', where DATE is a date string that
                   ('before (concat "Scheduled before " (second args)))
                   ('on (concat "Scheduled on " (second args)))
                   ('after (concat "Scheduled after " (second args))))
-  :let* ((today (pcase (car args)  ; Perhaps premature optimization
-                  ((or 'past 'today 'future 'before 'on 'after)
-                   (org-today))))
-         (target-date (pcase (car args)
-                        ((or 'before 'on 'after)
-                         (org-time-string-to-absolute (second args))))))
-  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
-          (let ((entry-time (org-entry-get (point) "SCHEDULED")))
-            (pcase (car args)
-              ('t entry-time)  ; Has any scheduled info
-              ('nil (not entry-time))  ; Has no scheduled info
-              (comparison
-               (when entry-time
-                 (let ((entry-time (org-time-string-to-absolute entry-time))
-                       (compare-date (pcase comparison
-                                       ((or 'past 'today 'future) today)
-                                       ((or 'before 'on 'after) target-date))))
-                   (org-super-agenda--compare-dates comparison entry-time compare-date))))))))
+  :test-property "SCHEDULED")
 
 (defun org-super-agenda--compare-dates (comparison date-a date-b)
   "Compare DATE-A and DATE-B according to COMPARISON.
