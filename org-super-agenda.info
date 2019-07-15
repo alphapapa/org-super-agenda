@@ -380,18 +380,21 @@ list.
      You might use this to select items that are project top-level
      headings.  Be aware that this may be very slow in non-daily/weekly
      agenda views because of its recursive nature.
-‘:date’
-     Group items that have a date associated.  Argument can be t to
-     match items with any date, nil to match items without a date, or
-     today to match items with today’s date.  The ts-date text-property
-     is matched against.
+‘:timestamp’
+     Group items that have a timestamp.  Argument can be ‘t’ (to match
+     items with any timestamp), ‘nil’ (to match items that have no
+     timestamp), ‘past’ (to match items with a timestamp in the past),
+     ‘today’ (to match items whose timestamp is today), or ‘future’ (to
+     match items with a timestamp in the future).  Argument may also be
+     given like ‘before DATE’ or ‘after DATE’ where ‘DATE’ is a date
+     string that ‘org-time-string-to-absolute’ can process.
 ‘:deadline’
      Group items that have a deadline.  Argument can be ‘t’ (to match
      items with any deadline), ‘nil’ (to match items that have no
      deadline), ‘past’ (to match items with a deadline in the past),
      ‘today’ (to match items whose deadline is today), or ‘future’ (to
      match items with a deadline in the future).  Argument may also be
-     given like ‘before DATE’ or ‘after DATE’ where DATE is a date
+     given like ‘before DATE’ or ‘after DATE’ where ‘DATE’ is a date
      string that ‘org-time-string-to-absolute’ can process.
 ‘:effort<’
      Group items that are less than (or equal to) the given effort.
@@ -444,7 +447,7 @@ list.
      schedule), ‘past’ (to match items scheduled for the past), ‘today’
      (to match items scheduled for today), or ‘future’ (to match items
      scheduled for the future).  Argument may also be given like ‘before
-     DATE’ or ‘after DATE’ where DATE is a date string that
+     DATE’ or ‘after DATE’ where ‘DATE’ is a date string that
      ‘org-time-string-to-absolute’ can process.
 ‘:tag’
      Group items that match any of the given tags.  Argument may be a
