@@ -411,10 +411,6 @@ agenda time-grid. "
               ;; the time-grid.  Yes, this is confusing.  :)
               (not (eql it 'time)))))
 
-(define-obsolete-function-alias 'org-super-agenda--group-date
-    'org-super-agenda--group-timestamp
-  "2019-07-15")
-
 (org-super-agenda--defgroup-with-time-tests timestamp
     "Group items that have a timestamp.
 Argument can be `t' (to match items with any timestamp),
