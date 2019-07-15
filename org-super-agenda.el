@@ -361,23 +361,41 @@ the third."
 ;; TODO: I guess these should be in a date-matcher macro
 
 (org-super-agenda--defgroup date
-  "Group items that have a date associated.
-Argument can be `t' to match items with any date, `nil' to match
-items without a date, or `today' to match items with today's
-date.  The `ts-date' text-property is matched against. "
-  :section-name "Dated items"  ; Note: this does not mean the item has a "SCHEDULED:" line
-  :let* ((today (org-today)))
-  :test (pcase (car args)
-          ('t ;; Test for any date
-           (org-find-text-property-in-string 'ts-date item))
-          ('nil ;; Test for not having a date
-           (not (org-find-text-property-in-string 'ts-date item)))
-          ('today  ;; Items that have a time sometime today
-           ;; TODO: Maybe I can use the ts-date property in some other places, might be faster
-           (when-let ((day (org-find-text-property-in-string 'ts-date item)))
-             (= day today)))
-          (_ ;; Oops
-           (user-error "Argument to `:date' must be `t', `nil', or `today'"))))
+  "Group items that have a timestamp.
+Argument can be `t' (to match items with any timestamp),
+`nil' (to match items that have no timestamp), `past' (to match
+items with a timestamp in the past), `today' (to match items
+whose timestamp for today), or `future' (to match items with
+a timestamp in the future).  Argument may also be given like
+`before DATE' or `after DATE', where DATE is a date string that
+`org-time-string-to-absolute' can process."
+  :section-name (pcase (car args)
+                  ('t "Timestamp items")
+                  ('nil "Items without timestamps")
+                  ('past "Timestamps in the past")
+                  ('today "Timestamps for today")
+                  ('future "Timestamps in the future")
+                  ('before (concat "Timestamps before " (second args)))
+                  ('on (concat "Timestamps on " (second args)))
+                  ('after (concat "Timestamps after  " (second args))))
+  :let* ((today (pcase (car args)  ; Perhaps premature optimization
+                  ((or 'past 'today 'future 'before 'on 'after)
+                   (org-today))))
+         (target-date (pcase (car args)
+                        ((or 'before 'on 'after)
+                         (org-time-string-to-absolute (second args))))))
+  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+          (let ((entry-time (org-entry-get (point) "TIMESTAMP")))
+            (pcase (car args)
+              ('t entry-time)  ; Has any timestamp
+              ('nil (not entry-time))  ; Has no timestamp
+              (comparison
+               (when entry-time
+                 (let ((entry-time (org-time-string-to-absolute entry-time))
+                       (compare-date (pcase comparison
+                                       ((or 'past 'today 'future) today)
+                                       ((or 'before 'on 'after) target-date))))
+                   (org-super-agenda--compare-dates comparison entry-time compare-date))))))))
 
 (org-super-agenda--defgroup time-grid
   "Group items that appear on a time grid.
