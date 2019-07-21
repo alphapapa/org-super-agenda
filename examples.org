@@ -152,17 +152,18 @@ This example groups items by the value of their =ProjectId= property (a more fle
 You can also use one or more arbitrary predicate functions, including lambdas.  Note that, since the group list is already quoted, function name symbols are not quoted again, nor is ~#'~ used.
 
 #+BEGIN_SRC elisp
-  (defun pizza-p (item)
-    (s-matches? "pizza" item))
+  (defun emacs-p (item)
+    (s-matches? "emacs" item))
 
   (let ((org-super-agenda-groups
-         '((:pred pizza-p))))
+         '((:pred emacs-p))))
     (org-agenda-list))
 
   (let ((org-super-agenda-groups
-         '((:pred (pizza-p
-                   (lambda (item)
-                     (s-matches? "Skype" item)))))))
+         '((:pred
+            ;; A list of two functions
+            (emacs-p (lambda (item)
+                       (s-matches? "Lisp" item)))))))
     (org-agenda-list))
 #+END_SRC
 
