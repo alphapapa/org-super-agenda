@@ -319,6 +319,10 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
 ‘‘:auto-dir-name’’
      This automatically groups items by the directory name of their
      source buffer.
+‘:auto-date’
+     This automatically groups items by their earliest of scheduled date
+     or deadline, formatted according to variable
+     ‘org-super-agenda-date-format’.
 ‘:auto-group’
      This selects items that have the agenda-group Org property set.  By
      setting this property for a subtree, every item in it will be
@@ -494,7 +498,14 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
 6.1 1.2-pre
 ===========
 
-*Fixed*
+*Added*
+   • Selector ‘:auto-date’, which groups items by their earliest of
+     scheduled date or deadline, formatted according to variable
+     ‘org-super-agenda-date-format’.
+   • Option ‘org-super-agenda-date-format’, used to format date headers
+     in the ‘:auto-date’ selector.
+
+   *Fixed*
    • :children todo group selection (#75
      (https://github.com/alphapapa/org-super-agenda/issues/75)).
      (Thanks to Ben Leggett (https://github.com/bleggett).)
@@ -658,20 +669,20 @@ Node: Examples4297
 Node: Group selectors7782
 Node: Keywords8971
 Node: Special selectors9712
-Node: Normal selectors12374
-Node: Tips17005
-Node: Changelog17856
-Node: 12-pre18081
-Node: 11118430
-Node: 1118603
-Node: 10320175
-Node: 10220386
-Node: 10120520
-Node: 10020858
-Node: Development20963
-Node: Bugs21365
-Node: Tests22018
-Node: Credits22337
+Node: Normal selectors12555
+Node: Tips17186
+Node: Changelog18037
+Node: 12-pre18262
+Node: 11118920
+Node: 1119093
+Node: 10320665
+Node: 10220876
+Node: 10121010
+Node: 10021348
+Node: Development21453
+Node: Bugs21855
+Node: Tests22508
+Node: Credits22827
 
 End Tag Table
 

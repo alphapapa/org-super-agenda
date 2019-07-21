@@ -168,6 +168,7 @@ Every selector requires an argument, even if it's just ~t~, e.g. ~:anything~, ~:
 +  =:anything= :: Select every item, no matter what.  This is probably most useful with ~:discard~, because it doesn't actually test anything, so it's faster than, e.g. ~:regexp "."~, which has to get the entry text for every item.
 +  =:auto-category= :: This automatically groups items by their category (usually the filename it's in, without the =.org= suffix).
 +  ~:auto-dir-name~ :: This automatically groups items by the directory name of their source buffer.
++  =:auto-date= :: This automatically groups items by their earliest of scheduled date or deadline, formatted according to variable ~org-super-agenda-date-format~.
 +  =:auto-group= :: This selects items that have the =agenda-group= Org property set.  By setting this property for a subtree, every item in it will be sorted into an agenda group by that name and placed into the agenda where the ~:auto-group~ selector is ([[examples.org#automatically-by-group][example]]).
 +  ~:auto-map~ :: This automatically groups items by the value returned when applying each item to the given function as a string from the agenda buffer ([[examples.org#automatically-by-mapping-a-function][example]]).  The function should return a string to be used as the grouping key and as the header for its group.
 +  ~:auto-parent~ :: This automatically groups items by their parent heading.  This is surprisingly handy, especially if you group tasks hierarchically by project and use agenda restrictions to limit the agenda to a subtree.
@@ -217,6 +218,10 @@ These selectors take one argument alone, or multiple arguments in a list.
 :END:
 
 ** 1.2-pre
+
+*Added*
++  Selector ~:auto-date~, which groups items by their earliest of scheduled date or deadline, formatted according to variable ~org-super-agenda-date-format~.
++  Option ~org-super-agenda-date-format~, used to format date headers in the ~:auto-date~ selector.
 
 *Fixed*
 +  =:children todo= group selection ([[https://github.com/alphapapa/org-super-agenda/issues/75][#75]]).  (Thanks to [[https://github.com/bleggett][Ben Leggett]].)

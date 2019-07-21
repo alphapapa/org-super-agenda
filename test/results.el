@@ -1830,4 +1830,51 @@ Wednesday   5 July 2017
   ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
+" "415e1172e603da0549cd21c3d9ecf418" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+  4 July 2017
+  ambition:   Sched. 1x:  TODO [#A] Skype with president of Antarctica                             :universe:ambition:world::meetings:
+
+  5 July 2017
+  test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor                                                  :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
+  ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
+  test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
+  ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+
+  7 July 2017
+  ambition:   In   2 d.:  TODO [#A] Take over the world                                                     :universe:ambition::world:
+
+ 10 July 2017
+  ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
+
+ 15 July 2017
+  ambition:   In  10 d.:  TODO [#A] Take over the universe                                                         :universe:ambition:
+
+ 21 July 2017
+  test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
+
+  1 August 2017
+  test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
+
+ 27 August 2017
+  ambition:   In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
+
+ 20 September 2017
+  ambition:   In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
 "))

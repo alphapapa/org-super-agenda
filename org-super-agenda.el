@@ -183,6 +183,11 @@ making it stretch across the screen."
   "String inserted before group headers."
   :type 'string)
 
+(defcustom org-super-agenda-date-format "%e %B %Y"
+  "Format string for date headers.
+See `format-time-string'."
+  :type 'string)
+
 ;;;; Faces
 
 (defface org-super-agenda-header '((t (:inherit org-agenda-structure)))
@@ -221,6 +226,20 @@ If ANY is non-nil, return as soon as FORM returns non-nil."
                                while (outline-next-heading))))))))))
 
 ;;;; Support functions
+
+(defun org-super-agenda--org-timestamp-element< (a b)
+  "Return non-nil if A's date element is earlier than B's.
+A and B are Org timestamp elements."
+  ;; Copied from `org-ql'.
+  (cl-macrolet ((ts (ts)
+                    `(when ,ts
+                       (org-timestamp-format ,ts "%s"))))
+    (let* ((a-ts (ts a))
+           (b-ts (ts b)))
+      (cond ((and a-ts b-ts)
+             (string< a-ts b-ts))
+            (a-ts t)
+            (b-ts nil)))))
 
 (defsubst org-super-agenda--get-marker (s)
   "Return `org-marker' text properties of string S."
@@ -777,7 +796,8 @@ The string should be the priority cookie letter, e.g. \"A\".")
 ;;;;; Auto-grouping
 
 (cl-defmacro org-super-agenda--def-auto-group (name docstring-ending
-                                                    &key keyword key-form (header-form 'key))
+                                                    &key keyword key-form
+                                                    (header-form 'key) (key-sort-fn #'string<))
   "Define an auto-grouping function.
 
 The function will be named `org-super-agenda--auto-group-NAME'.
@@ -789,6 +809,9 @@ The selector keyword will be `:auto-NAME'.
 Items will be grouped by the value of KEY-FORM evaluated for each
 item, with the variable `item' bound to the string from the
 agenda buffer.
+
+Group headers will be sorted by KEY-SORT-FN; usually the default
+will suffice.
 
 The groups' headers will be the value of HEADER-FORM, evaluated
 for each group after items are grouped, with the variable `key'
@@ -821,13 +844,45 @@ of the arguments to the function."
                     else collect item into non-matching
                     finally return (list ,keyword
                                          non-matching
-                                         (cl-loop for key in (sort (ht-keys groups) #'string<)
+                                         (cl-loop for key in (sort (ht-keys groups) #',key-sort-fn)
                                                   for name = ,header-form
                                                   collect (list :name name
                                                                 :items (nreverse (ht-get groups key)))))))
          (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
                                                        ,keyword #',fn-name))
          (add-to-list 'org-super-agenda-auto-selector-keywords ,keyword)))))
+
+(org-super-agenda--def-auto-group date
+  "their earliest deadline or scheduled date (formatted according to `org-super-agenda-date-format', which see)"
+  :keyword :auto-date
+  ;; This is convoluted, mainly because dates and times in Emacs are kind of
+  ;; insane.  Good luck parsing a simple "%e %B %Y"-formatted time back to a
+  ;; time value that can be compared.  It's virtually impossible, at least
+  ;; without a lot of work (hence my ts.el package, but it's not yet mature
+  ;; enough to use here).  So we store the Org timestamp element in the text
+  ;; properties of the formatted time.
+  :key-form (cl-flet ((get-date-type (type)
+                                     (when-let* ((date-string (org-entry-get (point) type)))
+                                       (with-temp-buffer
+                                         ;; FIXME: Hack: since we're using (org-element-property
+                                         ;; :type date-element) below, we need this date parsed
+                                         ;; into an org-element element.
+                                         (insert date-string)
+                                         (goto-char 0)
+                                         (org-element-timestamp-parser)))))
+              (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+                ;; MAYBE: Also check CLOSED date.
+                (let ((earliest-ts (car (sort (list (get-date-type "SCHEDULED")
+                                                    (get-date-type "DEADLINE"))
+                                              #'org-super-agenda--org-timestamp-element<))))
+                  (pcase earliest-ts
+                    ('nil nil)
+                    (_ (propertize (org-timestamp-format earliest-ts org-super-agenda-date-format)
+                                   'org-super-agenda-ts earliest-ts))))))
+  :key-sort-fn (lambda (a b)
+                 (org-super-agenda--org-timestamp-element<
+                  (get-text-property 0 'org-super-agenda-ts a)
+                  (get-text-property 0 'org-super-agenda-ts b))))
 
 (org-super-agenda--def-auto-group items "their AGENDA-GROUP property"
   :keyword :auto-group
