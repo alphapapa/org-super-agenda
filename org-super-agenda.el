@@ -142,6 +142,8 @@ only with point on the group headers (e.g. use `origami' to fold
 group headings by binding a key to `origami-toggle-node' in this
 map).")
 
+;;;; Customization
+
 (defgroup org-super-agenda nil
   "Settings for `org-super-agenda'."
   :group 'org

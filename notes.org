@@ -1260,7 +1260,7 @@ CLOSED: [2017-07-28 Fri 00:02]
 -  State "DONE"       from "TODO"       [2017-07-28 Fri 00:02]
 :END:
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results silent
   (defun osa/describe-groupers ()
     (require 'dash-functional)
     (let ((groups (cl-loop for (group-type fn) on org-super-agenda-group-types by 'cddr
