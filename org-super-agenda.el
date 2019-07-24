@@ -663,7 +663,9 @@ Argument may be a string or list of strings, or `t' to match any
 keyword, or `nil' to match only non-todo items."
   :section-name (pcase (car args)
                   ((pred stringp) ;; To-do keyword given
-                   (concat (s-join " and " args) " items"))
+                   (concat (s-join " and " (--map (propertize it 'face (org-get-todo-face it))
+                                                  args))
+                           " items"))
                   ('t ;; Test for any to-do keyword
                    "Any TODO keyword")
                   ('nil ;; Test for not having a to-do keyword
@@ -915,7 +917,8 @@ of the arguments to the function."
 
 (org-super-agenda--def-auto-group todo "their to-do keyword"
   :keyword :auto-todo
-  :key-form (org-find-text-property-in-string 'todo-state item)
+  :key-form (when-let* ((keyword (org-find-text-property-in-string 'todo-state item)))
+              (propertize keyword 'face (org-get-todo-face keyword)))
   :header-form (concat "To-do: " key))
 
 (org-super-agenda--def-auto-group dir-name "their parent heading"

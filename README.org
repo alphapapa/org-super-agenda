@@ -222,6 +222,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 *Added*
 +  Selector ~:auto-date~, which groups items by their earliest of scheduled date or deadline, formatted according to variable ~org-super-agenda-date-format~.
 +  Option ~org-super-agenda-date-format~, used to format date headers in the ~:auto-date~ selector.
++  To-do keyword faces are applied to keywords in group headers.
 
 *Changed*
 +  Group headers face is now appended to face list instead of overriding it.
