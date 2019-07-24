@@ -261,12 +261,13 @@ Prepended with `org-super-agenda-header-separator'."
   (pcase s
     ('none "")
     (_ (setq s (concat " " s))
-       (org-add-props s nil 'face 'org-super-agenda-header
-                      'keymap org-super-agenda-header-map
-                      ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
-                      ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
-                      ;; we'll use both.
-                      'local-map org-super-agenda-header-map)
+       (add-face-text-property 0 (length s) 'org-super-agenda-header t s)
+       (org-add-props s nil
+         'keymap org-super-agenda-header-map
+         ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
+         ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
+         ;; we'll use both.
+         'local-map org-super-agenda-header-map)
        (concat org-super-agenda-header-separator s))))
 
 (defsubst org-super-agenda--get-priority-cookie (s)

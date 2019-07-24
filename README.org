@@ -223,6 +223,9 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  Selector ~:auto-date~, which groups items by their earliest of scheduled date or deadline, formatted according to variable ~org-super-agenda-date-format~.
 +  Option ~org-super-agenda-date-format~, used to format date headers in the ~:auto-date~ selector.
 
+*Changed*
++  Group headers face is now appended to face list instead of overriding it.
+
 *Fixed*
 +  =:children todo= group selection ([[https://github.com/alphapapa/org-super-agenda/issues/75][#75]]).  (Thanks to [[https://github.com/bleggett][Ben Leggett]].)
 +  =:children= group headings.

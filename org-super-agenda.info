@@ -505,6 +505,10 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
    • Option ‘org-super-agenda-date-format’, used to format date headers
      in the ‘:auto-date’ selector.
 
+   *Changed*
+   • Group headers face is now appended to face list instead of
+     overriding it.
+
    *Fixed*
    • :children todo group selection (#75
      (https://github.com/alphapapa/org-super-agenda/issues/75)).
@@ -673,16 +677,16 @@ Node: Normal selectors12555
 Node: Tips17186
 Node: Changelog18037
 Node: 12-pre18262
-Node: 11118920
-Node: 1119093
-Node: 10320665
-Node: 10220876
-Node: 10121010
-Node: 10021348
-Node: Development21453
-Node: Bugs21855
-Node: Tests22508
-Node: Credits22827
+Node: 11119020
+Node: 1119193
+Node: 10320765
+Node: 10220976
+Node: 10121110
+Node: 10021448
+Node: Development21553
+Node: Bugs21955
+Node: Tests22608
+Node: Credits22927
 
 End Tag Table
 
