@@ -228,7 +228,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  Group headers face is now appended to face list instead of overriding it.
 
 *Fixed*
-+  =:children todo= group selection ([[https://github.com/alphapapa/org-super-agenda/issues/75][#75]]).  (Thanks to [[https://github.com/bleggett][Ben Leggett]].)
++  =:children todo= group selection ([[https://github.com/alphapapa/org-super-agenda/issues/75][#75]]).  (Thanks to [[https://github.com/bleggett][Ben Leggett]] and [[https://github.com/whirm][Elric Milon]].)
 +  =:children= group headings.
 
 *Updated*
