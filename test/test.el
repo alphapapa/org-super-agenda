@@ -438,6 +438,8 @@ buffer and do not save the results."
 (ert-deftest org-super-agenda--test-:children-todo ()
   (should (org-super-agenda--test-run
            ;; DONE: Works.
+           ;; FIXME: This test sort of works, but it passed even with a bug present in the code.
+           ;; See <https://github.com/alphapapa/org-super-agenda/issues/75#issuecomment-519839287>.
            :groups '((:children todo)))))
 
 (ert-deftest org-super-agenda--test-:children-string ()
