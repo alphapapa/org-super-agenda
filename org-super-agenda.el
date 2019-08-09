@@ -213,7 +213,7 @@ See `format-time-string'."
 If ANY is non-nil, return as soon as FORM returns non-nil."
   (declare (indent defun)
            (debug (":form" form [&optional ":any" sexp])))
-  (org-with-gensyms (tree-start result all-results region-beginning region-end)
+  (org-with-gensyms (tree-start all-results)
     `(save-excursion
        (save-restriction
          (let ((,tree-start (point))
