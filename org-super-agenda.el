@@ -857,7 +857,8 @@ of the arguments to the function."
                                                        ,keyword #',fn-name))
          (add-to-list 'org-super-agenda-auto-selector-keywords ,keyword)))))
 
-;; TODO: auto-year and auto-month groups.  Maybe also auto-quarter, auto-week, etc.  Maybe also auto-next-7-days, something like that.
+;; TODO: auto-year and auto-month groups.  Maybe also auto-quarter,
+;; auto-week, etc.  Maybe also auto-next-7-days, something like that.
 
 (org-super-agenda--def-auto-group date
   "their earliest deadline or scheduled date (formatted according to `org-super-agenda-date-format', which see)"
