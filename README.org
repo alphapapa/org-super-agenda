@@ -138,7 +138,7 @@ Here's the code for the screenshots above.  You can test it quickly by evaluatin
     (org-agenda nil "a"))
 #+END_SRC
 
-The groups apply to all agenda commands (at least, every one that calls ~org-agenda-finalize-entries~).  You can set different groups for custom commands by setting ~org-super-agenda-groups~ in the custom command's ~settings~ list (see the description for ~org-agenda-custom-commands~).  You can disable grouping by binding ~org-agenda-super-groups~ to nil around a call to an agenda command, or you can disable it globally by disabling the mode.
+The groups apply to all agenda commands (at least, every one that calls ~org-agenda-finalize-entries~).  You can set different groups for custom commands by setting ~org-super-agenda-groups~ in the custom command's ~settings~ list (see the description for ~org-agenda-custom-commands~).  You can disable grouping by binding ~org-super-agenda-groups~ to nil around a call to an agenda command, or you can disable it globally by disabling the mode.
 
 *** COMMENT Tasks                                                :noexport:
 
