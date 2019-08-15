@@ -627,10 +627,10 @@ buffer and do not save the results."
   (should (org-super-agenda--test-run
            :groups '((:auto-category t)))))
 
-(ert-deftest org-super-agenda--test-:auto-date ()
+(ert-deftest org-super-agenda--test-:auto-planning ()
   ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:auto-date t)))))
+           :groups '((:auto-planning t)))))
 
 (ert-deftest org-super-agenda--test-:auto-group ()
   ;; DONE: Works.

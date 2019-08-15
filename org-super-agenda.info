@@ -319,10 +319,6 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
 ‘‘:auto-dir-name’’
      This automatically groups items by the directory name of their
      source buffer.
-‘:auto-date’
-     This automatically groups items by their earliest of scheduled date
-     or deadline, formatted according to variable
-     ‘org-super-agenda-date-format’.
 ‘:auto-group’
      This selects items that have the agenda-group Org property set.  By
      setting this property for a subtree, every item in it will be
@@ -340,6 +336,10 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      subtree.
 ‘:auto-todo’
      This automatically groups items by their to-do keyword.
+‘:auto-planning’
+     This automatically groups items by their earliest of scheduled date
+     or deadline, formatted according to variable
+     ‘org-super-agenda-date-format’.
 ‘:auto-priority’
      This automatically groups items by their priority.
 ‘‘:auto-property’’
@@ -499,7 +499,7 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
 ===========
 
 *Added*
-   • Selector ‘:auto-date’, which groups items by their earliest of
+   • Selector ‘:auto-planning’, which groups items by their earliest of
      scheduled date or deadline, formatted according to variable
      ‘org-super-agenda-date-format’.
    • Option ‘org-super-agenda-date-format’, used to format date headers
@@ -675,20 +675,20 @@ Node: Examples4297
 Node: Group selectors7782
 Node: Keywords8971
 Node: Special selectors9712
-Node: Normal selectors12555
-Node: Tips17186
-Node: Changelog18037
-Node: 12-pre18262
-Node: 11119137
-Node: 1119310
-Node: 10320882
-Node: 10221093
-Node: 10121227
-Node: 10021565
-Node: Development21670
-Node: Bugs22072
-Node: Tests22725
-Node: Credits23044
+Node: Normal selectors12559
+Node: Tips17190
+Node: Changelog18041
+Node: 12-pre18266
+Node: 11119145
+Node: 1119318
+Node: 10320890
+Node: 10221101
+Node: 10121235
+Node: 10021573
+Node: Development21678
+Node: Bugs22080
+Node: Tests22733
+Node: Credits23052
 
 End Tag Table
 

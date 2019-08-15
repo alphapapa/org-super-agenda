@@ -859,9 +859,9 @@ of the arguments to the function."
 ;; TODO: auto-year and auto-month groups.  Maybe also auto-quarter,
 ;; auto-week, etc.  Maybe also auto-next-7-days, something like that.
 
-(org-super-agenda--def-auto-group date
+(org-super-agenda--def-auto-group planning
   "their earliest deadline or scheduled date (formatted according to `org-super-agenda-date-format', which see)"
-  :keyword :auto-date
+  :keyword :auto-planning
   ;; This is convoluted, mainly because dates and times in Emacs are kind of
   ;; insane.  Good luck parsing a simple "%e %B %Y"-formatted time back to a
   ;; time value that can be compared.  It's virtually impossible, at least
