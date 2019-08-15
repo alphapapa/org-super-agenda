@@ -869,6 +869,7 @@ of the arguments to the function."
   ;; without a lot of work (hence my ts.el package, but it's not yet mature
   ;; enough to use here).  So we store the Org timestamp element in the text
   ;; properties of the formatted time.
+  ;; TODO: Use `ts' for this.
   :key-form (cl-flet ((get-date-type (type)
                                      (when-let* ((date-string (org-entry-get (point) type)))
                                        (with-temp-buffer
