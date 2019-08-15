@@ -3,7 +3,7 @@
 ;; Author: Adam Porter <adam@alphapapa.net>
 ;; Url: http://github.com/alphapapa/org-super-agenda
 ;; Version: 1.2-pre
-;; Package-Requires: ((emacs "25.1") (s "1.10.0") (dash "2.13") (org "9.0") (ht "2.2"))
+;; Package-Requires: ((emacs "25.1") (s "1.10.0") (dash "2.13") (org "9.0") (ht "2.2") (ts "0.2"))
 ;; Keywords: hypermedia, outlines, Org, agenda
 
 ;;; Commentary:
@@ -110,6 +110,7 @@
 (require 's)
 (require 'ht)
 (require 'seq)
+(require 'ts)
 
 ;; I think this is the right way to do this...
 (eval-when-compile
@@ -890,6 +891,25 @@ of the arguments to the function."
                  (org-super-agenda--org-timestamp-element<
                   (get-text-property 0 'org-super-agenda-ts a)
                   (get-text-property 0 'org-super-agenda-ts b))))
+
+(org-super-agenda--def-auto-group ts
+  "the date of their latest timestamp anywhere in the entry (formatted according to `org-super-agenda-date-format', which see)"
+  :keyword :auto-ts
+  :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+              (let* ((limit (org-entry-end-position))
+                     (latest-ts (->> (cl-loop for next-ts =
+                                              (when (re-search-forward org-element--timestamp-regexp limit t)
+                                                (ts-parse-org (match-string 1)))
+                                              while next-ts
+                                              collect next-ts)
+                                     (-sort #'ts>)
+                                     car)))
+                (when latest-ts
+                  (propertize (ts-format org-super-agenda-date-format latest-ts)
+                              'org-super-agenda-ts latest-ts))))
+  :key-sort-fn (lambda (a b)
+                 (ts< (get-text-property 0 'org-super-agenda-ts a)
+                      (get-text-property 0 'org-super-agenda-ts b))))
 
 (org-super-agenda--def-auto-group items "their AGENDA-GROUP property"
   :keyword :auto-group

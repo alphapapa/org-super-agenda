@@ -345,6 +345,10 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      ().
 ‘:auto-todo’
      This automatically groups items by their to-do keyword.
+‘‘:auto-ts’’
+     This automatically groups items by the date of their latest
+     timestamp anywhere in the entry, formatted according to variable
+     ‘org-super-agenda-date-format’.
 ‘:discard’
      Discard items that don’t match selectors.  Any groups processed
      after this one will not see discarded items.  You might use this at
@@ -501,6 +505,9 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
 *Added*
    • Selector ‘:auto-planning’, which groups items by their earliest of
      scheduled date or deadline, formatted according to variable
+     ‘org-super-agenda-date-format’.
+   • Selector ‘:auto-ts’, which groups items by the date of their latest
+     timestamp anywhere in the entry, formatted according to variable
      ‘org-super-agenda-date-format’.
    • Option ‘org-super-agenda-date-format’, used to format date headers
      in the ‘:auto-date’ selector.
@@ -675,20 +682,20 @@ Node: Examples4297
 Node: Group selectors7782
 Node: Keywords8971
 Node: Special selectors9712
-Node: Normal selectors12559
-Node: Tips17190
-Node: Changelog18041
-Node: 12-pre18266
-Node: 11119145
-Node: 1119318
-Node: 10320890
-Node: 10221101
-Node: 10121235
-Node: 10021573
-Node: Development21678
-Node: Bugs22080
-Node: Tests22733
-Node: Credits23052
+Node: Normal selectors12756
+Node: Tips17387
+Node: Changelog18238
+Node: 12-pre18463
+Node: 11119532
+Node: 1119705
+Node: 10321277
+Node: 10221488
+Node: 10121622
+Node: 10021960
+Node: Development22065
+Node: Bugs22467
+Node: Tests23120
+Node: Credits23439
 
 End Tag Table
 
