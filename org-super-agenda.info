@@ -334,8 +334,6 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      surprisingly handy, especially if you group tasks hierarchically by
      project and use agenda restrictions to limit the agenda to a
      subtree.
-‘:auto-todo’
-     This automatically groups items by their to-do keyword.
 ‘:auto-planning’
      This automatically groups items by their earliest of scheduled date
      or deadline, formatted according to variable
@@ -345,6 +343,8 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
 ‘‘:auto-property’’
      This automatically groups items by the value of the given property
      ().
+‘:auto-todo’
+     This automatically groups items by their to-do keyword.
 ‘:discard’
      Discard items that don’t match selectors.  Any groups processed
      after this one will not see discarded items.  You might use this at

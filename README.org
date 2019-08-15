@@ -171,10 +171,10 @@ Every selector requires an argument, even if it's just ~t~, e.g. ~:anything~, ~:
 +  =:auto-group= :: This selects items that have the =agenda-group= Org property set.  By setting this property for a subtree, every item in it will be sorted into an agenda group by that name and placed into the agenda where the ~:auto-group~ selector is ([[examples.org#automatically-by-group][example]]).
 +  ~:auto-map~ :: This automatically groups items by the value returned when applying each item to the given function as a string from the agenda buffer ([[examples.org#automatically-by-mapping-a-function][example]]).  The function should return a string to be used as the grouping key and as the header for its group.
 +  ~:auto-parent~ :: This automatically groups items by their parent heading.  This is surprisingly handy, especially if you group tasks hierarchically by project and use agenda restrictions to limit the agenda to a subtree.
-+  =:auto-todo= :: This automatically groups items by their to-do keyword.
 +  =:auto-planning= :: This automatically groups items by their earliest of scheduled date or deadline, formatted according to variable ~org-super-agenda-date-format~.
 +  =:auto-priority= :: This automatically groups items by their priority.
 +  ~:auto-property~ :: This automatically groups items by the value of the given property ([[examples.org#automatically-by-property][example]]).
++  =:auto-todo= :: This automatically groups items by their to-do keyword.
 +  =:discard= :: Discard items that don't match selectors.  Any groups processed after this one will not see discarded items.  You might use this at the beginning or end of a list of groups, either to narrow down the list of items (used in combination with ~:not~), or to exclude items you're not interested in.
 +  =:not= :: Group ITEMS that match no selectors in GROUP.
 +  =:order= :: A number setting the order sections will be displayed in the agenda, lowest number first.  Defaults to =0=.
