@@ -1,3 +1,5 @@
+
+
 * UNDERWAY org-super-agenda                                       :Emacs:Org:
 :PROPERTIES:
 :ID:       d816ac2e-3af2-4f1d-bd7e-d8314bdcca1a
@@ -199,6 +201,7 @@ This passes the tests, and it's fewer lines of code than the =cl-loop=-based fun
 Could be useful in the loops where I use repeated ~when~ lines.
 
 [2018-08-03 Fri 18:05]  dash.el has =-setq= now.
+
 ** UNDERWAY [#B] Add property matcher
 :LOGBOOK:
 -  State "UNDERWAY"   from "TODO"       [2017-07-31 Mon 22:05]
@@ -1278,4 +1281,18 @@ CLOSED: [2017-07-28 Fri 00:02]
     (pop-to-buffer (current-buffer))
     (org-mode))
 #+END_SRC
+
+* Articles / Examples
+:PROPERTIES:
+:ID:       064cd3b7-c716-4b59-ab54-1b614c6dbe0c
+:END:
+
+Some articles that show how they use =org-super-agenda=.  Might want to add these to a list somewhere in the documentation.
+
++  [[https://www.baty.net/2019/org-super-agenda/][Org Super Agenda - Jack Baty's weblog]]
++  [[https://www.rousette.org.uk/archives/doom-emacs-tweaks-org-journal-and-org-super-agenda/][BSAG » Doom Emacs tweaks: Org Journal and Super Agenda]]
+
+Some example configs that aren't in article form:
+
++ [[https://emacs.christianbaeuerlein.com/my-org-config.html#org27f817c][Christian Baeuerlein]]
 
