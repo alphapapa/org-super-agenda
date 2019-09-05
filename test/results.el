@@ -1629,8 +1629,6 @@ Wednesday   5 July 2017
   ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "1ddbb96d38fccc4a44677f0a2240ebe2" "Day-agenda (W27):
 Wednesday   5 July 2017
-
- 
   test:        7:02...... Sunrise (12:04 of daylight)
                8:00...... ----------------
               10:00...... ----------------

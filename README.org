@@ -233,6 +233,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 *Fixed*
 +  =:children todo= group selection ([[https://github.com/alphapapa/org-super-agenda/issues/75][#75]]).  (Thanks to [[https://github.com/bleggett][Ben Leggett]] and [[https://github.com/whirm][Elric Milon]].)
 +  =:children= group headings.
++  Don't show blank lines for disabled headers (i.e. with ~:name none~ and =org-super-agenda-header-separator= set to an empty string).  (Fixes [[https://github.com/alphapapa/org-super-agenda/issues/105][#105]].  Thanks to [[https://github.com/floscr][Florian Schrödl]].)
 
 *Updated*
 +  Tests updated for Org 9.2.4.

@@ -1093,10 +1093,11 @@ actually the ORDER for the groups."
 
 (defun org-super-agenda--filter-finalize-entries (string)
   "Filter the return of `org-agenda-finalize-entries' through `org-super-agenda--finalize-entries'."
-  (mapconcat 'identity
-             (org-super-agenda--group-items
-              (split-string string "\n" t))
-             "\n"))
+  (--> string
+       (split-string it "\n" 'omit-nulls)
+       org-super-agenda--group-items
+       (-remove #'s-blank-str? it)
+       (s-join "\n" it)))
 
 ;;;; Footer
 

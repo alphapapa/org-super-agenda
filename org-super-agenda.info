@@ -526,6 +526,11 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
      (Thanks to Ben Leggett (https://github.com/bleggett) and Elric
      Milon (https://github.com/whirm).)
    • :children group headings.
+   • Don’t show blank lines for disabled headers (i.e.  with ‘:name
+     none’ and org-super-agenda-header-separator set to an empty
+     string).  (Fixes #105
+     (https://github.com/alphapapa/org-super-agenda/issues/105).  Thanks
+     to Florian Schrödl (https://github.com/floscr).)
 
    *Updated*
    • Tests updated for Org 9.2.4.
@@ -689,16 +694,16 @@ Node: Normal selectors12756
 Node: Tips17387
 Node: Changelog18238
 Node: 12-pre18463
-Node: 11119723
-Node: 1119896
-Node: 10321468
-Node: 10221679
-Node: 10121813
-Node: 10022151
-Node: Development22256
-Node: Bugs22658
-Node: Tests23311
-Node: Credits23630
+Node: 11120019
+Node: 1120192
+Node: 10321764
+Node: 10221975
+Node: 10122109
+Node: 10022447
+Node: Development22552
+Node: Bugs22954
+Node: Tests23607
+Node: Credits23926
 
 End Tag Table
 
