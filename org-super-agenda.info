@@ -146,11 +146,12 @@ File: README.info,  Node: Manual installation,  Prev: MELPA,  Up: Installation
 
 If you want to install manually, you must also install these packages:
 
-   • Emacs >= 25.1
+   • Emacs >= 26.1
    • dash >= 2.13
    • ht >=2.2
    • org-mode >= 9.0
    • s >= 1.10
+   • ts
 
    Then put org-super-agenda.el in your load-path, and eval
 (require 'org-super-agenda).
@@ -519,6 +520,8 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
    *Changed*
    • Group headers face is now appended to face list instead of
      overriding it.
+   • Minimum Emacs version requirement is now 26.1 (required by ts
+     library).
 
    *Fixed*
    • :children todo group selection (#75
@@ -685,25 +688,25 @@ Node: Screenshots2385
 Node: Installation2622
 Node: MELPA2783
 Node: Manual installation2930
-Node: Usage3321
-Node: Examples4297
-Node: Group selectors7782
-Node: Keywords8971
-Node: Special selectors9712
-Node: Normal selectors12756
-Node: Tips17387
-Node: Changelog18238
-Node: 12-pre18463
-Node: 11120019
-Node: 1120192
-Node: 10321764
-Node: 10221975
-Node: 10122109
-Node: 10022447
-Node: Development22552
-Node: Bugs22954
-Node: Tests23607
-Node: Credits23926
+Node: Usage3331
+Node: Examples4307
+Node: Group selectors7792
+Node: Keywords8981
+Node: Special selectors9722
+Node: Normal selectors12766
+Node: Tips17397
+Node: Changelog18248
+Node: 12-pre18473
+Node: 11120113
+Node: 1120286
+Node: 10321858
+Node: 10222069
+Node: 10122203
+Node: 10022541
+Node: Development22646
+Node: Bugs23048
+Node: Tests23701
+Node: Credits24020
 
 End Tag Table
 

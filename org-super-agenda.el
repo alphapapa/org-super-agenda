@@ -3,7 +3,7 @@
 ;; Author: Adam Porter <adam@alphapapa.net>
 ;; Url: http://github.com/alphapapa/org-super-agenda
 ;; Version: 1.2-pre
-;; Package-Requires: ((emacs "25.1") (s "1.10.0") (dash "2.13") (org "9.0") (ht "2.2") (ts "0.2"))
+;; Package-Requires: ((emacs "26.1") (s "1.10.0") (dash "2.13") (org "9.0") (ht "2.2") (ts "0.2"))
 ;; Keywords: hypermedia, outlines, Org, agenda
 
 ;;; Commentary:
@@ -1092,7 +1092,7 @@ actually the ORDER for the groups."
 ;;;; Finalize filter
 
 (defun org-super-agenda--filter-finalize-entries (string)
-  "Filter the return of `org-agenda-finalize-entries' through `org-super-agenda--finalize-entries'."
+  "Filter the return of `org-agenda-finalize-entries' through `org-super-agenda--group-items'."
   (--> string
        (split-string it "\n" 'omit-nulls)
        org-super-agenda--group-items

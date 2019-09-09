@@ -67,11 +67,12 @@ Just install the =org-super-agenda= package!
 
 If you want to install manually, you must also install these packages:
 
-+  Emacs >= 25.1
++  Emacs >= 26.1
 +  =dash= >= 2.13
 +  =ht= >=2.2
 +  =org-mode= >= 9.0
 +  =s= >= 1.10
++  =ts=
 
 Then put =org-super-agenda.el= in your =load-path=, and eval =(require 'org-super-agenda)=.
 
@@ -229,6 +230,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 
 *Changed*
 +  Group headers face is now appended to face list instead of overriding it.
++  Minimum Emacs version requirement is now 26.1 (required by =ts= library).
 
 *Fixed*
 +  =:children todo= group selection ([[https://github.com/alphapapa/org-super-agenda/issues/75][#75]]).  (Thanks to [[https://github.com/bleggett][Ben Leggett]] and [[https://github.com/whirm][Elric Milon]].)
