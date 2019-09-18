@@ -138,6 +138,12 @@ org-get-tags-at                                               220         0.2745
 
 The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
 
+** TODO [#B] Fix/document unintended sort order changing
+
+[2019-09-18 Wed 03:05]  I just now, finally, realized or understand that/why sort order can be modified by this package: Each grouping function is called in order, and the result of each function is appended to the list of matches.  So, e.g. ~((:scheduled t :deadline t))~ will sort all scheduled items before all deadlined items, even if deadline items are first in the list, before grouping.
+
+This is almost surely undesirable and confusing.  There may not be an easy way to fix it, short of rewriting the whole package to be more like =org-ql= with predicate functions called in a selector function.  If I can't fix it, I should at least document it.
+
 ** TODO [#B] Define customization types for group selectors
 
 E.g. [[info:elisp#Defining%20New%20Types][info:elisp#Defining New Types]].  This would make it possible to configure grouping with the customization UI.  Maybe it would also make it possible to verify that groups are configured correctly.  And maybe the customization types could be defined easily with the macros we're already using.
