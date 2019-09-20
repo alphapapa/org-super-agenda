@@ -200,6 +200,10 @@ If a string, a newline is added.  If a character, it is repeated
 to fill window width, and a newline is added."
   :type '(choice character string))
 
+(defcustom org-super-agenda-header-prefix " "
+  "Header prefix."
+  :type 'string)
+
 (defcustom org-super-agenda-date-format "%e %B %Y"
   "Format string for date headers.
 See `format-time-string'."
@@ -288,7 +292,7 @@ face `org-super-agenda-header' appended, and the text properties
                           (character (concat (s-repeat (window-width) org-super-agenda-header-separator)
                                              "\n"))
                           (string org-super-agenda-header-separator))))
-         (setq s (concat " " s))
+         (setq s (concat org-super-agenda-header-prefix s))
          (add-face-text-property 0 (length s) 'org-super-agenda-header t s)
          (org-add-props s org-super-agenda-header-properties
            'keymap org-super-agenda-header-map
