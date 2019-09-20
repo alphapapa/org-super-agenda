@@ -1208,46 +1208,49 @@ STRING should be that returned by `org-agenda-finalize-entries'"
 (defun org-super-agenda--hide-or-show-groups (&rest _)
   "Hide/Show any empty/non-empty groups after `org-agenda-filter-apply',
 `org-agenda-remove-filter' or `org-agenda-redo' was called."
-  (let ((inhibit-read-only t) start end nohide)
-    (save-excursion
-      (goto-char (point-min))
-      (cl-loop until (and (eobp)
-                          ;; Maybe a group at the end needs to be hidden, so iterate one more time if end is `non-nil'
-                          (not end))
-               do
-               (cond
-                 ((or (org-get-at-bol 'org-super-agenda-header) (eobp))
+  (cl-flet ((header-p () (or (org-get-at-bol 'org-super-agenda-header) (eobp)))
+            (hide-or-show-header (start end nohide)
+              (when (and start end)
+                (save-excursion
+                  (cl-loop with until = (point)
+                     with beg = nil
+                     with end = nil
+                     with props = `(invisible org-filtered org-filter-type org-super-agenda-header)
+                     initially do (goto-char start)
+                     while (< (point) until)
+                     do
+                       (beginning-of-line 2)
+                       (unless (or (org-get-at-bol 'org-agenda-structural-header)
+                                   (org-get-at-bol 'org-agenda-date-header)
+                                   (org-get-at-bol 'type))
+                         (setq beg (1- (point-at-bol))
+                               end (point-at-eol))
+                         (if nohide
+                             (remove-text-properties beg end props)
+                           (add-text-properties beg end props)))))))
+            (group-item-visible-p () (and (org-get-at-bol 'type) (not (org-get-at-bol 'invisible)))))
+    (let ((inhibit-read-only t) start end nohide)
+      (save-excursion
+        (goto-char (point-min))
+        (while (not (eobp))
+          (cond
+            ((header-p)
+             (hide-or-show-header start end nohide)
 
-                  (when (and start end)
-                    (save-excursion
-                      (cl-loop with until = (point)
-                               with beg = nil
-                               with end = nil
-                               with props = `(invisible org-filtered org-filter-type org-super-agenda-header)
-                               initially do (goto-char start)
-                               while (< (point) until)
-                               do
-                               (beginning-of-line 2)
-                               (unless (or (org-get-at-bol 'org-agenda-structural-header)
-                                           (org-get-at-bol 'org-agenda-date-header)
-                                           (org-get-at-bol 'type))
-                                 (setq beg (1- (point-at-bol))
-                                       end (point-at-eol))
-                                   (if nohide
-                                       (remove-text-properties beg end props)
-                                     (add-text-properties beg end props)))
-                               finally (setq nohide nil))))
+             ;; Start/End of the header.
+             (setq nohide nil ;; reset
+                   start (1- (point))
+                   end (next-single-property-change (point) 'org-super-agenda-header))
 
-                  (setq start (1- (point)) ;; Always one less than point.
-                        end (next-single-property-change (point) 'org-super-agenda-header))
+             ;; When `end' is `nil' we are at the end of the buffer.
+             (when end (goto-char end)))
 
-                  ;; When `end' is `nil', we are very likly at the end of the buffer.
-                  (when end (goto-char end)))
-
-                 ((and (org-get-at-bol 'type) (not (org-get-at-bol 'invisible)))
-                  ;; There was at least one task of the group visible.
-                  (setq nohide t)))
-               (beginning-of-line 2)))))
+            ((group-item-visible-p)
+             ;; There was at least one task of the group visible.
+             (setq nohide t)))
+          (beginning-of-line 2))
+        ;; Maybe there is a group at the end of the buffer which needs to be hidden/shown
+        (hide-or-show-header start end nohide)))))
 
 ;;;; Footer
 
