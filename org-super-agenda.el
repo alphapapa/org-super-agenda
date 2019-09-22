@@ -1218,8 +1218,9 @@ STRING should be that returned by `org-agenda-finalize-entries'"
                                 (while (not (or (bobp) header))
                                   (cond
                                     ((header-p)
-                                     (setq header (cons (1- (or (previous-single-property-change (point-at-eol) 'org-super-agenda-header) (1+ (point-min))))
-                                                        (cons (or grid-end (point-at-eol)) nohide))))
+                                     (setq header (list (1- (or (previous-single-property-change (point-at-eol) 'org-super-agenda-header) (1+ (point-min))))
+                                                        (or grid-end (point-at-eol))
+                                                        nohide)))
                                     ((group-item-visible-p)
                                      (setq nohide t))
                                     ((and (grid-p) (not grid-end))
@@ -1229,9 +1230,9 @@ STRING should be that returned by `org-agenda-finalize-entries'"
               (hide-or-show-header (header)
                 (when header
                   (cl-loop
-                     with start = (car header)
-                     with end = (cadr header)
-                     with nohide = (cddr header)
+                     with start = (nth 0 header)
+                     with end = (nth 1 header)
+                     with nohide = (nth 2 header)
                      with props = `(invisible org-filtered org-filter-type org-super-agenda-header)
                      initially do (goto-char end)
                      while (and start (> (point) start))
