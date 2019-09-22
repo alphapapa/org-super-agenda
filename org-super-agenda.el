@@ -1172,7 +1172,7 @@ STRING should be that returned by `org-agenda-finalize-entries'"
                                    (org-get-at-bol 'org-super-agenda-header))))
               (group-item-visible-p () (and (org-get-at-bol 'type) (not (org-get-at-bol 'invisible))))
               (next-header () (let (header nohide grid-end)
-                                (while (and (not (bobp)) (not header))
+                                (while (not (or (bobp) header))
                                   (cond
                                     ((header-p)
                                      (setq header (cons (1- (or (previous-single-property-change (point-at-eol) 'org-super-agenda-header) (1+ (point-min))))
