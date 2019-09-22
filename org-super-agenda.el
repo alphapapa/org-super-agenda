@@ -1184,23 +1184,22 @@ STRING should be that returned by `org-agenda-finalize-entries'"
                                   (beginning-of-line 0))
                                 header))
               (hide-or-show-header (header)
-                (cl-loop
-                   with start = (car header)
-                   with end = (cadr header)
-                   with nohide = (cddr header)
-                   with props = `(invisible org-filtered org-filter-type org-super-agenda-header)
-                   when header
-                   initially
-                   do (goto-char end)
-                   while (> (point) start)
-                   do
-                     (when (or (grid-p) (header-p))
-                       (let ((beg (1- (point-at-bol)))
-                             (end (point-at-eol)))
-                         (if nohide
-                             (remove-text-properties beg end props)
-                           (add-text-properties beg end props))))
-                     (beginning-of-line 0))))
+                (when header
+                  (cl-loop
+                     with start = (car header)
+                     with end = (cadr header)
+                     with nohide = (cddr header)
+                     with props = `(invisible org-filtered org-filter-type org-super-agenda-header)
+                     initially do (goto-char end)
+                     while (and start (> (point) start))
+                     do
+                       (when (or (grid-p) (header-p))
+                         (let ((beg (1- (point-at-bol)))
+                               (end (point-at-eol)))
+                           (if nohide
+                               (remove-text-properties beg end props)
+                             (add-text-properties beg end props))))
+                       (beginning-of-line 0)))))
     (let ((inhibit-read-only t))
       (save-excursion
         (goto-char (point-max))
