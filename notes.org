@@ -1288,6 +1288,20 @@ CLOSED: [2017-07-28 Fri 00:02]
     (org-mode))
 #+END_SRC
 
+* Ideas
+
+** TODO [#B] More useful headings in auto-parent grouping
+
+While testing =org-ql= in a MELPA sandbox session, I noticed that the =auto-parent= grouping headers were more useful, because some of the to-do keywords weren't configured in Org, so the keywords were displayed in the header (rather than being ignored as a to-do keyword).  For example:
+
+#+BEGIN_EXAMPLE
+ UNDERWAY [#B] Submit address change to agencies/businesses
+  TODO Car insurance?
+
+ [#B] Service requests [4/15]
+  TODO [#A] Deal with issues
+#+END_EXAMPLE
+
 * Articles / Examples
 :PROPERTIES:
 :ID:       064cd3b7-c716-4b59-ab54-1b614c6dbe0c
