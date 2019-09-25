@@ -904,6 +904,15 @@ of the arguments to the function."
                   (get-text-property 0 'org-super-agenda-ts a)
                   (get-text-property 0 'org-super-agenda-ts b))))
 
+(org-super-agenda--def-auto-group tags
+  "their tags"
+  :keyword :auto-tags
+  :key-form (->> (org-super-agenda--get-tags item)
+                 (-sort #'string<)
+                 (s-join ", ")
+                 (concat "Tags: "))
+  :key-sort-fn string<)
+
 (org-super-agenda--def-auto-group ts
   "the date of their latest timestamp anywhere in the entry (formatted according to `org-super-agenda-date-format', which see)"
   :keyword :auto-ts

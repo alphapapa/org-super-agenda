@@ -646,6 +646,11 @@ buffer and do not save the results."
                                     (format "Face: %s"
 					    (get-text-property pos 'face item)))))))))
 
+(ert-deftest org-super-agenda--test-:auto-tags ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:auto-tags t)))))
+
 (ert-deftest org-super-agenda--test-:auto-ts ()
   ;; DONE: Works.
   (should (org-super-agenda--test-run

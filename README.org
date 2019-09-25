@@ -175,6 +175,7 @@ Every selector requires an argument, even if it's just ~t~, e.g. ~:anything~, ~:
 +  =:auto-planning= :: This automatically groups items by their earliest of scheduled date or deadline, formatted according to variable ~org-super-agenda-date-format~.
 +  =:auto-priority= :: This automatically groups items by their priority.
 +  ~:auto-property~ :: This automatically groups items by the value of the given property ([[examples.org#automatically-by-property][example]]).
++  =:auto-tags= :: This automatically groups items by all of their tags (i.e. items with exactly the same tags, in any order, will be grouped together).
 +  =:auto-todo= :: This automatically groups items by their to-do keyword.
 +  ~:auto-ts~ :: This automatically groups items by the date of their latest timestamp anywhere in the entry, formatted according to variable ~org-super-agenda-date-format~.
 +  =:discard= :: Discard items that don't match selectors.  Any groups processed after this one will not see discarded items.  You might use this at the beginning or end of a list of groups, either to narrow down the list of items (used in combination with ~:not~), or to exclude items you're not interested in.
@@ -224,6 +225,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 *Added*
 +  Selector ~:auto-planning~, which groups items by their earliest of scheduled date or deadline, formatted according to variable ~org-super-agenda-date-format~.
 +  Selector ~:auto-ts~, which groups items by the date of their latest timestamp anywhere in the entry, formatted according to variable ~org-super-agenda-date-format~.
++  Selector =:auto-tags=, which groups items by all of their tags.
 +  Option ~org-super-agenda-date-format~, used to format date headers in the ~:auto-date~ selector.
 +  To-do keyword faces are applied to keywords in group headers.
 +  Option =org-super-agenda-header-separator= may also be a character, which is automatically repeated to the window width.  (Thanks to [[https://github.com/sheepduke][YUE Daian]].)

@@ -344,6 +344,10 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
 ‘‘:auto-property’’
      This automatically groups items by the value of the given property
      ().
+‘:auto-tags’
+     This automatically groups items by all of their tags (i.e.  items
+     with exactly the same tags, in any order, will be grouped
+     together).
 ‘:auto-todo’
      This automatically groups items by their to-do keyword.
 ‘‘:auto-ts’’
@@ -510,6 +514,7 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
    • Selector ‘:auto-ts’, which groups items by the date of their latest
      timestamp anywhere in the entry, formatted according to variable
      ‘org-super-agenda-date-format’.
+   • Selector :auto-tags, which groups items by all of their tags.
    • Option ‘org-super-agenda-date-format’, used to format date headers
      in the ‘:auto-date’ selector.
    • To-do keyword faces are applied to keywords in group headers.
@@ -693,20 +698,20 @@ Node: Examples4307
 Node: Group selectors7792
 Node: Keywords8981
 Node: Special selectors9722
-Node: Normal selectors12766
-Node: Tips17397
-Node: Changelog18248
-Node: 12-pre18473
-Node: 11120113
-Node: 1120286
-Node: 10321858
-Node: 10222069
-Node: 10122203
-Node: 10022541
-Node: Development22646
-Node: Bugs23048
-Node: Tests23701
-Node: Credits24020
+Node: Normal selectors12933
+Node: Tips17564
+Node: Changelog18415
+Node: 12-pre18640
+Node: 11120349
+Node: 1120522
+Node: 10322094
+Node: 10222305
+Node: 10122439
+Node: 10022777
+Node: Development22882
+Node: Bugs23284
+Node: Tests23937
+Node: Credits24256
 
 End Tag Table
 

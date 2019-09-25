@@ -1777,6 +1777,63 @@ Wednesday   5 July 2017
               16:00...... ----------------
               18:00...... ----------------
               20:00...... ----------------
+" "a5c8edc0db4a93c039964c5762e70420" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Tags: 
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+
+ Tags: @computer, shopping, spaceship
+  test:       Scheduled:  TODO [#B] Fix flux capacitor                                                  :spaceship:shopping:@computer:
+
+ Tags: @town, food, shopping
+  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
+
+ Tags: @town, personal
+  test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
+
+ Tags: ambition, meetings, universe, world
+  ambition:   Sched. 1x:  TODO [#A] Skype with president of Antarctica                             :universe:ambition:world::meetings:
+
+ Tags: ambition, personal, universe
+  ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+
+ Tags: ambition, planet, space, travel, universe
+  ambition:   In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
+
+ Tags: ambition, space, travel, universe
+  ambition:   In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
+
+ Tags: ambition, universe
+  ambition:   In  10 d.:  TODO [#A] Take over the universe                                                         :universe:ambition:
+  ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
+
+ Tags: ambition, universe, world
+  ambition:   In   2 d.:  TODO [#A] Take over the world                                                     :universe:ambition::world:
+
+ Tags: bills
+  test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
+
+ Tags: bills, spaceship
+  test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
+
+ Tags: computers, elisp, emacs, programming, software
+  ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
+
+ Tags: dinner, food
+  test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
+
+ Tags: emacs, website
+  test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
 " "2cf4644ff6420b8a4e5e7ae673f642a3" "Day-agenda (W27):
 Wednesday   5 July 2017
 
