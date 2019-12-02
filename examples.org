@@ -481,6 +481,165 @@ You could even fold certain groups by default, perhaps like this (this ~use-pack
                             (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 #+END_SRC
 
+** [[https://github.com/jonathanabennett][Jonathan Bennett]]
+[[file:images/screenshot/jonathanb.png][images/screenshots/jonathanb.png]]
+This demonstrates how to compose your org-agenda-groups by defining the groups outside of the individual agendas.
+This lets you build your org-agendas more fluidly.
+#+BEGIN_SRC elisp
+(setq jab-agenda-groups-big-rocks `(:name "Big Rocks for the Week"
+					  :tag "BigRock"
+					  :order 1))
+(setq jab-agenda-groups-mit `(:name "Most Important Tasks Today"
+				    :tag "MIT"
+				    :order 2))
+(setq jab-agenda-groups-today `(:name "Due Today"
+				      :and (:deadline today
+						      :not (:todo "SOMEDAY"))
+				      :order 3))
+(setq jab-agenda-groups-overdue `(:name "Overdue"
+                                        :and (:deadline past
+                                                        :not (:todo "SOMEDAY"))
+				        :order 7))
+(setq jab-agenda-groups-upcoming `(:name "Due Soon"
+					 :and (:deadline future
+							 :not (:todo "SOMEDAY"))
+					 :order 8))
+(setq jab-agenda-groups-reading `(:name "Reading list"
+					:and (:tag "reading"
+						   :not (:todo "SOMEDAY"))
+					:order 23))
+(setq jab-agenda-groups-projects `(:name "Projects"
+					 :and (:children todo
+							 :not (:todo "SOMEDAY"))
+				         :order 24))
+(setq jab-agenda-groups-makerspace `(:name "@MakerSpace"
+					   :and (:tag "@makerspace"
+						      :not (:todo "SOMEDAY"))
+					   :order 15))
+(setq jab-agenda-groups-comp-lab `(:name "@Computer Lab"
+					 :and (:tag "@computer_lab"
+						    :not (:todo "SOMEDAY"))
+					 :order 16))
+(setq jab-agenda-groups-school `(:name "@school"
+				       :and (:tag "@school"
+						  :not (:todo "SOMEDAY"))
+				       :order 17))
+(setq jab-agenda-groups-home `(:name "@home"
+				     :and (:tag "@home"
+						:not (:todo "SOMEDAY"))
+				     :order 18))
+(setq jab-agenda-groups-focused `(:name "Focused Work"
+					:and (:tag "full_focus"
+						   :not (:todo "SOMEDAY"))
+					:order 19))
+(setq jab-agenda-groups-creative `(:name "Creative Activities"
+					 :and (:tag "imaginative"
+						    :not (:todo "SOMEDAY"))
+					 :order 20))
+(setq jab-agenda-groups-waiting `(:name "Waiting"
+					:and (:todo "WAITING"
+						    :not (:todo "SOMEDAY"))
+					:order 21))
+(setq jab-agenda-groups-easy-wins `(:name "Easy Wins"
+					:and (:priority<= "C"
+							  :tag "braindead"
+							  :not (:todo "SOMEDAY"))
+					:order 22))
+(setq jab-agenda-groups-remainder `(:discard (:todo ("SOMEDAY")
+						   :children todo)))
+
+(setq org-agenda-custom-commands
+      '(("z" "Master Agenda"
+	 ((agenda "" ((org-agenda-span 'day)
+		      (org-super-agenda-groups
+		       '((:habit t)
+			 (:log t)
+			 (:name "Today List"
+				:time-grid t
+				:date today
+				:todo "TODO"
+				:scheduled today
+				:order 1)))))
+                                
+	  (alltodo "" ((org-agenda-overriding-header "")
+		       (org-super-agenda-groups
+			`(,jab-agenda-groups-big-rocks
+			  ,jab-agenda-groups-mit
+			  ,jab-agenda-groups-today
+			  ,jab-agenda-groups-overdue
+			  ,jab-agenda-groups-upcoming
+			  ,jab-agenda-groups-reading
+			  ,jab-agenda-groups-projects
+			  ,jab-agenda-groups-makerspace
+			  ,jab-agenda-groups-comp-lab
+			  ,jab-agenda-groups-school
+			  ,jab-agenda-groups-home
+			  ,jab-agenda-groups-focused
+			  ,jab-agenda-groups-creative
+			  ,jab-agenda-groups-waiting
+			  ,jab-agenda-groups-easy-wins
+			  ,jab-agenda-groups-remainder))))))
+
+      ("w" "Work Agenda"
+	 ((agenda "" ((org-agenda-span 'day)
+		      (org-super-agenda-groups
+		       '((:habit t)
+			 (:log t)
+			 (:name "Today List"
+				:time-grid t
+				:date today
+				:todo "☞ TODO"
+				:scheduled today
+				:order 1)))))
+	  (alltodo "" ((org-agenda-overriding-header "")
+		       (org-super-agenda-groups
+			`(,jab-agenda-groups-big-rocks
+			  ,jab-agenda-groups-mit
+			  ,jab-agenda-groups-today
+			  ,jab-agenda-groups-overdue
+			  ,jab-agenda-groups-upcoming
+			  ,jab-agenda-groups-reading
+			  ,jab-agenda-groups-projects
+			  ,jab-agenda-groups-makerspace
+			  ,jab-agenda-groups-comp-lab
+			  ,jab-agenda-groups-school
+			  ,jab-agenda-groups-focused
+			  ,jab-agenda-groups-creative
+			  ,jab-agenda-groups-waiting
+			  ,jab-agenda-groups-easy-wins
+			  ,jab-agenda-groups-remainder))))))
+
+      ("h" "Home Agenda"
+	 ((agenda "" ((org-agenda-span 'day)
+		      (org-super-agenda-groups
+		       '((:habit t)
+			 (:log t)
+			 (:name "Today List"
+				:time-grid t
+				:date today
+				:todo "☞ TODO"
+				:scheduled today
+				:order 1)))))
+	  (alltodo "" ((org-agenda-overriding-header "")
+		       (org-super-agenda-groups
+			`(,jab-agenda-groups-big-rocks
+			  ,jab-agenda-groups-mit
+			  ,jab-agenda-groups-today
+			  ,jab-agenda-groups-overdue
+			  ,jab-agenda-groups-upcoming
+			  ,jab-agenda-groups-reading
+			  ,jab-agenda-groups-projects
+			  ,jab-agenda-groups-makerspace
+			  ,jab-agenda-groups-comp-lab
+			  ,jab-agenda-groups-school
+			  ,jab-agenda-groups-home
+			  ,jab-agenda-groups-focused
+			  ,jab-agenda-groups-creative
+			  ,jab-agenda-groups-waiting
+			  ,jab-agenda-groups-easy-wins
+			  ,jab-agenda-groups-remainder))))))))
+
+#+END_SRC
 * COMMENT Footer                                                   :noexport:
 :PROPERTIES:
 :TOC:      ignore
