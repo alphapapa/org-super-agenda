@@ -299,12 +299,9 @@ face `org-super-agenda-header' appended, and the text properties
            ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
            ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
            ;; we'll use both.
-           'local-map org-super-agenda-header-map
-           'org-super-agenda-header t)
-         (org-add-props org-super-agenda-header-separator nil
-           'org-super-agenda-header t)
+           'local-map org-super-agenda-header-map)
          ;; Don't apply faces and properties to the separator part of the string.
-         (concat separator s)))))
+         (propertize (concat separator s) 'org-super-agenda-header t)))))
 
 (defsubst org-super-agenda--get-priority-cookie (s)
   "Return priority character for string S.
@@ -1166,41 +1163,39 @@ STRING should be that returned by `org-agenda-finalize-entries'"
   "Hide/Show any empty/non-empty groups after `org-agenda-finalize',
 `org-agenda-filter-apply'  was called."
   (cl-labels ((header-p () (org-get-at-bol 'org-super-agenda-header))
-              (grid-p () (not (or  (org-get-at-bol 'org-agenda-structural-header)
-                                   (org-get-at-bol 'org-agenda-date-header)
-                                   (org-get-at-bol 'type)
-                                   (org-get-at-bol 'org-super-agenda-header))))
+              (grid-p () (not (let ((props (text-properties-at (point-at-bol))))
+                                (or (member 'org-agenda-structural-header props)
+                                    (member 'org-agenda-date-header props)
+                                    (member 'type props)
+                                    (member 'org-super-agenda-header props)))))
               (group-item-visible-p () (and (org-get-at-bol 'type) (not (org-get-at-bol 'invisible))))
-              (next-header () (let (header nohide grid-end)
+              (next-header () (let ((hide-p t) header grid-end)
                                 (while (not (or (bobp) header))
-                                  (cond
-                                    ((header-p)
-                                     (setq header (list (1- (or (previous-single-property-change (point-at-eol) 'org-super-agenda-header) (1+ (point-min))))
-                                                        (or grid-end (point-at-eol))
-                                                        nohide)))
-                                    ((group-item-visible-p)
-                                     (setq nohide t))
-                                    ((and (grid-p) (not grid-end))
-                                     (setq grid-end (point-at-eol))))
+                                  (cond ((header-p)
+                                         (setq header (list (1- (or (previous-single-property-change (point-at-eol) 'org-super-agenda-header)
+                                                                    (1+ (point-min))))
+                                                            (or grid-end (point-at-eol))
+                                                            hide-p)))
+                                        ((group-item-visible-p)
+                                         (setq hide-p nil))
+                                        ((and (grid-p) (not grid-end))
+                                         (setq grid-end (point-at-eol))))
                                   (beginning-of-line 0))
                                 header))
               (hide-or-show-header (header)
                 (when header
                   (cl-loop
-                     with start = (nth 0 header)
-                     with end = (nth 1 header)
-                     with nohide = (nth 2 header)
+                     with (start end hide-p) = header
                      with props = `(invisible org-filtered org-filter-type org-super-agenda-header)
                      initially do (goto-char end)
                      while (and start (> (point) start))
-                     do
-                       (when (or (grid-p) (header-p))
-                         (let ((beg (1- (point-at-bol)))
-                               (end (point-at-eol)))
-                           (if nohide
-                               (remove-text-properties beg end props)
-                             (add-text-properties beg end props))))
-                       (beginning-of-line 0)))))
+                     do (when (or (grid-p) (header-p))
+                          (let ((beg (1- (point-at-bol)))
+                                (end (point-at-eol)))
+                            (if hide-p
+                                (add-text-properties beg end props)
+                              (remove-text-properties beg end props))))
+                        (beginning-of-line 0)))))
     (let ((inhibit-read-only t))
       (save-excursion
         (goto-char (point-max))
