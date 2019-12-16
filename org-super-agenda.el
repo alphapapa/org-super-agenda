@@ -647,6 +647,15 @@ available."
           (_ (cl-loop for fn in args
                       thereis (funcall fn item)))))
 
+(org-super-agenda--defgroup property
+  "Group items that contain a property with a given value.
+The argument should be a cons cell of strings, e.g. ( \"status\" . \"To Do\" ). "
+  :section-name (concat "Property: '" (cdr args) "' = '"(car args) "'")
+  :test (string= (cdr args)
+                 (org-entry-get (org-super-agenda--get-marker item)
+                                (car args)
+                                org-super-agenda-properties-inherit)))
+
 (org-super-agenda--defgroup regexp
   "Group items that match any of the given regular expressions.
 Argument may be a string or list of strings, each of which should
