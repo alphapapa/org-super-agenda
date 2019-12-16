@@ -566,6 +566,11 @@ already loaded."
            :groups '((:pred (lambda (item)
                               (s-contains? "moon" item)))))))
 
+(ert-deftest org-super-agenda-test--:property ()
+  ;; DONE: Works.
+  (should (org-super-agenda-test--run
+           :groups '((:property ("Effort" . "5" ))))))
+
 (ert-deftest org-super-agenda-test--:priority ()
   ;; DONE: Works.
   (should (org-super-agenda-test--run
