@@ -203,7 +203,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  =:priority>== :: Group items that are higher than or equal to the given priority, e.g. ~B~.
 +  =:priority<= :: Group items that are lower than the given priority, e.g. ~A~.
 +  =:priority<== :: Group items that are lower than or equal to the given priority, e.g. ~B~.
-+  =:property= :: Group items that match the given property key value.  Argument must be a cons cell of strings, e.g. ( "status" . "To Do" ).
++  =:property= :: Group items that match the given property key value.  Argument must be a cons cell of strings, e.g. ~( "status" . "To Do" )~.
 +  =:regexp= :: Group items that match any of the given regular expressions.
 +  =:scheduled= :: Group items that are scheduled.  Argument can be ~t~ (to match items scheduled for any date), ~nil~ (to match items that are not schedule), ~past~ (to match items scheduled for the past), ~today~ (to match items scheduled for today), or ~future~ (to match items scheduled for the future).  Argument may also be given like ~before DATE~ or ~after DATE~ where DATE is a date string that ~org-time-string-to-absolute~ can process.
 +  =:tag= :: Group items that match any of the given tags.  Argument may be a string or list of strings.
