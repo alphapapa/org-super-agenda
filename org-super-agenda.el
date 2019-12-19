@@ -665,12 +665,27 @@ available."
 
 (org-super-agenda--defgroup property
   "Group items that contain a property with a given value.
-The argument should be a cons cell of strings, e.g. ( \"status\" . \"To Do\" ). "
-  :section-name (concat "Property: '" (cdr args) "' = '"(car args) "'")
-  :test (string= (cdr args)
-                 (org-entry-get (org-super-agenda--get-marker item)
-                                (car args)
-                                org-super-agenda-properties-inherit)))
+Argument should be a list with a string representing a
+property, and an optional second argument being either a string
+representing a value, or a function which will be passed the
+found property value, if any. Without a second argument, any item
+with the given property will match. "
+  :section-name (concat "Property: '" (car args) "'"
+                        (if (= 2 (length args)) (concat " = '" (prin1-to-string (nth 1 args)) "'" )))
+  :test  (let* ((prop (car-safe args))
+                (restriction (nth 1 args))
+                (found-value (org-entry-get (org-super-agenda--get-marker item)
+                                            prop
+                                            org-super-agenda-properties-inherit)))
+           (pcase restriction
+             ((pred null)
+              found-value)
+             ((pred stringp)
+              (string= restriction found-value))
+             ((pred functionp)
+              (funcall restriction found-value))
+             (_ ;; Oops
+              (user-error "List argument to `:property' must either be of length 1, or have either a string of a function as the second element")))))
 
 (org-super-agenda--defgroup regexp
   "Group items that match any of the given regular expressions.
