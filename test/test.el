@@ -80,7 +80,7 @@
         (unless (> (point) eod)
           (goto-char (match-beginning 0))
           (forward-sexp)
-          (eval-last-sexp nil))))))
+          (ignore-errors (eval-last-sexp nil))))))) ;; to allow (should-error ...)
 
 (defun org-super-agenda--test-ert-def-this-test ()
   (save-excursion
@@ -533,10 +533,31 @@ buffer and do not save the results."
            :groups '((:pred (lambda (item)
                               (s-contains? "moon" item)))))))
 
-(ert-deftest org-super-agenda--test-:property ()
+(ert-deftest org-super-agenda--test-:property-list-val ()
   ;; DONE: Works.
   (should (org-super-agenda--test-run
-           :groups '((:property ("Effort" . "5" ))))))
+           :groups '((:property ("Effort" "5" ))))))
+
+(ert-deftest org-super-agenda--test-:property-list-fun ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:property ("Effort" (lambda (v) (string= v "5"))))))))
+
+(ert-deftest org-super-agenda--test-:property-str ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:property "Effort")))))
+
+(ert-deftest org-super-agenda--test-:property-list ()
+  ;; DONE: Works.
+  (should (org-super-agenda--test-run
+           :groups '((:property ("Effort"))))))
+
+(ert-deftest org-super-agenda--test-:property-err-check ()
+  ;; DONE: Works.
+  (let ((debug-on-error nil))
+    (should-error (org-super-agenda--test-run
+                   :groups '((:property ("Effort" 'sym-not-allowed-here)))))))
 
 (ert-deftest org-super-agenda--test-:priority ()
   ;; DONE: Works.
