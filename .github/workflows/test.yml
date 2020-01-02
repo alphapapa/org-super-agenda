@@ -1,0 +1,47 @@
+# Based on Steve Purcell's examples at
+# <https://github.com/purcell/setup-emacs/blob/master/.github/workflows/test.yml>,
+# <https://github.com/purcell/package-lint/blob/master/.github/workflows/test.yml>.
+
+name: "CI"
+on:
+  pull_request:
+  push:
+    # branches:
+    #   - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        emacs_version:
+          - 26.3
+          - snapshot
+    steps:
+    - uses: purcell/setup-emacs@master
+      with:
+        version: ${{ matrix.emacs_version }}
+
+    - uses: actions/checkout@v1
+    
+    - name: Install sandbox script
+      run: |
+        curl -o $GITHUB_WORKSPACE/emacs-sandbox.sh \
+          https://raw.githubusercontent.com/alphapapa/emacs-sandbox.sh/master/emacs-sandbox.sh
+        chmod +x $GITHUB_WORKSPACE/emacs-sandbox.sh
+        echo ::add-path::$GITHUB_WORKSPACE
+        echo ::set-env name=SANDBOX_DIR::$(mktemp -d)
+
+    - name: Initialize sandbox
+      run: ./makem.sh -vv --sandbox-dir=$SANDBOX_DIR --auto-install --install package-lint
+
+    # The "all" rule is not used, because it treats compilation warnings
+    # as failures, so linting and testing are run as separate steps.
+      
+    - name: Lint
+      run: ./makem.sh -vv --sandbox-dir=$SANDBOX_DIR lint
+
+    - name: Test
+      if: always()  # See <https://github.community/t5/GitHub-Actions/continue-on-error-allow-failure-UI-indication/m-p/37182#M2833>
+      run: ./makem.sh -vv --sandbox-dir=$SANDBOX_DIR test
