@@ -15,6 +15,17 @@
 (require 'f)
 (require 's)
 
+;;;; Variables
+
+(defconst org-super-agenda--test-date "2017-07-05 12:00")
+(defvar org-super-agenda--test-results (ht-create))
+(defvar org-super-agenda--test-save-results nil)
+(defvar org-super-agenda--test-show-results nil)
+;; HACK: Look for results file in both places.
+(defvar org-super-agenda--test-results-file (if (file-exists-p "test/results.el")
+                                                "test/results.el"
+                                              "results.el"))
+
 ;;;; Diary-sunset
 
 (require 'solar)
@@ -48,17 +59,6 @@
 
 (defun org-super-agenda--test-diary-sunset ()
   (cl-second (org-super-agenda--test-diary-sunrise-sunset-split)))
-
-;;;; Variables
-
-(defconst org-super-agenda--test-date "2017-07-05 12:00")
-(defvar org-super-agenda--test-results (ht-create))
-(defvar org-super-agenda--test-save-results nil)
-(defvar org-super-agenda--test-show-results nil)
-;; HACK: Look for results file in both places.
-(defvar org-super-agenda--test-results-file (if (file-exists-p "test/results.el")
-                                                "test/results.el"
-                                              "results.el"))
 
 ;;;; Commands
 
