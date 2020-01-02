@@ -105,6 +105,7 @@
 (require 'subr-x)
 (require 'org)
 (require 'org-agenda)
+(require 'org-habit)
 (require 'cl-lib)
 (require 'dash)
 (require 's)
@@ -554,12 +555,11 @@ to-do keywords."
             ('nil  ;; Match if it has no children
              (not (org-goto-first-child))))))
 
-(with-eval-after-load 'org-habit
-  (org-super-agenda--defgroup habit
-    "Group habit items.
+(org-super-agenda--defgroup habit
+  "Group habit items.
 Habit items have a \"STYLE: habit\" Org property."
-    :section-name "Habits"
-    :test (org-is-habit-p (org-super-agenda--get-marker item))))
+  :section-name "Habits"
+  :test (org-is-habit-p (org-super-agenda--get-marker item)))
 
 (org-super-agenda--defgroup file-path
   "Group items by file path.

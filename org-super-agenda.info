@@ -550,6 +550,11 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
    *Updated*
    • Tests updated for Org 9.2.4.
 
+   *Internal*
+   • org-habit is now loaded when org-super-agenda is loaded.  This
+     avoids issues, real and potential, and should not cause any
+     problems.
+
 
 File: README.info,  Node: 111,  Next: 11,  Prev: 12-pre,  Up: Changelog
 
@@ -709,16 +714,16 @@ Node: Normal selectors13087
 Node: Tips17718
 Node: Changelog18569
 Node: 12-pre18794
-Node: 11120774
-Node: 1120947
-Node: 10322519
-Node: 10222730
-Node: 10122864
-Node: 10023202
-Node: Development23307
-Node: Bugs23709
-Node: Tests24362
-Node: Credits24681
+Node: 11120939
+Node: 1121112
+Node: 10322684
+Node: 10222895
+Node: 10123029
+Node: 10023367
+Node: Development23472
+Node: Bugs23874
+Node: Tests24527
+Node: Credits24846
 
 End Tag Table
 

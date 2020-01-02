@@ -244,6 +244,9 @@ These selectors take one argument alone, or multiple arguments in a list.
 *Updated*
 +  Tests updated for Org 9.2.4.
 
+*Internal*
++  =org-habit= is now loaded when =org-super-agenda= is loaded.  This avoids issues, real and potential, and should not cause any problems.
+
 ** 1.1.1
 
 *Fixed*
