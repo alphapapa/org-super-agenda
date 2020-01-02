@@ -151,7 +151,7 @@ map).")
   :link '(url-link "http://github.com/alphapapa/org-super-agenda"))
 
 (defcustom org-super-agenda-groups nil
-  "List of groups to apply to agenda views when `org-super-agenda-mode' is on.
+  "List of groups to apply to agenda views.
 See readme for information."
   :type 'list)
 
@@ -160,7 +160,7 @@ See readme for information."
   :type 'string)
 
 (defcustom org-super-agenda-properties-inherit t
-  "Use property inheritance when checking properties with the :auto-group selector.
+  "Use property inheritance when checking properties with :auto-group selector.
 With this enabled, you can set the \"agenda-group\" property for
 an entire subtree, and every entry below it will inherit the
 agenda group.  It seems most natural for it to be enabled, so the
@@ -1066,7 +1066,7 @@ see."
                                               :not 'org-super-agenda--group-dispatch-not))
 
 (defun org-super-agenda--group-dispatch-discard (items group)
-  "Discard items that match GROUP.
+  "Discard ITEMS that match GROUP.
 Any groups processed after this will not see these items."
   (cl-loop for (selector args) on group by 'cddr  ; plist access
            for fn = (org-super-agenda--get-selector-fn selector)
@@ -1111,7 +1111,8 @@ actually the ORDER for the groups."
 ;;;; Finalize filter
 
 (defun org-super-agenda--filter-finalize-entries (string)
-  "Filter the return of `org-agenda-finalize-entries' through `org-super-agenda--group-items'."
+  "Filter STRING through `org-super-agenda--group-items'.
+STRING should be that returned by `org-agenda-finalize-entries'"
   (--> string
        (split-string it "\n" 'omit-nulls)
        org-super-agenda--group-items
