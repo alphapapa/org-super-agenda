@@ -141,7 +141,8 @@
   (setq org-super-agenda--test-results
         (read (f-read org-super-agenda--test-results-file)))
   (when (ht-empty? org-super-agenda--test-results)
-    (error "Test results empty")))
+    (error "Test results empty"))
+  (message "Test results loaded"))
 
 ;;;; Functions
 
@@ -243,9 +244,13 @@ where FUNCTION-BODY is a lambda form."
 When `org-super-agenda--test-save-results' is non-nil, save the
 new-result to the results file.  When
 `org-super-agenda--test-show-results' is non-nil, show the agenda
-buffer and do not save the results."
+buffer and do not save the results.  Load test results if not
+already loaded."
   (declare (debug (form &optional listp sexp sexp stringp)))
   `(progn
+     (unless (> (ht-size org-super-agenda--test-results) 0)
+       ;; This allows `ert-run-tests-batch-and-exit' to work automatically.
+       (org-super-agenda--test-load-results))
      (org-super-agenda-mode 1)
      (let ((body-groups-hash (secure-hash 'md5 (format "%S" (list ',body ,groups))))
            new-result)
