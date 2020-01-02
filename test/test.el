@@ -4,8 +4,6 @@
 
 ;;;; Requirements
 
-;; FIXME: Shouldn't be using `cl'.
-(require 'cl)
 (require 'cl-lib)
 (require 'cus-edit)
 (require 'org-habit)
@@ -46,7 +44,7 @@
 
 (defun org-super-agenda--test-diary-sunrise ()
   (let ((s (org-super-agenda--test-diary-sunrise-sunset-split)))
-    (format "%s (%s)" (first s) (third s))))
+    (format "%s (%s)" (cl-first s) (cl-third s))))
 
 (defun org-super-agenda--test-diary-sunset ()
   (cl-second (org-super-agenda--test-diary-sunrise-sunset-split)))
@@ -154,17 +152,17 @@ and IGNORE-STATUS is nil, raise `user-error' with STDERR
 message."
   (declare (indent defun))
   (let* ((args (internal--listify args))
-         status))
-  (with-temp-buffer
-    (when stdin
-      (insert stdin))
-    (setq status (apply #'call-process-region (point-min) (point-max)
-                        process t '(t t) nil args))
-    (unless (or ignore-status
-                (= 0 status))
-      (user-error (concat (concat process " failed: ")
-                          (buffer-string))))
-    (buffer-string)))
+         status)
+    (with-temp-buffer
+      (when stdin
+        (insert stdin))
+      (setq status (apply #'call-process-region (point-min) (point-max)
+                          process t '(t t) nil args))
+      (unless (or ignore-status
+                  (= 0 status))
+        (user-error (concat (concat process " failed: ")
+                            (buffer-string))))
+      (buffer-string))))
 
 (defun org-super-agenda--test-diff-strings (a b)
   "Compare strings A and B using the \"diff\" utility."
@@ -268,7 +266,7 @@ already loaded."
           (format-time-string (lambda (format-string &optional time zone)
                                 (if time
                                     (format-time-string-orig format-string time zone)
-                                  (concat (second (s-split " " ,date)) " "))))
+                                  (concat (cl-second (s-split " " ,date)) " "))))
           (frame-width (lambda ()
                          134))
           (window-width (lambda ()
