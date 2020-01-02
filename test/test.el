@@ -57,7 +57,10 @@
 (defvar org-super-agenda--test-results (ht-create))
 (defvar org-super-agenda--test-save-results nil)
 (defvar org-super-agenda--test-show-results nil)
-(defvar org-super-agenda--test-results-file "results.el")
+;; HACK: Look for results file in both places.
+(defvar org-super-agenda--test-results-file (if (file-exists-p "test/results.el")
+                                                "test/results.el"
+                                              "results.el"))
 
 ;;;; Commands
 
@@ -276,7 +279,11 @@ buffer and do not save the results."
                   ,@(org-super-agenda--test-get-custom-group-members 'org-habit)
                   (org-agenda-window-setup 'current-window) ; The default breaks batch tests by trying to open a new frame
                   (org-agenda-start-with-log-mode nil) ; Set this by default, in case it's set to t in my running Emacs instance
-                  (org-agenda-files (list "test.org"))
+                  ;; HACK: Look for test.org in either dir, so it works interactively and
+                  ;; in batch tests.  This is ugly, but I don't know how else to do it.
+                  (org-agenda-files (list (if (file-exists-p "test/test.org")
+                                              "test/test.org"
+                                            "test.org")))
                   ,@(if let*
                         let*
                       `((ignore nil)))
