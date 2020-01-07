@@ -21,10 +21,8 @@
 (defvar org-super-agenda--test-results (ht-create))
 (defvar org-super-agenda--test-save-results nil)
 (defvar org-super-agenda--test-show-results nil)
-;; HACK: Look for results file in both places.
-(defvar org-super-agenda--test-results-file (if (file-exists-p "test/results.el")
-                                                "test/results.el"
-                                              "results.el"))
+(defvar org-super-agenda--test-results-file
+  (expand-file-name "test/results.el" (locate-dominating-file default-directory ".git")))
 
 ;;;; Diary-sunset
 
