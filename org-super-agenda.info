@@ -330,6 +330,9 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      each item to the given function as a string from the agenda buffer
      ().  The function should return a string to be used as the grouping
      key and as the header for its group.
+‘:auto-outline-path’
+     This automatically groups items by their outline path hierarchy,
+     like Plans/Take over the universe/Take over the moon.
 ‘‘:auto-parent’’
      This automatically groups items by their parent heading.  This is
      surprisingly handy, especially if you group tasks hierarchically by
@@ -702,20 +705,20 @@ Node: Examples4307
 Node: Group selectors7792
 Node: Keywords8981
 Node: Special selectors9722
-Node: Normal selectors12933
-Node: Tips17564
-Node: Changelog18415
-Node: 12-pre18640
-Node: 11120620
-Node: 1120793
-Node: 10322365
-Node: 10222576
-Node: 10122710
-Node: 10023048
-Node: Development23153
-Node: Bugs23555
-Node: Tests24208
-Node: Credits24527
+Node: Normal selectors13087
+Node: Tips17718
+Node: Changelog18569
+Node: 12-pre18794
+Node: 11120774
+Node: 1120947
+Node: 10322519
+Node: 10222730
+Node: 10122864
+Node: 10023202
+Node: Development23307
+Node: Bugs23709
+Node: Tests24362
+Node: Credits24681
 
 End Tag Table
 

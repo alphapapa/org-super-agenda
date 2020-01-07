@@ -1981,4 +1981,47 @@ Wednesday   5 July 2017
 
  WAITING items
   ambition:   In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
+" "21c447791e388f4c16ebc74eba214a1a" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Test data
+  test:       18:00...... Scheduled:  TODO Order a pizza           :food:dinner:
+  ambition:   In  10 d.:  TODO [#A] Take over the universe   :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease            :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor :spaceship:shopping:@computer:
+  test:       In  16 d.:  TODO [#B] Internet                             :bills:
+  test:       Scheduled:  TODO [#C] Get haircut                 :personal:@town:
+
+ Test data/Ideas
+  ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp :Emacs:elisp:computers:software:programming:
+
+ Test data/Recurring
+  test:        7:02...... Sunrise (12:04 of daylight)
+  test:       19:07...... Sunset 
+  test:       Scheduled:  TODO Shop for groceries          :food:shopping:@town:
+  test:       Deadline:   CHECK /r/emacs                         :website:Emacs:
+
+ Test data/Take over the universe
+  ambition:   In   2 d.:  TODO [#A] Take over the world :universe:ambition::world:
+  ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club :universe:ambition::
+  ambition:   TODO Practice leaping tall                     !       :universe:ambition::personal:
+
+ Test data/Take over the universe/Take over Mars
+  ambition:   In  77 d.:  TODO Visit Mars :universe:ambition::space:travel:planet:
+
+ Test data/Take over the universe/Take over the moon
+  ambition:   In  53 d.:  WAITING Visit the moon :universe:ambition::space:travel:
+
+ Test data/Take over the universe/Take over the world
+  ambition:   Sched. 2x:  TODO [#A] Skype with president of Antarctica :universe:ambition:world::meetings:
+
+ Other items
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+              18:00...... ----------------
+              20:00...... ----------------
 "))

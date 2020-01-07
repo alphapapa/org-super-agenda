@@ -360,6 +360,11 @@ buffer and do not save the results."
   (should (org-super-agenda--test-run
            :groups '((:auto-property "agenda-group")))))
 
+(ert-deftest org-super-agenda--test-auto-outline-path ()
+  ;; TODO: This is really useful.  It should be an example in the docs.
+  (should (org-super-agenda--test-run
+           :groups '((:auto-outline-path t)))))
+
 (ert-deftest org-super-agenda--test-auto-parent ()
   ;; DONE: Works.
   ;; TODO: This is really useful.  It should be an example in the docs.

@@ -171,6 +171,7 @@ Every selector requires an argument, even if it's just ~t~, e.g. ~:anything~, ~:
 +  ~:auto-dir-name~ :: This automatically groups items by the directory name of their source buffer.
 +  =:auto-group= :: This selects items that have the =agenda-group= Org property set.  By setting this property for a subtree, every item in it will be sorted into an agenda group by that name and placed into the agenda where the ~:auto-group~ selector is ([[examples.org#automatically-by-group][example]]).
 +  ~:auto-map~ :: This automatically groups items by the value returned when applying each item to the given function as a string from the agenda buffer ([[examples.org#automatically-by-mapping-a-function][example]]).  The function should return a string to be used as the grouping key and as the header for its group.
++  =:auto-outline-path= :: This automatically groups items by their outline path hierarchy, like =Plans/Take over the universe/Take over the moon=.
 +  ~:auto-parent~ :: This automatically groups items by their parent heading.  This is surprisingly handy, especially if you group tasks hierarchically by project and use agenda restrictions to limit the agenda to a subtree.
 +  =:auto-planning= :: This automatically groups items by their earliest of scheduled date or deadline, formatted according to variable ~org-super-agenda-date-format~.
 +  =:auto-priority= :: This automatically groups items by their priority.
