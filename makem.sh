@@ -51,10 +51,8 @@ function usage {
 $0 [OPTIONS] RULES...
 
 Rules:
-  all          Run all lints and tests.
-  compile      Byte-compile source files.
-  interactive  Run Emacs interactively, loading project source files
-               automatically.  Most useful with --sandbox and --auto-install.
+  all      Run all lints and tests.
+  compile  Byte-compile source files.
 
   lint           Run all lints.
   lint-checkdoc  Run checkdoc.
@@ -64,6 +62,13 @@ Rules:
   test, tests     Run all tests.
   test-buttercup  Run Buttercup tests.
   test-ert        Run ERT tests.
+
+  These are especially useful with --sandbox:
+
+    batch        Run Emacs in batch mode, loading project source and test files
+                 automatically, with remaining args (after "--") passed to Emacs.
+    interactive  Run Emacs interactively, loading project source and test files
+                 automatically.
 
 Options:
   -d, --debug    Print debug info.
@@ -144,10 +149,10 @@ EOF
     echo $file
 }
 
- function elisp-package-initialize-file {
-     local file=$(mktemp)
+function elisp-package-initialize-file {
+    local file=$(mktemp)
 
-     cat >$file <<EOF
+    cat >$file <<EOF
 (require 'package)
 (setq package-archives (list (cons "gnu" "https://elpa.gnu.org/packages/")
                              (cons "melpa" "https://melpa.org/packages/")
@@ -156,76 +161,76 @@ EOF
 (package-initialize)
 (setq load-prefer-newer t)
 EOF
-     echo $file
- }
+    echo $file
+}
 
- # ** Emacs
+# ** Emacs
 
- function run_emacs {
-     debug "run_emacs: $emacs_command -Q $batch_arg --load=$package_initialize_file -L \"$load_path\" $@"
-     if [[ $debug_load_path ]]
-     then
-         debug $($emacs_command -Q $batch_arg \
-                                --load=$package_initialize_file \
-                                -L "$load_path" \
-                                --eval "(message \"LOAD-PATH: %s\" load-path)" \
-                                2>&1)
-     fi
+function run_emacs {
+    debug "run_emacs: $emacs_command -Q $batch_arg --load=$package_initialize_file -L \"$load_path\" $@"
+    if [[ $debug_load_path ]]
+    then
+        debug $($emacs_command -Q $batch_arg \
+                               --load=$package_initialize_file \
+                               -L "$load_path" \
+                               --eval "(message \"LOAD-PATH: %s\" load-path)" \
+                               2>&1)
+    fi
 
-     output_file=$(mktemp)
-     $emacs_command -Q $batch_arg \
-                    --load=$package_initialize_file \
-                    -L "$load_path" \
-                    "$@" \
-         &>$output_file
+    output_file=$(mktemp)
+    $emacs_command -Q $batch_arg \
+                   --load=$package_initialize_file \
+                   -L "$load_path" \
+                   "$@" \
+        &>$output_file
 
-     exit=$?
-     [[ $exit != 0 ]] && debug "Emacs exited non-zero: $exit"
-     if [[ $verbose -gt 1 || $exit != 0 ]]
-     then
-         cat $output_file
-     fi
-     rm -f $output_file
+    exit=$?
+    [[ $exit != 0 ]] && debug "Emacs exited non-zero: $exit"
+    if [[ $verbose -gt 1 || $exit != 0 ]]
+    then
+        cat $output_file
+    fi
+    rm -f $output_file
 
-     return $exit
- }
+    return $exit
+}
 
- # ** Compilation
+# ** Compilation
 
- function batch-byte-compile {
-     debug "batch-byte-compile: ERROR-ON-WARN:$compile_error_on_warn  FILES:$@"
+function batch-byte-compile {
+    debug "batch-byte-compile: ERROR-ON-WARN:$compile_error_on_warn  FILES:$@"
 
-     [[ $compile_error_on_warn ]] && local error_on_warn=(--eval "(setq byte-compile-error-on-warn t)")
+    [[ $compile_error_on_warn ]] && local error_on_warn=(--eval "(setq byte-compile-error-on-warn t)")
 
-     run_emacs \
-         "${error_on_warn[@]}" \
-         --funcall batch-byte-compile \
-         "$@"
- }
+    run_emacs \
+        "${error_on_warn[@]}" \
+        --funcall batch-byte-compile \
+        "$@"
+}
 
- # ** Files
+# ** Files
 
- function project-elisp-files {
-     # Echo list of Elisp files in project.
-     git ls-files 2>/dev/null | egrep "\.el$" | exclude-files
- }
+function project-elisp-files {
+    # Echo list of Elisp files in project.
+    git ls-files 2>/dev/null | egrep "\.el$" | exclude-files
+}
 
- function project-source-files {
-     # Echo list of Elisp files that are not tests.
-     project-elisp-files | egrep -v "$test_files_regexp" | feature-files
- }
+function project-source-files {
+    # Echo list of Elisp files that are not tests.
+    project-elisp-files | egrep -v "$test_files_regexp" | feature-files
+}
 
- function project-test-files {
-     # Echo list of Elisp test files.
-     project-elisp-files | egrep "$test_files_regexp"
- }
+function project-test-files {
+    # Echo list of Elisp test files.
+    project-elisp-files | egrep "$test_files_regexp"
+}
 
- function exclude-files {
-     # Filter out paths (STDIN) which should be excluded by default.
-     egrep -v "(/\.cask/|-autoloads.el|.dir-locals)"
- }
+function exclude-files {
+    # Filter out paths (STDIN) which should be excluded by default.
+    egrep -v "(/\.cask/|-autoloads.el|.dir-locals)"
+}
 
- function feature-files {
+function feature-files {
     # Read paths on STDIN and echo ones that (provide 'a-feature).
     while read path
     do
@@ -235,135 +240,135 @@ EOF
     done
 }
 
-   function load-files-args {
-       # For file in $@, echo "--load $file".
-       for file in "$@"
-       do
-           printf -- '--load %q ' "$file"
-       done
-   }
+function load-files-args {
+    # For file in $@, echo "--load $file".
+    for file in "$@"
+    do
+        printf -- '--load %q ' "$file"
+    done
+}
 
-   function files_args {
-       # For file in STDIN, echo "$file".
-       while read file
-       do
-           printf -- '%q ' "$file"
-       done
-   }
+function files_args {
+    # For file in STDIN, echo "$file".
+    while read file
+    do
+        printf -- '%q ' "$file"
+    done
+}
 
-   function test-files-p {
-       # Return 0 if $project_test_files is non-empty.
-       [[ "${project_test_files[@]}" ]]
-   }
+function test-files-p {
+    # Return 0 if $project_test_files is non-empty.
+    [[ "${project_test_files[@]}" ]]
+}
 
-   function buttercup-tests-p {
-       # Return 0 if Buttercup tests are found.
-       test-files-p || die "No tests found."
-       debug "Checking for Buttercup tests..."
+function buttercup-tests-p {
+    # Return 0 if Buttercup tests are found.
+    test-files-p || die "No tests found."
+    debug "Checking for Buttercup tests..."
 
-       grep "(require 'buttercup)" "${project_test_files[@]}" &>/dev/null
-   }
+    grep "(require 'buttercup)" "${project_test_files[@]}" &>/dev/null
+}
 
-   function ert-tests-p {
-       # Return 0 if ERT tests are found.
-       test-files-p || die "No tests found."
-       debug "Checking for ERT tests..."
+function ert-tests-p {
+    # Return 0 if ERT tests are found.
+    test-files-p || die "No tests found."
+    debug "Checking for ERT tests..."
 
     # We check for this rather than "(require 'ert)", because ERT may
     # already be loaded in Emacs and might not be loaded with
     # "require" in a test file.
     grep "(ert-deftest" "${project_test_files[@]}" &>/dev/null
-   }
+}
 
-   function dependencies {
-       # Echo list of package dependencies.
+function dependencies {
+    # Echo list of package dependencies.
 
-       # Search package headers.
-       egrep '^;; Package-Requires: ' $(project-source-files) $(project-test-files) \
-           | egrep -o '\([^([:space:]][^)]*\)' \
-           | egrep -o '^[^[:space:])]+' \
-           | sed -r 's/\(//g' \
-           | egrep -v '^emacs$'  # Ignore Emacs version requirement.
+    # Search package headers.
+    egrep '^;; Package-Requires: ' $(project-source-files) $(project-test-files) \
+        | egrep -o '\([^([:space:]][^)]*\)' \
+        | egrep -o '^[^[:space:])]+' \
+        | sed -r 's/\(//g' \
+        | egrep -v '^emacs$'  # Ignore Emacs version requirement.
 
-       # Search Cask file.
-       if [[ -r Cask ]]
-       then
-           egrep '\(depends-on "[^"]+"' Cask \
-               | sed -r -e 's/\(depends-on "([^"]+)".*/\1/g'
-       fi
-   }
+    # Search Cask file.
+    if [[ -r Cask ]]
+    then
+        egrep '\(depends-on "[^"]+"' Cask \
+            | sed -r -e 's/\(depends-on "([^"]+)".*/\1/g'
+    fi
+}
 
-   # ** Utility
+# ** Utility
 
-   function cleanup {
-       # Remove temporary paths (${temp_paths[@]}).
+function cleanup {
+    # Remove temporary paths (${temp_paths[@]}).
 
-       for path in "${temp_paths[@]}"
-       do
-           if [[ $debug ]]
-           then
-               debug "Debugging enabled: not deleting temporary path: $path"
-           elif [[ -r $path ]]
-           then
-               rm -rf "$path"
-           else
-               debug "Temporary path doesn't exist, not deleting: $path"
-           fi
-       done
-   }
+    for path in "${temp_paths[@]}"
+    do
+        if [[ $debug ]]
+        then
+            debug "Debugging enabled: not deleting temporary path: $path"
+        elif [[ -r $path ]]
+        then
+            rm -rf "$path"
+        else
+            debug "Temporary path doesn't exist, not deleting: $path"
+        fi
+    done
+}
 
-   function echo_color {
-       # This allows bold, italic, etc. without needing a function for
-       # each variation.
-       local color_code="COLOR_$1"
-       shift
+function echo_color {
+    # This allows bold, italic, etc. without needing a function for
+    # each variation.
+    local color_code="COLOR_$1"
+    shift
 
-       if [[ $color ]]
-       then
-           echo -e "${!color_code}${@}${COLOR_off}"
-       else
-           echo "$@"
-       fi
-   }
-   function debug {
-       if [[ $debug ]]
-       then
-           function debug {
-               echo_color yellow "DEBUG ($(ts)): $@" >&2
-           }
-           debug "$@"
-       else
-           function debug {
-               true
-           }
-       fi
-   }
-   function error {
-       echo_color red "ERROR ($(ts)): $@" >&2
-       ((errors++))
-       return 1
-   }
-   function die {
-       [[ $@ ]] && error "$@"
-       exit $errors
-   }
-   function log {
-       echo "LOG ($(ts)): $@" >&2
-   }
-   function log_color {
-       local color=$1
-       shift
-       echo_color $color "LOG ($(ts)): $@" >&2
-   }
-   function success {
-       if [[ $verbose -ge 2 ]]
-       then
-           log_color green "$@" >&2
-       fi
-   }
-   function verbose {
-       # $1 is the verbosity level, rest are echoed when appropriate.
-       if [[ $verbose -ge $1 ]]
+    if [[ $color ]]
+    then
+        echo -e "${!color_code}${@}${COLOR_off}"
+    else
+        echo "$@"
+    fi
+}
+function debug {
+    if [[ $debug ]]
+    then
+        function debug {
+            echo_color yellow "DEBUG ($(ts)): $@" >&2
+        }
+        debug "$@"
+    else
+        function debug {
+            true
+        }
+    fi
+}
+function error {
+    echo_color red "ERROR ($(ts)): $@" >&2
+    ((errors++))
+    return 1
+}
+function die {
+    [[ $@ ]] && error "$@"
+    exit $errors
+}
+function log {
+    echo "LOG ($(ts)): $@" >&2
+}
+function log_color {
+    local color=$1
+    shift
+    echo_color $color "LOG ($(ts)): $@" >&2
+}
+function success {
+    if [[ $verbose -ge 2 ]]
+    then
+        log_color green "$@" >&2
+    fi
+}
+function verbose {
+    # $1 is the verbosity level, rest are echoed when appropriate.
+    if [[ $verbose -ge $1 ]]
     then
         [[ $1 -eq 1 ]] && local color=blue
         [[ $1 -ge 2 ]] && local color=cyan
@@ -400,20 +405,20 @@ function compile {
             || error "Compilation failed."
 }
 
-function exec {
-    # Passes remaining arguments (rest of ${rest[@]} to Emacs.  Most
-    # useful with --sandbox.
+function batch {
+    # Run Emacs with $batch_args and with project source and test files loaded.
+    verbose 1 "Executing Emacs with arguments: ${batch_args[@]}"
+
     run_emacs \
-        $(load-files-args "${project_source_files[@]}") \
-
-
+        $(load-files-args "${project_source_files[@]}" "${project_test_files[@]}") \
+        "${batch_args[@]}"
 }
 
 function interactive {
     # Run Emacs interactively.  Most useful with --sandbox and --auto-install.
     unset batch_arg
     run_emacs \
-        $(load-files-args "${project_source_files[@]}")
+        $(load-files-args "${project_source_files[@]}" "${project_test_files[@]}")
     batch_arg="--batch"
 }
 
@@ -679,14 +684,15 @@ fi
 # Run rules.
 for rule in "${rest[@]}"
 do
-    if [[ $exec ]]
+    if [[ $batch ]]
+    then
+        debug "Adding batch argument: $rule"
+        batch_args+=("$rule")
+
+    elif [[ $rule = batch ]]
     then
         # Remaining arguments are passed to Emacs.
-        debug "Adding exec argument: $rule"
-        exec_args+=("$rule")
-    elif [[ $rule = exec ]]
-    then
-        exec=true
+        batch=true
     elif type "$rule" 2>/dev/null | grep "$rule is a function" &>/dev/null
     then
         $rule
@@ -700,14 +706,8 @@ do
     fi
 done
 
-if [[ $exec ]]
-then
-    verbose 1 "Executing Emacs with arguments: ${exec_args[@]}"
-
-    run_emacs \
-        $(load-files-args "${project_source_files[@]}" "${project_test_files[@]}") \
-        "${exec_args[@]}"
-fi
+# The batch rule.
+[[ $batch ]] && batch
 
 if [[ $errors -gt 0 ]]
 then
