@@ -105,6 +105,7 @@
 (require 'subr-x)
 (require 'org)
 (require 'org-agenda)
+(require 'org-element)
 (require 'org-habit)
 (require 'cl-lib)
 (require 'dash)
@@ -143,6 +144,9 @@ included.  This map is useful for binding commands which apply
 only with point on the group headers (e.g. use `origami' to fold
 group headings by binding a key to `origami-toggle-node' in this
 map).")
+
+;; Silence byte-compiler.
+(defvar org-element--timestamp-regexp)
 
 ;;;; Customization
 
