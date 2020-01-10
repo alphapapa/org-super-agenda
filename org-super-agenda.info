@@ -21,6 +21,7 @@ GPLv3+
 * Screenshots::
 * Installation::
 * Usage::
+* FAQ::
 * Changelog::
 * Development::
 * Credits::
@@ -49,6 +50,11 @@ Group selectors
 * Keywords::
 * Special selectors::
 * Normal selectors::
+
+FAQ
+
+* Why are some items not displayed even though I used group selectors for them?::
+
 
 Changelog
 
@@ -106,7 +112,7 @@ File: README.info,  Node: Contents,  Next: Screenshots,  Prev: Introduction,  Up
 **********
 
    • • • 
-        • • • • 
+        • • • • • 
 
 File: README.info,  Node: Screenshots,  Next: Installation,  Prev: Contents,  Up: Top
 
@@ -157,7 +163,7 @@ If you want to install manually, you must also install these packages:
 (require 'org-super-agenda).
 
 
-File: README.info,  Node: Usage,  Next: Changelog,  Prev: Installation,  Up: Top
+File: README.info,  Node: Usage,  Next: FAQ,  Prev: Installation,  Up: Top
 
 5 Usage
 *******
@@ -489,9 +495,35 @@ File: README.info,  Node: Tips,  Prev: Group selectors,  Up: Usage
           even fold some automatically ().
 
 
-File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
+File: README.info,  Node: FAQ,  Next: Changelog,  Prev: Usage,  Up: Top
 
-6 Changelog
+6 FAQ
+*****
+
+* Menu:
+
+* Why are some items not displayed even though I used group selectors for them?::
+
+
+File: README.info,  Node: Why are some items not displayed even though I used group selectors for them?,  Up: FAQ
+
+6.1 Why are some items not displayed even though I used group selectors for them?
+=================================================================================
+
+This is a common misunderstanding of how this package works.  As written
+in the introduction, it does not _collect_ items.  It only _groups_
+items that are collected by Org Agenda or org-ql.  So if your Agenda
+command or org-ql query does not collect certain items, they will not be
+displayed, regardless of what org-super-agenda groups you configure.
+
+   org-ql (https://github.com/alphapapa/org-ql) provides an easier way
+to write queries to generate agenda-like views that can be grouped with
+org-super-agenda.
+
+
+File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
+
+7 Changelog
 ***********
 
 * Menu:
@@ -507,7 +539,7 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 
 File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
 
-6.1 1.2-pre
+7.1 1.2-pre
 ===========
 
 *Added*
@@ -558,7 +590,7 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
 
 File: README.info,  Node: 111,  Next: 11,  Prev: 12-pre,  Up: Changelog
 
-6.2 1.1.1
+7.2 1.1.1
 =========
 
 *Fixed*
@@ -567,7 +599,7 @@ File: README.info,  Node: 111,  Next: 11,  Prev: 12-pre,  Up: Changelog
 
 File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
 
-6.3 1.1
+7.3 1.1
 =======
 
 *Additions*
@@ -602,7 +634,7 @@ File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
 
 File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
-6.4 1.0.3
+7.4 1.0.3
 =========
 
 *Fixed*
@@ -612,7 +644,7 @@ File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
 File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
-6.5 1.0.2
+7.5 1.0.2
 =========
 
 *Fixed*
@@ -621,7 +653,7 @@ File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
 File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
-6.6 1.0.1
+7.6 1.0.1
 =========
 
 *Fixes*
@@ -633,7 +665,7 @@ File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
 File: README.info,  Node: 100,  Prev: 101,  Up: Changelog
 
-6.7 1.0.0
+7.7 1.0.0
 =========
 
 First tagged version.
@@ -641,7 +673,7 @@ First tagged version.
 
 File: README.info,  Node: Development,  Next: Credits,  Prev: Changelog,  Up: Top
 
-7 Development
+8 Development
 *************
 
 Contributions and feedback are welcome.
@@ -659,7 +691,7 @@ of course).  I’d like to get ideas for how to better organize my agenda.
 
 File: README.info,  Node: Bugs,  Next: Tests,  Up: Development
 
-7.1 Bugs
+8.1 Bugs
 ========
 
    • The org-search-view agenda command does not seem to set the
@@ -674,7 +706,7 @@ File: README.info,  Node: Bugs,  Next: Tests,  Up: Development
 
 File: README.info,  Node: Tests,  Prev: Bugs,  Up: Development
 
-7.2 Tests
+8.2 Tests
 =========
 
 It’s easy to run the tests:
@@ -687,7 +719,7 @@ It’s easy to run the tests:
 
 File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
-8 Credits
+9 Credits
 *********
 
    • Thanks to Balaji Sivaraman (https://github.com/balajisivaraman) for
@@ -699,31 +731,33 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction824
-Node: Contents2232
-Node: Screenshots2385
-Node: Installation2622
-Node: MELPA2783
-Node: Manual installation2930
-Node: Usage3331
-Node: Examples4307
-Node: Group selectors7792
-Node: Keywords8981
-Node: Special selectors9722
-Node: Normal selectors13087
-Node: Tips17718
-Node: Changelog18569
-Node: 12-pre18794
-Node: 11120939
-Node: 1121112
-Node: 10322684
-Node: 10222895
-Node: 10123029
-Node: 10023367
-Node: Development23472
-Node: Bugs23874
-Node: Tests24527
-Node: Credits24846
+Node: Introduction921
+Node: Contents2329
+Node: Screenshots2486
+Node: Installation2723
+Node: MELPA2884
+Node: Manual installation3031
+Node: Usage3432
+Node: Examples4402
+Node: Group selectors7887
+Node: Keywords9076
+Node: Special selectors9817
+Node: Normal selectors13182
+Node: Tips17813
+Node: FAQ18664
+Node: Why are some items not displayed even though I used group selectors for them?18844
+Node: Changelog19641
+Node: 12-pre19864
+Node: 11122009
+Node: 1122182
+Node: 10323754
+Node: 10223965
+Node: 10124099
+Node: 10024437
+Node: Development24542
+Node: Bugs24944
+Node: Tests25597
+Node: Credits25916
 
 End Tag Table
 

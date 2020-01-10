@@ -24,13 +24,14 @@ The primary use of this package is for the daily/weekly agenda, made by the ~org
 :PROPERTIES:
 :TOC:      this
 :END:
-  -  [[#screenshots][Screenshots]]
-  -  [[#installation][Installation]]
-  -  [[#usage][Usage]]
-    -  [[#examples][Examples]]
-    -  [[#group-selectors][Group selectors]]
-    -  [[#tips][Tips]]
-  -  [[#changelog][Changelog]]
+-  [[#screenshots][Screenshots]]
+-  [[#installation][Installation]]
+-  [[#usage][Usage]]
+  -  [[#examples][Examples]]
+  -  [[#group-selectors][Group selectors]]
+  -  [[#tips][Tips]]
+-  [[#faq][FAQ]]
+-  [[#changelog][Changelog]]
 
 * Screenshots
 :PROPERTIES:
@@ -215,6 +216,17 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  An [[info:org-super-agenda][info page]] is included, with the contents of this readme file.
 +  Group headers use the keymap =org-super-agenda-header-map=, allowing you to bind keys in that map which will take effect when point is on a header.
      -  For example, [[https://github.com/gregsexton/origami.el][origami]] works with =org-super-agenda= buffers without any extra configuration.  Just activate =origami-mode= in the agenda buffer and use the command =origami-toggle-node= to fold groups.  You can bind, e.g. =TAB= to that command in the header map, and then you can easily collapse groups as if they were an outline.  You might even fold some automatically ([[examples.org#automatically-fold-certain-groups-with-origami][example]]).
+
+* FAQ
+:PROPERTIES:
+:TOC:      0
+:END:
+
+** Why are some items not displayed even though I used group selectors for them?
+
+This is a common misunderstanding of how this package works.  As written in the introduction, it does not /collect/ items.  It only /groups/ items that are collected by Org Agenda or =org-ql=.  So if your Agenda command or =org-ql= query does not collect certain items, they will not be displayed, regardless of what =org-super-agenda= groups you configure.
+
+[[https://github.com/alphapapa/org-ql][org-ql]] provides an easier way to write queries to generate agenda-like views that can be grouped with =org-super-agenda=.
 
 * Changelog
 :PROPERTIES:
