@@ -54,6 +54,8 @@ Group selectors
 FAQ
 
 * Why are some items not displayed even though I used group selectors for them?::
+* Why did a group disappear when I moved it to the end of the list?::
+
 
 
 Changelog
@@ -503,9 +505,10 @@ File: README.info,  Node: FAQ,  Next: Changelog,  Prev: Usage,  Up: Top
 * Menu:
 
 * Why are some items not displayed even though I used group selectors for them?::
+* Why did a group disappear when I moved it to the end of the list?::
 
 
-File: README.info,  Node: Why are some items not displayed even though I used group selectors for them?,  Up: FAQ
+File: README.info,  Node: Why are some items not displayed even though I used group selectors for them?,  Next: Why did a group disappear when I moved it to the end of the list?,  Up: FAQ
 
 6.1 Why are some items not displayed even though I used group selectors for them?
 =================================================================================
@@ -519,6 +522,17 @@ displayed, regardless of what org-super-agenda groups you configure.
    org-ql (https://github.com/alphapapa/org-ql) provides an easier way
 to write queries to generate agenda-like views that can be grouped with
 org-super-agenda.
+
+
+File: README.info,  Node: Why did a group disappear when I moved it to the end of the list?,  Prev: Why are some items not displayed even though I used group selectors for them?,  Up: FAQ
+
+6.2 Why did a group disappear when I moved it to the end of the list?
+=====================================================================
+
+As explained in the usage instructions and shown in the example, items
+are collected into groups in the order the groups are listed, and empty
+groups are not shown.  To display a group out of the order in which
+groups are listed, use :order.
 
 
 File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
@@ -731,33 +745,34 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction921
-Node: Contents2329
-Node: Screenshots2486
-Node: Installation2723
-Node: MELPA2884
-Node: Manual installation3031
-Node: Usage3432
-Node: Examples4402
-Node: Group selectors7887
-Node: Keywords9076
-Node: Special selectors9817
-Node: Normal selectors13182
-Node: Tips17813
-Node: FAQ18664
-Node: Why are some items not displayed even though I used group selectors for them?18844
-Node: Changelog19641
-Node: 12-pre19864
-Node: 11122009
-Node: 1122182
-Node: 10323754
-Node: 10223965
-Node: 10124099
-Node: 10024437
-Node: Development24542
-Node: Bugs24944
-Node: Tests25597
-Node: Credits25916
+Node: Introduction992
+Node: Contents2400
+Node: Screenshots2557
+Node: Installation2794
+Node: MELPA2955
+Node: Manual installation3102
+Node: Usage3503
+Node: Examples4473
+Node: Group selectors7958
+Node: Keywords9147
+Node: Special selectors9888
+Node: Normal selectors13253
+Node: Tips17884
+Node: FAQ18735
+Node: Why are some items not displayed even though I used group selectors for them?18985
+Node: Why did a group disappear when I moved it to the end of the list?19856
+Node: Changelog20431
+Node: 12-pre20654
+Node: 11122799
+Node: 1122972
+Node: 10324544
+Node: 10224755
+Node: 10124889
+Node: 10025227
+Node: Development25332
+Node: Bugs25734
+Node: Tests26387
+Node: Credits26706
 
 End Tag Table
 

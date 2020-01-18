@@ -228,6 +228,10 @@ This is a common misunderstanding of how this package works.  As written in the 
 
 [[https://github.com/alphapapa/org-ql][org-ql]] provides an easier way to write queries to generate agenda-like views that can be grouped with =org-super-agenda=.
 
+** Why did a group disappear when I moved it to the end of the list?
+
+As explained in the usage instructions and shown in the example, items are collected into groups in the order the groups are listed, and empty groups are not shown.  To display a group out of the order in which groups are listed, use =:order=.
+
 * Changelog
 :PROPERTIES:
 :TOC:      0
