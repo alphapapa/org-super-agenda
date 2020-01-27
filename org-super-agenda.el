@@ -652,26 +652,27 @@ available."
                       thereis (funcall fn item)))))
 
 (org-super-agenda--defgroup property
-  "Group items that contain a property with a given value.
-Argument should be a list with a string representing a
-property, and an optional second argument being either a string
-representing a value, or a function which will be passed the
-found property value, if any. Without a second argument, any item
-with the given property will match. "
-  :section-name (concat "Property: '" (car args) "'"
-                        (if (= 2 (length args)) (concat " = '" (prin1-to-string (nth 1 args)) "'" )))
+  "Group items with a property, optionally matching a value.
+Argument may be a property name string, or a list of property
+name string and either value string or predicate with which to
+test the value."
+  :section-name (concat "Property: " (car args)
+                        (pcase (cadr args)
+                          (`nil nil)
+                          ((pred stringp) (concat ": " (cadr args)))
+                          ((and (pred functionp) (pred symbolp))
+                           (concat " matches predicate " (symbol-name (cadr args))))
+                          ((pred functionp) (concat " matches lambda predicate"))))
   :test  (let* ((prop (car-safe args))
-                (restriction (nth 1 args))
                 (found-value (org-entry-get (org-super-agenda--get-marker item)
                                             prop
                                             org-super-agenda-properties-inherit)))
-           (pcase restriction
-             ((pred null)
-              found-value)
+           (pcase (cadr args)
+             (`nil nil)
              ((pred stringp)
-              (string= restriction found-value))
+              (string= (cadr args) found-value))
              ((pred functionp)
-              (funcall restriction found-value))
+              (funcall (cadr args) found-value))
              (_ ;; Oops
               (user-error "List argument to `:property' must either be of length 1, or have either a string of a function as the second element")))))
 

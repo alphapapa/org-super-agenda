@@ -569,7 +569,7 @@ already loaded."
 (ert-deftest org-super-agenda-test--:property-list-val ()
   ;; DONE: Works.
   (should (org-super-agenda-test--run
-           :groups '((:property ("Effort" "5" ))))))
+           :groups '((:property ("Effort" "5"))))))
 
 (ert-deftest org-super-agenda-test--:property-list-fun ()
   ;; DONE: Works.

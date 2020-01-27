@@ -205,7 +205,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  =:priority>== :: Group items that are higher than or equal to the given priority, e.g. ~B~.
 +  =:priority<= :: Group items that are lower than the given priority, e.g. ~A~.
 +  =:priority<== :: Group items that are lower than or equal to the given priority, e.g. ~B~.
-+  =:property= :: Group items that contain a property with a given value. Argument should be either a string representing a property, or a list with a string representing a property, and an optional second argument being either a string representing a value, or a function which will be passed the found property value, if any. With a string argument, or a list of length 1, any item with the given property will match.
++  =:property= :: Group items with a property, optionally matching a value.  Argument may be a property name string, or a list of property name string and either value string or predicate with which to test the value.
 +  =:regexp= :: Group items that match any of the given regular expressions.
 +  =:scheduled= :: Group items that are scheduled.  Argument can be ~t~ (to match items scheduled for any date), ~nil~ (to match items that are not schedule), ~past~ (to match items scheduled for the past), ~today~ (to match items scheduled for today), or ~future~ (to match items scheduled for the future).  Argument may also be given like ~before DATE~ or ~after DATE~ where DATE is a date string that ~org-time-string-to-absolute~ can process.
 +  =:tag= :: Group items that match any of the given tags.  Argument may be a string or list of strings.
