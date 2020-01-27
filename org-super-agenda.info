@@ -21,6 +21,7 @@ GPLv3+
 * Screenshots::
 * Installation::
 * Usage::
+* FAQ::
 * Changelog::
 * Development::
 * Credits::
@@ -49,6 +50,13 @@ Group selectors
 * Keywords::
 * Special selectors::
 * Normal selectors::
+
+FAQ
+
+* Why are some items not displayed even though I used group selectors for them?::
+* Why did a group disappear when I moved it to the end of the list?::
+
+
 
 Changelog
 
@@ -106,7 +114,7 @@ File: README.info,  Node: Contents,  Next: Screenshots,  Prev: Introduction,  Up
 **********
 
    • • • 
-        • • • • 
+        • • • • • 
 
 File: README.info,  Node: Screenshots,  Next: Installation,  Prev: Contents,  Up: Top
 
@@ -157,7 +165,7 @@ If you want to install manually, you must also install these packages:
 (require 'org-super-agenda).
 
 
-File: README.info,  Node: Usage,  Next: Changelog,  Prev: Installation,  Up: Top
+File: README.info,  Node: Usage,  Next: FAQ,  Prev: Installation,  Up: Top
 
 5 Usage
 *******
@@ -330,6 +338,9 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      each item to the given function as a string from the agenda buffer
      ().  The function should return a string to be used as the grouping
      key and as the header for its group.
+‘:auto-outline-path’
+     This automatically groups items by their outline path hierarchy,
+     like Plans/Take over the universe/Take over the moon.
 ‘‘:auto-parent’’
      This automatically groups items by their parent heading.  This is
      surprisingly handy, especially if you group tasks hierarchically by
@@ -486,9 +497,47 @@ File: README.info,  Node: Tips,  Prev: Group selectors,  Up: Usage
           even fold some automatically ().
 
 
-File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
+File: README.info,  Node: FAQ,  Next: Changelog,  Prev: Usage,  Up: Top
 
-6 Changelog
+6 FAQ
+*****
+
+* Menu:
+
+* Why are some items not displayed even though I used group selectors for them?::
+* Why did a group disappear when I moved it to the end of the list?::
+
+
+File: README.info,  Node: Why are some items not displayed even though I used group selectors for them?,  Next: Why did a group disappear when I moved it to the end of the list?,  Up: FAQ
+
+6.1 Why are some items not displayed even though I used group selectors for them?
+=================================================================================
+
+This is a common misunderstanding of how this package works.  As written
+in the introduction, it does not _collect_ items.  It only _groups_
+items that are collected by Org Agenda or org-ql.  So if your Agenda
+command or org-ql query does not collect certain items, they will not be
+displayed, regardless of what org-super-agenda groups you configure.
+
+   org-ql (https://github.com/alphapapa/org-ql) provides an easier way
+to write queries to generate agenda-like views that can be grouped with
+org-super-agenda.
+
+
+File: README.info,  Node: Why did a group disappear when I moved it to the end of the list?,  Prev: Why are some items not displayed even though I used group selectors for them?,  Up: FAQ
+
+6.2 Why did a group disappear when I moved it to the end of the list?
+=====================================================================
+
+As explained in the usage instructions and shown in the example, items
+are collected into groups in the order the groups are listed, and empty
+groups are not shown.  To display a group out of the order in which
+groups are listed, use :order.
+
+
+File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
+
+7 Changelog
 ***********
 
 * Menu:
@@ -504,7 +553,7 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: Usage,  Up: Top
 
 File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
 
-6.1 1.2-pre
+7.1 1.2-pre
 ===========
 
 *Added*
@@ -547,10 +596,15 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
    *Updated*
    • Tests updated for Org 9.2.4.
 
+   *Internal*
+   • org-habit is now loaded when org-super-agenda is loaded.  This
+     avoids issues, real and potential, and should not cause any
+     problems.
+
 
 File: README.info,  Node: 111,  Next: 11,  Prev: 12-pre,  Up: Changelog
 
-6.2 1.1.1
+7.2 1.1.1
 =========
 
 *Fixed*
@@ -559,7 +613,7 @@ File: README.info,  Node: 111,  Next: 11,  Prev: 12-pre,  Up: Changelog
 
 File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
 
-6.3 1.1
+7.3 1.1
 =======
 
 *Additions*
@@ -594,7 +648,7 @@ File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
 
 File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
-6.4 1.0.3
+7.4 1.0.3
 =========
 
 *Fixed*
@@ -604,7 +658,7 @@ File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
 File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
-6.5 1.0.2
+7.5 1.0.2
 =========
 
 *Fixed*
@@ -613,7 +667,7 @@ File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
 File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
-6.6 1.0.1
+7.6 1.0.1
 =========
 
 *Fixes*
@@ -625,7 +679,7 @@ File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
 File: README.info,  Node: 100,  Prev: 101,  Up: Changelog
 
-6.7 1.0.0
+7.7 1.0.0
 =========
 
 First tagged version.
@@ -633,7 +687,7 @@ First tagged version.
 
 File: README.info,  Node: Development,  Next: Credits,  Prev: Changelog,  Up: Top
 
-7 Development
+8 Development
 *************
 
 Contributions and feedback are welcome.
@@ -651,7 +705,7 @@ of course).  I’d like to get ideas for how to better organize my agenda.
 
 File: README.info,  Node: Bugs,  Next: Tests,  Up: Development
 
-7.1 Bugs
+8.1 Bugs
 ========
 
    • The org-search-view agenda command does not seem to set the
@@ -666,7 +720,7 @@ File: README.info,  Node: Bugs,  Next: Tests,  Up: Development
 
 File: README.info,  Node: Tests,  Prev: Bugs,  Up: Development
 
-7.2 Tests
+8.2 Tests
 =========
 
 It’s easy to run the tests:
@@ -679,7 +733,7 @@ It’s easy to run the tests:
 
 File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
-8 Credits
+9 Credits
 *********
 
    • Thanks to Balaji Sivaraman (https://github.com/balajisivaraman) for
@@ -691,31 +745,34 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction824
-Node: Contents2232
-Node: Screenshots2385
-Node: Installation2622
-Node: MELPA2783
-Node: Manual installation2930
-Node: Usage3331
-Node: Examples4307
-Node: Group selectors7792
-Node: Keywords8981
-Node: Special selectors9722
-Node: Normal selectors12933
-Node: Tips17564
-Node: Changelog18415
-Node: 12-pre18640
-Node: 11120620
-Node: 1120793
-Node: 10322365
-Node: 10222576
-Node: 10122710
-Node: 10023048
-Node: Development23153
-Node: Bugs23555
-Node: Tests24208
-Node: Credits24527
+Node: Introduction992
+Node: Contents2400
+Node: Screenshots2557
+Node: Installation2794
+Node: MELPA2955
+Node: Manual installation3102
+Node: Usage3503
+Node: Examples4473
+Node: Group selectors7958
+Node: Keywords9147
+Node: Special selectors9888
+Node: Normal selectors13253
+Node: Tips17884
+Node: FAQ18735
+Node: Why are some items not displayed even though I used group selectors for them?18985
+Node: Why did a group disappear when I moved it to the end of the list?19856
+Node: Changelog20431
+Node: 12-pre20654
+Node: 11122799
+Node: 1122972
+Node: 10324544
+Node: 10224755
+Node: 10124889
+Node: 10025227
+Node: Development25332
+Node: Bugs25734
+Node: Tests26387
+Node: Credits26706
 
 End Tag Table
 

@@ -24,13 +24,14 @@ The primary use of this package is for the daily/weekly agenda, made by the ~org
 :PROPERTIES:
 :TOC:      this
 :END:
-  -  [[#screenshots][Screenshots]]
-  -  [[#installation][Installation]]
-  -  [[#usage][Usage]]
-    -  [[#examples][Examples]]
-    -  [[#group-selectors][Group selectors]]
-    -  [[#tips][Tips]]
-  -  [[#changelog][Changelog]]
+-  [[#screenshots][Screenshots]]
+-  [[#installation][Installation]]
+-  [[#usage][Usage]]
+  -  [[#examples][Examples]]
+  -  [[#group-selectors][Group selectors]]
+  -  [[#tips][Tips]]
+-  [[#faq][FAQ]]
+-  [[#changelog][Changelog]]
 
 * Screenshots
 :PROPERTIES:
@@ -171,6 +172,7 @@ Every selector requires an argument, even if it's just ~t~, e.g. ~:anything~, ~:
 +  ~:auto-dir-name~ :: This automatically groups items by the directory name of their source buffer.
 +  =:auto-group= :: This selects items that have the =agenda-group= Org property set.  By setting this property for a subtree, every item in it will be sorted into an agenda group by that name and placed into the agenda where the ~:auto-group~ selector is ([[examples.org#automatically-by-group][example]]).
 +  ~:auto-map~ :: This automatically groups items by the value returned when applying each item to the given function as a string from the agenda buffer ([[examples.org#automatically-by-mapping-a-function][example]]).  The function should return a string to be used as the grouping key and as the header for its group.
++  =:auto-outline-path= :: This automatically groups items by their outline path hierarchy, like =Plans/Take over the universe/Take over the moon=.
 +  ~:auto-parent~ :: This automatically groups items by their parent heading.  This is surprisingly handy, especially if you group tasks hierarchically by project and use agenda restrictions to limit the agenda to a subtree.
 +  =:auto-planning= :: This automatically groups items by their earliest of scheduled date or deadline, formatted according to variable ~org-super-agenda-date-format~.
 +  =:auto-priority= :: This automatically groups items by their priority.
@@ -216,6 +218,21 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  Group headers use the keymap =org-super-agenda-header-map=, allowing you to bind keys in that map which will take effect when point is on a header.
      -  For example, [[https://github.com/gregsexton/origami.el][origami]] works with =org-super-agenda= buffers without any extra configuration.  Just activate =origami-mode= in the agenda buffer and use the command =origami-toggle-node= to fold groups.  You can bind, e.g. =TAB= to that command in the header map, and then you can easily collapse groups as if they were an outline.  You might even fold some automatically ([[examples.org#automatically-fold-certain-groups-with-origami][example]]).
 
+* FAQ
+:PROPERTIES:
+:TOC:      0
+:END:
+
+** Why are some items not displayed even though I used group selectors for them?
+
+This is a common misunderstanding of how this package works.  As written in the introduction, it does not /collect/ items.  It only /groups/ items that are collected by Org Agenda or =org-ql=.  So if your Agenda command or =org-ql= query does not collect certain items, they will not be displayed, regardless of what =org-super-agenda= groups you configure.
+
+[[https://github.com/alphapapa/org-ql][org-ql]] provides an easier way to write queries to generate agenda-like views that can be grouped with =org-super-agenda=.
+
+** Why did a group disappear when I moved it to the end of the list?
+
+As explained in the usage instructions and shown in the example, items are collected into groups in the order the groups are listed, and empty groups are not shown.  To display a group out of the order in which groups are listed, use =:order=.
+
 * Changelog
 :PROPERTIES:
 :TOC:      0
@@ -243,6 +260,9 @@ These selectors take one argument alone, or multiple arguments in a list.
 
 *Updated*
 +  Tests updated for Org 9.2.4.
+
+*Internal*
++  =org-habit= is now loaded when =org-super-agenda= is loaded.  This avoids issues, real and potential, and should not cause any problems.
 
 ** 1.1.1
 
