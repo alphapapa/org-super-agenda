@@ -1098,7 +1098,7 @@ Wednesday   5 July 2017
 " "29c8faa14ff46b4082d0c83629c2faa2" "Day-agenda (W27):
 Wednesday   5 July 2017
 
- Property: 'Effort' = '\"5\"'
+ Property: Effort: 5
   test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
 
  Other items
@@ -1129,7 +1129,7 @@ Wednesday   5 July 2017
 " "e29293019f52072cbdadb86b043e0e2c" "Day-agenda (W27):
 Wednesday   5 July 2017
 
- Property: 'Effort' = '(lambda (v) (string= v \"5\"))'
+ Property: Effort matches lambda predicate
   test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
 
  Other items

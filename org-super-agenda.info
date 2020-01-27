@@ -459,6 +459,10 @@ list.
 ‘:priority<=’
      Group items that are lower than or equal to the given priority,
      e.g.  ‘B’.
+‘:property’
+     Group items with a property, optionally matching a value.  Argument
+     may be a property name string, or a list of property name string
+     and either value string or predicate with which to test the value.
 ‘:regexp’
      Group items that match any of the given regular expressions.
 ‘:scheduled’
