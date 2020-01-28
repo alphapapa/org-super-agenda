@@ -1181,6 +1181,7 @@ Wednesday   5 July 2017
   ambition:   In  10 d.:  TODO [#A] Take over the universe                                                         :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
   test:       Scheduled:  TODO [#B] Fix flux capacitor                                                  :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
   ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
@@ -1213,6 +1214,7 @@ Wednesday   5 July 2017
   ambition:   In  10 d.:  TODO [#A] Take over the universe                                                         :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
   test:       Scheduled:  TODO [#B] Fix flux capacitor                                                  :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
   ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
