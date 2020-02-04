@@ -1160,10 +1160,6 @@ Wednesday   5 July 2017
 " "e782d297fe34c306951019e1ef526cda" "Day-agenda (W27):
 Wednesday   5 July 2017
 
- Property: 'Effort'
-  test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
-  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
-
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
                8:00...... ----------------
@@ -1192,10 +1188,6 @@ Wednesday   5 July 2017
   ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "31fecc75d5e0a7b47625d709eb31da33" "Day-agenda (W27):
 Wednesday   5 July 2017
-
- Property: 'Effort'
-  test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
-  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
 
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
