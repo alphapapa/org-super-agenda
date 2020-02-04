@@ -663,9 +663,8 @@ test the value."
                           ((and (pred functionp) (pred symbolp))
                            (concat " matches predicate " (symbol-name (cadr args))))
                           ((pred functionp) (concat " matches lambda predicate"))))
-  :test  (let* ((prop (car-safe args))
-                (found-value (org-entry-get (org-super-agenda--get-marker item)
-                                            prop
+  :test  (let* ((found-value (org-entry-get (org-super-agenda--get-marker item)
+                                            (car-safe args)
                                             org-super-agenda-properties-inherit)))
            (pcase (cadr args)
              (`nil nil)
