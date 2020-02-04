@@ -995,7 +995,10 @@ of the arguments to the function."
 
 (org-super-agenda--def-auto-group todo "their to-do keyword"
   :keyword :auto-todo
-  :key-form (when-let* ((keyword (org-find-text-property-in-string 'todo-state item)))
+  ;; NOTE: I'm not sure why sometimes items have the `todo-state' property set and other
+  ;; times `todo-keyword', but that seems to be the case, so we need to handle both.
+  :key-form (when-let* ((keyword (or (org-find-text-property-in-string 'todo-state item)
+                                     (org-find-text-property-in-string 'todo-keyword item))))
               (propertize keyword 'face (org-get-todo-face keyword)))
   :header-form (concat "To-do: " key))
 
