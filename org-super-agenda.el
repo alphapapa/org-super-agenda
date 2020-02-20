@@ -337,13 +337,14 @@ With prefix argument ARG, turn on if positive, otherwise off."
                                      (advice-add to :after fn))
                                  (lambda (from fn)
                                    ;; Disable mode
-                                   (advice-remove from fn)))))
+                                   (advice-remove from fn))))
+        (hook-function (if org-super-agenda-mode #'add-hook #'remove-hook)))
     (funcall advice-function-filter-return #'org-agenda-finalize-entries
              #'org-super-agenda--filter-finalize-entries)
     (funcall advice-function-after #'org-agenda-filter-apply
              #'org-super-agenda--hide-or-show-groups)
-    (funcall advice-function-after #'org-agenda-finalize
-             #'org-super-agenda--hide-or-show-groups)
+    (funcall hook-function 'org-agenda-finalize-hook
+             'org-super-agenda--hide-or-show-groups)
 
     ;; Add variable to list of variables (see issue #22).
     (if org-super-agenda-mode
