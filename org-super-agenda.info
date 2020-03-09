@@ -366,9 +366,9 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      timestamp anywhere in the entry, formatted according to variable
      ‘org-super-agenda-date-format’.
 ‘:discard’
-     Discard items that don’t match selectors.  Any groups processed
-     after this one will not see discarded items.  You might use this at
-     the beginning or end of a list of groups, either to narrow down the
+     Discard items that match selectors.  Any groups processed after
+     this one will not see discarded items.  You might use this at the
+     beginning or end of a list of groups, either to narrow down the
      list of items (used in combination with ‘:not’), or to exclude
      items you’re not interested in.
 ‘:not’
@@ -756,23 +756,23 @@ Node: Examples4473
 Node: Group selectors7958
 Node: Keywords9147
 Node: Special selectors9888
-Node: Normal selectors13253
-Node: Tips17884
-Node: FAQ18735
-Node: Why are some items not displayed even though I used group selectors for them?18985
-Node: Why did a group disappear when I moved it to the end of the list?19856
-Node: Changelog20431
-Node: 12-pre20654
-Node: 11122799
-Node: 1122972
-Node: 10324544
-Node: 10224755
-Node: 10124889
-Node: 10025227
-Node: Development25332
-Node: Bugs25734
-Node: Tests26387
-Node: Credits26706
+Node: Normal selectors13245
+Node: Tips17876
+Node: FAQ18727
+Node: Why are some items not displayed even though I used group selectors for them?18977
+Node: Why did a group disappear when I moved it to the end of the list?19848
+Node: Changelog20423
+Node: 12-pre20646
+Node: 11122791
+Node: 1122964
+Node: 10324536
+Node: 10224747
+Node: 10124881
+Node: 10025219
+Node: Development25324
+Node: Bugs25726
+Node: Tests26379
+Node: Credits26698
 
 End Tag Table
 
