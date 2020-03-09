@@ -342,10 +342,10 @@ with the function, which is used by the dispatcher.
 
 DOCSTRING is a string used for the function's docstring.
 
-:SECTION-NAME is a string or a lisp form that is run once, with
+:SECTION-NAME is a string or a Lisp form that is run once, with
 the variable `items' available.
 
-:TEST is a lisp form that is run for each item, with the variable
+:TEST is a Lisp form that is run for each item, with the variable
 `item' available.  Items passing this test are filtered into a
 separate list.
 
