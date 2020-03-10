@@ -218,6 +218,7 @@ where FUNCTION-BODY is a lambda form."
 (cl-defmacro org-super-agenda-test--run
     (&key (body '(org-agenda-list))
           (groups nil groups-set)
+          (overridehashkey nil)
           (span 'day)
           (date org-super-agenda-test-date)
           let*)
@@ -226,7 +227,9 @@ When `org-super-agenda-test-save-results' is non-nil, save the
 new-result to the results file.  When
 `org-super-agenda-test-show-results' is non-nil, show the agenda
 buffer and do not save the results.  Load test results if not
-already loaded."
+already loaded.
+
+Use OVERRIDEHASHKEY to look up the test result, if that is set."
   (declare (debug (form &optional listp sexp sexp stringp)))
   `(progn
      (unless (> (ht-size org-super-agenda-test-results) 0)
@@ -235,6 +238,9 @@ already loaded."
      (org-super-agenda-mode 1)
      (let ((body-groups-hash (secure-hash 'md5 (format "%S" (list ',body ,groups))))
            new-result)
+
+       ;; Use the overridehashkey if it's set.
+       (setq body-groups-hash (if overridehashkey overridehashkey body-groups-hash))
 
        ;; Redefine functions
        (org-super-agenda-test--with-mock-functions
@@ -677,7 +683,8 @@ already loaded."
 				  (when-let* ((pos (text-property-not-all 0 (length item)
 									  'face nil item)))
                                     (format "Face: %s"
-					    (get-text-property pos 'face item)))))))))
+					    (get-text-property pos 'face item)))))))
+	  :overridehashkey "org-super-agenda-test--:auto-map"))
 
 (ert-deftest org-super-agenda-test--:auto-tags ()
   ;; DONE: Works.
