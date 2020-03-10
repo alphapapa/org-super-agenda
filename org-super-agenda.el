@@ -722,7 +722,7 @@ e.g. \"A\" or (\"B\" \"C\")."
 (cl-defmacro org-super-agenda--defpriority-group (name docstring &key comparator)
   "Define a priority-grouping function.
 
-NAME is a symbol that will be appended to `priority' to construct the group name.
+NAME is a symbol appended to `priority' to construct the group name.
 
 DOCSTRING is a string used for the function's docstring.
 
