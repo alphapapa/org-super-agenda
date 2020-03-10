@@ -514,8 +514,8 @@ DOCSTRING is a string used for the function's docstring.
 COMPARATOR is a grouping comparison operator."
   (declare (indent defun))
   `(org-super-agenda--defgroup ,(intern (concat "effort" (symbol-name name)))
-     ,(concat docstring "\nArgument is a time-duration string,
-like \"5\" or \"0:05\" for 5 minutes.")
+     ,(concat docstring
+              "\nArgument is a time-duration string, like \"5\" or \"0:05\" for 5 minutes.")
      :section-name (concat "Effort " ,(symbol-name name) " "
                            (s-join " or " args) " items")
      :let* ((effort-minutes (org-duration-to-minutes (car args))))
@@ -841,11 +841,9 @@ The string should be the priority cookie letter, e.g. \"A\".")
                                                     (header-form 'key) (key-sort-fn #'string<))
   "Define an auto-grouping function.
 
-For the function name, NAME will be concatenated to
-`org-super-agenda--auto-group-'.
+For the function name, NAME is concatenated to `org-super-agenda--auto-group-'.
 
-The docstring will be, \"Divide ALL-ITEMS into groups based on
-DOCSTRING-ENDING.\".
+The docstring will be, \"Divide ALL-ITEMS into groups based on DOCSTRING-ENDING.\".
 
 The selector KEYWORD will be `:auto-NAME'.
 
