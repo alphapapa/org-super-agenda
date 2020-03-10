@@ -845,7 +845,8 @@ The string should be the priority cookie letter, e.g. \"A\".")
 
 The function will be named `org-super-agenda--auto-group-NAME'.
 
-The docstring will be, \"Divide ALL-ITEMS into groups based on DOCSTRING_ENDING.\".
+The docstring will be, \"Divide ALL-ITEMS into groups based on
+DOCSTRING_ENDING.\".
 
 The selector keyword will be `:auto-NAME'.
 
