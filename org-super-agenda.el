@@ -850,7 +850,7 @@ For the function name, NAME will be concatenated to
 The docstring will be, \"Divide ALL-ITEMS into groups based on
 DOCSTRING-ENDING.\".
 
-The selector keyword will be `:auto-NAME'.
+The selector KEYWORD will be `:auto-NAME'.
 
 Items will be grouped by the value of KEY-FORM evaluated for each
 item, with the variable `item' bound to the string from the
