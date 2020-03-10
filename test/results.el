@@ -1736,7 +1736,7 @@ Wednesday   5 July 2017
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
-" "25b5f6da5442f760584293ee1a07e0e8" "Day-agenda (W27):
+" "org-super-agenda-test--:auto-map" "Day-agenda (W27):
 Wednesday   5 July 2017
 
  Face: org-agenda-calendar-sexp
