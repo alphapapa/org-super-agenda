@@ -917,10 +917,9 @@ of the arguments to the function."
 (org-super-agenda--def-auto-group tags
   "their tags"
   :keyword :auto-tags
-  :key-form (->> (org-super-agenda--get-tags item)
-                 (-sort #'string<)
-                 (s-join ", ")
-                 (concat "Tags: "))
+  :key-form (--when-let (org-super-agenda--get-tags item)
+              (->> it (-sort #'string<) (s-join ", ")
+                   (concat "Tags: ")))
   :key-sort-fn string<)
 
 (org-super-agenda--def-auto-group ts

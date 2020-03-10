@@ -1780,18 +1780,6 @@ Wednesday   5 July 2017
 " "a5c8edc0db4a93c039964c5762e70420" "Day-agenda (W27):
 Wednesday   5 July 2017
 
- Tags: 
-  test:        7:02...... Sunrise (12:04 of daylight)
-               8:00...... ----------------
-              10:00...... ----------------
-              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
-              12:00...... ----------------
-              14:00...... ----------------
-              16:00...... ----------------
-              18:00...... ----------------
-  test:       19:07...... Sunset 
-              20:00...... ----------------
-
  Tags: @computer, shopping, spaceship
   test:       Scheduled:  TODO [#B] Fix flux capacitor                                                  :spaceship:shopping:@computer:
 
@@ -1834,6 +1822,18 @@ Wednesday   5 July 2017
 
  Tags: emacs, website
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
 " "2cf4644ff6420b8a4e5e7ae673f642a3" "Day-agenda (W27):
 Wednesday   5 July 2017
 
