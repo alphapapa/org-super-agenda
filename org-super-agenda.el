@@ -507,12 +507,11 @@ COMPARISON should be a symbol, one of: `past' or `before',
 (cl-defmacro org-super-agenda--defeffort-group (name docstring &key comparator)
   "Define an effort-grouping function.
 
-NAME is a symbol that will be appended to `effort' to construct
-the group name.
+NAME is a symbol appended to `effort' to create the group name.
 
 DOCSTRING is a string used for the function's docstring.
 
-COMPARATOR is the binary operator used for the grouping comparison."
+COMPARATOR is a grouping comparison operator."
   (declare (indent defun))
   `(org-super-agenda--defgroup ,(intern (concat "effort" (symbol-name name)))
      ,(concat docstring "\nArgument is a time-duration string,
@@ -724,13 +723,11 @@ e.g. \"A\" or (\"B\" \"C\")."
 (cl-defmacro org-super-agenda--defpriority-group (name docstring &key comparator)
   "Define a priority-grouping function.
 
-NAME is a symbol appended to `priority' to construct the group
-name.
+NAME is a symbol appended to `priority' to create the group name.
 
 DOCSTRING is a string used for the function's docstring.
 
-COMPARATOR is the binary operator used for the grouping
-comparison."
+COMPARATOR is a grouping comparison operator."
   (declare (indent defun))
   `(org-super-agenda--defgroup ,(intern (concat "priority" (symbol-name name)))
      ,(concat docstring "\nArgument is a string; it may also be a list of
