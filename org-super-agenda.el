@@ -848,7 +848,7 @@ For the function name, NAME will be concatenated to
 `org-super-agenda--auto-group-'.
 
 The docstring will be, \"Divide ALL-ITEMS into groups based on
-DOCSTRING_ENDING.\".
+DOCSTRING-ENDING.\".
 
 The selector keyword will be `:auto-NAME'.
 
