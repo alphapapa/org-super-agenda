@@ -843,7 +843,8 @@ The string should be the priority cookie letter, e.g. \"A\".")
                                                     (header-form 'key) (key-sort-fn #'string<))
   "Define an auto-grouping function.
 
-The function will be named `org-super-agenda--auto-group-NAME'.
+For the function name, NAME will be concatenated to
+`org-super-agenda--auto-group-'.
 
 The docstring will be, \"Divide ALL-ITEMS into groups based on
 DOCSTRING_ENDING.\".
