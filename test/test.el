@@ -240,7 +240,7 @@ Use OVERRIDEHASHKEY to look up the test result, if that is set."
            new-result)
 
        ;; Use the overridehashkey if it's set.
-       (setq body-groups-hash (if overridehashkey overridehashkey body-groups-hash))
+       (setq body-groups-hash (if ,overridehashkey ,overridehashkey body-groups-hash))
 
        ;; Redefine functions
        (org-super-agenda-test--with-mock-functions
@@ -684,7 +684,7 @@ Use OVERRIDEHASHKEY to look up the test result, if that is set."
 									  'face nil item)))
                                     (format "Face: %s"
 					    (get-text-property pos 'face item))))))
-	  :overridehashkey "org-super-agenda-test--:auto-map")))
+	   :overridehashkey "org-super-agenda-test--:auto-map")))
 
 (ert-deftest org-super-agenda-test--:auto-tags ()
   ;; DONE: Works.
