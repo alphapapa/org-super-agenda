@@ -683,8 +683,8 @@ Use OVERRIDEHASHKEY to look up the test result, if that is set."
 				  (when-let* ((pos (text-property-not-all 0 (length item)
 									  'face nil item)))
                                     (format "Face: %s"
-					    (get-text-property pos 'face item)))))))
-	  :overridehashkey "org-super-agenda-test--:auto-map"))
+					    (get-text-property pos 'face item))))))
+	  :overridehashkey "org-super-agenda-test--:auto-map")))
 
 (ert-deftest org-super-agenda-test--:auto-tags ()
   ;; DONE: Works.
