@@ -342,10 +342,10 @@ with the function, which is used by the dispatcher.
 
 DOCSTRING is a string used for the function's docstring.
 
-:SECTION-NAME is a string or a lisp form that is run once, with
+:SECTION-NAME is a string or a Lisp form that is run once, with
 the variable `items' available.
 
-:TEST is a lisp form that is run for each item, with the variable
+:TEST is a Lisp form that is run for each item, with the variable
 `item' available.  Items passing this test are filtered into a
 separate list.
 
@@ -828,7 +828,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
 
 The function will be named `org-super-agenda--auto-group-NAME'.
 
-The docstring will be, \"Divide ALL-ITEMS into groups based on DOCSTRING_ENDING.\".
+The docstring will be, \"Divide ALL-ITEMS into groups based on DOCSTRING-ENDING.\".
 
 The selector keyword will be `:auto-NAME'.
 
