@@ -1230,7 +1230,7 @@ STRING should be that returned by `org-agenda-finalize-entries'"
                 (when header
                   (cl-loop
                      with (start end hide-p) = header
-                     with props = `(invisible org-filtered org-filter-type org-super-agenda-header)
+                     with props = `(invisible org-filtered org-filter-type org-super-agenda)
                      initially do (goto-char end)
                      while (and start (> (point) start))
                      do (when (or (grid-p) (header-p))
