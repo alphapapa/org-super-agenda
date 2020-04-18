@@ -289,7 +289,7 @@ face `org-super-agenda-header' appended, and the text properties
   (pcase s
     ('none "")
     (_ (let ((separator (cl-etypecase org-super-agenda-header-separator
-                          (character (concat (s-repeat (window-width) org-super-agenda-header-separator)
+                          (character (concat (make-string (window-width) org-super-agenda-header-separator)
                                              "\n"))
                           (string org-super-agenda-header-separator))))
          (setq s (concat org-super-agenda-header-prefix s))
