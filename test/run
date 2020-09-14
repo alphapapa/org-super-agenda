@@ -128,7 +128,7 @@ function run_tests {
              --eval "(message \"Org version: %s\" (org-version))" \
              -l $MAIN_FILE \
              -l $TEST_FILE \
-             -f org-super-agenda--test-load-results \
+             -f org-super-agenda-test--load-results \
              -f ert-run-tests-batch-and-exit
 }
 
