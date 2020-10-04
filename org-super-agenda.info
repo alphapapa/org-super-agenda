@@ -1,4 +1,4 @@
-This is README.info, produced by makeinfo version 5.2 from README.texi.
+This is README.info, produced by makeinfo version 6.7 from README.texi.
 
 GPLv3+
 INFO-DIR-SECTION Emacs
@@ -11,8 +11,6 @@ File: README.info,  Node: Top,  Next: Introduction,  Up: (dir)
 
 org-super-agenda
 ****************
-
-GPLv3+
 
 * Menu:
 
@@ -28,22 +26,16 @@ GPLv3+
 
 — The Detailed Node Listing —
 
-
-
-
 Installation
 
 * MELPA::
 * Manual installation::
-
-
 
 Usage
 
 * Examples::
 * Group selectors::
 * Tips::
-
 
 Group selectors
 
@@ -56,24 +48,21 @@ FAQ
 * Why are some items not displayed even though I used group selectors for them?::
 * Why did a group disappear when I moved it to the end of the list?::
 
-
-
 Changelog
 
-* 1.2-pre: 12-pre. 
-* 1.1.1: 111. 
-* 1.1: 11. 
-* 1.0.3: 103. 
-* 1.0.2: 102. 
-* 1.0.1: 101. 
-* 1.0.0: 100. 
-
-
+* 1.2-pre: 12-pre.
+* 1.1.1: 111.
+* 1.1: 11.
+* 1.0.3: 103.
+* 1.0.2: 102.
+* 1.0.1: 101.
+* 1.0.0: 100.
 
 Development
 
 * Bugs::
 * Tests::
+
 
 
 File: README.info,  Node: Introduction,  Next: Contents,  Prev: Top,  Up: Top
@@ -144,7 +133,7 @@ File: README.info,  Node: MELPA,  Next: Manual installation,  Up: Installation
 4.1 MELPA
 =========
 
-Just install the org-super-agenda package!
+Just install the ‘org-super-agenda’ package!
 
 
 File: README.info,  Node: Manual installation,  Prev: MELPA,  Up: Installation
@@ -155,14 +144,14 @@ File: README.info,  Node: Manual installation,  Prev: MELPA,  Up: Installation
 If you want to install manually, you must also install these packages:
 
    • Emacs >= 26.1
-   • dash >= 2.13
-   • ht >=2.2
-   • org-mode >= 9.0
-   • s >= 1.10
-   • ts
+   • ‘dash’ >= 2.13
+   • ‘ht’ >=2.2
+   • ‘org-mode’ >= 9.0
+   • ‘s’ >= 1.10
+   • ‘ts’
 
-   Then put org-super-agenda.el in your load-path, and eval
-(require 'org-super-agenda).
+   Then put ‘org-super-agenda.el’ in your ‘load-path’, and eval
+‘(require 'org-super-agenda)’.
 
 
 File: README.info,  Node: Usage,  Next: FAQ,  Prev: Installation,  Up: Top
@@ -181,7 +170,7 @@ File: README.info,  Node: Usage,  Next: FAQ,  Prev: Installation,  Up: Top
      interface).  Alternatively, it can be ‘let’-bound in lisp code that
      calls ‘org-agenda’ commands, but in that case, the setting _will
      not persist across agenda commands_ (so after refreshing an agenda
-     buffer by pressing g, there will be no groups).
+     buffer by pressing ‘g’, there will be no groups).
   3. Run an Org agenda command.
   4. Start the day with confidence, knowing that nothing important has
      been lost in the jumble of _ahem_ overdue items.
@@ -297,11 +286,11 @@ File: README.info,  Node: Keywords,  Next: Special selectors,  Up: Group selecto
      Optionally, set group name header.  May be a string; or the symbol
      ‘none’, in which case no header will be inserted.  If ‘:name’ is
      not set at all, the group will be named automatically.
-‘‘:face’’
+‘:face’
      A _face_ to apply to items in the group.  If _face_ is a plist
      containing ‘:append t’, it will be appended.  See function
      ‘add-face-text-property’.
-‘‘:transformer’’
+‘:transformer’
      Used to transform item strings before display.  Either a function
      called with one argument, the item string, or a sexp, in which case
      the item string is bound to ‘it’.
@@ -324,24 +313,24 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      for every item.
 ‘:auto-category’
      This automatically groups items by their category (usually the
-     filename it’s in, without the .org suffix).
-‘‘:auto-dir-name’’
+     filename it’s in, without the ‘.org’ suffix).
+‘:auto-dir-name’
      This automatically groups items by the directory name of their
      source buffer.
 ‘:auto-group’
-     This selects items that have the agenda-group Org property set.  By
-     setting this property for a subtree, every item in it will be
+     This selects items that have the ‘agenda-group’ Org property set.
+     By setting this property for a subtree, every item in it will be
      sorted into an agenda group by that name and placed into the agenda
      where the ‘:auto-group’ selector is ().
-‘‘:auto-map’’
+‘:auto-map’
      This automatically groups items by the value returned when applying
      each item to the given function as a string from the agenda buffer
      ().  The function should return a string to be used as the grouping
      key and as the header for its group.
 ‘:auto-outline-path’
      This automatically groups items by their outline path hierarchy,
-     like Plans/Take over the universe/Take over the moon.
-‘‘:auto-parent’’
+     like ‘Plans/Take over the universe/Take over the moon’.
+‘:auto-parent’
      This automatically groups items by their parent heading.  This is
      surprisingly handy, especially if you group tasks hierarchically by
      project and use agenda restrictions to limit the agenda to a
@@ -352,7 +341,7 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      ‘org-super-agenda-date-format’.
 ‘:auto-priority’
      This automatically groups items by their priority.
-‘‘:auto-property’’
+‘:auto-property’
      This automatically groups items by the value of the given property
      ().
 ‘:auto-tags’
@@ -361,7 +350,7 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      together).
 ‘:auto-todo’
      This automatically groups items by their to-do keyword.
-‘‘:auto-ts’’
+‘:auto-ts’
      This automatically groups items by the date of their latest
      timestamp anywhere in the entry, formatted according to variable
      ‘org-super-agenda-date-format’.
@@ -375,7 +364,7 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      Group ITEMS that match no selectors in GROUP.
 ‘:order’
      A number setting the order sections will be displayed in the
-     agenda, lowest number first.  Defaults to 0.
+     agenda, lowest number first.  Defaults to ‘0’.
 ‘:order-multi’
      Set the order of multiple groups at once, like ‘(:order-multi (2
      (groupA) (groupB) ...))’ to set the order of these groups to 2.
@@ -401,10 +390,10 @@ list.
      headings.  Be aware that this may be very slow in non-daily/weekly
      agenda views because of its recursive nature.
 ‘:date’
-     Group items that have a date associated.  Argument can be t to
-     match items with any date, nil to match items without a date, or
-     today to match items with today’s date.  The ts-date text-property
-     is matched against.
+     Group items that have a date associated.  Argument can be ‘t’ to
+     match items with any date, ‘nil’ to match items without a date, or
+     ‘today’ to match items with today’s date.  The ‘ts-date’
+     text-property is matched against.
 ‘:deadline’
      Group items that have a deadline.  Argument can be ‘t’ (to match
      items with any deadline), ‘nil’ (to match items that have no
@@ -413,6 +402,14 @@ list.
      match items with a deadline in the future).  Argument may also be
      given like ‘before DATE’ or ‘after DATE’ where DATE is a date
      string that ‘org-time-string-to-absolute’ can process.
+‘:timestamp’
+     Group items whose bodies contain an active timestamp.  Argument can
+     be ‘t’ (to match items with any timestamp), ‘past’ (to match items
+     with timestamps in the past), ‘today’ (to match items with
+     timestamps set to today), or ‘future’ (to match items with
+     timestamps in the future).  Argument may also be given like ‘before
+     DATE’ or ‘after DATE’, where DATE is a date string that
+     ‘org-time-string-to-absolute’ can process.
 ‘:effort<’
      Group items that are less than (or equal to) the given effort.
      Argument is a time-duration string, like ‘5’ or ‘0:05’ for 5
@@ -421,11 +418,11 @@ list.
      Group items that are higher than (or equal to) the given effort.
      Argument is a time-duration string, like ‘5’ or ‘0:05’ for 5
      minutes.
-‘‘:file-path’’
+‘:file-path’
      Group items whose buffers’ filename paths match any of the given
      regular expressions.
 ‘:habit’
-     Group habit items (items which have a STYLE: habit Org property).
+     Group habit items (items which have a ‘STYLE: habit’ Org property).
 ‘:heading-regexp’
      Group items whose headings match any of the given regular
      expressions.
@@ -439,7 +436,7 @@ list.
      matched by the ‘:time-grid’ selector, so if you want these
      displayed in their own group, you may need to select them in a
      group before a group containing the ‘:time-grid’ selector.
-‘‘:pred’’
+‘:pred’
      Group items if any of the given predicate functions return non-nil
      when called with each item as a string from the agenda buffer ().
 ‘:priority’
@@ -484,17 +481,17 @@ File: README.info,  Node: Tips,  Prev: Group selectors,  Up: Usage
 
    • An *note info page: (org-super-agenda)Top. is included, with the
      contents of this readme file.
-   • Group headers use the keymap org-super-agenda-header-map, allowing
-     you to bind keys in that map which will take effect when point is
-     on a header.
+   • Group headers use the keymap ‘org-super-agenda-header-map’,
+     allowing you to bind keys in that map which will take effect when
+     point is on a header.
         • For example, origami
           (https://github.com/gregsexton/origami.el) works with
-          org-super-agenda buffers without any extra configuration.
-          Just activate origami-mode in the agenda buffer and use the
-          command origami-toggle-node to fold groups.  You can bind,
-          e.g.  TAB to that command in the header map, and then you can
-          easily collapse groups as if they were an outline.  You might
-          even fold some automatically ().
+          ‘org-super-agenda’ buffers without any extra configuration.
+          Just activate ‘origami-mode’ in the agenda buffer and use the
+          command ‘origami-toggle-node’ to fold groups.  You can bind,
+          e.g.  ‘TAB’ to that command in the header map, and then you
+          can easily collapse groups as if they were an outline.  You
+          might even fold some automatically ().
 
 
 File: README.info,  Node: FAQ,  Next: Changelog,  Prev: Usage,  Up: Top
@@ -515,13 +512,14 @@ File: README.info,  Node: Why are some items not displayed even though I used gr
 
 This is a common misunderstanding of how this package works.  As written
 in the introduction, it does not _collect_ items.  It only _groups_
-items that are collected by Org Agenda or org-ql.  So if your Agenda
-command or org-ql query does not collect certain items, they will not be
-displayed, regardless of what org-super-agenda groups you configure.
+items that are collected by Org Agenda or ‘org-ql’.  So if your Agenda
+command or ‘org-ql’ query does not collect certain items, they will not
+be displayed, regardless of what ‘org-super-agenda’ groups you
+configure.
 
    org-ql (https://github.com/alphapapa/org-ql) provides an easier way
 to write queries to generate agenda-like views that can be grouped with
-org-super-agenda.
+‘org-super-agenda’.
 
 
 File: README.info,  Node: Why did a group disappear when I moved it to the end of the list?,  Prev: Why are some items not displayed even though I used group selectors for them?,  Up: FAQ
@@ -532,7 +530,7 @@ File: README.info,  Node: Why did a group disappear when I moved it to the end o
 As explained in the usage instructions and shown in the example, items
 are collected into groups in the order the groups are listed, and empty
 groups are not shown.  To display a group out of the order in which
-groups are listed, use :order.
+groups are listed, use ‘:order’.
 
 
 File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
@@ -542,13 +540,13 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
 
 * Menu:
 
-* 1.2-pre: 12-pre. 
-* 1.1.1: 111. 
-* 1.1: 11. 
-* 1.0.3: 103. 
-* 1.0.2: 102. 
-* 1.0.1: 101. 
-* 1.0.0: 100. 
+* 1.2-pre: 12-pre.
+* 1.1.1: 111.
+* 1.1: 11.
+* 1.0.3: 103.
+* 1.0.2: 102.
+* 1.0.1: 101.
+* 1.0.0: 100.
 
 
 File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
@@ -563,32 +561,33 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
    • Selector ‘:auto-ts’, which groups items by the date of their latest
      timestamp anywhere in the entry, formatted according to variable
      ‘org-super-agenda-date-format’.
-   • Selector :auto-tags, which groups items by all of their tags.
+   • Selector ‘:auto-tags’, which groups items by all of their tags.
    • Option ‘org-super-agenda-date-format’, used to format date headers
      in the ‘:auto-date’ selector.
    • To-do keyword faces are applied to keywords in group headers.
-   • Option org-super-agenda-header-separator may also be a character,
+   • Option ‘org-super-agenda-header-separator’ may also be a character,
      which is automatically repeated to the window width.  (Thanks to
      YUE Daian (https://github.com/sheepduke).)
-   • Option org-super-agenda-header-properties.  It sets
-     org-agenda-structural-header by default, which enables navigating
-     to headers with the default M-{ / M-} bindings in agenda buffers.
-     (Thanks to Abdul-Lateef Haji-Ali (https://github.com/haji-ali).)
+   • Option ‘org-super-agenda-header-properties’.  It sets
+     ‘org-agenda-structural-header’ by default, which enables navigating
+     to headers with the default ‘M-{’ / ‘M-}’ bindings in agenda
+     buffers.  (Thanks to Abdul-Lateef Haji-Ali
+     (https://github.com/haji-ali).)
 
    *Changed*
    • Group headers face is now appended to face list instead of
      overriding it.
-   • Minimum Emacs version requirement is now 26.1 (required by ts
+   • Minimum Emacs version requirement is now 26.1 (required by ‘ts’
      library).
 
    *Fixed*
-   • :children todo group selection (#75
+   • ‘:children todo’ group selection (#75
      (https://github.com/alphapapa/org-super-agenda/issues/75)).
      (Thanks to Ben Leggett (https://github.com/bleggett) and Elric
      Milon (https://github.com/whirm).)
-   • :children group headings.
+   • ‘:children’ group headings.
    • Don’t show blank lines for disabled headers (i.e.  with ‘:name
-     none’ and org-super-agenda-header-separator set to an empty
+     none’ and ‘org-super-agenda-header-separator’ set to an empty
      string).  (Fixes #105
      (https://github.com/alphapapa/org-super-agenda/issues/105).  Thanks
      to Florian Schrödl (https://github.com/floscr).)
@@ -597,7 +596,7 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
    • Tests updated for Org 9.2.4.
 
    *Internal*
-   • org-habit is now loaded when org-super-agenda is loaded.  This
+   • ‘org-habit’ is now loaded when ‘org-super-agenda’ is loaded.  This
      avoids issues, real and potential, and should not cause any
      problems.
 
@@ -608,7 +607,7 @@ File: README.info,  Node: 111,  Next: 11,  Prev: 12-pre,  Up: Changelog
 =========
 
 *Fixed*
-   • Selector :auto-dir-name did not handle items without markers
+   • Selector ‘:auto-dir-name’ did not handle items without markers
 
 
 File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
@@ -636,8 +635,8 @@ File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
      of their source buffer.
    • Selector ‘:auto-parent’, which groups items by their parent
      heading.
-   • Selector :auto-todo, which groups items by their to-do keyword.
-   • Selector :auto-priority, which groups items by their priority.
+   • Selector ‘:auto-todo’, which groups items by their to-do keyword.
+   • Selector ‘:auto-priority’, which groups items by their priority.
    • Option ‘org-super-agenda-unmatched-name’, used to change the name
      of the unmatched group.  (Thanks to Marcin Swieczkowski
      (https://github.com/m-cat).)
@@ -708,14 +707,15 @@ File: README.info,  Node: Bugs,  Next: Tests,  Up: Development
 8.1 Bugs
 ========
 
-   • The org-search-view agenda command does not seem to set the
-     todo-state text property for items it finds, so the :todo selector
-     doesn’t work with it.  We should be able to work around this by
-     getting the todo state for each item manually, but we have to make
-     sure that we only do that when necessary, otherwise it might be
-     slow.  And I wouldn’t be surprised if there are other selectors
-     that don’t work with this or other commands, but org-agenda-list
-     should work fine, and org-tags-view and org-todo-list seem to work.
+   • The ‘org-search-view’ agenda command does not seem to set the
+     ‘todo-state’ text property for items it finds, so the ‘:todo’
+     selector doesn’t work with it.  We should be able to work around
+     this by getting the todo state for each item manually, but we have
+     to make sure that we only do that when necessary, otherwise it
+     might be slow.  And I wouldn’t be surprised if there are other
+     selectors that don’t work with this or other commands, but
+     ‘org-agenda-list’ should work fine, and ‘org-tags-view’ and
+     ‘org-todo-list’ seem to work.
 
 
 File: README.info,  Node: Tests,  Prev: Bugs,  Up: Development
@@ -726,9 +726,9 @@ File: README.info,  Node: Tests,  Prev: Bugs,  Up: Development
 It’s easy to run the tests:
 
   1. Install Cask (https://github.com/cask/cask).
-  2. From the repo root directory, run cask install, which installs
-     Emacs and package dependencies into the .cask directory.
-  3. Run make test.
+  2. From the repo root directory, run ‘cask install’, which installs
+     Emacs and package dependencies into the ‘.cask’ directory.
+  3. Run ‘make test’.
 
 
 File: README.info,  Node: Credits,  Prev: Development,  Up: Top
@@ -737,42 +737,42 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 *********
 
    • Thanks to Balaji Sivaraman (https://github.com/balajisivaraman) for
-     contributing the :category selector.
+     contributing the ‘:category’ selector.
    • Thanks to Michael Welle (https://github.com/hmw42) for contributing
-     the customizable auto-group Org property name.
+     the customizable ‘auto-group’ Org property name.
 
 
 
 Tag Table:
 Node: Top222
-Node: Introduction992
-Node: Contents2400
-Node: Screenshots2557
-Node: Installation2794
-Node: MELPA2955
-Node: Manual installation3102
-Node: Usage3503
-Node: Examples4473
-Node: Group selectors7958
-Node: Keywords9147
-Node: Special selectors9888
-Node: Normal selectors13245
-Node: Tips17876
-Node: FAQ18727
-Node: Why are some items not displayed even though I used group selectors for them?18977
-Node: Why did a group disappear when I moved it to the end of the list?19848
-Node: Changelog20423
-Node: 12-pre20646
-Node: 11122791
-Node: 1122964
-Node: 10324536
-Node: 10224747
-Node: 10124881
-Node: 10025219
-Node: Development25324
-Node: Bugs25726
-Node: Tests26379
-Node: Credits26698
+Node: Introduction968
+Node: Contents2376
+Node: Screenshots2533
+Node: Installation2770
+Node: MELPA2931
+Node: Manual installation3084
+Node: Usage3533
+Node: Examples4509
+Node: Group selectors7994
+Node: Keywords9183
+Node: Special selectors9912
+Node: Normal selectors13262
+Node: Tips18411
+Node: FAQ19292
+Node: Why are some items not displayed even though I used group selectors for them?19542
+Node: Why did a group disappear when I moved it to the end of the list?20437
+Node: Changelog21018
+Node: 12-pre21234
+Node: 11123457
+Node: 1123636
+Node: 10325220
+Node: 10225431
+Node: 10125565
+Node: 10025903
+Node: Development26008
+Node: Bugs26410
+Node: Tests27104
+Node: Credits27441
 
 End Tag Table
 

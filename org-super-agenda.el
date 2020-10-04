@@ -357,6 +357,7 @@ returned by :SECTION-NAME as the first item, a list of items not
 matching the :TEST as the second, and a list of items matching as
 the third."
   (declare (indent defun)
+           (doc-string 2)
            (debug (&define symbolp stringp
                            &rest [&or [":section-name" [&or stringp def-form]]
                                       [":test" def-form]
@@ -459,7 +460,7 @@ DATE', where DATE is a date string that
 (org-super-agenda--defgroup scheduled
   "Group items that are scheduled.
 Argument can be `t' (to match items scheduled for any date),
-`nil' (to match items that are not schedule), `past` (to match
+`nil' (to match items that are not scheduled), `past' (to match
 items scheduled for the past), `today' (to match items scheduled
 for today), or `future' (to match items scheduled for the
 future).  Argument may also be given like `before DATE' or `after
@@ -492,6 +493,44 @@ DATE', where DATE is a date string that
                                        ((or 'past 'today 'future) today)
                                        ((or 'before 'on 'after) target-date))))
                    (org-super-agenda--compare-dates comparison entry-time compare-date))))))))
+
+(org-super-agenda--defgroup timestamp
+  "Group items whose bodies contain an active timestamp.
+Argument can be `t' (to match items with any timestamps),
+`past' (to match items with timestamps in the past), `today' (to
+match items with timestamps set to today), or `future' (to match
+items with timestamps in the future).  Argument may also be given
+like `before DATE' or `after DATE', where DATE is a date string
+that `org-time-string-to-absolute' can process."
+  :section-name (pcase (car args)
+                  ('t "Active timestamps")
+                  ('today "Active timestamps for today")
+                  ('future "Future active timestamps")
+                  ('past "Past active timestamps")
+                  ('before (concat "Active timestamps before " (cadr args)))
+                  ('on (concat "Active timestamps on " (cadr args)))
+                  ('after (concat "Active timestamps after " (cadr args))))
+  :let* ((now (ts-now))
+         (target-date (pcase (car args)
+                        ((or 'before 'on 'after)
+                         (make-ts :internal (org-time-string-to-absolute (cadr args))))))
+         (test (pcase-exhaustive (car args)
+                 ('t      (lambda (_) t))
+                 ('future (lambda (it) (ts>= it now)))
+                 ('past   (lambda (it) (ts<= it now)))
+                 ('before (lambda (it) (ts<= it target-date)))
+                 ('after  (lambda (it) (ts>= it target-date)))
+                 ('on     (lambda (it) (and (= (ts-year it)  (ts-year target-date))
+                                       (= (ts-month it) (ts-month target-date))
+                                       (= (ts-day it)   (ts-day target-date))))))))
+  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+          (let ((limit (org-entry-end-position)))
+            (cl-macrolet ((next-timestamp ()
+                                          `(when (re-search-forward org-ts-regexp limit :no-error)
+                                             (ts-parse-org (match-string 1)))))
+              (cl-loop for next-ts = (next-timestamp)
+                       while next-ts
+                       thereis (funcall test next-ts))))))
 
 (defun org-super-agenda--compare-dates (comparison date-a date-b)
   "Compare DATE-A and DATE-B according to COMPARISON.
