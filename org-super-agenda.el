@@ -1128,8 +1128,8 @@ If N is positive, take the first N items, otherwise take the last N items. Note:
 the ordering of entries is not guarateed to be preserved, so this may not always
 show the expected results."
   (-let* (((name non-matching matching) (org-super-agenda--group-dispatch items group))
-          (take-fn (if (< n 0) #'-take-last #'-take))
-          (placement (if (< n 0) "Last" "First"))
+          (take-fn (if (cl-minusp n) #'-take-last #'-take))
+          (placement (if (cl-minusp n) "Last" "First"))
           (name (format "%s %d %s" placement (abs n) name)))
     (list name non-matching (funcall take-fn (abs n) matching))))
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
