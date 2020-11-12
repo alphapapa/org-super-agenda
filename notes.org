@@ -1,5 +1,11 @@
 
 
+* Checklists
+
+** Release
+
++ [ ] Any new code which may call arbitrary functions checks =org-super-agenda-allow-unsafe-groups=.
+
 * UNDERWAY org-super-agenda                                       :Emacs:Org:
 :PROPERTIES:
 :ID:       d816ac2e-3af2-4f1d-bd7e-d8314bdcca1a

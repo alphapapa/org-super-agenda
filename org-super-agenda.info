@@ -600,6 +600,9 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
    • org-habit is now loaded when org-super-agenda is loaded.  This
      avoids issues, real and potential, and should not cause any
      problems.
+   • Variable org-super-agenda-allow-unsafe-groups may be used to
+     disable groups which call arbitrary functions (e.g.  when called
+     from other packages that may read code from untrusted origins).
 
 
 File: README.info,  Node: 111,  Next: 11,  Prev: 12-pre,  Up: Changelog
@@ -763,16 +766,16 @@ Node: Why are some items not displayed even though I used group selectors for th
 Node: Why did a group disappear when I moved it to the end of the list?19848
 Node: Changelog20423
 Node: 12-pre20646
-Node: 11122791
-Node: 1122964
-Node: 10324536
-Node: 10224747
-Node: 10124881
-Node: 10025219
-Node: Development25324
-Node: Bugs25726
-Node: Tests26379
-Node: Credits26698
+Node: 11122998
+Node: 1123171
+Node: 10324743
+Node: 10224954
+Node: 10125088
+Node: 10025426
+Node: Development25531
+Node: Bugs25933
+Node: Tests26586
+Node: Credits26905
 
 End Tag Table
 

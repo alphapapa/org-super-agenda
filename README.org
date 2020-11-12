@@ -262,6 +262,7 @@ As explained in the usage instructions and shown in the example, items are colle
 
 *Internal*
 +  =org-habit= is now loaded when =org-super-agenda= is loaded.  This avoids issues, real and potential, and should not cause any problems.
++  Variable =org-super-agenda-allow-unsafe-groups= may be used to disable groups which call arbitrary functions (e.g. when called from other packages that may read code from untrusted origins).
 
 ** 1.1.1
 

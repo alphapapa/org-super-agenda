@@ -148,6 +148,13 @@ map).")
 ;; Silence byte-compiler.
 (defvar org-element--timestamp-regexp)
 
+(defvar org-super-agenda-allow-unsafe-groups t
+  "When nil, groups that could be unsafe do not function.
+This includes, e.g. `:pred' and `:auto-map', which call arbitrary
+functions.  This variable is intended to be bound around calls to
+grouping functions by code that might read values from untrusted
+origin (e.g. Org QL's link-handling code).")
+
 ;;;; Customization
 
 (defgroup org-super-agenda nil
@@ -638,14 +645,18 @@ being tested, as a string.  Agenda-related attributes will have
 been applied to the string as text-properties.  Use
 `describe-text-properties' in an agenda buffer to see what's
 available."
-  :section-name (concat "Predicate: "
-                        (cl-labels ((to-string (arg)
-                                               (pcase-exhaustive arg
-                                                 ;; FIXME: What if the lambda's byte-compiled?
-                                                 (`(lambda . ,_) "Lambda")
-                                                 ((pred functionp) (symbol-name arg))
-                                                 ((pred listp) (s-join " OR " (-map #'to-string arg))))))
-                          (to-string args)))
+  :section-name (progn
+                  (unless org-super-agenda-allow-unsafe-groups
+                    ;; Check here so the test is run once, not for every item.
+                    (error "Unsafe groups disallowed (:pred): %s" args))
+                  (concat "Predicate: "
+                          (cl-labels ((to-string (arg)
+                                                 (pcase-exhaustive arg
+                                                   ;; FIXME: What if the lambda's byte-compiled?
+                                                   (`(lambda . ,_) "Lambda")
+                                                   ((pred functionp) (symbol-name arg))
+                                                   ((pred listp) (s-join " OR " (-map #'to-string arg))))))
+                            (to-string args))))
   :test (pcase args
           ((pred functionp) (funcall args item))
           (_ (cl-loop for fn in args
@@ -954,8 +965,14 @@ of the arguments to the function."
   :header-form (concat "Category: " key))
 
 (org-super-agenda--def-auto-group map "the value returned by calling function ARGS with each item.  The function should return a string to be used as the grouping key and as the header for its group"
-  :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
-              (funcall (car args) item)))
+  :key-form (progn
+              (unless org-super-agenda-allow-unsafe-groups
+                ;; This check gets run for every item because the `def-auto-group'
+                ;; macro doesn't have a form that is eval'ed once.
+                ;; TODO: Add a form to the macro so this test can be run once.
+                (error "Unsafe groups disallowed (:auto-map): %s" args))
+              (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+                (funcall (car args) item))))
 
 (org-super-agenda--def-auto-group priority "their priority"
   :key-form (org-super-agenda--get-priority-cookie item)
