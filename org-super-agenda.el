@@ -201,7 +201,7 @@ to fill window width, and a newline is added."
   :type '(choice character string))
 
 (defcustom org-super-agenda-header-prefix " "
-  "Header prefix."
+  "String prepended to group headers."
   :type 'string)
 
 (defcustom org-super-agenda-date-format "%e %B %Y"

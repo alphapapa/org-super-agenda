@@ -247,6 +247,7 @@ As explained in the usage instructions and shown in the example, items are colle
 +  To-do keyword faces are applied to keywords in group headers.
 +  Option =org-super-agenda-header-separator= may also be a character, which is automatically repeated to the window width.  (Thanks to [[https://github.com/sheepduke][YUE Daian]].)
 +  Option =org-super-agenda-header-properties=.  It sets =org-agenda-structural-header= by default, which enables navigating to headers with the default =M-{= / =M-}= bindings in agenda buffers.  (Thanks to [[https://github.com/haji-ali][Abdul-Lateef Haji-Ali]].)
++  Option =org-super-agenda-header-prefix=, a string prepended to group headers.  ([[https://github.com/alphapapa/org-super-agenda/issues/108][#108]].  Thanks to [[https://github.com/cslux][Christian Schwarzgruber]].)
 
 *Changed*
 +  Group headers face is now appended to face list instead of overriding it.
