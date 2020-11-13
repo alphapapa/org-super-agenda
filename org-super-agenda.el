@@ -1204,8 +1204,8 @@ STRING should be that returned by `org-agenda-finalize-entries'"
 
 ;;;; Hide/Show filter
 (defun org-super-agenda--hide-or-show-groups (&rest _)
-  "Hide/Show any empty/non-empty groups after `org-agenda-finalize',
-`org-agenda-filter-apply'  was called."
+  "Hide/Show any empty/non-empty groups.
+This is happens after `org-agenda-finalize' or `org-agenda-filter-apply' was called."
   (cl-labels ((header-p () (org-get-at-bol 'org-super-agenda-header))
               (grid-p () (not (let ((props (text-properties-at (point-at-bol))))
                                 (or (member 'org-agenda-structural-header props)
@@ -1239,7 +1239,7 @@ STRING should be that returned by `org-agenda-finalize-entries'"
                             (if hide-p
                                 (add-text-properties beg end props)
                               (remove-text-properties beg end props))))
-                        (beginning-of-line 0)))))
+                       (beginning-of-line 0)))))
     (let ((inhibit-read-only t))
       (save-excursion
         (goto-char (point-max))
