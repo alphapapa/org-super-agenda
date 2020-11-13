@@ -574,6 +574,10 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
      org-agenda-structural-header by default, which enables navigating
      to headers with the default M-{ / M-} bindings in agenda buffers.
      (Thanks to Abdul-Lateef Haji-Ali (https://github.com/haji-ali).)
+   • Option org-super-agenda-header-prefix, a string prepended to group
+     headers.  (#108
+     (https://github.com/alphapapa/org-super-agenda/issues/108).  Thanks
+     to Christian Schwarzgruber (https://github.com/cslux).)
 
    *Changed*
    • Group headers face is now appended to face list instead of
@@ -766,16 +770,16 @@ Node: Why are some items not displayed even though I used group selectors for th
 Node: Why did a group disappear when I moved it to the end of the list?19848
 Node: Changelog20423
 Node: 12-pre20646
-Node: 11122998
-Node: 1123171
-Node: 10324743
-Node: 10224954
-Node: 10125088
-Node: 10025426
-Node: Development25531
-Node: Bugs25933
-Node: Tests26586
-Node: Credits26905
+Node: 11123227
+Node: 1123400
+Node: 10324972
+Node: 10225183
+Node: 10125317
+Node: 10025655
+Node: Development25760
+Node: Bugs26162
+Node: Tests26815
+Node: Credits27134
 
 End Tag Table
 
