@@ -971,8 +971,9 @@ of the arguments to the function."
 (org-super-agenda--def-auto-group map "the value returned by calling function ARGS with each item.  The function should return a string to be used as the grouping key and as the header for its group"
   :key-form (progn
               (unless org-super-agenda-allow-unsafe-groups
-                ;; This check gets run for every item because the `def-auto-group'
-                ;; macro doesn't have a form that is eval'ed once.
+                ;; This check gets run for every item because the `def-auto-group' macro
+                ;; doesn't have a form that is eval'ed once.  NOTE: If there are no
+                ;; results, the key-form never gets evaluated, so the check doesn't either.
                 ;; TODO: Add a form to the macro so this test can be run once.
                 (error "Unsafe groups disallowed (:auto-map): %s" args))
               (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
