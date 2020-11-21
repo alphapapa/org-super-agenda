@@ -236,7 +236,7 @@ As explained in the usage instructions and shown in the example, items are colle
 :TOC:      0
 :END:
 
-** 1.2-pre
+** 1.2
 
 *Added*
 +  Selector ~:auto-planning~, which groups items by their earliest of scheduled date or deadline, formatted according to variable ~org-super-agenda-date-format~.

@@ -60,7 +60,7 @@ FAQ
 
 Changelog
 
-* 1.2-pre: 12-pre. 
+* 1.2: 12. 
 * 1.1.1: 111. 
 * 1.1: 11. 
 * 1.0.3: 103. 
@@ -544,7 +544,7 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
 
 * Menu:
 
-* 1.2-pre: 12-pre. 
+* 1.2: 12. 
 * 1.1.1: 111. 
 * 1.1: 11. 
 * 1.0.3: 103. 
@@ -553,10 +553,10 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
 * 1.0.0: 100. 
 
 
-File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
+File: README.info,  Node: 12,  Next: 111,  Up: Changelog
 
-7.1 1.2-pre
-===========
+7.1 1.2
+=======
 
 *Added*
    • Selector ‘:auto-planning’, which groups items by their earliest of
@@ -611,7 +611,7 @@ File: README.info,  Node: 12-pre,  Next: 111,  Up: Changelog
      from other packages that may read code from untrusted origins).
 
 
-File: README.info,  Node: 111,  Next: 11,  Prev: 12-pre,  Up: Changelog
+File: README.info,  Node: 111,  Next: 11,  Prev: 12,  Up: Changelog
 
 7.2 1.1.1
 =========
@@ -754,34 +754,34 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction992
-Node: Contents2400
-Node: Screenshots2557
-Node: Installation2794
-Node: MELPA2955
-Node: Manual installation3102
-Node: Usage3503
-Node: Examples4473
-Node: Group selectors7958
-Node: Keywords8920
-Node: Special selectors9661
-Node: Normal selectors13520
-Node: Tips18151
-Node: FAQ19002
-Node: Why are some items not displayed even though I used group selectors for them?19252
-Node: Why did a group disappear when I moved it to the end of the list?20123
-Node: Changelog20698
-Node: 12-pre20921
-Node: 11123502
-Node: 1123675
-Node: 10325247
-Node: 10225458
-Node: 10125592
-Node: 10025930
-Node: Development26035
-Node: Bugs26437
-Node: Tests27090
-Node: Credits27409
+Node: Introduction984
+Node: Contents2392
+Node: Screenshots2549
+Node: Installation2786
+Node: MELPA2947
+Node: Manual installation3094
+Node: Usage3495
+Node: Examples4465
+Node: Group selectors7950
+Node: Keywords8912
+Node: Special selectors9653
+Node: Normal selectors13512
+Node: Tips18143
+Node: FAQ18994
+Node: Why are some items not displayed even though I used group selectors for them?19244
+Node: Why did a group disappear when I moved it to the end of the list?20115
+Node: Changelog20690
+Node: 1220905
+Node: 11123474
+Node: 1123643
+Node: 10325215
+Node: 10225426
+Node: 10125560
+Node: 10025898
+Node: Development26003
+Node: Bugs26405
+Node: Tests27058
+Node: Credits27377
 
 End Tag Table
 
