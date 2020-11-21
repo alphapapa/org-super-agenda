@@ -2,9 +2,47 @@
 
 * Checklists
 
-** Release
+** DONE Release 1.2
+CLOSED: [2020-11-21 Sat 03:43]
+:LOGBOOK:
+-  State "DONE"       from "UNDERWAY"   [2020-11-21 Sat 03:43]
+-  State "UNDERWAY"   from              [2020-11-21 Sat 03:39]
+:END:
 
-+ [ ] Any new code which may call arbitrary functions checks =org-super-agenda-allow-unsafe-groups=.
++  [X] Verify:
+     -  [X] Any new code which may call arbitrary functions checks =org-super-agenda-allow-unsafe-groups=.
++  [X] Complete [[id:a79457e2-87d5-45e2-ba84-bff5d05fd08a][commit checklist]]
++  [X] Changelog entry
++  [X] Update version numbers
+     -  [X] =org-super-agenda.el=
+     -  [X] =README.org=
++  [X] Tag and sign
++  [X] Push to stable branch
++  [X] Merge to master
+
+** Release template
+
++  [ ] Verify:
+     -  [ ] Any new code which may call arbitrary functions checks =org-super-agenda-allow-unsafe-groups=.
++  [ ] Complete [[id:a79457e2-87d5-45e2-ba84-bff5d05fd08a][commit checklist]]
++  [ ] Changelog entry
++  [ ] Update version numbers
+     -  [ ] =org-super-agenda.el=
+     -  [ ] =README.org=
++  [ ] Tag and sign
++  [ ] Push to stable branch
++  [ ] Merge to master
+
+** Commit
+:PROPERTIES:
+:ID:       a79457e2-87d5-45e2-ba84-bff5d05fd08a
+:END:
+
++  [ ] Check repo for closing issue
++  [ ] Check this file for closing task
++  [ ] Lint
++  [ ] Test
++  [ ] Commit and push
 
 * UNDERWAY org-super-agenda                                       :Emacs:Org:
 :PROPERTIES:
