@@ -261,25 +261,20 @@ File: README.info,  Node: Group selectors,  Next: Tips,  Prev: Examples,  Up: Us
 5.2 Group selectors
 ===================
 
-Each group selector takes an argument which can be a single atom or a
+Each group selector creates a group in the agenda containing the items
+it matches and consumes those items; any items it doesn’t match are
+passed to the next group selector.  The selector ‘:discard’ is an
+exception: it consumes any items it matches without creating an agenda
+group and passes through the rest to the next selector.
+
+   Each group selector takes an argument which can be a single atom or a
 list, e.g.  ‘:tag’ takes a string or list of strings.  Some selectors
 are predicates, like ‘:deadline’ or ‘:habit’; for consistency, they also
 take an argument, but it is ignored.
 
-   A group selector creates a section in the agenda containing the items
-it matches, and any items it doesn’t match are passed to the next group
-selector.
-
-   ‘:discard’ is a special exception to this: it simply discards any
-items it matches, and passes through the rest to the next group
-selector.
-
-   Note that the ‘:not’ group selector _creates_ a group with items it
-_does not_ match; it can be combined with ‘:discard’ to discard items
-that _don’t_ match, e.g.  ‘(:discard (:not (:priority "A")))’ as the
-first selector would mean that only priority ‘A’ items would appear in
-the agenda, while ‘(:discard (:priority "C"))’ would mean that any
-priority ‘C’ items would not appear in the agenda.
+   *Note:* The order of items may not be preserved after grouping due to
+the implementation’s using hash tables.  Future versions may address
+this shortcoming.
 
 * Menu:
 
@@ -373,6 +368,13 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      items you’re not interested in.
 ‘:not’
      Group ITEMS that match no selectors in GROUP.
+        • Note that the ‘:not’ group selector _creates_ a group with
+          items it _does not_ match; it can be combined with ‘:discard’
+          to discard items that _don’t_ match.  For example, ‘(:discard
+          (:not (:priority "A")))’ as the first selector would mean that
+          only priority ‘A’ items would appear in the agenda, while
+          ‘(:discard (:priority "C"))’ would mean that any priority ‘C’
+          items would not appear in the agenda.
 ‘:order’
      A number setting the order sections will be displayed in the
      agenda, lowest number first.  Defaults to 0.
@@ -761,25 +763,25 @@ Node: Manual installation3102
 Node: Usage3503
 Node: Examples4473
 Node: Group selectors7958
-Node: Keywords9147
-Node: Special selectors9888
-Node: Normal selectors13245
-Node: Tips17876
-Node: FAQ18727
-Node: Why are some items not displayed even though I used group selectors for them?18977
-Node: Why did a group disappear when I moved it to the end of the list?19848
-Node: Changelog20423
-Node: 12-pre20646
-Node: 11123227
-Node: 1123400
-Node: 10324972
-Node: 10225183
-Node: 10125317
-Node: 10025655
-Node: Development25760
-Node: Bugs26162
-Node: Tests26815
-Node: Credits27134
+Node: Keywords8920
+Node: Special selectors9661
+Node: Normal selectors13520
+Node: Tips18151
+Node: FAQ19002
+Node: Why are some items not displayed even though I used group selectors for them?19252
+Node: Why did a group disappear when I moved it to the end of the list?20123
+Node: Changelog20698
+Node: 12-pre20921
+Node: 11123502
+Node: 1123675
+Node: 10325247
+Node: 10225458
+Node: 10125592
+Node: 10025930
+Node: Development26035
+Node: Bugs26437
+Node: Tests27090
+Node: Credits27409
 
 End Tag Table
 
