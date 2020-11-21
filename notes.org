@@ -141,14 +141,25 @@ org-get-tags-at                                               220         0.2745
 #+end_example
 
 ** TODO [#C] Make :children non-recursive
+:PROPERTIES:
+:milestone: 1.3
+:END:
 
 The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
 
-** TODO [#B] Fix/document unintended sort order changing
+** PROJECT [#B] Preserve sort order
+:PROPERTIES:
+:milestone: 1.3
+:END:
+:LOGBOOK:
+-  State "PROJECT"    from "TODO"       [2020-11-21 Sat 03:25]
+:END:
 
 [2019-09-18 Wed 03:05]  I just now, finally, realized or understand that/why sort order can be modified by this package: Each grouping function is called in order, and the result of each function is appended to the list of matches.  So, e.g. ~((:scheduled t :deadline t))~ will sort all scheduled items before all deadlined items, even if deadline items are first in the list, before grouping.
 
 This is almost surely undesirable and confusing.  There may not be an easy way to fix it, short of rewriting the whole package to be more like =org-ql= with predicate functions called in a selector function.  If I can't fix it, I should at least document it.
+
+[2020-11-21 Sat 03:24]  It's documented now (=79d979ca7057478fbf907adee3a2bdff743b2bd3=).
 
 ** TODO [#B] Define customization types for group selectors
 
@@ -215,6 +226,9 @@ Could be useful in the loops where I use repeated ~when~ lines.
 [2018-08-03 Fri 18:05]  dash.el has =-setq= now.
 
 ** UNDERWAY [#B] Add property matcher
+:PROPERTIES:
+:milestone: 1.3
+:END:
 :LOGBOOK:
 -  State "UNDERWAY"   from "TODO"       [2017-07-31 Mon 22:05]
 :END:
@@ -224,6 +238,9 @@ Might be handy.
 [2017-07-31 Mon 22:05] Underway in a branch.
 
 ** TODO Add effort selector
+:PROPERTIES:
+:milestone: 1.3
+:END:
 
 Shouldn't be too hard, I think.  The date selector and macro should be similar.
 
@@ -1297,6 +1314,9 @@ CLOSED: [2017-07-28 Fri 00:02]
 * Ideas
 
 ** TODO [#B] More useful headings in auto-parent grouping
+:PROPERTIES:
+:milestone: 1.3
+:END:
 
 While testing =org-ql= in a MELPA sandbox session, I noticed that the =auto-parent= grouping headers were more useful, because some of the to-do keywords weren't configured in Org, so the keywords were displayed in the header (rather than being ignored as a to-do keyword).  For example:
 
