@@ -2,3 +2,4 @@
 *.elc
 .#*
 /sandbox/
+/.sandbox/
