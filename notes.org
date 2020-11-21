@@ -1,0 +1,1380 @@
+#+TITLE: org-super-agenda Notes
+
+* Checklists
+
+** DONE Release 1.2
+CLOSED: [2020-11-21 Sat 03:43]
+:LOGBOOK:
+-  State "DONE"       from "UNDERWAY"   [2020-11-21 Sat 03:43]
+-  State "UNDERWAY"   from              [2020-11-21 Sat 03:39]
+:END:
+
++  [X] Verify:
+     -  [X] Any new code which may call arbitrary functions checks =org-super-agenda-allow-unsafe-groups=.
++  [X] Complete [[id:a79457e2-87d5-45e2-ba84-bff5d05fd08a][commit checklist]]
++  [X] Changelog entry
++  [X] Update version numbers
+     -  [X] =org-super-agenda.el=
+     -  [X] =README.org=
++  [X] Tag and sign
++  [X] Push to stable branch
++  [X] Merge to master
+
+** Release template
+
++  [ ] Verify:
+     -  [ ] Any new code which may call arbitrary functions checks =org-super-agenda-allow-unsafe-groups=.
++  [ ] Complete [[id:a79457e2-87d5-45e2-ba84-bff5d05fd08a][commit checklist]]
++  [ ] Changelog entry
++  [ ] Update version numbers
+     -  [ ] =org-super-agenda.el=
+     -  [ ] =README.org=
++  [ ] Tag and sign
++  [ ] Push to stable branch
++  [ ] Merge to master
+
+** Commit
+:PROPERTIES:
+:ID:       a79457e2-87d5-45e2-ba84-bff5d05fd08a
+:END:
+
++  [ ] Check repo for closing issue
++  [ ] Check this file for closing task
++  [ ] Lint
++  [ ] Test
++  [ ] Commit and push
+
+* Tasks                                                               :tasks:
+
+** DONE [#A] Use :filter-return?
+CLOSED: [2017-08-03 Thu 01:21]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-08-03 Thu 01:21]
+:END:
+
+Wait, can I just use filter-return advice on =org-agenda-finalize-entries= instead of overriding it?
+
+Yes, it works, but let's profile...
+
+Well, it doesn't seem slower to use =:filter-return=, so I guess we should use it!  This is great, because now we're not copying any code from Org.
+
+*** Benchmark
+
+#+BEGIN_SRC elisp
+  (profile-it 5
+              (let ((org-super-agenda-groups
+                     '((:order-multi (8 (:name "Done today"
+                                               :and (:regexp "State \"DONE\""
+                                                             :log t))
+                                        (:name "Clocked today"
+                                               :log t)))
+                       (:name "Schedule"
+                              :time-grid t
+                              :todo "TODAY")
+                       (:name "Bills"
+                              :tag "bills")
+                       (:name "Prayers"
+                              :tag "prayers"
+                              :order 3)
+                       (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                              :order 7)
+                       (:name "Personal"
+                              :habit t
+                              :tag "personal"
+                              :order 3)
+                       (:name "People"
+                              :tag ("friends" "family")
+                              :order 4)
+                       (:name "Computer"
+                              :tag ("Emacs" "Org" "computer" "computers" "Onyx" "sparky" "software" "bugs" "programming")
+                              :order 5)
+                       (:todo "WAITING"
+                              :order 6)
+                       ;; (:auto-groups t)
+                       (:priority "A" :order 1)
+                       (:priority ("B" "C") :order 2))))
+                (org-agenda-list)))
+#+END_SRC
+
+**** :override
+
+#+begin_example
+org-agenda-list                                               5           8.884669554   1.7769339108
+org-agenda-finalize                                           5           3.3452782930  0.6690556586
+org-agenda-get-day-entries                                    40          2.78929123    0.0697322807
+org-agenda-prepare                                            5           2.615082307   0.5230164614
+org-agenda-prepare-buffers                                    5           2.600693143   0.5201386286
+org-agenda-get-scheduled                                      40          1.9107706770  0.0477692669
+re-search-forward                                             10165       1.6621631180  0.0001635182
+org-refresh-category-properties                               40          0.9622059339  0.0240551483
+org-at-planning-p                                             2640        0.7469212169  0.0002829247
+org-agenda-get-deadlines                                      40          0.6566957920  0.0164173948
+re-search-backward                                            10795       0.6538935470  6.057...e-05
+org-entry-get                                                 1770        0.6271259749  0.0003543084
+org-is-habit-p                                                1745        0.6243584910  0.0003577985
+org--property-local-values                                    1750        0.6092262489  0.0003481292
+org-get-property-block                                        1755        0.5801290770  0.0003305578
+org-inlinetask-in-task-p                                      4335        0.5690890999  0.0001312777
+org-back-to-heading                                           8335        0.5312232549  6.373...e-05
+outline-back-to-heading                                       8335        0.5145584149  6.173...e-05
+org-refresh-stats-properties                                  40          0.3778483340  0.0094462083
+org-get-tags-at                                               220         0.2802401510  0.0012738188
+#+end_example
+
+**** :filter-return
+
+#+begin_example
+org-agenda-list                                               5           7.1494525670  1.4298905134
+org-agenda-get-day-entries                                    40          4.191255803   0.1047813950
+org-agenda-prepare                                            5           2.6251538089  0.5250307617
+org-agenda-prepare-buffers                                    5           2.614603167   0.5229206334
+org-at-planning-p                                             2640        2.2422132450  0.0008493231
+org-agenda-get-scheduled                                      40          1.8079526389  0.0451988159
+org-agenda-get-timestamps                                     40          1.6295731519  0.0407393287
+re-search-forward                                             10165       1.6290118519  0.0001602569
+org-refresh-category-properties                               40          0.982746159   0.0245686539
+re-search-backward                                            10795       0.6367730910  5.898...e-05
+org-agenda-get-deadlines                                      40          0.634180644   0.0158545161
+org-entry-get                                                 1770        0.5903215880  0.0003335150
+org-is-habit-p                                                1745        0.5854299620  0.0003354899
+org--property-local-values                                    1750        0.5728089089  0.0003273193
+org-get-property-block                                        1755        0.5456562839  0.0003109152
+org-inlinetask-in-task-p                                      4335        0.5273626830  0.0001216522
+org-back-to-heading                                           8335        0.5145283710  6.173...e-05
+outline-back-to-heading                                       8335        0.4984345350  5.980...e-05
+org-refresh-stats-properties                                  40          0.3778725309  0.0094468132
+org-get-tags-at                                               220         0.2745500779  0.0012479548
+#+end_example
+
+** TODO [#C] Make :children non-recursive
+:PROPERTIES:
+:milestone: 1.3
+:END:
+
+The recursive matching with =:children= is just too slow for non-daily/weekly agenda views.  There should probably be a separate selector for recursive child matching, maybe something like =:descendants=, and then =:children= could only match direct children, which is reasonably quick.
+
+** PROJECT [#B] Preserve sort order
+:PROPERTIES:
+:milestone: 1.3
+:END:
+:LOGBOOK:
+-  State "PROJECT"    from "TODO"       [2020-11-21 Sat 03:25]
+:END:
+
+[2019-09-18 Wed 03:05]  I just now, finally, realized or understand that/why sort order can be modified by this package: Each grouping function is called in order, and the result of each function is appended to the list of matches.  So, e.g. ~((:scheduled t :deadline t))~ will sort all scheduled items before all deadlined items, even if deadline items are first in the list, before grouping.
+
+This is almost surely undesirable and confusing.  There may not be an easy way to fix it, short of rewriting the whole package to be more like =org-ql= with predicate functions called in a selector function.  If I can't fix it, I should at least document it.
+
+[2020-11-21 Sat 03:24]  It's documented now (=79d979ca7057478fbf907adee3a2bdff743b2bd3=).
+
+** TODO [#B] Define customization types for group selectors
+
+E.g. [[info:elisp#Defining%20New%20Types][info:elisp#Defining New Types]].  This would make it possible to configure grouping with the customization UI.  Maybe it would also make it possible to verify that groups are configured correctly.  And maybe the customization types could be defined easily with the macros we're already using.
+
+** MAYBE Put before/after in date strings
+:LOGBOOK:
+-  State "MAYBE"      from              [2017-08-12 Sat 22:59]
+:END:
+
+Maybe instead of:
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:deadline (before "2017-09-01"))
+           (:discard (:anything t)))))
+    (org-todo-list))
+#+END_SRC
+
+I should do:
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:deadline "before 2017-09-01")
+           (:discard (:anything t)))))
+    (org-todo-list))
+#+END_SRC
+
+Perhaps a bit less semantic, but it avoids having to use a list, and it seems pretty natural.
+
+** MAYBE [#B] Rewrite some loops to not use =cl-loop=
+:LOGBOOK:
+-  State "MAYBE"      from              [2019-07-12 Fri 07:08]
+:END:
+
+[2019-07-12 Fri 07:08]  For example:
+
+#+BEGIN_SRC elisp
+  (defun org-super-agenda--group-dispatch-and (items group)
+    "Group ITEMS that match all selectors in GROUP."
+    ;; Used for the `:and' selector.
+    (let (matches names)
+      ;; Note that "." syntax is not used in the `-when-let*' binding form here, because it would prevent
+      ;; matching the last two elements of group. This is non-intuitive to me, but that's how it works.
+      (while (-when-let* (((selector args) group)
+                          (fn (org-super-agenda--get-selector-fn selector)))
+               (-let (((auto-section-name _ matching) (funcall fn items args)))
+                 (push matching matches)
+                 (push auto-section-name names)))
+        (setf group (cddr group)))
+      (setf matches (cl-reduce #'seq-intersection matches))
+      (list (s-join " AND " (-non-nil (nreverse names)))
+            ;; Non-matches
+            (seq-difference items matches)
+            matches)))
+#+END_SRC
+
+This passes the tests, and it's fewer lines of code than the =cl-loop=-based function it replaces.  I'd like to benchmark it sometime to see if it's faster.
+
+** MAYBE Use [[https://github.com/VincentToups/destructuring-set][destructuring-set]]
+
+Could be useful in the loops where I use repeated ~when~ lines.
+
+[2018-08-03 Fri 18:05]  dash.el has =-setq= now.
+
+** UNDERWAY [#B] Add property matcher
+:PROPERTIES:
+:milestone: 1.3
+:END:
+:LOGBOOK:
+-  State "UNDERWAY"   from "TODO"       [2017-07-31 Mon 22:05]
+:END:
+
+Might be handy.
+
+[2017-07-31 Mon 22:05] Underway in a branch.
+
+** TODO Add effort selector
+:PROPERTIES:
+:milestone: 1.3
+:END:
+
+Shouldn't be too hard, I think.  The date selector and macro should be similar.
+
+** SOMEDAY Look at how ibuffer does grouping
+:LOGBOOK:
+-  State "SOMEDAY"    from              [2017-07-31 Mon 18:51]
+:END:
+
+[[http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html][For example]]:
+
+#+BEGIN_SRC elisp
+  (setq ibuffer-saved-filter-groups
+        '(("home"
+           ("emacs-config" (or (filename . ".emacs.d")
+                               (filename . "emacs-config")))
+           ("martinowen.net" (filename . "martinowen.net"))
+           ("Org" (or (mode . org-mode)
+                      (filename . "OrgMode")))
+           ("code" (filename . "code"))
+           ("Web Dev" (or (mode . html-mode)
+                          (mode . css-mode)))
+           ("Subversion" (name . "\*svn"))
+           ("Magit" (name . "\*magit"))
+           ("ERC" (mode . erc-mode))
+           ("Help" (or (name . "\*Help\*")
+                       (name . "\*Apropos\*")
+                       (name . "\*info\*"))))))
+#+END_SRC
+
+I could probably learn a lot from studying how this is implemented.  It's basically doing the same thing but probably in a more lispy way.
+
+** MAYBE [#B] Advise other agenda commands for default grouping
+:LOGBOOK:
+-  State "MAYBE"      from              [2017-08-01 Tue 05:16]
+:END:
+
+For example, I'd like to have a different set of default groups for =org-tags-view= and =org-todo-list= than I have for =org-agenda-list=.  Should be able to do this with advice, although I'm not sure if it belongs in this package or my own config.
+
+** MAYBE [#C] Use org-with-point-at
+:LOGBOOK:
+-  State "MAYBE"      from              [2017-08-01 Tue 00:08]
+:END:
+
+I think I can just use this instead of my own =when-with-marker-buffer=.
+
+** MAYBE [#C] Use cl-seq
+
+I just discovered the =cl-seq= library, which includes =cl-subsetp=, which might be preferable over =seq-intersection= for testing membership.
+
+** MAYBE [#C] Customize interface
+:LOGBOOK:
+-  State "MAYBE"      from              [2017-08-01 Tue 05:15]
+:END:
+
+I might be able to use =org-agenda-custom-commands-local-options= as a guide.
+
+** SOMEDAY More functional approach
+:LOGBOOK:
+-  State "SOMEDAY"    from              [2017-08-03 Thu 09:26]
+:END:
+
+Vincent Toups was kind enough to look at some of my ugly code and give me some [[https://github.com/VincentToups/destructuring-set/issues/1#issuecomment-319982708][feedback]] about using a more functional approach.  Something I'd like to move toward in the future:
+
+#+BEGIN_QUOTE
+Ha - that is some serious cl-loop work. I tend towards functional approaches, so I'd probably dispense with all the loop machinery in factor of a reduce over org-super-agenda-groups and then I'd define some pattern matching functions using shadchen's function definition forms. Or, if I wanted to put it all in one place, I'd use match or match-let. In the former case, I'd write one function body for each possible case in the loop and construct the result iteratively. Finally, I'd apply the transformations in the finally clause, probably as a function call of a locally defined function using flet.
+
+All this is a matter of taste, but I almost never setq in code I write. In this case it doesn't seem like you need to side effect for performance or memory reasons, so I'd refactor the code to be completely pure.
+#+END_QUOTE
+
+*** partition function
+
+[[https://github.com/TBRSS/serapeum][This CL library]] has partitioning functions:
+
+#+BEGIN_QUOTE
+The function that takes a predicate and a sequence, and returns two sequences – one sequence of the elements for which the function returns true, and one sequence of the elements for which it returns false – is (still) called partition.
+
+(partition #'oddp (iota 10))
+=> (1 3 5 7 9), (0 2 4 6 8)
+
+The generalized version of partition, which takes a number of functions and returns the items that satisfy each condition, is called partitions.
+
+(partitions (list #'primep #'evenp) (iota 10))
+=> ((2 3 5 7) (0 4 6 8)), (1 9)
+
+Items that do not belong in any partition are returned as a second value.
+#+END_QUOTE
+
+
+
+** CANCELED Use seq
+CLOSED: [2017-07-27 Thu 02:12]
+:LOGBOOK:
+-  State "CANCELED"   from "TODO"       [2017-07-27 Thu 02:12]
+:END:
+
+Instead of writing all this custom code in =cl-loop=, I can use the new =seq= library and =seq-group-by=.
+
+Nevermind.  Sounds like a nice idea, but the tests I use don't always return just =t= or =nil=, and =seq-group-by= groups item by return value, not merely =nil= or =non-nil=.  So the order of the groups returned is not guaranteed, and the keys will vary.
+
+Then again, if I wrap the tests in ~(not (null ...))~, I can use it.  But what's the benefit then?  =cl-loop= seems verbose in comparison, but I have wasted literally hours trying to debug this, because I was confused by the inconsistent order of results from =seq-group-by=, when all I care about is =nil= or =non-nil=.  =cl-loop='s ~if ,test~ is very clearly only testing for =nil= / =non-nil=, and that's all I need.
+
+I know some people don't like the =loop= macro, because it seems non-lispy.  But lisp isn't just about sexps and parentheses, it's also about having the power to define a more purposeful language for a certain task and integrate that into your program.  And the =loop= macro is very well suited to this task.  And even though it has its own idiosyncrasies, I think I've spent less time debugging it than I spent on this.  Maybe that just means I'm a poor programmer (although, in my defense, trying to debug lists of text with thousands of characters of text-properties in Emacs that get abbreviated and wrapped and truncated on-screen...) , but I think I'm going to stick with =loop= until I actually need something that =seq-group-by= provides.
+
+** CANCELED Rewrite the whole agenda after it's done instead
+CLOSED: [2017-07-28 Fri 00:11]
+:LOGBOOK:
+-  State "CANCELED"   from "MAYBE"      [2017-07-28 Fri 00:11]
+:END:
+
+Ideally, I guess, we would let the normal agenda command finish, then work on the buffer.  But this would mean that we have to avoid non-agenda-item lines, like headers, timetables, clockreports, etc.  That would likely get messy and have edge cases.  It's nice to get the list of agenda items before they are inserted, so we can filter them to begin with, but the problem with that is that we have to make a copy of the agenda command, which will get out-of-sync with newer Org versions.
+
+So /ideally/ we would get a patch committed to Org which would make this sort of thing possible, but that would probably entail a major refactoring of much of the agenda code.  And while that might end up with a nice result, it would be an enormous amount of work, and there aren't any guarantees that Org would merge it.
+
+In the meantime, this works well.
+
+[2017-07-28 Fri 00:11] Nope, nope, nope.  Not worth it.
+
+** DONE Add category matcher
+CLOSED: [2017-08-01 Tue 05:20]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-08-01 Tue 05:20]
+:END:
+
+Can probably use property or auto-group matcher, maybe refactor them.
+
+** DONE Use advice and minor mode
+CLOSED: [2017-07-28 Fri 22:18]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-28 Fri 22:18]
+:END:
+
+Instead of making a new agenda command that must be called separately, I could use advice to override the standard agenda commands with my modified versions, and that way users wouldn't have to do anything except define the groups.  That could even be done globally.  Then a minor mode could add/remove the advice.
+
+Yep, added an override for =org-todo-list= and it seems to be working fine so far.
+
+** DONE Just modify org-agenda-finalize-entries?
+CLOSED: [2017-07-28 Fri 22:18]
+:LOGBOOK:
+-  State "DONE"       from "MAYBE"      [2017-07-28 Fri 22:18] \\
+   It works!
+:END:
+
+I just realized that, instead of copying and modifying every agenda command, I might be able to just modify =org-agenda-finalize-entries=!
+
+** DONE Get list of agenda items from agenda function, just before it inserts into the agenda buffer
+CLOSED: [2017-07-23 Sun 16:50]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:50]
+:END:
+
++  =org-agenda-get-day-entries= is the function that "does the work" for the agenda.  If I need to build a custom command sort-of from scratch, this is probably how to start.
+
+#+NAME: get-agenda-item
+#+BEGIN_SRC elisp :results silent :cache yes
+  (defun osa/get-first-agenda-item () (car (org-agenda-get-day-entries "~/org/main.org" (calendar-current-date) :deadline)))
+#+END_SRC
+
++  =org-agenda-list= is the function that makes the default agenda view.
+     -  It seems to use ~(org-agenda-finalize-entries rtnall 'agenda)~ to return a string containing the actual items to insert.  So maybe I can just override that function, although I'm not sure if that's enough, because I don't think that function creates section headers.
+
+** DONE Filter list according to passed arguments
+CLOSED: [2017-07-28 Fri 00:11]
+:LOGBOOK:
+-  State "DONE"       from "UNDERWAY"   [2017-07-28 Fri 00:11]
+-  State "UNDERWAY"   from "TODO"       [2017-07-23 Sun 16:50]
+:END:
+
+*** DONE Filter by tags
+CLOSED: [2017-07-23 Sun 15:36]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 15:36]
+:END:
+
+#+BEGIN_SRC elisp
+  (defun osa/get-tags (s)
+    "Return list of tags in agenda item string S."
+    (org-find-text-property-in-string 'tags s))
+
+  (defun osa/separate-by-any-tags (items tags)
+    "Separate agenda ITEMS into two lists, putting items that contain any of TAGS into the second list.
+  Returns list like (SECTION-NAME NON-MATCHING MATCHING)."
+    (let ((section-name (concat "Items tagged with: "
+                                (s-join " OR " tags))))
+      (cl-loop for item in items
+               for item-tags = (osa/get-tags item)
+               if (seq-intersection item-tags tags)
+               collect item into matching
+               else collect item into non-matching
+               finally return (list section-name non-matching matching))))
+
+  (osa/def-separator any-tags
+    "Separate agenda ITEMS into two lists, putting items that contain any of TAGS into the second list.
+  Returns list like (SECTION-NAME NON-MATCHING MATCHING)."
+    :section-name (concat "Items tagged with: " (s-join " OR " args))
+    :test (seq-intersection (osa/get-tags item) args))
+#+END_SRC
+
+[2017-07-23 Sun 13:53] Okay, this is a good prototype: it takes a list of agenda items and separates it into two lists, one containing items that don't match the tags, and one containing items that do.  Note that it may not be sorted; I think that happens at a later step.
+
+*** DONE Filter habits
+CLOSED: [2017-07-23 Sun 16:02]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:02]
+:END:
+
+#+BEGIN_SRC elisp
+  (defun osa/separate-by-habits (items &ignore)
+    "Separate habits into separate list.
+  Returns (\"Habits\" NON-HABITS HABITS)."
+    (cl-loop for item in items
+             for marker = (org-find-text-property-in-string 'org-marker item)
+             if (org-is-habit-p marker)
+             collect item into matching
+             else collect item into non-matching
+             finally return (list "Habits" non-matching matching)))
+
+  (osa/def-separator habits
+    "Separate habits into separate list.
+  Returns (\"Habits\" NON-HABITS HABITS)."
+    :section-name "Habits"
+    :test (org-is-habit-p (org-find-text-property-in-string 'org-marker item)))
+#+END_SRC
+
+*** DONE Filter by todo keyword
+CLOSED: [2017-07-23 Sun 16:16]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:16]
+:END:
+
+#+BEGIN_SRC elisp
+  (defun osa/separate-by-todo-keywords (items todo-keywords)
+    "Separate items by TODO-KEYWORDS.
+    Returns (SECTION-NAME NON-MATCHING MATCHING)."
+    (unless (listp todo-keywords)
+      ;; Accept either one word or a list
+      (setq todo-keywords (list todo-keywords)))
+    (cl-loop with section-name = (concat (s-join " and " todo-keywords) " items")
+             for item in items
+             if (cl-member (org-find-text-property-in-string 'todo-state item) todo-keywords :test 'string=)
+             collect item into matching
+             else collect item into non-matching
+             finally return (list section-name non-matching matching)))
+
+  (osa/def-separator todo-keyword
+    "Separate items by TODO-KEYWORD.
+    Returns (SECTION-NAME NON-MATCHING MATCHING)."
+    :section-name (concat (s-join " and " args) " items")
+    :test (cl-member (org-find-text-property-in-string 'todo-state item) args :test 'string=))
+#+END_SRC
+
+*** DONE Filter by priority
+CLOSED: [2017-07-23 Sun 16:41]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:41]
+:END:
+
+#+BEGIN_SRC elisp
+  (defun osa/get-priority-cookie (item)
+    "Return priority character for item."
+    (when (string-match org-priority-regexp item)
+      (match-string-no-properties 2 item)))
+
+  (defun osa/separate-by-priorities (items priorities)
+    "Separate items by PRIORITIES.
+  PRIORITIES may be a string or a list of strings which match the
+  letter in an Org priority cookie, e.g. \"A\", \"B\", etc.
+  Returns (SECTION-NAME NON-MATCHING MATCHING)."
+    (unless (listp priorities)
+      ;; Accept either one word or a list
+      (setq priorities (list priorities)))
+    (cl-loop with section-name = (concat "Priority " (s-join " and " priorities) " items")
+             for item in items
+             for priority = (osa/get-priority-cookie item)
+             if (cl-member (osa/get-priority-cookie item) priorities :test 'string=)
+             collect item into matching
+             else collect item into non-matching
+             finally return (list section-name non-matching matching)))
+
+  (osa/def-separator priorities
+    "Separate items by PRIORITIES.
+      PRIORITIES may be a string or a list of strings which match the
+      letter in an Org priority cookie, e.g. \"A\", \"B\", etc.
+      Returns (SECTION-NAME NON-MATCHING MATCHING)."
+    :section-name (concat "Priority " (s-join " and " args) " items")
+    :test (cl-member (osa/get-priority-cookie item) args :test 'string=))
+#+END_SRC
+
+** DONE Insert into agenda buffer
+CLOSED: [2017-07-23 Sun 16:51]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:51]
+:END:
+
++  =org-agenda-prepare= is an early step.
++  =org-agenda-finalize= may be relevant here.
++  =org-agenda-list= runs ~(setq buffer-read-only t)~ at the very end.  Seems like that should be factored out into a common finishing function.
++  =org-agenda-run-series= might be the way to do this, or at least a model to follow.  This may be how custom commands are dispatched...
+
+[2017-07-23 Sun 14:27] This is basically copying =org-agenda-list=...this may get messy, but I don't think there's an alternative, because I have to make separate sections.
+
+On the other hand, maybe I should look at the custom commands...that might end up being a lot less work...
+
+[2017-07-23 Sun 14:34] It looks like I basically do have to make my own command from scratch.  =org-agenda-run-series= calls commands like =org-agenda-list=, so I have to do what =org-agenda-list=, =org-tags-view=, etc. do.  See the =cond= in =org-agenda=.  I think what I can do is, make my command one that =org-agenda= calls...maybe.  So maybe I should just copy =org-agenda-list= and then modify it.  I hate to do this, in a way, because it will get out-of-sync if/when Org changes that function.  But I don't see any alternative for now.
+
+#+BEGIN_SRC elisp
+  (let ((org-agenda-buffer-name "super-agenda")
+        (agenda-items (seq-subseq (org-agenda-get-day-entries "~/org/main.org"
+                                                              (calendar-current-date)
+                                                              :deadline)
+                                  0 5)))
+    (org-agenda-prepare "super agenda")
+    (org-set-sorting-strategy 'agenda)
+    (insert (org-agenda-finalize-entries agenda-items 'agenda)
+            "\n"))
+#+END_SRC
+
+*** DONE Copy and modify =org-agenda-list=
+CLOSED: [2017-07-23 Sun 16:51]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 16:51]
+:END:
+
+#+BEGIN_SRC elisp
+  (cl-defun org-super-agenda (&optional arg start-day span with-hour)
+    "SUPER-FILTERS should be a list like (FILTER-FN ARG), e.g.:
+
+    '(osa/separate-by-any-tags (\"bills\"))"
+    (interactive "P")
+    (if org-agenda-overriding-arguments
+        (setq arg (car org-agenda-overriding-arguments)
+              start-day (nth 1 org-agenda-overriding-arguments)
+              span (nth 2 org-agenda-overriding-arguments)))
+    (if (and (integerp arg) (> arg 0))
+        (setq span arg arg nil))
+    (catch 'exit
+      (setq org-agenda-buffer-name
+            (or org-agenda-buffer-tmp-name
+                (if org-agenda-sticky
+                    (cond ((and org-keys (stringp org-match))
+                           (format "*Org Agenda(%s:%s)*" org-keys org-match))
+                          (org-keys
+                           (format "*Org Agenda(%s)*" org-keys))
+                          (t "*Org Agenda(a)*")))
+                org-agenda-buffer-name))
+      (org-agenda-prepare "Day/Week")
+      (setq start-day (or start-day org-agenda-start-day))
+      (if (stringp start-day)
+          ;; Convert to an absolute day number
+          (setq start-day (time-to-days (org-read-date nil t start-day))))
+      (org-compile-prefix-format 'agenda)
+      (org-set-sorting-strategy 'agenda)
+      (let* ((span (org-agenda-ndays-to-span (or span org-agenda-span)))
+             (today (org-today))
+             (sd (or start-day today))
+             (ndays (org-agenda-span-to-ndays span sd))
+             (org-agenda-start-on-weekday
+              (if (or (eq ndays 7) (eq ndays 14))
+                  org-agenda-start-on-weekday))
+             (thefiles (org-agenda-files nil 'ifmode))
+             (files thefiles)
+             (start (if (or (null org-agenda-start-on-weekday)
+                            (< ndays 7))
+                        sd
+                      (let* ((nt (calendar-day-of-week
+                                  (calendar-gregorian-from-absolute sd)))
+                             (n1 org-agenda-start-on-weekday)
+                             (d (- nt n1)))
+                        (- sd (+ (if (< d 0) 7 0) d)))))
+             (day-numbers (list start))
+             (day-cnt 0)
+             (inhibit-redisplay (not debug-on-error))
+             (org-agenda-show-log-scoped org-agenda-show-log)
+             s e rtn rtnall file date d start-pos end-pos todayp
+             clocktable-start clocktable-end filter)
+        (setq org-agenda-redo-command
+              (list 'org-super-agenda (list 'quote arg) start-day (list 'quote span) with-hour))
+        (dotimes (n (1- ndays))
+          (push (1+ (car day-numbers)) day-numbers))
+        (setq day-numbers (nreverse day-numbers))
+        (setq clocktable-start (car day-numbers)
+              clocktable-end (1+ (or (org-last day-numbers) 0)))
+        (setq-local org-starting-day (car day-numbers))
+        (setq-local org-arg-loc arg)
+        (setq-local org-agenda-current-span (org-agenda-ndays-to-span span))
+        (unless org-agenda-compact-blocks
+          (let* ((d1 (car day-numbers))
+                 (d2 (org-last day-numbers))
+                 (w1 (org-days-to-iso-week d1))
+                 (w2 (org-days-to-iso-week d2)))
+            (setq s (point))
+            (if org-agenda-overriding-header
+                (insert (org-add-props (copy-sequence org-agenda-overriding-header)
+                            nil 'face 'org-agenda-structure) "\n")
+              (insert (org-agenda-span-name span)
+                      "-agenda"
+                      (if (< (- d2 d1) 350)
+                          (if (= w1 w2)
+                              (format " (W%02d)" w1)
+                            (format " (W%02d-W%02d)" w1 w2))
+                        "")
+                      ":\n")))
+          (add-text-properties s (1- (point)) (list 'face 'org-agenda-structure
+                                                    'org-date-line t))
+          (org-agenda-mark-header-line s))
+        (while (setq d (pop day-numbers))
+          (setq date (calendar-gregorian-from-absolute d)
+                s (point))
+          (if (or (setq todayp (= d today))
+                  (and (not start-pos) (= d sd)))
+              (setq start-pos (point))
+            (if (and start-pos (not end-pos))
+                (setq end-pos (point))))
+          (setq files thefiles
+                rtnall nil)
+          (while (setq file (pop files))
+            (catch 'nextfile
+              (org-check-agenda-file file)
+              (let ((org-agenda-entry-types org-agenda-entry-types))
+                ;; Starred types override non-starred equivalents
+                (when (member :deadline* org-agenda-entry-types)
+                  (setq org-agenda-entry-types
+                        (delq :deadline org-agenda-entry-types)))
+                (when (member :scheduled* org-agenda-entry-types)
+                  (setq org-agenda-entry-types
+                        (delq :scheduled org-agenda-entry-types)))
+                ;; Honor with-hour
+                (when with-hour
+                  (when (member :deadline org-agenda-entry-types)
+                    (setq org-agenda-entry-types
+                          (delq :deadline org-agenda-entry-types))
+                    (push :deadline* org-agenda-entry-types))
+                  (when (member :scheduled org-agenda-entry-types)
+                    (setq org-agenda-entry-types
+                          (delq :scheduled org-agenda-entry-types))
+                    (push :scheduled* org-agenda-entry-types)))
+                (unless org-agenda-include-deadlines
+                  (setq org-agenda-entry-types
+                        (delq :deadline* (delq :deadline org-agenda-entry-types))))
+                (cond
+                 ((memq org-agenda-show-log-scoped '(only clockcheck))
+                  (setq rtn (org-agenda-get-day-entries
+                             file date :closed)))
+                 (org-agenda-show-log-scoped
+                  (setq rtn (apply 'org-agenda-get-day-entries
+                                   file date
+                                   (append '(:closed) org-agenda-entry-types))))
+                 (t
+                  (setq rtn (apply 'org-agenda-get-day-entries
+                                   file date
+                                   org-agenda-entry-types)))))
+              (setq rtnall (append rtnall rtn)))) ;; all entries
+
+          (if org-agenda-include-diary
+              ;; Diary
+              (let ((org-agenda-search-headline-for-time t))
+                (require 'diary-lib)
+                (setq rtn (org-get-entries-from-diary date))
+                (setq rtnall (append rtnall rtn))))
+
+          (if (or rtnall org-agenda-show-all-dates)
+              ;; Insert results
+              (progn
+                (setq day-cnt (1+ day-cnt))
+                (insert
+                 (if (stringp org-agenda-format-date)
+                     (format-time-string org-agenda-format-date
+                                         (org-time-from-absolute date))
+                   (funcall org-agenda-format-date date))
+                 "\n")
+                (put-text-property s (1- (point)) 'face
+                                   (org-agenda-get-day-face date))
+                (put-text-property s (1- (point)) 'org-date-line t)
+                (put-text-property s (1- (point)) 'org-agenda-date-header t)
+                (put-text-property s (1- (point)) 'org-day-cnt day-cnt)
+                (when todayp
+                  (put-text-property s (1- (point)) 'org-today t))
+                (setq rtnall
+                      (org-agenda-add-time-grid-maybe rtnall ndays todayp))
+
+                ;; Actually insert results
+                (when rtnall
+                  ;; Insert each filtered sublist
+                  (cl-loop with filter-fn
+                           with args
+                           for filter in super-filters
+                           if (functionp filter) do (setq filter-fn filter
+                                                          args nil)
+                           else do (setq filter-fn (car filter)
+                                         args (cadr filter))
+                           for (section-name non-matching matching) = (funcall filter-fn rtnall args)
+                           collect (cons section-name matching) into sections
+                           and do (setq rtnall non-matching)
+                           finally do (progn
+                                        ;; Insert sections
+                                        (cl-loop for (section-name . items) in sections
+                                                 when items
+                                                 do (progn
+                                                      (osa/insert-agenda-header section-name)
+                                                      (insert (org-agenda-finalize-entries items 'agenda)
+                                                              "\n\n")))
+                                        (when non-matching
+                                          ;; Insert non-matching items in main section
+                                          (osa/insert-agenda-header "Other items")
+                                          (insert (org-agenda-finalize-entries non-matching 'agenda)
+                                                  "\n")))))
+
+
+                (put-text-property s (1- (point)) 'day d)
+                (put-text-property s (1- (point)) 'org-day-cnt day-cnt))))
+
+        (when (and org-agenda-clockreport-mode clocktable-start)
+          ;; Clocktable
+          (let ((org-agenda-files (org-agenda-files nil 'ifmode))
+                ;; the above line is to ensure the restricted range!
+                (p (copy-sequence org-agenda-clockreport-parameter-plist))
+                tbl)
+            (setq p (org-plist-delete p :block))
+            (setq p (plist-put p :tstart clocktable-start))
+            (setq p (plist-put p :tend clocktable-end))
+            (setq p (plist-put p :scope 'agenda))
+            (setq tbl (apply 'org-clock-get-clocktable p))
+            (insert tbl)))
+
+        ;; Window stuff
+        (goto-char (point-min))
+        (or org-agenda-multi (org-agenda-fit-window-to-buffer))
+        (unless (and (pos-visible-in-window-p (point-min))
+                     (pos-visible-in-window-p (point-max)))
+          (goto-char (1- (point-max)))
+          (recenter -1)
+          (if (not (pos-visible-in-window-p (or start-pos 1)))
+              (progn
+                (goto-char (or start-pos 1))
+                (recenter 1))))
+        (goto-char (or start-pos 1))
+
+        ;; Add text properties to entire buffer
+        (add-text-properties (point-min) (point-max)
+                             `(org-agenda-type agenda
+                                               org-last-args (,arg ,start-day ,span)
+                                               org-redo-cmd ,org-agenda-redo-command
+                                               org-series-cmd ,org-cmd))
+
+        (if (eq org-agenda-show-log-scoped 'clockcheck)
+            (org-agenda-show-clocking-issues))
+
+        (org-agenda-finalize)
+        (setq buffer-read-only t)
+        (message ""))))
+
+  (defun osa/insert-agenda-header (s)
+    "Insert agenda header into current buffer containing string S and a newline."
+    (insert (org-add-props s nil 'face 'org-agenda-structure) "\n"))
+
+    (org-super-agenda nil nil 'day nil :super-filters '((osa/separate-by-any-tags ("bills" "apartment"))))
+#+END_SRC
+
+*** DONE Take keyword args with filters
+CLOSED: [2017-07-23 Sun 18:46]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-23 Sun 18:46]
+:END:
+
+This isn't quite as elegant to configure, but it's definitely worth the benefits.
+
+#+BEGIN_SRC elisp
+  (cl-defun org-super-agenda (&optional arg start-day span with-hour)
+    "SUPER-FILTERS should be a list like (FILTER-FN ARG), e.g.:
+
+    '(osa/separate-by-any-tags (\"bills\"))"
+    (interactive "P")
+    (if org-agenda-overriding-arguments
+        (setq arg (car org-agenda-overriding-arguments)
+              start-day (nth 1 org-agenda-overriding-arguments)
+              span (nth 2 org-agenda-overriding-arguments)))
+    (if (and (integerp arg) (> arg 0))
+        (setq span arg arg nil))
+    (catch 'exit
+      (setq org-agenda-buffer-name
+            (or org-agenda-buffer-tmp-name
+                (if org-agenda-sticky
+                    (cond ((and org-keys (stringp org-match))
+                           (format "*Org Agenda(%s:%s)*" org-keys org-match))
+                          (org-keys
+                           (format "*Org Agenda(%s)*" org-keys))
+                          (t "*Org Agenda(a)*")))
+                org-agenda-buffer-name))
+      (org-agenda-prepare "Day/Week")
+      (setq start-day (or start-day org-agenda-start-day))
+      (if (stringp start-day)
+          ;; Convert to an absolute day number
+          (setq start-day (time-to-days (org-read-date nil t start-day))))
+      (org-compile-prefix-format 'agenda)
+      (org-set-sorting-strategy 'agenda)
+      (let* ((span (org-agenda-ndays-to-span (or span org-agenda-span)))
+             (today (org-today))
+             (sd (or start-day today))
+             (ndays (org-agenda-span-to-ndays span sd))
+             (org-agenda-start-on-weekday
+              (if (or (eq ndays 7) (eq ndays 14))
+                  org-agenda-start-on-weekday))
+             (thefiles (org-agenda-files nil 'ifmode))
+             (files thefiles)
+             (start (if (or (null org-agenda-start-on-weekday)
+                            (< ndays 7))
+                        sd
+                      (let* ((nt (calendar-day-of-week
+                                  (calendar-gregorian-from-absolute sd)))
+                             (n1 org-agenda-start-on-weekday)
+                             (d (- nt n1)))
+                        (- sd (+ (if (< d 0) 7 0) d)))))
+             (day-numbers (list start))
+             (day-cnt 0)
+             (inhibit-redisplay (not debug-on-error))
+             (org-agenda-show-log-scoped org-agenda-show-log)
+             s e rtn rtnall file date d start-pos end-pos todayp
+             clocktable-start clocktable-end filter)
+        (setq org-agenda-redo-command
+              (list 'org-super-agenda (list 'quote arg) start-day (list 'quote span) with-hour))
+        (dotimes (n (1- ndays))
+          (push (1+ (car day-numbers)) day-numbers))
+        (setq day-numbers (nreverse day-numbers))
+        (setq clocktable-start (car day-numbers)
+              clocktable-end (1+ (or (org-last day-numbers) 0)))
+        (setq-local org-starting-day (car day-numbers))
+        (setq-local org-arg-loc arg)
+        (setq-local org-agenda-current-span (org-agenda-ndays-to-span span))
+        (unless org-agenda-compact-blocks
+          (let* ((d1 (car day-numbers))
+                 (d2 (org-last day-numbers))
+                 (w1 (org-days-to-iso-week d1))
+                 (w2 (org-days-to-iso-week d2)))
+            (setq s (point))
+            (if org-agenda-overriding-header
+                (insert (org-add-props (copy-sequence org-agenda-overriding-header)
+                            nil 'face 'org-agenda-structure) "\n")
+              (insert (org-agenda-span-name span)
+                      "-agenda"
+                      (if (< (- d2 d1) 350)
+                          (if (= w1 w2)
+                              (format " (W%02d)" w1)
+                            (format " (W%02d-W%02d)" w1 w2))
+                        "")
+                      ":\n")))
+          (add-text-properties s (1- (point)) (list 'face 'org-agenda-structure
+                                                    'org-date-line t))
+          (org-agenda-mark-header-line s))
+        (while (setq d (pop day-numbers))
+          (setq date (calendar-gregorian-from-absolute d)
+                s (point))
+          (if (or (setq todayp (= d today))
+                  (and (not start-pos) (= d sd)))
+              (setq start-pos (point))
+            (if (and start-pos (not end-pos))
+                (setq end-pos (point))))
+          (setq files thefiles
+                rtnall nil)
+          (while (setq file (pop files))
+            (catch 'nextfile
+              (org-check-agenda-file file)
+              (let ((org-agenda-entry-types org-agenda-entry-types))
+                ;; Starred types override non-starred equivalents
+                (when (member :deadline* org-agenda-entry-types)
+                  (setq org-agenda-entry-types
+                        (delq :deadline org-agenda-entry-types)))
+                (when (member :scheduled* org-agenda-entry-types)
+                  (setq org-agenda-entry-types
+                        (delq :scheduled org-agenda-entry-types)))
+                ;; Honor with-hour
+                (when with-hour
+                  (when (member :deadline org-agenda-entry-types)
+                    (setq org-agenda-entry-types
+                          (delq :deadline org-agenda-entry-types))
+                    (push :deadline* org-agenda-entry-types))
+                  (when (member :scheduled org-agenda-entry-types)
+                    (setq org-agenda-entry-types
+                          (delq :scheduled org-agenda-entry-types))
+                    (push :scheduled* org-agenda-entry-types)))
+                (unless org-agenda-include-deadlines
+                  (setq org-agenda-entry-types
+                        (delq :deadline* (delq :deadline org-agenda-entry-types))))
+                (cond
+                 ((memq org-agenda-show-log-scoped '(only clockcheck))
+                  (setq rtn (org-agenda-get-day-entries
+                             file date :closed)))
+                 (org-agenda-show-log-scoped
+                  (setq rtn (apply 'org-agenda-get-day-entries
+                                   file date
+                                   (append '(:closed) org-agenda-entry-types))))
+                 (t
+                  (setq rtn (apply 'org-agenda-get-day-entries
+                                   file date
+                                   org-agenda-entry-types)))))
+              (setq rtnall (append rtnall rtn)))) ;; all entries
+
+          (if org-agenda-include-diary
+              ;; Diary
+              (let ((org-agenda-search-headline-for-time t))
+                (require 'diary-lib)
+                (setq rtn (org-get-entries-from-diary date))
+                (setq rtnall (append rtnall rtn))))
+
+          (if (or rtnall org-agenda-show-all-dates)
+              ;; Insert results
+              (progn
+                (setq day-cnt (1+ day-cnt))
+                (insert
+                 (if (stringp org-agenda-format-date)
+                     (format-time-string org-agenda-format-date
+                                         (org-time-from-absolute date))
+                   (funcall org-agenda-format-date date))
+                 "\n")
+                (put-text-property s (1- (point)) 'face
+                                   (org-agenda-get-day-face date))
+                (put-text-property s (1- (point)) 'org-date-line t)
+                (put-text-property s (1- (point)) 'org-agenda-date-header t)
+                (put-text-property s (1- (point)) 'org-day-cnt day-cnt)
+                (when todayp
+                  (put-text-property s (1- (point)) 'org-today t))
+                (setq rtnall
+                      (org-agenda-add-time-grid-maybe rtnall ndays todayp))
+
+                ;; Actually insert results
+                (when rtnall
+                  ;; Insert each filtered sublist
+                  (cl-loop with filter-fn
+                           with args
+                           for filter in super-filters
+                           if (functionp filter) do (setq filter-fn filter
+                                                          args nil
+                                                          last nil)
+                           else do (setq filter-fn (plist-get filter :fn)
+                                         args (plist-get filter :args)
+                                         last (plist-get filter :last))
+                           for (section-name non-matching matching) = (funcall filter-fn rtnall args)
+
+                           ;; FIXME: This repetition is kind of ugly, but I guess cl-loop is worth it...
+                           if last collect (cons section-name matching) into last-sections
+                           and do (setq rtnall non-matching)
+                           else collect (cons section-name matching) into sections
+                           and do (setq rtnall non-matching)
+
+                           finally do (progn
+                                        ;; Insert sections
+                                        (cl-loop for (section-name . items) in sections
+                                                 when items
+                                                 do (progn
+                                                      (osa/insert-agenda-header section-name)
+                                                      (insert (org-agenda-finalize-entries items 'agenda)
+                                                              "\n\n")))
+                                        (when non-matching
+                                          ;; Insert non-matching items in main section
+                                          (osa/insert-agenda-header "Other items")
+                                          (insert (org-agenda-finalize-entries non-matching 'agenda)
+                                                  "\n\n"))
+
+                                        ;; Insert final sections
+                                        (cl-loop for (section-name . items) in last-sections
+                                                 when items
+                                                 do (progn
+                                                      (osa/insert-agenda-header section-name)
+                                                      (insert (org-agenda-finalize-entries items 'agenda)
+                                                              "\n\n"))))))
+
+
+                (put-text-property s (1- (point)) 'day d)
+                (put-text-property s (1- (point)) 'org-day-cnt day-cnt))))
+
+        (when (and org-agenda-clockreport-mode clocktable-start)
+          ;; Clocktable
+          (let ((org-agenda-files (org-agenda-files nil 'ifmode))
+                ;; the above line is to ensure the restricted range!
+                (p (copy-sequence org-agenda-clockreport-parameter-plist))
+                tbl)
+            (setq p (org-plist-delete p :block))
+            (setq p (plist-put p :tstart clocktable-start))
+            (setq p (plist-put p :tend clocktable-end))
+            (setq p (plist-put p :scope 'agenda))
+            (setq tbl (apply 'org-clock-get-clocktable p))
+            (insert tbl)))
+
+        ;; Window stuff
+        (goto-char (point-min))
+        (or org-agenda-multi (org-agenda-fit-window-to-buffer))
+        (unless (and (pos-visible-in-window-p (point-min))
+                     (pos-visible-in-window-p (point-max)))
+          (goto-char (1- (point-max)))
+          (recenter -1)
+          (if (not (pos-visible-in-window-p (or start-pos 1)))
+              (progn
+                (goto-char (or start-pos 1))
+                (recenter 1))))
+        (goto-char (or start-pos 1))
+
+        ;; Add text properties to entire buffer
+        (add-text-properties (point-min) (point-max)
+                             `(org-agenda-type agenda
+                                               org-last-args (,arg ,start-day ,span)
+                                               org-redo-cmd ,org-agenda-redo-command
+                                               org-series-cmd ,org-cmd))
+
+        (if (eq org-agenda-show-log-scoped 'clockcheck)
+            (org-agenda-show-clocking-issues))
+
+        (org-agenda-finalize)
+        (setq buffer-read-only t)
+        (message ""))))
+
+  (let ((org-agenda-custom-commands (list (quote ("u" "SUPER Agenda"
+                                                  org-super-agenda ""
+                                                  ((super-filters '((:fn osa/separate-by-any-tags :args ("bills"))
+                                                                    osa/separate-by-habits
+                                                                    (:fn osa/separate-by-todo-keywords :args "WAITING")
+                                                                    (:fn osa/separate-by-todo-keywords :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                                                                         :last t)
+                                                                    (:fn osa/separate-by-priorities :args "A")
+                                                                    (:fn osa/separate-by-priorities :args "B")
+                                                                    (:fn osa/separate-by-priorities :args "C")
+                                                                    (:fn osa/separate-by-any-tags :args ("prayers"))))
+                                                   (org-agenda-span 'day)))))))
+    (org-agenda nil "u"))
+
+
+  (let ((filter '(:name osa/separate-by-todo-keywords :args ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                                                :last t)))
+    (plist-get filter :args))
+#+END_SRC
+
+** DONE Use macros
+CLOSED: [2017-07-23 Sun 19:22]
+:LOGBOOK:
+-  State "DONE"       from "UNDERWAY"   [2017-07-23 Sun 19:22]
+-  State "UNDERWAY"   from              [2017-07-23 Sun 18:08]
+:END:
+
+Calls are in the sections above.
+
+#+BEGIN_SRC elisp
+  (cl-defmacro osa/def-separator (name docstring &key section-name test)
+    (declare (indent defun))
+    (let ((function-name (intern (concat "osa/separate-by-" (symbol-name name)))))
+      `(defun ,function-name (items args)
+         ,docstring
+         (unless (listp args)
+           (setq args (list args)))
+         (cl-loop with section-name = ,section-name
+                  for item in items
+                  if ,test
+                  collect item into matching
+                  else collect item into non-matching
+                  finally return (list section-name non-matching matching))))) 
+#+END_SRC
+
+** DONE Add boolean AND
+CLOSED: [2017-07-27 Thu 23:35]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-27 Thu 23:35]
+:END:
+
+Proof-of-concept code:
+
+#+BEGIN_SRC elisp
+  (defun factor-of-3 (num)
+    (= 0 (mod num 3)))
+
+  (defun factor-of-2 (num)
+    (= 0 (mod num 2)))
+
+  (factor-of-3 3)
+
+  (factor-of-2 4)
+
+  (-let* ((l (number-sequence 1 20))
+          ((&plist :non-matching non-matching :matching matching) (cl-loop for fn in '(factor-of-2 factor-of-3)
+                                                                           for result = (seq-group-by fn l)
+                                                                           collect (alist-get t result) into matching
+                                                                           and collect (alist-get nil result) into non-matching
+                                                                           finally return (list :non-matching non-matching :matching matching)))
+          (intersection (reduce 'seq-intersection matching))
+          (difference (seq-difference l intersection))
+          )
+    (list :intersection intersection
+          :difference difference))
+#+END_SRC
+
+Test groups:
+
+#+BEGIN_SRC elisp
+  (let ((org-agenda-files '("test.org"))
+        (org-agenda-custom-commands
+         '(("u" "SUPER Agenda"
+            org-super-agenda ""
+            ((org-agenda-span 'day)
+             (org-super-agenda-groups '((:name "Spaceship bills"
+                                               :and (:tags "spaceship" :tags "bills"))
+(:name "CHECK Emacs" :and (:todo "CHECK" :tags "Emacs"))
+(:name "A-priority world-related" :and (:priority "A" :tags "world")))))))))
+    (org-agenda nil "u"))
+
+  (-let* ((results (org-agenda-get-day-entries "test.org" (calendar-current-date)))
+          (fn 'osa/group-tags)
+          (args "bills")
+          ((name non-matching matching) (funcall fn results args)))
+    (mapcar 'substring-no-properties matching))
+
+  (-let* ((edebug-print-level 1)
+          (edebug-print-length 1)
+          (results (org-agenda-get-day-entries "test.org" (calendar-current-date)))
+          (fn 'osa/group-dispatch-and)
+          (args (list :tags "bills"
+                      :tags "spaceship"))
+          ((name non-matching matching) (funcall fn results args))
+          ((non-matching matching) (--map (mapcar 'substring-no-properties it) (list non-matching matching))))
+
+    (list :non-matching non-matching :matching matching))
+
+  ;; I found cust-print.el but it says it's obsolete, but it doesn't say
+  ;; why.  It works for normal use, but when I use this with edebug,
+  ;; Emacs freezes hard, no CPU usage, no response to any signals.
+  ;; Sigh.
+  (require 'cust-print)
+  (with-custom-print
+   (add-custom-printer 'stringp (lambda (s)
+                                  (princ (substring-no-properties s))))
+   (-let* ((edebug-print-level 1)
+           (edebug-print-length 1)
+           (results (org-agenda-get-day-entries "test.org" (calendar-current-date)))
+           (fn 'osa/group-dispatch-and)
+           (args (list :tags "bills"
+                       :tags "spaceship"))
+           ((name non-matching matching) (funcall fn results args))
+           ((non-matching matching) (--map (mapcar 'substring-no-properties it) (list non-matching matching))))
+
+     (list :non-matching non-matching :matching matching)))
+#+END_SRC
+
+** DONE Boolean NOT
+CLOSED: [2017-07-27 Thu 23:35]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-27 Thu 23:35]
+:END:
+
+#+BEGIN_SRC elisp
+  (let ((org-agenda-files '("test.org"))
+        (org-agenda-custom-commands
+         '(("u" "SUPER Agenda"
+            org-super-agenda ""
+            ((org-agenda-span 'day)
+             (org-super-agenda-groups '((:name "Non-moon space-related" :and (:regexp "space"
+                                                                                      :not (:regexp "moon"))))))))))
+    (org-agenda nil "u"))
+#+END_SRC
+
+** DONE Add scheduled/deadline matchers
+CLOSED: [2017-07-27 Thu 23:46]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-27 Thu 23:46]
+:END:
+
+#+BEGIN_SRC elisp
+  (defun osa/get-marker (s)
+    (org-find-text-property-in-string 'org-marker s))
+
+  (osa/defgroup scheduled
+    "Group items that are scheduled."
+    :section-name "Scheduled items"
+    :test (when-let ((m (osa/get-marker item)))
+            (with-current-buffer (marker-buffer m)
+              (org-get-scheduled-time m))))
+
+  (-let* ((edebug-print-level 1)
+          (edebug-print-length 1)
+          (results (org-agenda-get-day-entries "test.org" (calendar-current-date)))
+          (fn 'osa/group-dispatch)
+          (args (list :scheduled t))
+          ((name non-matching matching) (funcall fn results args))
+          ((non-matching matching) (--map (mapcar 'substring-no-properties it) (list non-matching matching))))
+
+    (list :non-matching non-matching :matching matching))
+
+  (let ((org-agenda-files (list "~/src/org-super-agenda/test.org"))
+        (org-agenda-custom-commands
+         '(("u" "SUPER Agenda"
+            org-super-agenda ""
+            ((org-agenda-span 'day)
+             (org-super-agenda-groups
+              '((:scheduled t)
+                (:deadline t))))))))
+    (org-agenda nil "u"))
+#+END_SRC
+
+** DONE Sort sections
+CLOSED: [2017-07-28 Fri 20:26]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-28 Fri 20:26]
+:END:
+
+#+BEGIN_SRC elisp
+  (let ((org-super-agenda-groups
+         '((:name "Today"
+                  :time t
+                  :todo "TODAY")
+           (:name "Bills"
+                  :tags "bills"
+                  :order 1)
+           (:name "Prayers"
+                  :tags "prayers"
+                  :order 2)
+           (:name "Personal"
+                  :habit t
+                  :tags "personal"
+                  :order 3)
+           (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                  :order 9)
+           (:name "People"
+                  :tags ("friends" "family")
+                  :order 3)
+           (:name "Computer"
+                  :tags ("Emacs" "Org" "computer" "computers" "Onyx" "sparky" "software")
+                  :order 4)
+           (:todo "WAITING" :order 5)
+
+           (:name "Priority A items" :priority "A" :order 2)
+           (:name "Priority B and C items" :priority ("B" "C") :order 2))))
+    (cl-loop for filter in org-super-agenda-groups
+             for custom-section-name = (plist-get filter :name)
+             for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
+             for section-name = custom-section-name
+             for matching = nil
+             collect (list :name section-name :items matching :order order) into sections
+
+             ;; Sort sections
+             ;; finally return (setq sections (-sort (-on '< (lambda (it)
+             ;;                                                (plist-get it :order)))
+             ;;                                      sections))
+             finally return (--sort (cond ((= (plist-get it :order)
+                                              (plist-get other :order))
+                                           (string< (plist-get it :name)
+                                                    (plist-get other :name)))
+                                          (t (< (plist-get it :order)
+                                                (plist-get other :order))))
+                                    sections)
+             ))
+#+END_SRC
+
+** DONE Make function to describe groupers
+CLOSED: [2017-07-28 Fri 00:02]
+:LOGBOOK:
+-  State "DONE"       from "TODO"       [2017-07-28 Fri 00:02]
+:END:
+
+#+BEGIN_SRC elisp :results silent
+  (defun osa/describe-groupers ()
+    (require 'dash-functional)
+    (let ((groups (cl-loop for (group-type fn) on org-super-agenda-group-types by 'cddr
+                           for docstring = (s-collapse-whitespace
+                                            (s-replace "\n" " " (documentation fn)))
+                           when docstring
+                           collect (list group-type docstring) into groups
+                           finally return (-sort (-on 'string< 'car) groups))))
+      (apply 'concat (--map (format "+ =%s= %s\n" (first it) (second it))
+                            groups))))
+
+  (with-current-buffer (get-buffer-create "osa/describe-groupers")
+    (erase-buffer)
+    (insert (osa/describe-groupers))
+    (pop-to-buffer (current-buffer))
+    (org-mode))
+#+END_SRC
+
+* Ideas
+
+** TODO [#B] More useful headings in auto-parent grouping
+:PROPERTIES:
+:milestone: 1.3
+:END:
+
+While testing =org-ql= in a MELPA sandbox session, I noticed that the =auto-parent= grouping headers were more useful, because some of the to-do keywords weren't configured in Org, so the keywords were displayed in the header (rather than being ignored as a to-do keyword).  For example:
+
+#+BEGIN_EXAMPLE
+ UNDERWAY [#B] Submit address change to agencies/businesses
+  TODO Car insurance?
+
+ [#B] Service requests [4/15]
+  TODO [#A] Deal with issues
+#+END_EXAMPLE
+
+* Archive                                                           :archived:
+
+** org-super-agenda
+
+[2017-07-23 Sun 11:51] I want a more powerful way to build Org agendas.  I want to be able to take a standard Org agenda view and separate items into sections.  This is different from the existing support for sections in the agenda, because that only allows each section to be built from scratch individually.  I just want to take existing items collected for the agenda and display them in separate sections.
+
+I want to be able to pass a list of headers with filter criteria, and any item matching a filter (top-down, first-come-first-serve, or maybe put items in every filter they match) gets shown in that section instead of in the main, unfiltered section.  Something like:
+
+#+BEGIN_SRC elisp
+  '(("Bills"
+     :tags-any "bills")
+    ("Deadline"
+     :filter-fns (org-has-deadline-p)
+     :sort org-priority-down)
+    ("Habits"
+     :filter-fns (org-is-habit-p))
+    ("Prayers"
+     :tags-any "prayers")
+    ("Emacs"
+     :tags-any ("Emacs" "Org"))
+    ("To-Read"
+     :todo "TO-READ"))
+#+END_SRC
+
+Here's my initial plan.  What I basically need to do is run the standard agenda command, but get the list of items instead of filling the agenda buffer.  Then I can rearrange those items, and then insert into the agenda buffer myself.  This may end up being practically rewriting or at least refactoring the agenda function.  The hardest part may be doing the insertion in the same way the agenda does, preserving the metadata and such.
+
+[2017-07-23 Sun 16:51] Well, that didn't take /too/ long.  I consider this now a very functional first version.  I'd like to eventually get to where ~super-filters~ could be specified like in the example above, but this is a good start.
+
+Now, I wonder if I should keep the name ~super-agenda~ or if something more descriptive like ~org-divided-agenda~ would be better.  Maybe ask on the mailing list...
+
+* Articles / Examples
+:PROPERTIES:
+:ID:       064cd3b7-c716-4b59-ab54-1b614c6dbe0c
+:END:
+
+Some articles that show how they use =org-super-agenda=.  Might want to add these to a list somewhere in the documentation.
+
++  [[https://www.baty.net/2019/org-super-agenda/][Org Super Agenda - Jack Baty's weblog]]
++  [[https://www.rousette.org.uk/archives/doom-emacs-tweaks-org-journal-and-org-super-agenda/][BSAG » Doom Emacs tweaks: Org Journal and Super Agenda]]
+
+Some example configs that aren't in article form:
+
++ [[https://emacs.christianbaeuerlein.com/my-org-config.html#org27f817c][Christian Baeuerlein]]
+
