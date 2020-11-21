@@ -275,13 +275,13 @@ A and B are Org timestamp elements."
 
 (defun org-super-agenda--make-agenda-header (name)
   "Return agenda header named NAME.
-If NAME is `none', return empty string.  Otherwise, return string
-NAME prepended with `org-super-agenda-header-separator', which
-see.  NAME has the face `org-super-agenda-header' appended, and
-the text properties `keymap' and `local-map' set to the value of
-`org-super-agenda-header-map', which see."
+If NAME is nil or `none', return empty string.  Otherwise, return
+string NAME prepended with `org-super-agenda-header-separator',
+which see.  NAME has the face `org-super-agenda-header' appended,
+and the text properties `keymap' and `local-map' set to the value
+of `org-super-agenda-header-map', which see."
   (pcase name
-    ('none "")
+    ((or `nil 'none) "")
     (_ (let* ((properties (text-properties-at 0 name))
               (header (concat org-super-agenda-header-prefix name))
               (separator
