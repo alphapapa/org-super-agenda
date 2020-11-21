@@ -273,31 +273,32 @@ A and B are Org timestamp elements."
   "Return list of tags in agenda item string S."
   (org-find-text-property-in-string 'tags s))
 
-(defun org-super-agenda--make-agenda-header (s)
-  "Return agenda header containing string S.
-If `none', return empty string.  Otherwise, return S prepended
-with `org-super-agenda-header-separator', which see.  S has the
-face `org-super-agenda-header' appended, and the text properties
-`keymap' and `local-map' set to the value of
+(defun org-super-agenda--make-agenda-header (name)
+  "Return agenda header named NAME.
+If NAME is `none', return empty string.  Otherwise, return string
+NAME prepended with `org-super-agenda-header-separator', which
+see.  NAME has the face `org-super-agenda-header' appended, and
+the text properties `keymap' and `local-map' set to the value of
 `org-super-agenda-header-map', which see."
-  (pcase s
+  (pcase name
     ('none "")
-    (_ (let ((separator (cl-etypecase org-super-agenda-header-separator
-                          (character (concat (make-string (window-width) org-super-agenda-header-separator)
-                                             "\n"))
-                          (string org-super-agenda-header-separator)))
-             (props (text-properties-at 0 s)))
-         (setq s (concat org-super-agenda-header-prefix s))
-         (set-text-properties 0 (length s) props s)
-         (add-face-text-property 0 (length s) 'org-super-agenda-header t s)
-         (org-add-props s org-super-agenda-header-properties
+    (_ (let* ((properties (text-properties-at 0 name))
+              (header (concat org-super-agenda-header-prefix name))
+              (separator
+               (cl-etypecase org-super-agenda-header-separator
+                 (character (concat (make-string (window-width) org-super-agenda-header-separator)
+                                    "\n"))
+                 (string org-super-agenda-header-separator))))
+         (set-text-properties 0 (length header) properties header)
+         (add-face-text-property 0 (length header) 'org-super-agenda-header t header)
+         (org-add-props header org-super-agenda-header-properties
            'keymap org-super-agenda-header-map
            ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
            ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
            ;; we'll use both.
            'local-map org-super-agenda-header-map)
          ;; Don't apply faces and properties to the separator part of the string.
-         (concat separator s)))))
+         (concat separator header)))))
 
 (defsubst org-super-agenda--get-priority-cookie (s)
   "Return priority character for string S.
