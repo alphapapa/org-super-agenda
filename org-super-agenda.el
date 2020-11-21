@@ -285,8 +285,10 @@ face `org-super-agenda-header' appended, and the text properties
     (_ (let ((separator (cl-etypecase org-super-agenda-header-separator
                           (character (concat (make-string (window-width) org-super-agenda-header-separator)
                                              "\n"))
-                          (string org-super-agenda-header-separator))))
+                          (string org-super-agenda-header-separator)))
+             (props (text-properties-at 0 s)))
          (setq s (concat org-super-agenda-header-prefix s))
+         (set-text-properties 0 (length s) props s)
          (add-face-text-property 0 (length s) 'org-super-agenda-header t s)
          (org-add-props s org-super-agenda-header-properties
            'keymap org-super-agenda-header-map
