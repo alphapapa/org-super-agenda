@@ -783,6 +783,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
                  for face = (plist-get filter :face)
                  when face
                  do (let ((append (plist-get face :append)))
+                      (when append (cl-remf face :append))
                       (--each matching
                         (add-face-text-property 0 (length it) face append it)))
 
