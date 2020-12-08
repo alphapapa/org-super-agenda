@@ -237,6 +237,15 @@ Let's say it's approaching the start of a new school year, and you want to see a
 
 Of course, you could also write that as a standard agenda command with the  [[http://orgmode.org/worg/org-tutorials/advanced-searching.html][advanced searching syntax]], and it would execute faster.
 
+Perhaps you want to see all tasks due within the next two weeks? You can use relative date notation like this:
+
+#+BEGIN_SRC elisp :results none
+  (let ((org-super-agenda-groups
+         '((:deadline (before "+2w"))
+           (:discard (:anything t)))))
+    (org-todo-list))
+#+END_SRC
+
 What if you wanted to group tasks that are due before the end of the current month?  You could use something like this:
 
 #+BEGIN_SRC elisp
