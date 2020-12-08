@@ -434,8 +434,7 @@ match items that have no deadline), `past` (to match items with a
 deadline in the past), `today' (to match items whose deadline is
 today), or `future' (to match items with a deadline in the
 future).  Argument may also be given like `before DATE' or `after
-DATE', where DATE is a date string that
-`org-time-string-to-absolute' can process."
+DATE', where DATE is a date string that `org-read-date' can process."
   :section-name (pcase (car args)
                   ('t "Deadline items")
                   ('nil "Items without deadlines")
@@ -471,8 +470,7 @@ Argument can be `t' (to match items scheduled for any date),
 items scheduled for the past), `today' (to match items scheduled
 for today), or `future' (to match items scheduled for the
 future).  Argument may also be given like `before DATE' or `after
-DATE', where DATE is a date string that
-`org-time-string-to-absolute' can process."
+DATE', where DATE is a date string that `org-read-date' can process."
   :section-name (pcase (car args)
                   ('t "Scheduled items")
                   ('nil "Unscheduled items ")
