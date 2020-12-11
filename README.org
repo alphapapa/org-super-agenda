@@ -239,7 +239,8 @@ As explained in the usage instructions and shown in the example, items are colle
 
 ** 1.3-pre
 
-Nothing new yet.
+*Added*
++  Selector ~:property~, which groups items with a property, optionally also matching a value or predicate.  (Thanks to [[https://github.com/weipe][Per Weijnitz]].)
 
 ** 1.2
 
