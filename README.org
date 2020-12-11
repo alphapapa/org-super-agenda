@@ -236,6 +236,10 @@ As explained in the usage instructions and shown in the example, items are colle
 :TOC:      0
 :END:
 
+** 1.3-pre
+
+Nothing new yet.
+
 ** 1.2
 
 *Added*

@@ -60,6 +60,7 @@ FAQ
 
 Changelog
 
+* 1.3-pre: 13-pre. 
 * 1.2: 12. 
 * 1.1.1: 111. 
 * 1.1: 11. 
@@ -544,6 +545,7 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
 
 * Menu:
 
+* 1.3-pre: 13-pre. 
 * 1.2: 12. 
 * 1.1.1: 111. 
 * 1.1: 11. 
@@ -553,9 +555,17 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
 * 1.0.0: 100. 
 
 
-File: README.info,  Node: 12,  Next: 111,  Up: Changelog
+File: README.info,  Node: 13-pre,  Next: 12,  Up: Changelog
 
-7.1 1.2
+7.1 1.3-pre
+===========
+
+Nothing new yet.
+
+
+File: README.info,  Node: 12,  Next: 111,  Prev: 13-pre,  Up: Changelog
+
+7.2 1.2
 =======
 
 *Added*
@@ -613,7 +623,7 @@ File: README.info,  Node: 12,  Next: 111,  Up: Changelog
 
 File: README.info,  Node: 111,  Next: 11,  Prev: 12,  Up: Changelog
 
-7.2 1.1.1
+7.3 1.1.1
 =========
 
 *Fixed*
@@ -622,7 +632,7 @@ File: README.info,  Node: 111,  Next: 11,  Prev: 12,  Up: Changelog
 
 File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
 
-7.3 1.1
+7.4 1.1
 =======
 
 *Additions*
@@ -657,7 +667,7 @@ File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
 
 File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
-7.4 1.0.3
+7.5 1.0.3
 =========
 
 *Fixed*
@@ -667,7 +677,7 @@ File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
 File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
-7.5 1.0.2
+7.6 1.0.2
 =========
 
 *Fixed*
@@ -676,7 +686,7 @@ File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
 File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
-7.6 1.0.1
+7.7 1.0.1
 =========
 
 *Fixes*
@@ -688,7 +698,7 @@ File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
 File: README.info,  Node: 100,  Prev: 101,  Up: Changelog
 
-7.7 1.0.0
+7.8 1.0.0
 =========
 
 First tagged version.
@@ -754,34 +764,35 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction984
-Node: Contents2392
-Node: Screenshots2549
-Node: Installation2786
-Node: MELPA2947
-Node: Manual installation3094
-Node: Usage3495
-Node: Examples4465
-Node: Group selectors7950
-Node: Keywords8912
-Node: Special selectors9653
-Node: Normal selectors13512
-Node: Tips18143
-Node: FAQ18994
-Node: Why are some items not displayed even though I used group selectors for them?19244
-Node: Why did a group disappear when I moved it to the end of the list?20115
-Node: Changelog20690
-Node: 1220905
-Node: 11123474
-Node: 1123643
-Node: 10325215
-Node: 10225426
-Node: 10125560
-Node: 10025898
-Node: Development26003
-Node: Bugs26405
-Node: Tests27058
-Node: Credits27377
+Node: Introduction1004
+Node: Contents2412
+Node: Screenshots2569
+Node: Installation2806
+Node: MELPA2967
+Node: Manual installation3114
+Node: Usage3515
+Node: Examples4485
+Node: Group selectors7970
+Node: Keywords8932
+Node: Special selectors9673
+Node: Normal selectors13532
+Node: Tips18163
+Node: FAQ19014
+Node: Why are some items not displayed even though I used group selectors for them?19264
+Node: Why did a group disappear when I moved it to the end of the list?20135
+Node: Changelog20710
+Node: 13-pre20945
+Node: 1221051
+Node: 11123635
+Node: 1123804
+Node: 10325376
+Node: 10225587
+Node: 10125721
+Node: 10026059
+Node: Development26164
+Node: Bugs26566
+Node: Tests27219
+Node: Credits27538
 
 End Tag Table
 
