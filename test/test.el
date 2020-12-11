@@ -69,7 +69,7 @@ Saves results of already-defined tests."
   ;; Don't fsync every time the result file is written, which is slow.
   (let ((write-region-inhibit-fsync t)
         (org-super-agenda-test-save-results t))
-    (ert-run-tests-batch "^org-super-agenda--")))
+    (ert-run-tests-batch "^org-super-agenda-test--")))
 
 (defun org-super-agenda-test--save-this-result ()
   "Save the result of this test."
