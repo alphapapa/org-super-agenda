@@ -69,7 +69,7 @@ Saves results of already-defined tests."
   ;; Don't fsync every time the result file is written, which is slow.
   (let ((write-region-inhibit-fsync t)
         (org-super-agenda-test-save-results t))
-    (ert-run-tests-batch "^org-super-agenda--")))
+    (ert-run-tests-batch "^org-super-agenda-test--")))
 
 (defun org-super-agenda-test--save-this-result ()
   "Save the result of this test."
@@ -565,6 +565,34 @@ already loaded."
   (should (org-super-agenda-test--run
            :groups '((:pred (lambda (item)
                               (s-contains? "moon" item)))))))
+
+(ert-deftest org-super-agenda-test--:property-only ()
+  ;; DONE: Works.
+  (should (org-super-agenda-test--run
+           :groups '((:property "Effort")))))
+
+(ert-deftest org-super-agenda-test--:property-list-without-value ()
+  ;; DONE: Works.
+  (should (org-super-agenda-test--run
+           :groups '((:property ("Effort"))))))
+
+(ert-deftest org-super-agenda-test--:property-list-with-value ()
+  ;; DONE: Works.
+  (should (org-super-agenda-test--run
+           :groups '((:property ("Effort" "5"))))))
+
+(ert-deftest org-super-agenda-test--:property-list-with-pred ()
+  ;; DONE: Works.
+  (should (org-super-agenda-test--run
+           :groups '((:property ("Effort" (lambda (v)
+					    (when v
+					      (<= (string-to-number v) 5)))))))))
+
+(ert-deftest org-super-agenda-test--:property-list-with-symbol ()
+  ;; DONE: Works.
+  (let ((debug-on-error nil))
+    (should-error (org-super-agenda-test--run
+                   :groups '((:property ("Effort" 'sym-not-allowed-here)))))))
 
 (ert-deftest org-super-agenda-test--:priority ()
   ;; DONE: Works.

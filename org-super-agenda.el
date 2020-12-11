@@ -663,6 +663,31 @@ available."
           (_ (cl-loop for fn in args
                       thereis (funcall fn item)))))
 
+(org-super-agenda--defgroup property
+  "Group items with a property, optionally matching a value.
+Argument may be a property name string, or a list of property
+name string and either value string or predicate with which to
+test the value."
+  :section-name (concat "Property: " (car args)
+                        (pcase (cadr args)
+                          (`nil nil)
+                          ((pred stringp) (concat ": " (cadr args)))
+                          ((and (pred functionp) (pred symbolp))
+                           (concat " matches predicate " (symbol-name (cadr args))))
+                          ((pred functionp) (concat " matches lambda predicate"))))
+  :test  (when-let* ((found-value
+		      (org-entry-get (org-super-agenda--get-marker item)
+				     (car-safe args)
+				     org-super-agenda-properties-inherit)))
+           (pcase (cadr args)
+             (`nil t)
+             ((pred stringp)
+              (string= (cadr args) found-value))
+             ((pred functionp)
+              (funcall (cadr args) found-value))
+             (_ ;; Oops
+              (user-error "Second element of list argument to `:property' selector may be only a string or predicate")))))
+
 (org-super-agenda--defgroup regexp
   "Group items that match any of the given regular expressions.
 Argument may be a string or list of strings, each of which should
