@@ -445,7 +445,7 @@ Wednesday   5 July 2017
  Scheduled earlier
   ambition:   Sched. 1x:  TODO [#A] Skype with president of Antarctica                             :universe:ambition:world::meetings:
 " "5db2acc8c5a09927fa8b6246b9480d69" "Headlines with TAGS match: Emacs
-Press `C-u r' to search again with new search string
+Press ‘C-u r’ to search again
 
  SOMEDAY items
   ideas:      SOMEDAY Rewrite Emacs in Common Lisp                                        :Emacs:elisp:computers:software:programming:
@@ -701,8 +701,8 @@ Wednesday   5 July 2017
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
   ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "ee86c7d11d20c4894e7956db5efce309" "Global list of TODO items of type: ALL
-Available with `N r': (0)[ALL] (1)TODO (2)TODAY (3)NEXT (4)STARTED (5)IN-PROGRESS (6)UNDERWAY (7)WAITING (8)SOMEDAY (9)MAYBE (10)CHECK
-                      (11)DONE (12)CANCELED
+Press ‘N r’ (e.g. ‘0 r’) to search again: (0)[ALL] (1)TODO (2)TODAY (3)NEXT (4)STARTED (5)IN-PROGRESS (6)UNDERWAY (7)WAITING
+                      (8)SOMEDAY (9)MAYBE (10)CHECK (11)DONE (12)CANCELED
 
  Items without deadlines
   ambition:   TODO [#A] Skype with president of Antarctica                                         :universe:ambition:world::meetings:
@@ -1863,13 +1863,6 @@ Wednesday   5 July 2017
 " "25b5f6da5442f760584293ee1a07e0e8" "Day-agenda (W27):
 Wednesday   5 July 2017
 
- Face: default
-  test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
-  ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
-  test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
-  ambition:   In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
-  ambition:   In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
-
  Face: org-agenda-calendar-sexp
   test:        7:02...... Sunrise (12:04 of daylight)
   test:       19:07...... Sunset 
@@ -1888,6 +1881,13 @@ Wednesday   5 July 2017
  Face: org-upcoming-deadline
   ambition:   In   2 d.:  TODO [#A] Take over the world                                                     :universe:ambition::world:
   ambition:   In  10 d.:  TODO [#A] Take over the universe                                                         :universe:ambition:
+
+ Face: org-upcoming-distant-deadline
+  test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
+  ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
+  ambition:   In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
+  ambition:   In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
 
  Face: org-warning
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
