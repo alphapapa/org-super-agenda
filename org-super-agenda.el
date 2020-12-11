@@ -679,12 +679,15 @@ test the value."
 		      (org-entry-get (org-super-agenda--get-marker item)
 				     (car-safe args)
 				     org-super-agenda-properties-inherit)))
-           (pcase (cadr args)
-             (`nil t)
-             ((pred stringp)
-              (string= (cadr args) found-value))
-             ((pred functionp)
-              (funcall (cadr args) found-value))
+           (pcase args
+             ((or (and property (pred stringp))
+                  `(,(and property (pred stringp)) . nil))
+              ;; Only property, no value given.
+              t)
+             (`(,property ,(and value (pred stringp)))
+              (string= value found-value))
+             (`(,property ,(and predicate (pred functionp)))
+              (funcall predicate found-value))
              (_ ;; Oops
               (user-error "Second element of list argument to `:property' selector may be only a string or predicate")))))
 
