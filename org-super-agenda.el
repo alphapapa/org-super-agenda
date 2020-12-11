@@ -675,17 +675,18 @@ test the value."
                           ((and (pred functionp) (pred symbolp))
                            (concat " matches predicate " (symbol-name (cadr args))))
                           ((pred functionp) (concat " matches lambda predicate"))))
-  :test  (let* ((found-value (org-entry-get (org-super-agenda--get-marker item)
-                                            (car-safe args)
-                                            org-super-agenda-properties-inherit)))
+  :test  (when-let* ((found-value
+		      (org-entry-get (org-super-agenda--get-marker item)
+				     (car-safe args)
+				     org-super-agenda-properties-inherit)))
            (pcase (cadr args)
-             (`nil nil)
+             (`nil t)
              ((pred stringp)
               (string= (cadr args) found-value))
              ((pred functionp)
               (funcall (cadr args) found-value))
              (_ ;; Oops
-              (user-error "List argument to `:property' must either be of length 1, or have either a string of a function as the second element")))))
+              (user-error "Second element of list argument to `:property' selector may be only a string or predicate")))))
 
 (org-super-agenda--defgroup regexp
   "Group items that match any of the given regular expressions.
