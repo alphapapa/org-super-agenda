@@ -566,27 +566,29 @@ already loaded."
            :groups '((:pred (lambda (item)
                               (s-contains? "moon" item)))))))
 
-(ert-deftest org-super-agenda-test--:property-list-val ()
-  ;; DONE: Works.
-  (should (org-super-agenda-test--run
-           :groups '((:property ("Effort" "5"))))))
-
-(ert-deftest org-super-agenda-test--:property-list-fun ()
-  ;; DONE: Works.
-  (should (org-super-agenda-test--run
-           :groups '((:property ("Effort" (lambda (v) (string= v "5"))))))))
-
-(ert-deftest org-super-agenda-test--:property-str ()
+(ert-deftest org-super-agenda-test--:property-only ()
   ;; DONE: Works.
   (should (org-super-agenda-test--run
            :groups '((:property "Effort")))))
 
-(ert-deftest org-super-agenda-test--:property-list ()
+(ert-deftest org-super-agenda-test--:property-list-without-value ()
   ;; DONE: Works.
   (should (org-super-agenda-test--run
            :groups '((:property ("Effort"))))))
 
-(ert-deftest org-super-agenda-test--:property-err-check ()
+(ert-deftest org-super-agenda-test--:property-list-with-value ()
+  ;; DONE: Works.
+  (should (org-super-agenda-test--run
+           :groups '((:property ("Effort" "5"))))))
+
+(ert-deftest org-super-agenda-test--:property-list-with-pred ()
+  ;; DONE: Works.
+  (should (org-super-agenda-test--run
+           :groups '((:property ("Effort" (lambda (v)
+					    (when v
+					      (<= (string-to-number v) 5)))))))))
+
+(ert-deftest org-super-agenda-test--:property-list-with-symbol ()
   ;; DONE: Works.
   (let ((debug-on-error nil))
     (should-error (org-super-agenda-test--run

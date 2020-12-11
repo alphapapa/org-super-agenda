@@ -1,4 +1,4 @@
-#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ("51a5664a5a65a46a38b52d518844dd08" "Day-agenda (W27):
+#s(hash-table size 97 test equal rehash-size 1.5 rehash-threshold 0.8125 data ("51a5664a5a65a46a38b52d518844dd08" "Day-agenda (W27):
 Wednesday   5 July 2017
   test:        7:02...... Sunrise (12:04 of daylight)
                8:00...... ----------------
@@ -1160,6 +1160,10 @@ Wednesday   5 July 2017
 " "e782d297fe34c306951019e1ef526cda" "Day-agenda (W27):
 Wednesday   5 July 2017
 
+ Property: Effort
+  test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
+  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
+
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
                8:00...... ----------------
@@ -1168,7 +1172,6 @@ Wednesday   5 July 2017
               12:00...... ----------------
               14:00...... ----------------
               16:00...... ----------------
-  test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
@@ -1177,7 +1180,6 @@ Wednesday   5 July 2017
   ambition:   In  10 d.:  TODO [#A] Take over the universe                                                         :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
   test:       Scheduled:  TODO [#B] Fix flux capacitor                                                  :spaceship:shopping:@computer:
-  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
   ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
@@ -1189,6 +1191,10 @@ Wednesday   5 July 2017
 " "31fecc75d5e0a7b47625d709eb31da33" "Day-agenda (W27):
 Wednesday   5 July 2017
 
+ Property: Effort
+  test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
+  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
+
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
                8:00...... ----------------
@@ -1197,7 +1203,6 @@ Wednesday   5 July 2017
               12:00...... ----------------
               14:00...... ----------------
               16:00...... ----------------
-  test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
               18:00...... ----------------
   test:       19:07...... Sunset 
               20:00...... ----------------
@@ -1206,7 +1211,6 @@ Wednesday   5 July 2017
   ambition:   In  10 d.:  TODO [#A] Take over the universe                                                         :universe:ambition:
   test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
   test:       Scheduled:  TODO [#B] Fix flux capacitor                                                  :spaceship:shopping:@computer:
-  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
   ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
