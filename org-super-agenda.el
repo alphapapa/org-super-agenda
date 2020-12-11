@@ -341,6 +341,9 @@ With prefix argument ARG, turn on if positive, otherwise off."
 
 ;;;; Group selectors
 
+;; TODO: Write TODOs for places to use this custom error.
+(define-error 'org-super-agenda-invalid-selector "Invalid org-super-agenda selector" 'user-error)
+
 (cl-defmacro org-super-agenda--defgroup (name docstring &key section-name test let*)
   "Define an agenda-item group function.
 NAME is a symbol that will be appended to `org-super-agenda--group-' to
@@ -689,7 +692,7 @@ test the value."
              (`(,property ,(and predicate (pred functionp)))
               (funcall predicate found-value))
              (_ ;; Oops
-              (user-error "Second element of list argument to `:property' selector may be only a string or predicate")))))
+              (signal 'org-super-agenda-invalid-selector (list (cons :property args)))))))
 
 (org-super-agenda--defgroup regexp
   "Group items that match any of the given regular expressions.
