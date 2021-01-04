@@ -215,6 +215,10 @@ See `format-time-string'."
   "Text properties added to group headers."
   :type 'plist)
 
+(defcustom org-super-agenda-hide-empty-group-headers nil
+  "If non-nil, hide group header when it has no items."
+  :type 'boolean)
+
 ;;;; Faces
 
 (defface org-super-agenda-header '((t (:inherit org-agenda-structure)))
@@ -341,10 +345,11 @@ With prefix argument ARG, turn on if positive, otherwise off."
         (hook-function (if org-super-agenda-mode #'add-hook #'remove-hook)))
     (funcall advice-function-filter-return #'org-agenda-finalize-entries
              #'org-super-agenda--filter-finalize-entries)
-    (funcall advice-function-after #'org-agenda-filter-apply
-             #'org-super-agenda--hide-or-show-groups)
-    (funcall hook-function 'org-agenda-finalize-hook
-             'org-super-agenda--hide-or-show-groups)
+    (when org-super-agenda-hide-empty-group-headers
+      (funcall advice-function-after #'org-agenda-filter-apply
+               #'org-super-agenda--hide-or-show-groups)
+      (funcall hook-function 'org-agenda-finalize-hook
+               'org-super-agenda--hide-or-show-groups))
 
     ;; Add variable to list of variables (see issue #22).
     (if org-super-agenda-mode
