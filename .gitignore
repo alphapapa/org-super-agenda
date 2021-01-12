@@ -1,5 +1,6 @@
 /.cask
 *.elc
+*~
 .#*
 /sandbox/
 /.sandbox/
