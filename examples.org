@@ -372,16 +372,14 @@ You could even fold certain groups by default, perhaps like this (this ~use-pack
     (defvar ap/org-super-agenda-auto-show-groups
       '("Schedule" "Bills" "Priority A items" "Priority B items"))
     
-    ;; NOTE: This only works in org-agenda-day-view
-    (defun ap/org-super-agenda-origami-fold-default ()
-      "Fold certain groups by default in Org Super Agenda buffer."
-      (forward-line 3)
-      (cl-loop do (origami-forward-toggle-node (current-buffer) (point))
-               while (origami-forward-fold-same-level (current-buffer) (point)))
-      (--each ap/org-super-agenda-auto-show-groups
-        (goto-char (point-min))
-        (when (re-search-forward (rx-to-string `(seq bol " " ,it)) nil t)
-          (origami-show-node (current-buffer) (point)))))
+   (defun ap/org-super-agenda-origami-fold-default ()
+     (forward-line 3)
+     (cl-loop do (origami-forward-toggle-node (current-buffer) (point))
+   	   while (numberp (org-agenda-forward-block)))
+     (--each ap/org-super-agenda-auto-show-groups
+       (goto-char (point-min))
+       (when (re-search-forward (rx-to-string `(seq bol " " ,it)) nil t)
+         (origami-show-node (current-buffer) (point)))))
 
     :hook ((org-agenda-mode . origami-mode)
            (org-agenda-finalize . ap/org-super-agenda-origami-fold-default)))
