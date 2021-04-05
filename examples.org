@@ -371,7 +371,8 @@ You could even fold certain groups by default, perhaps like this (this ~use-pack
 
     (defvar ap/org-super-agenda-auto-show-groups
       '("Schedule" "Bills" "Priority A items" "Priority B items"))
-
+    
+    ;; NOTE: This only works in org-agenda-day-view
     (defun ap/org-super-agenda-origami-fold-default ()
       "Fold certain groups by default in Org Super Agenda buffer."
       (forward-line 3)
