@@ -437,8 +437,9 @@ match items that have no deadline), `past` (to match items with a
 deadline in the past), `today' (to match items whose deadline is
 today), or `future' (to match items with a deadline in the
 future).  Argument may also be given like `before DATE' or `after
-DATE', where DATE is a date string that
-`org-time-string-to-absolute' can process."
+DATE', where DATE is a date string that `org-read-date' can
+process.  Note that relative dates are supported, e.g. `before
++3d' means in the next two days."
   :section-name (pcase (car args)
                   ('t "Deadline items")
                   ('nil "Items without deadlines")
@@ -453,7 +454,7 @@ DATE', where DATE is a date string that
                    (org-today))))
          (target-date (pcase (car args)
                         ((or 'before 'on 'after)
-                         (org-time-string-to-absolute (cadr args))))))
+                         (org-time-string-to-absolute (org-read-date nil nil (cadr args)))))))
   :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
           (let ((entry-time (org-entry-get (point) "DEADLINE")))
             (pcase (car args)
@@ -474,8 +475,9 @@ Argument can be `t' (to match items scheduled for any date),
 items scheduled for the past), `today' (to match items scheduled
 for today), or `future' (to match items scheduled for the
 future).  Argument may also be given like `before DATE' or `after
-DATE', where DATE is a date string that
-`org-time-string-to-absolute' can process."
+DATE', where DATE is a date string that `org-read-date' can
+process.  Note that relative dates are supported, e.g. `before
++3d' means in the next two days."
   :section-name (pcase (car args)
                   ('t "Scheduled items")
                   ('nil "Unscheduled items ")
@@ -490,7 +492,7 @@ DATE', where DATE is a date string that
                    (org-today))))
          (target-date (pcase (car args)
                         ((or 'before 'on 'after)
-                         (org-time-string-to-absolute (cadr args))))))
+                         (org-time-string-to-absolute (org-read-date nil nil (cadr args)))))))
   :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
           (let ((entry-time (org-entry-get (point) "SCHEDULED")))
             (pcase (car args)

@@ -415,7 +415,7 @@ list.
      ‘today’ (to match items whose deadline is today), or ‘future’ (to
      match items with a deadline in the future).  Argument may also be
      given like ‘before DATE’ or ‘after DATE’ where DATE is a date
-     string that ‘org-time-string-to-absolute’ can process.
+     string that ‘org-read-date’ can process.
 ‘:effort<’
      Group items that are less than (or equal to) the given effort.
      Argument is a time-duration string, like ‘5’ or ‘0:05’ for 5
