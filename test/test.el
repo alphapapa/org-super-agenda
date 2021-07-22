@@ -268,8 +268,8 @@ already loaded."
                   ;; HACK: Look for test.org in either dir, so it works interactively and
                   ;; in batch tests.  This is ugly, but I don't know how else to do it.
                   (org-agenda-files (list (if (file-exists-p "test/test.org")
-                                              "test/test.org"
-                                            "test.org")))
+                                              (expand-file-name "test/test.org")
+                                            (expand-file-name "test.org"))))
                   ,@(if let*
                         let*
                       `((ignore nil)))
