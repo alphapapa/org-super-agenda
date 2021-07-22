@@ -268,8 +268,8 @@ already loaded."
                   ;; HACK: Look for test.org in either dir, so it works interactively and
                   ;; in batch tests.  This is ugly, but I don't know how else to do it.
                   (org-agenda-files (list (if (file-exists-p "test/test.org")
-                                              "test/test.org"
-                                            "test.org")))
+                                              (expand-file-name "test/test.org")
+                                            (expand-file-name "test.org"))))
                   ,@(if let*
                         let*
                       `((ignore nil)))
@@ -727,6 +727,24 @@ already loaded."
   ;; DONE: Works otherwise.
   (should (org-super-agenda-test--run
            :groups '((:not (:todo t))))))
+
+(ert-deftest org-super-agenda-test--with-retained-sorting ()
+  (should (org-super-agenda-test--run
+           :groups '((:name "Ambitions vs Bills with retained sorting"
+                            :and (:todo "TODO" :priority>= "B" :tag "ambition")
+                            :and (:todo "TODO" :priority>= "B" :tag "bills")
+                            :discard (:anything)))
+           :let* ((org-agenda-sorting-strategy '(priority-down tag-down))
+                  (org-super-agenda-retain-sorting t)))))
+
+(ert-deftest org-super-agenda-test--without-retained-sorting ()
+  (should (org-super-agenda-test--run
+           :groups '((:name "Ambitions vs Bills without retained sorting"
+                            :and (:todo "TODO" :priority>= "B" :tag "ambition")
+                            :and (:todo "TODO" :priority>= "B" :tag "bills")
+                            :discard (:anything)))
+           :let* ((org-agenda-sorting-strategy '(priority-down tag-down))
+                  (org-super-agenda-retain-sorting nil)))))
 
 (ert-deftest org-super-agenda-test--:order ()
   ;; DONE: Works.
