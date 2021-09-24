@@ -382,6 +382,12 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
 ‘:order-multi’
      Set the order of multiple groups at once, like ‘(:order-multi (2
      (groupA) (groupB) ...))’ to set the order of these groups to 2.
+‘:take’
+     Take the first N items in GROUP. If N is negative, take the last N
+     items.  For example, ‘(:take (-3 group))’ will take the last 3
+     items from the group.  The remainder of items are discarded.  Note:
+     The order of entries from GROUP is not guaranteed to be preserved,
+     so ‘:take’ may not always show expected entries.
 
 
 File: README.info,  Node: Normal selectors,  Prev: Special selectors,  Up: Group selectors
@@ -568,6 +574,9 @@ File: README.info,  Node: 13-pre,  Next: 12,  Up: Changelog
    • Selector ‘:property’, which groups items with a property,
      optionally also matching a value or predicate.  (Thanks to Per
      Weijnitz (https://github.com/weipe).)
+   • Special selector ‘:take’, which limits the number of items
+     displayed in a group.  (Thanks to Pete Kazmier
+     (https://github.com/pkazmier).)
 
 
 File: README.info,  Node: 12,  Next: 111,  Prev: 13-pre,  Up: Changelog
@@ -782,24 +791,24 @@ Node: Examples4485
 Node: Group selectors7970
 Node: Keywords8932
 Node: Special selectors9673
-Node: Normal selectors13532
-Node: Tips18394
-Node: FAQ19245
-Node: Why are some items not displayed even though I used group selectors for them?19495
-Node: Why did a group disappear when I moved it to the end of the list?20366
-Node: Changelog20941
-Node: 13-pre21176
-Node: 1221453
-Node: 11124037
-Node: 1124206
-Node: 10325778
-Node: 10225989
-Node: 10126123
-Node: 10026461
-Node: Development26566
-Node: Bugs26968
-Node: Tests27621
-Node: Credits27940
+Node: Normal selectors13891
+Node: Tips18753
+Node: FAQ19604
+Node: Why are some items not displayed even though I used group selectors for them?19854
+Node: Why did a group disappear when I moved it to the end of the list?20725
+Node: Changelog21300
+Node: 13-pre21535
+Node: 1221971
+Node: 11124555
+Node: 1124724
+Node: 10326296
+Node: 10226507
+Node: 10126641
+Node: 10026979
+Node: Development27084
+Node: Bugs27486
+Node: Tests28139
+Node: Credits28458
 
 End Tag Table
 
