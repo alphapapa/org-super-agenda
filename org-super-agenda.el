@@ -1124,9 +1124,9 @@ see."
 
 (cl-defun org-super-agenda--group-dispatch-take (items (n &rest group))
   "Take N ITEMS that match selectors in GROUP.
-If N is positive, take the first N items, otherwise take the last N items. Note:
-the ordering of entries is not guarateed to be preserved, so this may not always
-show the expected results."
+If N is positive, take the first N items, otherwise take the last N items.
+Note: the ordering of entries is not guaranteed to be preserved, so this may
+not always show the expected results."
   (-let* (((name non-matching matching) (org-super-agenda--group-dispatch items group))
           (take-fn (if (cl-minusp n) #'-take-last #'-take))
           (placement (if (cl-minusp n) "Last" "First"))
