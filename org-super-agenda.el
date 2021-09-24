@@ -1122,6 +1122,19 @@ see."
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
                                               :not 'org-super-agenda--group-dispatch-not))
 
+(cl-defun org-super-agenda--group-dispatch-take (items (n &rest group))
+  "Take N ITEMS that match selectors in GROUP.
+If N is positive, take the first N items, otherwise take the last N items.
+Note: the ordering of entries is not guaranteed to be preserved, so this may
+not always show the expected results."
+  (-let* (((name non-matching matching) (org-super-agenda--group-dispatch items group))
+          (take-fn (if (cl-minusp n) #'-take-last #'-take))
+          (placement (if (cl-minusp n) "Last" "First"))
+          (name (format "%s %d %s" placement (abs n) name)))
+    (list name non-matching (funcall take-fn (abs n) matching))))
+(setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
+                                              :take 'org-super-agenda--group-dispatch-take))
+
 (defun org-super-agenda--group-dispatch-discard (items group)
   "Discard ITEMS that match GROUP.
 Any groups processed after this will not see these items."
