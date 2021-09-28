@@ -209,6 +209,12 @@ See `format-time-string'."
   "Text properties added to group headers."
   :type 'plist)
 
+(defcustom org-super-agenda-hide-empty-groups nil
+  "Hide empty groups.
+Note that `org-super-agenda-mode' must be toggled for this option
+to take effect."
+  :type 'boolean)
+
 ;;;; Faces
 
 (defface org-super-agenda-header '((t (:inherit org-agenda-structure)))
@@ -321,15 +327,29 @@ marker."
   "Global minor mode to group items in Org agenda views according to `org-super-agenda-groups'.
 With prefix argument ARG, turn on if positive, otherwise off."
   :global t
-  (let ((advice-function (if org-super-agenda-mode
-                             (lambda (to fn)
-                               ;; Enable mode
-                               (advice-add to :filter-return fn))
-                           (lambda (from fn)
-                             ;; Disable mode
-                             (advice-remove from fn)))))
-    (funcall advice-function #'org-agenda-finalize-entries
+  (let ((advice-function-filter-return (if org-super-agenda-mode
+                                           (lambda (to fn)
+                                             ;; Enable mode
+                                             (advice-add to :filter-return fn))
+                                         (lambda (from fn)
+                                           ;; Disable mode
+                                           (advice-remove from fn))))
+        (advice-function-after (if org-super-agenda-mode
+                                   (lambda (to fn)
+                                     ;; Enable mode
+                                     (advice-add to :after fn))
+                                 (lambda (from fn)
+                                   ;; Disable mode
+                                   (advice-remove from fn))))
+        (hook-function (if org-super-agenda-mode #'add-hook #'remove-hook)))
+    (funcall advice-function-filter-return #'org-agenda-finalize-entries
              #'org-super-agenda--filter-finalize-entries)
+    (when org-super-agenda-hide-empty-groups
+      (funcall advice-function-after #'org-agenda-filter-apply
+               #'org-super-agenda--hide-or-show-groups)
+      (funcall hook-function 'org-agenda-finalize-hook
+               'org-super-agenda--hide-or-show-groups))
+
     ;; Add variable to list of variables (see issue #22).
     (if org-super-agenda-mode
         (add-to-list 'org-agenda-local-vars 'org-super-agenda-groups)
@@ -1178,7 +1198,7 @@ actually the ORDER for the groups."
 (setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
                                                      :order-multi 'org-super-agenda--transform-group-order))
 
-;;;; Finalize filter
+;;;; Filters
 
 (defun org-super-agenda--filter-finalize-entries (string)
   "Filter STRING through `org-super-agenda--group-items'.
@@ -1188,6 +1208,51 @@ STRING should be that returned by `org-agenda-finalize-entries'"
        org-super-agenda--group-items
        (-remove #'s-blank-str? it)
        (s-join "\n" it)))
+
+(defun org-super-agenda--hide-or-show-groups (&rest _)
+  "Hide/Show any empty/non-empty groups.
+Should be done after `org-agenda-finalize' or
+`org-agenda-filter-apply' is called."
+  (cl-labels ((header-p () (org-get-at-bol 'org-super-agenda-header))
+              (grid-p () (not (cl-intersection
+                               '(org-agenda-structural-header org-agenda-date-header org-super-agenda-header type)
+                               (text-properties-at (point-at-bol)))))
+              (group-item-visible-p () (and (org-get-at-bol 'type) (not (org-get-at-bol 'invisible))))
+              (next-header
+               () (let ((hide-p t) header grid-end)
+                    (while (not (or (bobp) header))
+                      (cond ((header-p)
+                             (setq header (list (1- (or (previous-single-property-change
+                                                         (point-at-eol) 'org-super-agenda-header)
+                                                        (1+ (point-min))))
+                                                (or grid-end (point-at-eol))
+                                                hide-p)))
+                            ((group-item-visible-p)
+                             (setq hide-p nil))
+                            ((and (grid-p) (not grid-end))
+                             (setq grid-end (point-at-eol))))
+                      (beginning-of-line 0))
+                    header))
+              (hide-or-show-header
+               (header) (when header
+                          (cl-loop
+                           with (start end hide-p) = header
+                           with props = '(invisible org-filtered org-filter-type org-super-agenda-filtered)
+                           initially do (goto-char end)
+                           while (and start (> (point) start))
+                           do (when (or (grid-p) (header-p))
+                                (let ((beg (1- (point-at-bol)))
+                                      (end (point-at-eol)))
+                                  (if hide-p
+                                      (add-text-properties beg end props)
+                                    (remove-text-properties beg end props))))
+                           (beginning-of-line 0)))))
+    (let ((inhibit-read-only t))
+      (save-excursion
+        (goto-char (point-max))
+        (beginning-of-line 0)
+        (while (not (bobp))
+          (hide-or-show-header (next-header)))))))
 
 ;;;; Footer
 

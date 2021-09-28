@@ -577,6 +577,9 @@ File: README.info,  Node: 13-pre,  Next: 12,  Up: Changelog
    • Special selector ‘:take’, which limits the number of items
      displayed in a group.  (Thanks to Pete Kazmier
      (https://github.com/pkazmier).)
+   • Option ‘org-super-agenda-hide-empty-groups’, which hides empty
+     groups.  (Thanks to Christian Schwarzgruber
+     (https://github.com/cslux).)
 
 
 File: README.info,  Node: 12,  Next: 111,  Prev: 13-pre,  Up: Changelog
@@ -798,17 +801,17 @@ Node: Why are some items not displayed even though I used group selectors for th
 Node: Why did a group disappear when I moved it to the end of the list?20725
 Node: Changelog21300
 Node: 13-pre21535
-Node: 1221971
-Node: 11124555
-Node: 1124724
-Node: 10326296
-Node: 10226507
-Node: 10126641
-Node: 10026979
-Node: Development27084
-Node: Bugs27486
-Node: Tests28139
-Node: Credits28458
+Node: 1222128
+Node: 11124712
+Node: 1124881
+Node: 10326453
+Node: 10226664
+Node: 10126798
+Node: 10027136
+Node: Development27241
+Node: Bugs27643
+Node: Tests28296
+Node: Credits28615
 
 End Tag Table
 
