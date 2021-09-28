@@ -215,19 +215,12 @@ Note that `org-super-agenda-mode' must be toggled for this option
 to take effect."
   :type 'boolean)
 
-(defcustom org-super-agenda-retain-sorting nil
-  "When non-nil org-agenda's original sorting of entries will be retained.
-When creating a group from multiple selectors the original sorting of items, as
-determined by `org-agenda-sorting-strategy' will no longer hold for the entire
-list since super-agenda creates its groups by first selecting all items that
-match the first selector, then it appends those matching the second, then the
-third etc.  So in practice only consecutive subsets of a super-agenda group will
-be sorted as they were originally.
-
-When this option is non-nil the original sorting is retained by sorting all of
-the matched items *again*.  The additional costs of this procedure may range
-from negligible to considerable, depending on the number of matched items to
-sort."
+(defcustom org-super-agenda-keep-order nil
+  "Keep items' original sort order.
+When multiple selectors are used, items' sort order may be
+changed by the grouping process.  This option re-sorts items
+after grouping.  The cost of this may range from negligible to
+considerable, depending on the number of items."
   :type 'boolean)
 
 ;;;; Faces
@@ -836,7 +829,7 @@ The string should be the priority cookie letter, e.g. \"A\".")
                  for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
                  for (auto-section-name non-matching matching) = (org-super-agenda--group-dispatch all-items filter)
 
-                 do (when org-super-agenda-retain-sorting
+                 do (when org-super-agenda-keep-order
                       (setf matching (sort matching #'org-entries-lessp)))
 
                  ;; Transformer
