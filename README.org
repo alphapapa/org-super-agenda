@@ -244,6 +244,7 @@ As explained in the usage instructions and shown in the example, items are colle
 +  Selector ~:property~, which groups items with a property, optionally also matching a value or predicate.  (Thanks to [[https://github.com/weipe][Per Weijnitz]].)
 +  Special selector ~:take~, which limits the number of items displayed in a group.  (Thanks to [[https://github.com/pkazmier][Pete Kazmier]].)
 +  Option ~org-super-agenda-hide-empty-groups~, which hides empty groups.  (Thanks to [[https://github.com/cslux][Christian Schwarzgruber]].)
++  Optioin ~org-super-agenda-keep-order~, which re-sorts items after grouping to preserve their original sort order.  (Thanks to [[https://github.com/Alexander-Miller][Alexander-Miller]].)
 
 ** 1.2
 

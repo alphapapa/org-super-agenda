@@ -580,6 +580,9 @@ File: README.info,  Node: 13-pre,  Next: 12,  Up: Changelog
    • Option ‘org-super-agenda-hide-empty-groups’, which hides empty
      groups.  (Thanks to Christian Schwarzgruber
      (https://github.com/cslux).)
+   • Optioin ‘org-super-agenda-keep-order’, which re-sorts items after
+     grouping to preserve their original sort order.  (Thanks to
+     Alexander-Miller (https://github.com/Alexander-Miller).)
 
 
 File: README.info,  Node: 12,  Next: 111,  Prev: 13-pre,  Up: Changelog
@@ -801,17 +804,17 @@ Node: Why are some items not displayed even though I used group selectors for th
 Node: Why did a group disappear when I moved it to the end of the list?20725
 Node: Changelog21300
 Node: 13-pre21535
-Node: 1222128
-Node: 11124712
-Node: 1124881
-Node: 10326453
-Node: 10226664
-Node: 10126798
-Node: 10027136
-Node: Development27241
-Node: Bugs27643
-Node: Tests28296
-Node: Credits28615
+Node: 1222332
+Node: 11124916
+Node: 1125085
+Node: 10326657
+Node: 10226868
+Node: 10127002
+Node: 10027340
+Node: Development27445
+Node: Bugs27847
+Node: Tests28500
+Node: Credits28819
 
 End Tag Table
 

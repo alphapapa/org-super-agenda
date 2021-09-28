@@ -215,6 +215,14 @@ Note that `org-super-agenda-mode' must be toggled for this option
 to take effect."
   :type 'boolean)
 
+(defcustom org-super-agenda-keep-order nil
+  "Keep items' original sort order.
+When multiple selectors are used, items' sort order may be
+changed by the grouping process.  This option re-sorts items
+after grouping.  The cost of this may range from negligible to
+considerable, depending on the number of items."
+  :type 'boolean)
+
 ;;;; Faces
 
 (defface org-super-agenda-header '((t (:inherit org-agenda-structure)))
@@ -820,6 +828,9 @@ The string should be the priority cookie letter, e.g. \"A\".")
                  for custom-section-name = (plist-get filter :name)
                  for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
                  for (auto-section-name non-matching matching) = (org-super-agenda--group-dispatch all-items filter)
+
+                 do (when org-super-agenda-keep-order
+                      (setf matching (sort matching #'org-entries-lessp)))
 
                  ;; Transformer
                  for transformer = (plist-get filter :transformer)
