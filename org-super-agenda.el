@@ -1211,13 +1211,12 @@ STRING should be that returned by `org-agenda-finalize-entries'"
 
 (defun org-super-agenda--hide-or-show-groups (&rest _)
   "Hide/Show any empty/non-empty groups.
-This is happens after `org-agenda-finalize' or `org-agenda-filter-apply' was called."
+Should be done after `org-agenda-finalize' or
+`org-agenda-filter-apply' is called."
   (cl-labels ((header-p () (org-get-at-bol 'org-super-agenda-header))
-              (grid-p () (not (let ((props (text-properties-at (point-at-bol))))
-                                (or (member 'org-agenda-structural-header props)
-                                    (member 'org-agenda-date-header props)
-                                    (member 'type props)
-                                    (member 'org-super-agenda-header props)))))
+              (grid-p () (not (cl-intersection
+                               '(org-agenda-structural-header org-agenda-date-header org-super-agenda-header type)
+                               (text-properties-at (point-at-bol)))))
               (group-item-visible-p () (and (org-get-at-bol 'type) (not (org-get-at-bol 'invisible))))
               (next-header
                () (let ((hide-p t) header grid-end)
@@ -1238,7 +1237,7 @@ This is happens after `org-agenda-finalize' or `org-agenda-filter-apply' was cal
                 (when header
                   (cl-loop
                      with (start end hide-p) = header
-                     with props = `(invisible org-filtered org-filter-type org-super-agenda-filtered)
+                     with props = '(invisible org-filtered org-filter-type org-super-agenda-filtered)
                      initially do (goto-char end)
                      while (and start (> (point) start))
                      do (when (or (grid-p) (header-p))
