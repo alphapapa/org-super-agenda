@@ -1233,20 +1233,20 @@ Should be done after `org-agenda-finalize' or
                              (setq grid-end (point-at-eol))))
                       (beginning-of-line 0))
                     header))
-              (hide-or-show-header (header)
-                (when header
-                  (cl-loop
-                     with (start end hide-p) = header
-                     with props = '(invisible org-filtered org-filter-type org-super-agenda-filtered)
-                     initially do (goto-char end)
-                     while (and start (> (point) start))
-                     do (when (or (grid-p) (header-p))
-                          (let ((beg (1- (point-at-bol)))
-                                (end (point-at-eol)))
-                            (if hide-p
-                                (add-text-properties beg end props)
-                              (remove-text-properties beg end props))))
-                       (beginning-of-line 0)))))
+              (hide-or-show-header
+               (header) (when header
+                          (cl-loop
+                           with (start end hide-p) = header
+                           with props = '(invisible org-filtered org-filter-type org-super-agenda-filtered)
+                           initially do (goto-char end)
+                           while (and start (> (point) start))
+                           do (when (or (grid-p) (header-p))
+                                (let ((beg (1- (point-at-bol)))
+                                      (end (point-at-eol)))
+                                  (if hide-p
+                                      (add-text-properties beg end props)
+                                    (remove-text-properties beg end props))))
+                           (beginning-of-line 0)))))
     (let ((inhibit-read-only t))
       (save-excursion
         (goto-char (point-max))
