@@ -1198,7 +1198,7 @@ actually the ORDER for the groups."
 (setq org-super-agenda-group-transformers (plist-put org-super-agenda-group-transformers
                                                      :order-multi 'org-super-agenda--transform-group-order))
 
-;;;; Finalize filter
+;;;; Filters
 
 (defun org-super-agenda--filter-finalize-entries (string)
   "Filter STRING through `org-super-agenda--group-items'.
@@ -1209,7 +1209,6 @@ STRING should be that returned by `org-agenda-finalize-entries'"
        (-remove #'s-blank-str? it)
        (s-join "\n" it)))
 
-;;;; Hide/Show filter
 (defun org-super-agenda--hide-or-show-groups (&rest _)
   "Hide/Show any empty/non-empty groups.
 This is happens after `org-agenda-finalize' or `org-agenda-filter-apply' was called."
@@ -1220,19 +1219,21 @@ This is happens after `org-agenda-finalize' or `org-agenda-filter-apply' was cal
                                     (member 'type props)
                                     (member 'org-super-agenda-header props)))))
               (group-item-visible-p () (and (org-get-at-bol 'type) (not (org-get-at-bol 'invisible))))
-              (next-header () (let ((hide-p t) header grid-end)
-                                (while (not (or (bobp) header))
-                                  (cond ((header-p)
-                                         (setq header (list (1- (or (previous-single-property-change (point-at-eol) 'org-super-agenda-header)
-                                                                    (1+ (point-min))))
-                                                            (or grid-end (point-at-eol))
-                                                            hide-p)))
-                                        ((group-item-visible-p)
-                                         (setq hide-p nil))
-                                        ((and (grid-p) (not grid-end))
-                                         (setq grid-end (point-at-eol))))
-                                  (beginning-of-line 0))
-                                header))
+              (next-header
+               () (let ((hide-p t) header grid-end)
+                    (while (not (or (bobp) header))
+                      (cond ((header-p)
+                             (setq header (list (1- (or (previous-single-property-change
+                                                         (point-at-eol) 'org-super-agenda-header)
+                                                        (1+ (point-min))))
+                                                (or grid-end (point-at-eol))
+                                                hide-p)))
+                            ((group-item-visible-p)
+                             (setq hide-p nil))
+                            ((and (grid-p) (not grid-end))
+                             (setq grid-end (point-at-eol))))
+                      (beginning-of-line 0))
+                    header))
               (hide-or-show-header (header)
                 (when header
                   (cl-loop
