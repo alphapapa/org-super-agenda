@@ -78,6 +78,12 @@ If I don't, the frobnicator will probably fall off halfway to Mars...
 
 Gotta buy one first, though.
 
+** NEXT Meet with the Elder Council                            :appointment:
+<2021-10-03 So>
+** NEXT Time Travellers' Convention                            :appointment:
+<1566-10-05 Mo>
+** NEXT Release the Kraken                                     :appointment:
+<2017-07-08 Mo>
 ** Recurring
 :PROPERTIES:
 :agenda-group: recurring
