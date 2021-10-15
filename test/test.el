@@ -18,6 +18,7 @@
 ;;;; Variables
 
 (defconst org-super-agenda-test-date "2017-07-05 12:00")
+(defconst org-super-agenda-test-date-internal (org-read-date t t org-super-agenda-test-date))
 (defvar org-super-agenda-test-results (ht-create))
 (defvar org-super-agenda-test-save-results nil)
 (defvar org-super-agenda-test-show-results nil)
@@ -57,6 +58,31 @@
 
 (defun org-super-agenda-test--diary-sunset ()
   (cl-second (org-super-agenda-test--diary-sunrise-sunset-split)))
+
+
+;;;; Relative dates
+
+(defun org-read-date-around (orig-fun &optional with-time to-time from-string
+                                      prompt default-time default-input inactive)
+  "Workaround for allowing the check of relative date to and
+arbitrary fixed date: ~org-super-agenda-test-date-internal~"
+  ;;; not very lispy... I known I do not kwnow
+  (when (string-prefix-p "+" from-string)
+    (setq from-string (concat "+" from-string)
+          default-time org-super-agenda-test-date-internal)
+    (message "org-read-date-around: Active workaround for relative date check for +"))
+  (when (string-prefix-p "-" from-string)
+    (setq from-string (concat "-" from-string)
+          default-time org-super-agenda-test-date-internal)
+    (message "org-read-date-around: Active workaround for relative date check for -"))
+    (apply orig-fun with-time to-time from-string
+         prompt default-time default-input inactive))
+
+;;; FIXME the advice is enabled globally because
+;;; org-super-agenda-test--run-this-test execute only part of the the ert test
+;;; definition and we use all the test definition for unwind-protect, anyway due
+;;; to the conditional it will not break anything in current tests
+(advice-add 'org-read-date :around #'org-read-date-around)
 
 ;;;; Commands
 
@@ -525,10 +551,26 @@ already loaded."
   ;; DONE: Works.
   (should (org-super-agenda-test--run
            :groups '((:deadline (before "2017-07-10"))))))
+(ert-deftest org-super-agenda-test--:deadline-before-relative ()
+  ;; DONE: Works.
+  ;;; not very lispy... I known I do not kwnow probably it should be
+  ;;; refactored as a macro
+  (unwind-protect
+      (progn (advice-add 'org-read-date :around #'org-read-date-around)
+             (should (org-super-agenda-test--run
+                      :groups '((:deadline (before "+5d"))))))
+    (advice-remove 'org-read-date #'org-read-date-around)))
 (ert-deftest org-super-agenda-test--:deadline-after ()
   ;; DONE: Works.
   (should (org-super-agenda-test--run
            :groups '((:deadline (after "2017-07-10"))))))
+(ert-deftest org-super-agenda-test--:deadline-after-relative ()
+  ;; DONE: Works.
+  (unwind-protect
+      (progn (advice-add 'org-read-date :around #'org-read-date-around)
+             (should (org-super-agenda-test--run
+                      :groups '((:deadline (after "+5d"))))))
+    (advice-remove 'org-read-date #'org-read-date-around)))
 
 (ert-deftest org-super-agenda-test--:effort< ()
   ;; DONE: Works.
@@ -646,10 +688,24 @@ already loaded."
   ;; DONE: Works.
   (should (org-super-agenda-test--run
            :groups '((:scheduled (before "2017-07-05"))))))
+(ert-deftest org-super-agenda-test--:scheduled-before-relative ()
+  ;; DONE: Works.
+  (unwind-protect
+      (progn (advice-add 'org-read-date :around #'org-read-date-around)
+             (should (org-super-agenda-test--run
+                      :groups '((:scheduled (before "-0d"))))))
+    (advice-remove 'org-read-date #'org-read-date-around)))
 (ert-deftest org-super-agenda-test--:scheduled-after ()
   ;; DONE: Works.
   (should (org-super-agenda-test--run
            :groups '((:scheduled (after "2017-07-04"))))))
+(ert-deftest org-super-agenda-test--:scheduled-after-relative ()
+  ;; DONE: Works.
+  (unwind-protect
+      (progn (advice-add 'org-read-date :around #'org-read-date-around)
+             (should (org-super-agenda-test--run
+                      :groups '((:scheduled (after "-1d")))))))
+  (advice-remove 'org-read-date #'org-read-date-around))
 
 (ert-deftest org-super-agenda-test--:tag ()
   ;; DONE: Works.
