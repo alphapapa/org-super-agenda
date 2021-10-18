@@ -198,6 +198,12 @@ to fill window width, and a newline is added."
   "String prepended to group headers."
   :type 'string)
 
+(defcustom org-super-agenda-final-group-separator ""
+  "Separator inserted after final agenda group.
+If a character, it is repeated to fill window width, and a
+newline is added."
+  :type '(choice character string))
+
 (defcustom org-super-agenda-date-format "%e %B %Y"
   "Format string for date headers.
 See `format-time-string'."
@@ -1221,7 +1227,10 @@ STRING should be that returned by `org-agenda-finalize-entries'"
        (split-string it "\n" 'omit-nulls)
        org-super-agenda--group-items
        (-remove #'s-blank-str? it)
-       (s-join "\n" it)))
+       (s-join "\n" it)
+       (concat it (cl-etypecase org-super-agenda-final-group-separator
+                    (character (concat "\n" (make-string (window-width) org-super-agenda-final-group-separator)))
+                    (string org-super-agenda-final-group-separator)))))
 
 (defun org-super-agenda--hide-or-show-groups (&rest _)
   "Hide/Show any empty/non-empty groups.

@@ -245,6 +245,7 @@ As explained in the usage instructions and shown in the example, items are colle
 +  Option ~org-super-agenda-hide-empty-groups~, which hides empty groups.  (Thanks to [[https://github.com/cslux][Christian Schwarzgruber]].)
 +  Option ~org-super-agenda-keep-order~, which re-sorts items after grouping to preserve their original sort order.  (Thanks to [[https://github.com/Alexander-Miller][Alexander-Miller]].)
 +  Selector ~:auto-ts~ may be given the argument ~reverse~ to sort the groups newest-first.
++  Option ~org-super-agenda-final-group-separator~, which is a separator inserted after the final agenda group.  (Thanks to [[https://github.com/funnell][Tyler Funnell]].)
 
 ** 1.2
 
