@@ -2,7 +2,6 @@
 
 #+PROPERTY: LOGGING nil
 
-#+HTML: <a href="https://alphapapa.github.io/dont-tread-on-emacs/"><img src="images/dont-tread-on-emacs-150.png" align="right"></a>
 #+HTML: <a href="https://melpa.org/#/org-super-agenda"><img src="https://melpa.org/packages/org-super-agenda-badge.svg"></a> <a href="https://stable.melpa.org/#/org-super-agenda"><img src="https://stable.melpa.org/packages/org-super-agenda-badge.svg"></a>
 
 * Introduction
