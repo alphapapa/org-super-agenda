@@ -282,6 +282,13 @@ I don't know when I'll get to this, so it's undated.
             (org-super-agenda-groups
              '((:scheduled (before "2017-07-06")))))
         (org-agenda nil "a")))
+
+    (with-org-today-date "2017-07-05 00:00"
+      (let ((org-agenda-files (list "~/src/org-super-agenda/test/test.org"))
+            (org-agenda-span 'day)
+            (org-super-agenda-groups
+             '((:scheduled (before "+2d")))))
+        (org-agenda nil "a")))
 #+END_SRC
 
 #+BEGIN_SRC elisp
