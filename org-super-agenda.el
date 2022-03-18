@@ -450,13 +450,7 @@ agenda time-grid. "
               ;; This property is a string; if empty, it doesn't match
               (not (string-empty-p it)))
             ;; This property is nil if it doesn't match
-            (org-find-text-property-in-string 'time-of-day item)
-            (--when-let (org-find-text-property-in-string 'dotime item)
-              ;; For this to match, the 'dotime property must be set, and
-              ;; it must not be equal to 'time.  If it is not set, or if
-              ;; it is set and is equal to 'time, the item is not part of
-              ;; the time-grid.  Yes, this is confusing.  :)
-              (not (eql it 'time)))))
+            (org-find-text-property-in-string 'time-of-day item)))
 
 (org-super-agenda--defgroup deadline
   "Group items that have a deadline.
