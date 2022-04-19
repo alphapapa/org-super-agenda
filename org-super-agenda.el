@@ -235,7 +235,7 @@ considerable, depending on the number of items."
   (declare (indent defun) (debug (form body)))
   (org-with-gensyms (marker)
     `(let ((,marker ,form))
-       (when (markerp ,marker)
+       (when (and (markerp ,marker) (marker-buffer ,marker))
          (with-current-buffer (marker-buffer ,marker)
            (save-excursion
              (goto-char ,marker)
