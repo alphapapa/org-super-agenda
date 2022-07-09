@@ -240,13 +240,8 @@ Of course, you could also write that as a standard agenda command with the  [[ht
 What if you wanted to group tasks that are due before the end of the current month?  You could use something like this:
 
 #+BEGIN_SRC elisp
-  (-let* (((sec minute hour day month year dow dst utcoff) (decode-time))
-          (last-day-of-month (calendar-last-day-of-month month year))
-          (target-date
-           ;; A hack that seems to work fine.  Yay, Postel!
-           (format "%d-%02d-%02d" year month (1+ last-day-of-month)))
-          (org-super-agenda-groups
-           `((:deadline (before ,target-date))
+  (let ((org-super-agenda-groups
+           '((:deadline (before "1 +1m")) ; first day of the next month
              (:discard (:anything t)))))
     (org-todo-list))
 #+END_SRC

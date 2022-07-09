@@ -328,6 +328,12 @@ marker."
     (buffer-substring (org-entry-beginning-position)
                       (org-entry-end-position))))
 
+(defun org-super-agenda--translate-org-date (s)
+  "Return absolute time from various org supported date format,
+included relative: +1, +mon and so on..."
+  (org-time-string-to-absolute (org-read-date nil nil s))
+  )
+
 ;;;; Minor mode
 
 ;;;###autoload
@@ -481,7 +487,7 @@ DATE', where DATE is a date string that
                    (org-today))))
          (target-date (pcase (car args)
                         ((or 'before 'on 'after)
-                         (org-time-string-to-absolute (cadr args))))))
+                         (org-super-agenda--translate-org-date (cadr args))))))
   :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
           (let ((entry-time (org-entry-get (point) "DEADLINE")))
             (pcase (car args)
@@ -489,7 +495,7 @@ DATE', where DATE is a date string that
               ('nil (not entry-time))  ; Has no deadline info
               (comparison
                (when entry-time
-                 (let ((entry-time (org-time-string-to-absolute entry-time))
+                 (let ((entry-time (org-super-agenda--translate-org-date entry-time))
                        (compare-date (pcase comparison
                                        ((or 'past 'today 'future) today)
                                        ((or 'before 'on 'after) target-date))))
@@ -518,7 +524,7 @@ DATE', where DATE is a date string that
                    (org-today))))
          (target-date (pcase (car args)
                         ((or 'before 'on 'after)
-                         (org-time-string-to-absolute (cadr args))))))
+                         (org-super-agenda--translate-org-date (cadr args))))))
   :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
           (let ((entry-time (org-entry-get (point) "SCHEDULED")))
             (pcase (car args)
@@ -526,7 +532,7 @@ DATE', where DATE is a date string that
               ('nil (not entry-time))  ; Has no scheduled info
               (comparison
                (when entry-time
-                 (let ((entry-time (org-time-string-to-absolute entry-time))
+                 (let ((entry-time (org-super-agenda--translate-org-date entry-time))
                        (compare-date (pcase comparison
                                        ((or 'past 'today 'future) today)
                                        ((or 'before 'on 'after) target-date))))
