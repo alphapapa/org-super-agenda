@@ -46,6 +46,50 @@ CLOSED: [2020-11-21 Sat 03:43]
 
 * Tasks                                                               :tasks:
 
+** TODO [#A] Add ~clocked-or-created~ auto group
+:PROPERTIES:
+:milestone: 1.3
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2022-08-16 Tue 07:42]
+:END:
+
+[2022-08-16 Tue 07:43]  Like this one I made for knighthk:
+
+#+begin_src elisp
+  (org-super-agenda--def-auto-group bergheim/clocked-or-created
+    "the date of their latest CLOCK or CREATED timestamp in the entry (formatted according to `org-super-agenda-date-format', which see)"
+    ;; :keyword :auto-
+    :key-form (cl-labels ((latest-ts-up-to
+                           (limit) ;; FIXME: What if the logbook is empty?
+                           (-some->> (cl-loop for next-ts = (when (re-search-forward org-element--timestamp-regexp limit t)
+                                                              (ts-parse-org (match-string 1)))
+                                              while next-ts
+                                              collect next-ts)
+                             (-sort #'ts>)
+                             car)))
+                (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+                  (let* ((created (when (org-entry-get (point) "CREATED")
+                                    (ts-parse-org (org-entry-get (point) "CREATED"))))
+                         (clocked (let ((drawer-name (org-clock-drawer-name))
+                                        (entry-end (org-entry-end-position))
+                                        ts)
+                                    (when (and drawer-name
+                                               (re-search-forward (rx-to-string `(seq bol (0+ blank) ":" ,drawer-name ":"))
+                                                                  entry-end 'noerror)
+                                               (org-at-drawer-p))
+                                      (latest-ts-up-to (save-excursion
+                                                         ;; End of drawer.
+                                                         (re-search-forward (rx bol (0+ blank) ":END:") entry-end))))))
+                         (latest-ts (car (sort (remq nil (list created clocked)) #'ts>))))
+                    (when latest-ts
+                      (propertize (ts-format org-super-agenda-date-format latest-ts)
+                                  'org-super-agenda-ts latest-ts)))))
+    :key-sort-fn (lambda (a b)
+                   (ts< (get-text-property 0 'org-super-agenda-ts a)
+                        (get-text-property 0 'org-super-agenda-ts b))))
+#+end_src
+
 ** DONE [#A] Use :filter-return?
 CLOSED: [2017-08-03 Thu 01:21]
 :LOGBOOK:
