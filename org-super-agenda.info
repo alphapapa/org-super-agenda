@@ -360,7 +360,8 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
 ‘‘:auto-ts’’
      This automatically groups items by the date of their latest
      timestamp anywhere in the entry, formatted according to variable
-     ‘org-super-agenda-date-format’.
+     ‘org-super-agenda-date-format’.  With argument ‘reverse’, groups
+     are sorted newest-first.
 ‘:discard’
      Discard items that match selectors.  Any groups processed after
      this one will not see discarded items.  You might use this at the
@@ -583,6 +584,8 @@ File: README.info,  Node: 13-pre,  Next: 12,  Up: Changelog
    • Option ‘org-super-agenda-keep-order’, which re-sorts items after
      grouping to preserve their original sort order.  (Thanks to
      Alexander-Miller (https://github.com/Alexander-Miller).)
+   • Selector ‘:auto-ts’ may be given the argument ‘reverse’ to sort the
+     groups newest-first.
 
 
 File: README.info,  Node: 12,  Next: 111,  Prev: 13-pre,  Up: Changelog
@@ -797,24 +800,24 @@ Node: Examples4485
 Node: Group selectors7970
 Node: Keywords8932
 Node: Special selectors9673
-Node: Normal selectors13891
-Node: Tips18753
-Node: FAQ19604
-Node: Why are some items not displayed even though I used group selectors for them?19854
-Node: Why did a group disappear when I moved it to the end of the list?20725
-Node: Changelog21300
-Node: 13-pre21535
-Node: 1222331
-Node: 11124915
-Node: 1125084
-Node: 10326656
-Node: 10226867
-Node: 10127001
-Node: 10027339
-Node: Development27444
-Node: Bugs27846
-Node: Tests28499
-Node: Credits28818
+Node: Normal selectors13958
+Node: Tips18820
+Node: FAQ19671
+Node: Why are some items not displayed even though I used group selectors for them?19921
+Node: Why did a group disappear when I moved it to the end of the list?20792
+Node: Changelog21367
+Node: 13-pre21602
+Node: 1222507
+Node: 11125091
+Node: 1125260
+Node: 10326832
+Node: 10227043
+Node: 10127177
+Node: 10027515
+Node: Development27620
+Node: Bugs28022
+Node: Tests28675
+Node: Credits28994
 
 End Tag Table
 

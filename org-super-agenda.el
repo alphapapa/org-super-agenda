@@ -1001,6 +1001,7 @@ of the arguments to the function."
   "the date of their latest timestamp anywhere in the entry (formatted according to `org-super-agenda-date-format', which see)"
   :keyword :auto-ts
   :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+              (ignore args)
               (let* ((limit (org-entry-end-position))
                      (latest-ts (->> (cl-loop for next-ts =
                                               (when (re-search-forward org-element--timestamp-regexp limit t)
@@ -1013,8 +1014,10 @@ of the arguments to the function."
                   (propertize (ts-format org-super-agenda-date-format latest-ts)
                               'org-super-agenda-ts latest-ts))))
   :key-sort-fn (lambda (a b)
-                 (ts< (get-text-property 0 'org-super-agenda-ts a)
-                      (get-text-property 0 'org-super-agenda-ts b))))
+                 (funcall (if (member 'reverse args)
+                              #'ts> #'ts<)
+                          (get-text-property 0 'org-super-agenda-ts a)
+                          (get-text-property 0 'org-super-agenda-ts b))))
 
 (org-super-agenda--def-auto-group items "their AGENDA-GROUP property"
   :keyword :auto-group

@@ -176,7 +176,7 @@ Every selector requires an argument, even if it's just ~t~, e.g. ~:anything~, ~:
 +  ~:auto-property~ :: This automatically groups items by the value of the given property ([[examples.org#automatically-by-property][example]]).
 +  =:auto-tags= :: This automatically groups items by all of their tags (i.e. items with exactly the same tags, in any order, will be grouped together).
 +  =:auto-todo= :: This automatically groups items by their to-do keyword.
-+  ~:auto-ts~ :: This automatically groups items by the date of their latest timestamp anywhere in the entry, formatted according to variable ~org-super-agenda-date-format~.
++  ~:auto-ts~ :: This automatically groups items by the date of their latest timestamp anywhere in the entry, formatted according to variable ~org-super-agenda-date-format~.  With argument ~reverse~, groups are sorted newest-first.
 +  =:discard= :: Discard items that match selectors.  Any groups processed after this one will not see discarded items.  You might use this at the beginning or end of a list of groups, either to narrow down the list of items (used in combination with ~:not~), or to exclude items you're not interested in.
 +  =:not= :: Group ITEMS that match no selectors in GROUP.
      -  Note that the ~:not~ group selector /creates/ a group with items it /does not/ match; it can be combined with ~:discard~ to discard items that /don't/ match.  For example, ~(:discard (:not (:priority "A")))~ as the first selector would mean that only priority ~A~ items would appear in the agenda, while ~(:discard (:priority "C"))~ would mean that any priority ~C~ items would not appear in the agenda.
@@ -244,6 +244,7 @@ As explained in the usage instructions and shown in the example, items are colle
 +  Special selector ~:take~, which limits the number of items displayed in a group.  (Thanks to [[https://github.com/pkazmier][Pete Kazmier]].)
 +  Option ~org-super-agenda-hide-empty-groups~, which hides empty groups.  (Thanks to [[https://github.com/cslux][Christian Schwarzgruber]].)
 +  Option ~org-super-agenda-keep-order~, which re-sorts items after grouping to preserve their original sort order.  (Thanks to [[https://github.com/Alexander-Miller][Alexander-Miller]].)
++  Selector ~:auto-ts~ may be given the argument ~reverse~ to sort the groups newest-first.
 
 ** 1.2
 
