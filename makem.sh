@@ -3,11 +3,11 @@
 # * makem.sh --- Script to aid building and testing Emacs Lisp packages
 
 # URL: https://github.com/alphapapa/makem.sh
-# Version: 0.2
+# Version: 0.6-pre
 
 # * Commentary:
 
-# makem.sh is a script helps to build, lint, and test Emacs Lisp
+# makem.sh is a script that helps to build, lint, and test Emacs Lisp
 # packages.  It aims to make linting and testing as simple as possible
 # without requiring per-package configuration.
 
@@ -79,7 +79,8 @@ Rules:
 Options:
   -d, --debug    Print debug info.
   -h, --help     I need somebody!
-  -v, --verbose  Increase verbosity, up to -vv.
+  -v, --verbose  Increase verbosity, up to -vvv.
+  --no-color     Disable color output.
 
   --debug-load-path  Print load-path from inside Emacs.
 
@@ -88,8 +89,9 @@ Options:
   -e, --exclude FILE  Exclude FILE from linting and testing.
   -f, --file FILE     Check FILE in addition to discovered files.
 
-  --no-color        Disable color output.
-  -C, --no-compile  Don't compile files automatically.
+  -c, --compile-batch  Batch-compile files (instead of separately; quicker, but
+                                            may hide problems).
+  -C, --no-compile     Don't compile files automatically.
 
 Sandbox options:
   -s[DIR], --sandbox[=DIR]  Run Emacs with an empty config in a sandbox DIR.
@@ -134,6 +136,27 @@ EOF
     echo $file
 }
 
+function elisp-elint-file {
+    local file=$(mktemp)
+    cat >$file <<EOF
+(require 'cl-lib)
+(require 'elint)
+(defun makem-elint-file (file)
+  (let ((errors 0))
+    (cl-letf (((symbol-function 'orig-message) (symbol-function 'message))
+              ((symbol-function 'message) (symbol-function 'ignore))
+              ((symbol-function 'elint-output)
+               (lambda (string)
+                 (cl-incf errors)
+                 (orig-message "%s" string))))
+      (elint-file file)
+      ;; NOTE: \`errors' is not actually the number of errors, because
+      ;; it's incremented for non-error header strings as well.
+      (kill-emacs errors))))
+EOF
+    echo "$file"
+}
+
 function elisp-checkdoc-file {
     # Since checkdoc doesn't have a batch function that exits non-zero
     # when errors are found, we make one.
@@ -152,7 +175,8 @@ function elisp-checkdoc-file {
                                ": " text)))
               (message msg)
               (setq makem-checkdoc-errors-p t)
-              (list text start end unfixable)))))
+              ;; Return nil because we *are* generating a buffered list of errors.
+              nil))))
     (mapcar #'checkdoc-file files)
     (when makem-checkdoc-errors-p
       (kill-emacs 1))))
@@ -161,6 +185,51 @@ function elisp-checkdoc-file {
 (makem-checkdoc-files-and-exit)
 EOF
     echo $file
+}
+
+function elisp-byte-compile-file {
+    # This seems to be the only way to make byte-compilation signal
+    # errors for warnings AND display all warnings rather than only
+    # the first one.
+    local file=$(mktemp)
+    # TODO: Add file to $paths_temp in other elisp- functions.
+    paths_temp+=("$file")
+
+    cat >"$file" <<EOF
+(defun makem-batch-byte-compile (&rest args)
+  ""
+  (let ((num-errors 0)
+        (num-warnings 0))
+    ;; NOTE: Only accepts files as args, not directories.
+    (dolist (file command-line-args-left)
+      (pcase-let ((\`(,errors ,warnings) (makem-byte-compile-file file)))
+        (cl-incf num-errors errors)
+        (cl-incf num-warnings warnings)))
+    (zerop num-errors)))
+
+(defun makem-byte-compile-file (filename &optional load)
+  "Call \`byte-compile-warn', returning the number of errors and the number of warnings."
+  (let ((num-warnings 0)
+        (num-errors 0))
+    (cl-letf (((symbol-function 'byte-compile-warn)
+               (lambda (format &rest args)
+                 ;; Copied from \`byte-compile-warn'.
+                 (cl-incf num-warnings)
+                 (setq format (apply #'format-message format args))
+                 (byte-compile-log-warning format t :warning)))
+              ((symbol-function 'byte-compile-report-error)
+               (lambda (error-info &optional fill &rest args)
+                 (cl-incf num-errors)
+                 ;; Copied from \`byte-compile-report-error'.
+                 (setq byte-compiler-error-flag t)
+                 (byte-compile-log-warning
+                  (if (stringp error-info) error-info
+                    (error-message-string error-info))
+                  fill :error))))
+      (byte-compile-file filename load))
+    (list num-errors num-warnings)))
+EOF
+    echo "$file"
 }
 
 function elisp-check-declare-file {
@@ -198,20 +267,23 @@ Exits non-zero if mis-indented lines are found.  Checks files in
   (let ((errors-p))
     (cl-labels ((lint-file (file)
                            (find-file file)
-                           (let ((tick (buffer-modified-tick)))
-                             (let ((inhibit-message t))
-                               (indent-region (point-min) (point-max)))
-                             (when (/= tick (buffer-modified-tick))
-                               ;; Indentation changed: warn for each line.
-                               (dolist (line (undo-lines buffer-undo-list))
-                                 (message "%s:%s: Indentation mismatch" (buffer-name) line))
-                               (setf errors-p t))))
+                           (let ((inhibit-message t))
+                             (indent-region (point-min) (point-max)))
+                           (when buffer-undo-list
+                             ;; Indentation changed: warn for each line.
+                             (dolist (line (undo-lines buffer-undo-list))
+                               (message "%s:%s: Indentation mismatch" (buffer-name) line))
+                             (setf errors-p t)))
+                (undo-pos (entry)
+                           (cl-typecase (car entry)
+                             (number (car entry))
+                             (string (abs (cdr entry)))))
                 (undo-lines (undo-list)
                             ;; Return list of lines changed in UNDO-LIST.
                             (nreverse (cl-loop for elt in undo-list
-                                               when (and (consp elt)
-                                                         (numberp (car elt)))
-                                               collect (line-number-at-pos (car elt))))))
+                                               for pos = (undo-pos elt)
+                                               when pos
+                                               collect (line-number-at-pos pos)))))
       (mapc #'lint-file (mapcar #'expand-file-name command-line-args-left))
       (when errors-p
         (kill-emacs 1)))))
@@ -230,7 +302,6 @@ function elisp-package-initialize-file {
                              (cons "melpa-stable" "https://stable.melpa.org/packages/")))
 $elisp_org_package_archive
 (package-initialize)
-(setq load-prefer-newer t)
 EOF
     echo $file
 }
@@ -243,6 +314,7 @@ function run_emacs {
     local emacs_command=(
         "${emacs_command[@]}"
         -Q
+        --eval "(setq load-prefer-newer t)"
         "${args_debug[@]}"
         "${args_sandbox[@]}"
         -l $package_initialize_file
@@ -284,9 +356,25 @@ function batch-byte-compile {
     [[ $compile_error_on_warn ]] && local error_on_warn=(--eval "(setq byte-compile-error-on-warn t)")
 
     run_emacs \
+        --load "$(elisp-byte-compile-file)" \
         "${error_on_warn[@]}" \
-        --funcall batch-byte-compile \
+        --eval "(unless (makem-batch-byte-compile) (kill-emacs 1))" \
         "$@"
+}
+
+function byte-compile-file {
+    debug "byte-compile: ERROR-ON-WARN:$compile_error_on_warn"
+    local file="$1"
+
+    [[ $compile_error_on_warn ]] && local error_on_warn=(--eval "(setq byte-compile-error-on-warn t)")
+
+    # FIXME: Why is the line starting with "&& verbose 3" not indented properly?  Emacs insists on indenting it back a level.
+    run_emacs \
+        --load "$(elisp-byte-compile-file)" \
+        "${error_on_warn[@]}" \
+        --eval "(pcase-let ((\`(,num-errors ,num-warnings) (makem-byte-compile-file \"$file\"))) (when (or (and byte-compile-error-on-warn (not (zerop num-warnings))) (not (zerop num-errors))) (kill-emacs 1)))" \
+        && verbose 3 "Compiling $file finished without errors." \
+            || { verbose 3 "Compiling file failed: $file"; return 1; }
 }
 
 # ** Files
@@ -362,7 +450,8 @@ function args-load-files {
     # For file in $@, echo "--load $file".
     for file in "$@"
     do
-        printf -- '--load %q ' "$file"
+        sans_extension=${file%%.el}
+        printf -- '--load %q ' "$sans_extension"
     done
 }
 
@@ -399,8 +488,7 @@ function ert-tests-p {
 }
 
 function package-main-file {
-    # Echo the package's main file.  Helpful for setting package-lint-main-file.
-
+    # Echo the package's main file.
     file_pkg=$(git ls-files ./*-pkg.el 2>/dev/null)
 
     if [[ $file_pkg ]]
@@ -422,8 +510,9 @@ function package-main-file {
 function dependencies {
     # Echo list of package dependencies.
 
-    # Search package headers.
-    egrep -i '^;; Package-Requires: ' $(files-project-feature) $(files-project-test) \
+    # Search package headers.  Use -a so grep won't think that an Elisp file containing
+    # control characters (rare, but sometimes necessary) is binary and refuse to search it.
+    egrep -a -i '^;; Package-Requires: ' $(files-project-feature) $(files-project-test) \
         | egrep -o '\([^([:space:]][^)]*\)' \
         | egrep -o '^[^[:space:])]+' \
         | sed -r 's/\(//g' \
@@ -481,6 +570,8 @@ function sandbox {
     args_sandbox=(
         --title "makem.sh: $(basename $(pwd)) (sandbox: $sandbox_dir)"
         --eval "(setq user-emacs-directory (file-truename \"$sandbox_dir\"))"
+        --load package
+        --eval "(setq package-user-dir (expand-file-name \"elpa\" user-emacs-directory))"
         --eval "(setq user-init-file (file-truename \"$init_file\"))"
     )
 
@@ -643,7 +734,8 @@ function verbose {
     if [[ $verbose -ge $1 ]]
     then
         [[ $1 -eq 1 ]] && local color_name=blue
-        [[ $1 -ge 2 ]] && local color_name=cyan
+        [[ $1 -eq 2 ]] && local color_name=cyan
+        [[ $1 -ge 3 ]] && local color_name=white
 
         shift
         log_color $color_name "$@" >&2
@@ -683,16 +775,54 @@ function all {
     tests
 }
 
-function compile {
+function compile-batch {
+    [[ $compile ]] || return 0
+    unset compile  # Only compile once.
+
+    verbose 1 "Compiling..."
+    verbose 2 "Batch-compiling files..."
+    debug "Byte-compile files: ${files_project_byte_compile[@]}"
+
+    batch-byte-compile "${files_project_byte_compile[@]}"
+}
+
+function compile-each {
     [[ $compile ]] || return 0
     unset compile  # Only compile once.
 
     verbose 1 "Compiling..."
     debug "Byte-compile files: ${files_project_byte_compile[@]}"
 
-    batch-byte-compile "${files_project_byte_compile[@]}" \
-        && success "Compiling finished without errors." \
-            || error "Compilation failed."
+    local compile_errors
+    for file in "${files_project_byte_compile[@]}"
+    do
+        verbose 2 "Compiling file: $file..."
+        byte-compile-file "$file" \
+            || compile_errors=t
+    done
+
+    [[ ! $compile_errors ]]
+}
+
+function compile {
+    if [[ $compile = batch ]]
+    then
+        compile-batch "$@"
+    else
+        compile-each "$@"
+    fi
+    local status=$?
+
+    if [[ $compile_error_on_warn ]]
+    then
+        # Linting: just return status code, because lint rule will print messages.
+        [[ $status = 0 ]]
+    else
+        # Not linting: print messages here.
+        [[ $status = 0 ]] \
+            && success "Compiling finished without errors." \
+                || error "Compiling failed."
+    fi
 }
 
 function batch {
@@ -707,12 +837,15 @@ function batch {
 
 function interactive {
     # Run Emacs interactively.  Most useful with --sandbox and --install-deps.
+    local load_file_args=$(args-load-files "${files_project_feature[@]}" "${files_project_test[@]}")
     verbose 1 "Running Emacs interactively..."
-    verbose 2 "Loading files:" "${files_project_feature[@]}" "${files_project_test[@]}"
+    verbose 2 "Loading files: ${load_file_args//--load /}"
+
+    [[ $compile ]] && compile
 
     unset arg_batch
     run_emacs \
-        $(args-load-files "${files_project_feature[@]}" "${files_project_test[@]}") \
+        $load_file_args \
         --eval "(load user-init-file)" \
         "${args_batch_interactive[@]}"
     arg_batch="--batch"
@@ -724,6 +857,9 @@ function lint {
     lint-checkdoc
     lint-compile
     lint-declare
+    # NOTE: Elint doesn't seem very useful at the moment.  See comment
+    # in lint-elint function.
+    # lint-elint
     lint-indent
     lint-package
     lint-regexps
@@ -746,7 +882,7 @@ function lint-compile {
     verbose 1 "Linting compilation..."
 
     compile_error_on_warn=true
-    batch-byte-compile "${files_project_byte_compile[@]}" \
+    compile "${files_project_byte_compile[@]}" \
         && success "Linting compilation finished without errors." \
             || error "Linting compilation failed."
     unset compile_error_on_warn
@@ -778,6 +914,28 @@ function lint-elsa {
         "${files_project_feature[@]}" \
         && success "Linting with Elsa finished without errors." \
             || error "Linting with Elsa failed."
+}
+
+function lint-elint {
+    # NOTE: Elint gives a lot of spurious warnings, apparently because it doesn't load files
+    # that are `require'd, so its output isn't very useful.  But in case it's improved in
+    # the future, and since this wrapper code already works, we might as well leave it in.
+    verbose 1 "Linting with Elint..."
+
+    local errors=0
+    for file in "${files_project_feature[@]}"
+    do
+        verbose 2 "Linting with Elint: $file..."
+        run_emacs \
+            --load "$(elisp-elint-file)" \
+            --eval "(makem-elint-file \"$file\")" \
+            && verbose 3 "Linting with Elint found no errors." \
+                || { error "Linting with Elint failed: $file"; ((errors++)) ; }
+    done
+
+    [[ $errors = 0 ]] \
+        && success "Linting with Elint finished without errors." \
+            || error "Linting with Elint failed."
 }
 
 function lint-indent {
@@ -851,7 +1009,8 @@ function test-buttercup {
 
     run_emacs \
         $(args-load-files "${files_project_test[@]}") \
-        -f buttercup-run \
+        --load "$buttercup_file" \
+        --eval "(progn (setq backtrace-on-error-noninteractive nil) (buttercup-run))" \
         && success "Buttercup tests finished without errors." \
             || error "Buttercup tests failed."
 }
@@ -879,6 +1038,7 @@ errors=0
 verbose=0
 compile=true
 arg_batch="--batch"
+compile=each
 
 # MAYBE: Disable color if not outputting to a terminal.  (OTOH, the
 # colorized output is helpful in CI logs, and I don't know if,
@@ -937,8 +1097,8 @@ elisp_org_package_archive="(add-to-list 'package-archives '(\"org\" . \"https://
 # * Args
 
 args=$(getopt -n "$0" \
-              -o dhe:E:i:s::vf:CO \
-              -l exclude:,emacs:,install-deps,install-linters,debug,debug-load-path,help,install:,verbose,file:,no-color,no-compile,no-org-repo,sandbox:: \
+              -o dhce:E:i:s::vf:CO \
+              -l compile-batch,exclude:,emacs:,install-deps,install-linters,debug,debug-load-path,help,install:,verbose,file:,no-color,no-compile,no-org-repo,sandbox:: \
               -- "$@") \
     || { usage; exit 1; }
 eval set -- "$args"
@@ -964,6 +1124,10 @@ do
         -h|--help)
             usage
             exit
+            ;;
+        -c|--compile-batch)
+            debug "Compiling files in batch mode"
+            compile=batch
             ;;
         -E|--emacs)
             shift
