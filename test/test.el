@@ -17,7 +17,12 @@
 
 ;;;; Variables
 
-(defconst org-super-agenda-test-date "2017-07-05 12:00")
+(eval-and-compile
+  ;; NOTE: Using eval-and-compile was not necessary in the past, but
+  ;; now for some reason, without it, running the tests signals a
+  ;; void-variable error.  It seems to make no sense, but this seems
+  ;; to fix it.
+  (defconst org-super-agenda-test-date "2017-07-05 12:00"))
 (defvar org-super-agenda-test-results (ht-create))
 (defvar org-super-agenda-test-save-results nil)
 (defvar org-super-agenda-test-show-results nil)
@@ -57,6 +62,178 @@
 
 (defun org-super-agenda-test--diary-sunset ()
   (cl-second (org-super-agenda-test--diary-sunrise-sunset-split)))
+
+;;;; Workarounds
+
+;; Emacs 28.1 wraps ERT output and escapes newlines in it, which makes
+;; the results of our test suite unreadable.  Since the relevant
+;; variables are bound in the ERT function bodies, the only way to
+;; override them is to redefine or advise the relevant ERT functions.
+;; Of course, this may introduce problems if these functions change in
+;; future Emacs versions, but we seem to have no choice but to copy
+;; the function definitions and change the bindings.
+
+(setq ert-batch-backtrace-right-margin nil)
+
+(advice-add #'ert--pp-with-indentation-and-newline :override
+            (lambda (object)
+              "Pretty-print OBJECT, indenting it to the current column of point.
+Ensures a final newline is inserted."
+              (let ((begin (point))
+                    (print-escape-newlines nil)
+                    (pp-escape-newlines nil)
+                    (print-escape-control-characters nil))
+                (pp object (current-buffer))
+                (unless (bolp) (insert "\n"))
+                (save-excursion
+                  (goto-char begin)
+                  (indent-sexp)))))
+
+(advice-add #'ert-reason-for-test-result :override
+            (lambda (result)
+              "Return the reason given for RESULT, as a string.
+
+The reason is the argument given when invoking `ert-fail' or `ert-skip'.
+It is output using `prin1' prefixed by two spaces.
+
+If no reason was given, or for a successful RESULT, return the
+empty string."
+              (let ((reason
+                     (and
+                      (ert-test-result-with-condition-p result)
+                      (cadr (ert-test-result-with-condition-condition result))))
+                    (print-escape-newlines nil)
+                    (print-level 6)
+                    (print-length 10))
+                (if reason (format "  %S" reason) ""))))
+
+(advice-add #'ert-run-tests-batch :override
+            (lambda (&optional selector)
+              "Run the tests specified by SELECTOR, printing results to the terminal.
+
+SELECTOR works as described in `ert-select-tests', except if
+SELECTOR is nil, in which case all tests rather than none will be
+run; this makes the command line \"emacs -batch -l my-tests.el -f
+ert-run-tests-batch-and-exit\" useful.
+
+Returns the stats object."
+              (unless selector (setq selector 't))
+              (ert-run-tests
+               selector
+               (lambda (event-type &rest event-args)
+                 (cl-ecase event-type
+                   (run-started
+                    (unless ert-quiet
+                      (cl-destructuring-bind (stats) event-args
+                        (message "Running %s tests (%s, selector `%S')"
+                                 (length (ert--stats-tests stats))
+                                 (ert--format-time-iso8601 (ert--stats-start-time stats))
+                                 selector))))
+                   (run-ended
+                    (cl-destructuring-bind (stats abortedp) event-args
+                      (let ((unexpected (ert-stats-completed-unexpected stats))
+                            (skipped (ert-stats-skipped stats))
+		            (expected-failures (ert--stats-failed-expected stats)))
+                        (message "\n%sRan %s tests, %s results as expected, %s unexpected%s (%s, %f sec)%s\n"
+                                 (if (not abortedp)
+                                     ""
+                                   "Aborted: ")
+                                 (ert-stats-total stats)
+                                 (ert-stats-completed-expected stats)
+                                 unexpected
+                                 (if (zerop skipped)
+                                     ""
+                                   (format ", %s skipped" skipped))
+                                 (ert--format-time-iso8601 (ert--stats-end-time stats))
+                                 (float-time
+                                  (time-subtract
+                                   (ert--stats-end-time stats)
+                                   (ert--stats-start-time stats)))
+                                 (if (zerop expected-failures)
+                                     ""
+                                   (format "\n%s expected failures" expected-failures)))
+                        (unless (zerop unexpected)
+                          (message "%s unexpected results:" unexpected)
+                          (cl-loop for test across (ert--stats-tests stats)
+                                   for result = (ert-test-most-recent-result test) do
+                                   (when (not (ert-test-result-expected-p test result))
+                                     (message "%9s  %S%s"
+                                              (ert-string-for-test-result result nil)
+                                              (ert-test-name test)
+                                              (if (getenv "EMACS_TEST_VERBOSE")
+                                                  (ert-reason-for-test-result result)
+                                                ""))))
+                          (message "%s" ""))
+                        (unless (zerop skipped)
+                          (message "%s skipped results:" skipped)
+                          (cl-loop for test across (ert--stats-tests stats)
+                                   for result = (ert-test-most-recent-result test) do
+                                   (when (ert-test-result-type-p result :skipped)
+                                     (message "%9s  %S%s"
+                                              (ert-string-for-test-result result nil)
+                                              (ert-test-name test)
+                                              (if (getenv "EMACS_TEST_VERBOSE")
+                                                  (ert-reason-for-test-result result)
+                                                ""))))
+                          (message "%s" "")))))
+                   (test-started
+                    )
+                   (test-ended
+                    (cl-destructuring-bind (stats test result) event-args
+                      (unless (ert-test-result-expected-p test result)
+                        (cl-etypecase result
+                          (ert-test-passed
+                           (message "Test %S passed unexpectedly" (ert-test-name test)))
+                          (ert-test-result-with-condition
+                           (message "Test %S backtrace:" (ert-test-name test))
+                           (with-temp-buffer
+                             (insert (backtrace-to-string
+                                      (ert-test-result-with-condition-backtrace result)))
+                             (if (not ert-batch-backtrace-right-margin)
+                                 (message "%s"
+                                          (buffer-substring-no-properties (point-min)
+                                                                          (point-max)))
+                               (goto-char (point-min))
+                               (while (not (eobp))
+                                 (let ((start (point))
+                                       (end (line-end-position)))
+                                   (setq end (min end
+                                                  (+ start
+                                                     ert-batch-backtrace-right-margin)))
+                                   (message "%s" (buffer-substring-no-properties
+                                                  start end)))
+                                 (forward-line 1))))
+                           (with-temp-buffer
+                             (ert--insert-infos result)
+                             (insert "    ")
+                             (let ((print-escape-newlines nil)
+                                   (print-level 5)
+                                   (print-length 10))
+                               (ert--pp-with-indentation-and-newline
+                                (ert-test-result-with-condition-condition result)))
+                             (goto-char (1- (point-max)))
+                             (cl-assert (looking-at "\n"))
+                             (delete-char 1)
+                             (message "Test %S condition:" (ert-test-name test))
+                             (message "%s" (buffer-string))))
+                          (ert-test-aborted-with-non-local-exit
+                           (message "Test %S aborted with non-local exit"
+                                    (ert-test-name test)))
+                          (ert-test-quit
+                           (message "Quit during %S" (ert-test-name test)))))
+                      (unless ert-quiet
+                        (let* ((max (prin1-to-string (length (ert--stats-tests stats))))
+                               (format-string (concat "%9s  %"
+                                                      (prin1-to-string (length max))
+                                                      "s/" max "  %S (%f sec)")))
+                          (message format-string
+                                   (ert-string-for-test-result result
+                                                               (ert-test-result-expected-p
+                                                                test result))
+                                   (1+ (ert--stats-test-pos stats test))
+                                   (ert-test-name test)
+                                   (ert-test-result-duration result))))))))
+               nil)))
 
 ;;;; Commands
 
@@ -179,20 +356,24 @@ message."
       (insert (format "%S" org-super-agenda-test-results))))
   (message "Saved result for: %s" body-groups-hash))
 
-(defun org-super-agenda-test--get-custom-group-members (group)
-  "Return a list of (VAR STANDARD-VALUE) forms for the customization group GROUP.
+(eval-and-compile
+  ;; NOTE: Similarly to the variable defined earlier, a void-function
+  ;; error is now signaled unless this definition is wrapped in
+  ;; eval-and-compile.  I can't explain why.
+  (defun org-super-agenda-test--get-custom-group-members (group)
+    "Return a list of (VAR STANDARD-VALUE) forms for the customization group GROUP.
 Sub-groups of GROUP are recursed into.  The resulting list is
 suitable for splicing into a `let' binding form to temporarily
 set every variable in GROUP to its standard, un-customized
 value."
-  (let* ((subgroups (custom-group-members group t))
-         (vars (seq-difference (custom-group-members group nil) subgroups)))
-    (append (cl-loop for (sg . type) in subgroups
-                     append (org-super-agenda-test--get-custom-group-members sg))
-            (cl-loop for (var . type) in vars
-                     for sv = (car (get var 'standard-value))
-                     when sv
-                     collect (list var sv)))))
+    (let* ((subgroups (custom-group-members group t))
+           (vars (seq-difference (custom-group-members group nil) subgroups)))
+      (append (cl-loop for (sg . type) in subgroups
+                       append (org-super-agenda-test--get-custom-group-members sg))
+              (cl-loop for (var . type) in vars
+                       for sv = (car (get var 'standard-value))
+                       when sv
+                       collect (list var sv))))))
 
 ;;;; Macros
 
@@ -201,7 +382,7 @@ value."
 FNS should be a list of (FUNCTION-NAME FUNCTION-BODY) lists,
 where FUNCTION-BODY is a lambda form."
   (declare (indent defun))
-  `(cl-letf ,(cl-loop for (fn def) in fns
+  `(cl-letf* ,(cl-loop for (fn def) in fns
                       collect `((symbol-function ',fn)
                                 ,def))
      ,@body))
@@ -250,12 +431,12 @@ already loaded."
                                 (if time
                                     (format-time-string-orig format-string time zone)
                                   (concat (cl-second (s-split " " ,date)) " "))))
-          (frame-width (lambda ()
+          (frame-width (lambda (&rest _ignore)
                          134))
-          (window-width (lambda ()
+          (window-width (lambda (&rest _ignore)
                           134))
           ;; Org after 2017-08-08 uses `window-text-width'
-          (window-text-width (lambda ()
+          (window-text-width (lambda (&rest _ignore)
                                134)))
 
          ;; Run agenda
