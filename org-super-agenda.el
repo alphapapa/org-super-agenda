@@ -229,6 +229,13 @@ after grouping.  The cost of this may range from negligible to
 considerable, depending on the number of items."
   :type 'boolean)
 
+(defcustom org-super-agenda-ignored-agenda-names nil
+  "List of agenda names on which to avoid using Org Super Agenda.
+The agenda name is as specified by the local variable
+`org-agenda-name' of the agenda to be ignored by Org Super
+Agenda."
+  :type '(repeat string))
+
 ;;;; Faces
 
 (defface org-super-agenda-header '((t (:inherit org-agenda-structure)))
@@ -1223,14 +1230,19 @@ actually the ORDER for the groups."
 (defun org-super-agenda--filter-finalize-entries (string)
   "Filter STRING through `org-super-agenda--group-items'.
 STRING should be that returned by `org-agenda-finalize-entries'"
-  (--> string
-       (split-string it "\n" 'omit-nulls)
-       org-super-agenda--group-items
-       (-remove #'s-blank-str? it)
-       (s-join "\n" it)
-       (concat it (cl-etypecase org-super-agenda-final-group-separator
-                    (character (concat "\n" (make-string (window-width) org-super-agenda-final-group-separator)))
-                    (string org-super-agenda-final-group-separator)))))
+  (if (not (and org-agenda-name
+                (-any? (lambda (regexp)
+                         (string-match-p regexp org-agenda-name))
+                       org-super-agenda-ignored-agenda-names)))
+      (--> string
+           (split-string it "\n" 'omit-nulls)
+           org-super-agenda--group-items
+           (-remove #'s-blank-str? it)
+           (s-join "\n" it)
+           (concat it (cl-etypecase org-super-agenda-final-group-separator
+                        (character (concat "\n" (make-string (window-width) org-super-agenda-final-group-separator)))
+                        (string org-super-agenda-final-group-separator))))
+    string))
 
 (defun org-super-agenda--hide-or-show-groups (&rest _)
   "Hide/Show any empty/non-empty groups.
