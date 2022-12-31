@@ -307,8 +307,8 @@ of `org-super-agenda-header-map', which see."
                                     "\n"))
                  (string org-super-agenda-header-separator))))
          (set-text-properties 0 (length header) properties header)
-         (add-face-text-property 0 (length header) 'org-super-agenda-header t header)
          (org-add-props header org-super-agenda-header-properties
+           'face 'org-super-agenda-header
            'org-super-agenda-header t
            'keymap org-super-agenda-header-map
            ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
