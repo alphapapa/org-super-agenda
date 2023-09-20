@@ -1162,7 +1162,7 @@ see."
 (setq org-super-agenda-group-types (plist-put org-super-agenda-group-types
                                               :not 'org-super-agenda--group-dispatch-not))
 
-(cl-defun org-super-agenda--group-dispatch-take (items (n &rest group))
+(cl-defun org-super-agenda--group-dispatch-take (items (n group))
   "Take N ITEMS that match selectors in GROUP.
 If N is positive, take the first N items, otherwise take the last N items.
 Note: the ordering of entries is not guaranteed to be preserved, so this may
