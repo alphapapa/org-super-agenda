@@ -909,23 +909,44 @@ already loaded."
   (should (org-super-agenda-test--run
            :groups '((:not (:todo t))))))
 
-(ert-deftest org-super-agenda-test--with-retained-sorting ()
+(ert-deftest org-super-agenda-test--with-kept-order ()
   (should (org-super-agenda-test--run
            :groups '((:name "Ambitions vs Bills with retained sorting"
                             :and (:todo "TODO" :priority>= "B" :tag "ambition")
                             :and (:todo "TODO" :priority>= "B" :tag "bills")
                             :discard (:anything)))
            :let* ((org-agenda-sorting-strategy '(priority-down tag-down))
-                  (org-super-agenda-retain-sorting t)))))
+                  (org-super-agenda-keep-order t)))))
 
-(ert-deftest org-super-agenda-test--without-retained-sorting ()
+(ert-deftest org-super-agenda-test--without-kept-order ()
   (should (org-super-agenda-test--run
            :groups '((:name "Ambitions vs Bills without retained sorting"
                             :and (:todo "TODO" :priority>= "B" :tag "ambition")
                             :and (:todo "TODO" :priority>= "B" :tag "bills")
                             :discard (:anything)))
            :let* ((org-agenda-sorting-strategy '(priority-down tag-down))
-                  (org-super-agenda-retain-sorting nil)))))
+                  (org-super-agenda-keep-order nil)))))
+
+(ert-deftest org-super-agenda-test--future-timestamps ()
+  (should (org-super-agenda-test--run
+           :groups '((:name "Future timestamps"
+                            :and (:tag "appointment" :timestamp future)
+                            :discard (:anything)))
+           :let* ((org-agenda-sorting-strategy '(priority-down tag-down))))))
+
+(ert-deftest org-super-agenda-test--past-timestamps ()
+  (should (org-super-agenda-test--run
+           :groups '((:name "Past timestamps"
+                            :and (:tag "appointment" :timestamp past)
+                            :discard (:anything)))
+           :let* ((org-agenda-sorting-strategy '(priority-down tag-down))))))
+
+(ert-deftest org-super-agenda-test--past-timestamps ()
+  (should (org-super-agenda-test--run
+           :groups '((:name "Relative timestamps"
+                            :and (:tag "appointment" :timestamp (on "+3d"))
+                            :discard (:anything)))
+           :let* ((org-agenda-sorting-strategy '(priority-down tag-down))))))
 
 (ert-deftest org-super-agenda-test--:order ()
   ;; DONE: Works.

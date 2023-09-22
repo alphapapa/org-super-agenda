@@ -2199,4 +2199,19 @@ Wednesday   5 July 2017
   ambition:   In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
   ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+" "98d4ed62b31456728bdfc66c8210b1ea" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Future timestamps
+  test:          NEXT Meet with the Elder Council
+" "7b77cb34ad6f2bf523dc25b647310fd0" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Past timestamps
+  test:          NEXT Time Travellers' Convention
+" "7b77cb34ad6f2bf523dc25b647310fd0" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Relative timestamps
+  test:          NEXT Release the Kraken
 "))
