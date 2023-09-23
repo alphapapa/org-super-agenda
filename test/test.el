@@ -421,19 +421,7 @@ already loaded."
 
        ;; Redefine functions
        (org-super-agenda-test--with-mock-functions
-         ;; Rebind `format-time-string' so it always returns the
-         ;; same when no time is given, otherwise the "now" line
-         ;; in the time-grid depends on the real time when the
-         ;; test is run.  (For some reason, cl-labels/cl-flet
-         ;; don't work, so we have to use `setf' and
-         ;; `symbol-function'.  Might have something to do with
-         ;; lexical-binding.)
-         ((format-time-string-orig (symbol-function 'format-time-string))
-          (format-time-string (lambda (format-string &optional time zone)
-                                (if time
-                                    (format-time-string-orig format-string time zone)
-                                  (concat (cl-second (s-split " " ,date)) " "))))
-          (frame-width (lambda (&rest _ignore)
+         ((frame-width (lambda (&rest _ignore)
                          134))
           (window-width (lambda (&rest _ignore)
                           134))
@@ -463,7 +451,20 @@ already loaded."
                        `(org-agenda-span ',span)
                      `(ignore nil))
                   string)
-             ,body
+             (unwind-protect
+                 (progn
+                   ;; Advise `format-time-string' so it always returns the same when no time is given,
+                   ;; otherwise the "now" line in the time-grid depends on the real time when the test
+                   ;; is run.  NOTE: Due to ERT's calling `format-time-string' when a test fails, for
+                   ;; some reason, using `cl-letf*' to rebind `format-time-string' prevents ERT from
+                   ;; using it to log a timestamp, so we use advice here, which seems to work.
+                   (advice-add #'format-time-string :around
+                               (defun org-super-agenda-test/format-time-string (orig-fn format-string &optional time zone)
+                                 (if time
+                                     (funcall orig-fn format-string time zone)
+                                   (concat (cl-second (s-split " " ,date)) " "))))
+                   ,body)
+               (advice-remove #'format-time-string 'org-super-agenda-test/format-time-string))
              ;; We ignore the text properties.  This should be the right thing to do, since we
              ;; never modify them.  It also makes the results actually legible.  NOTE: We
              ;; could collapse the whitespace to avoid annoying discrepancies between my
