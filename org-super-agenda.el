@@ -6,6 +6,8 @@
 ;; Package-Requires: ((emacs "26.1") (compat "29.1.4.1") (s "1.10.0") (dash "2.13") (org "9.0") (ht "2.2") (ts "0.2"))
 ;; Keywords: hypermedia, outlines, Org, agenda
 
+;; TODO(v1.4): Require Emacs 27.1 in v1.4-pre.  (Some dependency seems to require it now, and 26.3 is old, anyway.)
+
 ;;; Commentary:
 
 ;; This package lets you "supercharge" your Org daily/weekly agenda.
