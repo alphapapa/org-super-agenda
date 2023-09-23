@@ -311,7 +311,9 @@ strings. STDIN should be a string. If process returns non-zero
 and IGNORE-STATUS is nil, raise `user-error' with STDERR
 message."
   (declare (indent defun))
-  (let* ((args (internal--listify args))
+  (let* ((args (cl-typecase args
+                 (list args)
+                 (otherwise (list args))))
          status)
     (with-temp-buffer
       (when stdin
