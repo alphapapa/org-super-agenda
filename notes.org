@@ -44,7 +44,7 @@ CLOSED: [2020-11-21 Sat 03:43]
 +  [ ] Test
 +  [ ] Commit and push
 
-* Tasks                                                               :tasks:
+* Tasks :tasks:
 
 ** TODO [#A] Add ~clocked-or-created~ auto group
 :PROPERTIES:
@@ -1378,7 +1378,7 @@ While testing =org-ql= in a MELPA sandbox session, I noticed that the =auto-pare
   TODO [#A] Deal with issues
 #+END_EXAMPLE
 
-* Archive                                                           :archived:
+* Archive :archived:
 
 ** org-super-agenda
 
@@ -1422,3 +1422,9 @@ Some example configs that aren't in article form:
 
 + [[https://emacs.christianbaeuerlein.com/my-org-config.html#org27f817c][Christian Baeuerlein]]
 
+
+* COMMENT Config
+
+# Local Variables:
+# org-tags-column: 0
+# End:
