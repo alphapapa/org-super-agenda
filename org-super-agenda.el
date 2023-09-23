@@ -237,15 +237,13 @@ considerable, depending on the number of items."
 ;;;; Macros
 
 (defmacro org-super-agenda--when-with-marker-buffer (form &rest body)
-  "When FORM is a marker, run BODY in the marker's buffer, with point starting at it."
+  "When FORM is a marker, eval BODY wrapped in `org-with-point-at'."
   (declare (indent defun) (debug (form body)))
   (org-with-gensyms (marker)
     `(let ((,marker ,form))
        (when (markerp ,marker)
-         (with-current-buffer (marker-buffer ,marker)
-           (save-excursion
-             (goto-char ,marker)
-             ,@body))))))
+         (org-with-point-at ,marker
+           ,@body)))))
 
 (cl-defmacro org-super-agenda--map-children (&key form any)
   "Return FORM mapped across child entries of entry at point, if it has any.

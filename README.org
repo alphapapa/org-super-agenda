@@ -247,6 +247,9 @@ As explained in the usage instructions and shown in the example, items are colle
 +  Selector ~:auto-ts~ may be given the argument ~reverse~ to sort the groups newest-first.
 +  Option ~org-super-agenda-final-group-separator~, which is a separator inserted after the final agenda group.  (Thanks to [[https://github.com/funnell][Tyler Funnell]].)
 
+*Fixes*
++ Widen buffers when collecting parent headers. ([[https://github.com/alphapapa/org-super-agenda/issues/231][#231]].  Thanks to [[https://github.com/haji-ali][Abdul-Lateef Haji-Ali]] for reporting.)
+
 ** 1.2
 
 *Added*

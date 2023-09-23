@@ -1,4 +1,4 @@
-This is README.info, produced by makeinfo version 5.2 from README.texi.
+This is README.info, produced by makeinfo version 6.7 from README.texi.
 
 GPLv3+
 INFO-DIR-SECTION Emacs
@@ -50,14 +50,14 @@ FAQ
 
 Changelog
 
-* 1.3-pre: 13-pre. 
-* 1.2: 12. 
-* 1.1.1: 111. 
-* 1.1: 11. 
-* 1.0.3: 103. 
-* 1.0.2: 102. 
-* 1.0.1: 101. 
-* 1.0.0: 100. 
+* 1.3-pre: 13-pre.
+* 1.2: 12.
+* 1.1.1: 111.
+* 1.1: 11.
+* 1.0.3: 103.
+* 1.0.2: 102.
+* 1.0.1: 101.
+* 1.0.0: 100.
 
 Development
 
@@ -546,14 +546,14 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
 
 * Menu:
 
-* 1.3-pre: 13-pre. 
-* 1.2: 12. 
-* 1.1.1: 111. 
-* 1.1: 11. 
-* 1.0.3: 103. 
-* 1.0.2: 102. 
-* 1.0.1: 101. 
-* 1.0.0: 100. 
+* 1.3-pre: 13-pre.
+* 1.2: 12.
+* 1.1.1: 111.
+* 1.1: 11.
+* 1.0.3: 103.
+* 1.0.2: 102.
+* 1.0.1: 101.
+* 1.0.0: 100.
 
 
 File: README.info,  Node: 13-pre,  Next: 12,  Up: Changelog
@@ -579,6 +579,12 @@ File: README.info,  Node: 13-pre,  Next: 12,  Up: Changelog
    • Option ‘org-super-agenda-final-group-separator’, which is a
      separator inserted after the final agenda group.  (Thanks to Tyler
      Funnell (https://github.com/funnell).)
+
+   *Fixes*
+   • Widen buffers when collecting parent headers.  (#231
+     (https://github.com/alphapapa/org-super-agenda/issues/231).  Thanks
+     to Abdul-Lateef Haji-Ali (https://github.com/haji-ali) for
+     reporting.)
 
 
 File: README.info,  Node: 12,  Next: 111,  Prev: 13-pre,  Up: Changelog
@@ -784,35 +790,35 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction987
-Node: Contents2395
-Node: Screenshots2552
-Node: Installation2789
-Node: MELPA2950
-Node: Manual installation3103
-Node: Usage3552
-Node: Examples4528
-Node: Group selectors8013
-Node: Keywords8975
-Node: Special selectors9704
-Node: Normal selectors13983
-Node: Tips18863
-Node: FAQ19744
-Node: Why are some items not displayed even though I used group selectors for them?19994
-Node: Why did a group disappear when I moved it to the end of the list?20889
-Node: Changelog21470
-Node: 13-pre21705
-Node: 1222797
-Node: 11125471
-Node: 1125646
-Node: 10327230
-Node: 10227441
-Node: 10127575
-Node: 10027913
-Node: Development28018
-Node: Bugs28420
-Node: Tests29114
-Node: Credits29451
+Node: Introduction979
+Node: Contents2387
+Node: Screenshots2544
+Node: Installation2781
+Node: MELPA2942
+Node: Manual installation3095
+Node: Usage3544
+Node: Examples4520
+Node: Group selectors8005
+Node: Keywords8967
+Node: Special selectors9696
+Node: Normal selectors13975
+Node: Tips18855
+Node: FAQ19736
+Node: Why are some items not displayed even though I used group selectors for them?19986
+Node: Why did a group disappear when I moved it to the end of the list?20881
+Node: Changelog21462
+Node: 13-pre21689
+Node: 1223007
+Node: 11125681
+Node: 1125856
+Node: 10327440
+Node: 10227651
+Node: 10127785
+Node: 10028123
+Node: Development28228
+Node: Bugs28630
+Node: Tests29324
+Node: Credits29661
 
 End Tag Table
 
