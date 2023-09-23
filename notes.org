@@ -2,6 +2,28 @@
 
 * Checklists
 
+** DONE Release v1.3
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2023-09-23 Sat 18:55]
+:END:
+
++ [X] Verify:
+  - [X] Any new code which may call arbitrary functions checks =org-super-agenda-allow-unsafe-groups=.
++ [X] Complete [[id:a79457e2-87d5-45e2-ba84-bff5d05fd08a][commit checklist]]
++ [X] Changelog entry
++ [X] Update version numbers
+  - [X] =org-super-agenda.el=
+  - [X] =README.org=
++ [X] Tag and sign
++ [X] Push to stable branch
++ [X] Merge to master
++ [X] Push tags
++ [X] Publish GitHub release
++ [X] Announce
+  - [X] Reddit
+  - [X] org-mode list
+  - [X] Matrix
+
 ** DONE Release 1.2
 CLOSED: [2020-11-21 Sat 03:43]
 :LOGBOOK:
@@ -22,16 +44,22 @@ CLOSED: [2020-11-21 Sat 03:43]
 
 ** Release template
 
-+  [ ] Verify:
-     -  [ ] Any new code which may call arbitrary functions checks =org-super-agenda-allow-unsafe-groups=.
-+  [ ] Complete [[id:a79457e2-87d5-45e2-ba84-bff5d05fd08a][commit checklist]]
-+  [ ] Changelog entry
-+  [ ] Update version numbers
-     -  [ ] =org-super-agenda.el=
-     -  [ ] =README.org=
-+  [ ] Tag and sign
-+  [ ] Push to stable branch
-+  [ ] Merge to master
++ [ ] Verify:
+  - [ ] Any new code which may call arbitrary functions checks =org-super-agenda-allow-unsafe-groups=.
++ [ ] Complete [[id:a79457e2-87d5-45e2-ba84-bff5d05fd08a][commit checklist]]
++ [ ] Changelog entry
++ [ ] Update version numbers
+  - [ ] =org-super-agenda.el=
+  - [ ] =README.org=
++ [ ] Tag and sign
++ [ ] Push to stable branch
++ [ ] Merge to master
++ [ ] Push tags
++ [ ] Publish GitHub release
++ [ ] Announce
+  - [ ] Reddit
+  - [ ] org-mode list
+  - [ ] Matrix
 
 ** Commit
 :PROPERTIES:
