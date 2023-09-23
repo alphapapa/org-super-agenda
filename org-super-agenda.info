@@ -585,6 +585,10 @@ File: README.info,  Node: 13-pre,  Next: 12,  Up: Changelog
      (https://github.com/alphapapa/org-super-agenda/issues/231).  Thanks
      to Abdul-Lateef Haji-Ali (https://github.com/haji-ali) for
      reporting.)
+   • Showing names of empty sections.  (#236
+     (https://github.com/alphapapa/org-super-agenda/issues/236).  Thanks
+     to Patrick Duncan (https://github.com/PaddyPatPat) and Christian
+     Schwarzgruber (https://github.com/cslux).)
 
 
 File: README.info,  Node: 12,  Next: 111,  Prev: 13-pre,  Up: Changelog
@@ -808,17 +812,17 @@ Node: Why are some items not displayed even though I used group selectors for th
 Node: Why did a group disappear when I moved it to the end of the list?20881
 Node: Changelog21462
 Node: 13-pre21689
-Node: 1223007
-Node: 11125681
-Node: 1125856
-Node: 10327440
-Node: 10227651
-Node: 10127785
-Node: 10028123
-Node: Development28228
-Node: Bugs28630
-Node: Tests29324
-Node: Credits29661
+Node: 1223245
+Node: 11125919
+Node: 1126094
+Node: 10327678
+Node: 10227889
+Node: 10128023
+Node: 10028361
+Node: Development28466
+Node: Bugs28868
+Node: Tests29562
+Node: Credits29899
 
 End Tag Table
 

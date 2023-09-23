@@ -249,6 +249,7 @@ As explained in the usage instructions and shown in the example, items are colle
 
 *Fixes*
 + Widen buffers when collecting parent headers. ([[https://github.com/alphapapa/org-super-agenda/issues/231][#231]].  Thanks to [[https://github.com/haji-ali][Abdul-Lateef Haji-Ali]] for reporting.)
++ Showing names of empty sections.  ([[https://github.com/alphapapa/org-super-agenda/issues/236][#236]].  Thanks to [[https://github.com/PaddyPatPat][Patrick Duncan]] and [[https://github.com/cslux][Christian Schwarzgruber]].)
 
 ** 1.2
 
