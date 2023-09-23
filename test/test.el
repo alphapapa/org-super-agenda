@@ -921,6 +921,7 @@ already loaded."
            :groups '((:not (:todo t))))))
 
 (ert-deftest org-super-agenda-test--with-retained-sorting ()
+  ;; FIXME: This seems to be slightly broken on Org 9.6.6.
   (should (org-super-agenda-test--run
            :groups '((:name "Ambitions vs Bills with retained sorting"
                             :and (:todo "TODO" :priority>= "B" :tag "ambition")
