@@ -50,7 +50,7 @@ FAQ
 
 Changelog
 
-* 1.3-pre: 13-pre.
+* 1.3: 13.
 * 1.2: 12.
 * 1.1.1: 111.
 * 1.1: 11.
@@ -546,7 +546,7 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
 
 * Menu:
 
-* 1.3-pre: 13-pre.
+* 1.3: 13.
 * 1.2: 12.
 * 1.1.1: 111.
 * 1.1: 11.
@@ -556,12 +556,12 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
 * 1.0.0: 100.
 
 
-File: README.info,  Node: 13-pre,  Next: 12,  Up: Changelog
+File: README.info,  Node: 13,  Next: 12,  Up: Changelog
 
-7.1 1.3-pre
-===========
+7.1 1.3
+=======
 
-*Added*
+*Additions*
    • Selector ‘:property’, which groups items with a property,
      optionally also matching a value or predicate.  (Thanks to Per
      Weijnitz (https://github.com/weipe).)
@@ -591,7 +591,7 @@ File: README.info,  Node: 13-pre,  Next: 12,  Up: Changelog
      Schwarzgruber (https://github.com/cslux).)
 
 
-File: README.info,  Node: 12,  Next: 111,  Prev: 13-pre,  Up: Changelog
+File: README.info,  Node: 12,  Next: 111,  Prev: 13,  Up: Changelog
 
 7.2 1.2
 =======
@@ -794,35 +794,35 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction979
-Node: Contents2387
-Node: Screenshots2544
-Node: Installation2781
-Node: MELPA2942
-Node: Manual installation3095
-Node: Usage3544
-Node: Examples4520
-Node: Group selectors8005
-Node: Keywords8967
-Node: Special selectors9696
-Node: Normal selectors13975
-Node: Tips18855
-Node: FAQ19736
-Node: Why are some items not displayed even though I used group selectors for them?19986
-Node: Why did a group disappear when I moved it to the end of the list?20881
-Node: Changelog21462
-Node: 13-pre21689
-Node: 1223245
-Node: 11125919
-Node: 1126094
-Node: 10327678
-Node: 10227889
-Node: 10128023
-Node: 10028361
-Node: Development28466
-Node: Bugs28868
-Node: Tests29562
-Node: Credits29899
+Node: Introduction971
+Node: Contents2379
+Node: Screenshots2536
+Node: Installation2773
+Node: MELPA2934
+Node: Manual installation3087
+Node: Usage3536
+Node: Examples4512
+Node: Group selectors7997
+Node: Keywords8959
+Node: Special selectors9688
+Node: Normal selectors13967
+Node: Tips18847
+Node: FAQ19728
+Node: Why are some items not displayed even though I used group selectors for them?19978
+Node: Why did a group disappear when I moved it to the end of the list?20873
+Node: Changelog21454
+Node: 1321673
+Node: 1223221
+Node: 11125891
+Node: 1126066
+Node: 10327650
+Node: 10227861
+Node: 10127995
+Node: 10028333
+Node: Development28438
+Node: Bugs28840
+Node: Tests29534
+Node: Credits29871
 
 End Tag Table
 
