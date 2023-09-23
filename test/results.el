@@ -701,8 +701,8 @@ Wednesday   5 July 2017
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
   ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
 " "ee86c7d11d20c4894e7956db5efce309" "Global list of TODO items of type: ALL
-Press ‘N r’ (e.g. ‘0 r’) to search again: (0)[ALL] (1)TODO (2)TODAY (3)NEXT (4)STARTED (5)IN-PROGRESS (6)UNDERWAY (7)WAITING
-                      (8)SOMEDAY (9)MAYBE (10)CHECK (11)DONE (12)CANCELED
+Press ‘N r’ (e.g. ‘0 r’) to search again: (0)[ALL] (1)CANCELED (2)DONE (3)CHECK (4)MAYBE (5)SOMEDAY (6)WAITING (7)UNDERWAY
+                      (8)IN-PROGRESS (9)STARTED (10)NEXT (11)TODAY (12)TODO
 
  Items without deadlines
   ambition:   TODO [#A] Skype with president of Antarctica                                         :universe:ambition:world::meetings:
@@ -1913,6 +1913,12 @@ Wednesday   5 July 2017
  Tags: @town, personal
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
 
+ Tags: Emacs, computers, elisp, programming, software
+  ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
+
+ Tags: Emacs, website
+  test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
+
  Tags: ambition, meetings, universe, world
   ambition:   Sched. 1x:  TODO [#A] Skype with president of Antarctica                             :universe:ambition:world::meetings:
 
@@ -1938,14 +1944,8 @@ Wednesday   5 July 2017
  Tags: bills, spaceship
   test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
 
- Tags: computers, elisp, emacs, programming, software
-  ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
-
  Tags: dinner, food
   test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
-
- Tags: emacs, website
-  test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
 
  Other items
   test:        7:02...... Sunrise (12:04 of daylight)
@@ -2196,6 +2196,78 @@ Wednesday   5 July 2017
   ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
   test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   ambition:   In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
+  ambition:   In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
+  test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
+  ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+" "307f68fcbbad5bc27a9bb104acbf6997" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Face: org-agenda-calendar-sexp
+  test:        7:02...... Sunrise (12:04 of daylight)
+  test:       19:07...... Sunset 
+
+ Face: org-imminent-deadline
+  test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
+
+ Face: org-scheduled-previously
+  ambition:   Sched. 1x:  TODO [#A] Skype with president of Antarctica                             :universe:ambition:world::meetings:
+
+ Face: org-scheduled-today
+  test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor                                                  :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
+  ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
+  test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
+  ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+
+ Face: org-upcoming-deadline
+  ambition:   In   2 d.:  TODO [#A] Take over the world                                                     :universe:ambition::world:
+  ambition:   In  10 d.:  TODO [#A] Take over the universe                                                         :universe:ambition:
+
+ Face: org-upcoming-distant-deadline
+  test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
+  ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
+  ambition:   In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
+  ambition:   In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
+
+ Other items
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+              18:00...... ----------------
+              20:00...... ----------------
+" "fb3663ca7869a5f776ff9b43f7ed6a69" "Day-agenda (W27):
+Wednesday   5 July 2017
+
+ Predicate: Lambda
+  ambition:   In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
+
+ Other items
+  test:        7:02...... Sunrise (12:04 of daylight)
+               8:00...... ----------------
+              10:00...... ----------------
+              12:00...... now - - - - - - - - - - - - - - - - - - - - - - - - -
+              12:00...... ----------------
+              14:00...... ----------------
+              16:00...... ----------------
+  test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
+              18:00...... ----------------
+  test:       19:07...... Sunset 
+              20:00...... ----------------
+  ambition:   Sched. 1x:  TODO [#A] Skype with president of Antarctica                             :universe:ambition:world::meetings:
+  ambition:   In   2 d.:  TODO [#A] Take over the world                                                     :universe:ambition::world:
+  ambition:   In  10 d.:  TODO [#A] Take over the universe                                                         :universe:ambition:
+  test:       In  27 d.:  TODO [#A] Spaceship lease                                                                  :bills:spaceship:
+  test:       Scheduled:  TODO [#B] Fix flux capacitor                                                  :spaceship:shopping:@computer:
+  test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
+  ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
+  test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
+  ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
+  test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   ambition:   In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
   ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
