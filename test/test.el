@@ -427,15 +427,19 @@ already loaded."
                           134))
           ;; Org after 2017-08-08 uses `window-text-width'
           (window-text-width (lambda (&rest _ignore)
-                               134)))
+                               134))
+          ;; Org after 81a2fe4f0b6d5bb91e96fc91f8550f2dce8d1185 uses `window-max-chars-per-line'.
+          (window-max-chars-per-line (lambda (&rest _ignore) 134)))
 
          ;; Run agenda
          (org-super-agenda-test--with-org-today-date ,date
-           (let* ( ;; Set these vars so they are consistent between my config and the batch config
+           (let* (;; Set these vars so they are consistent between my config and the batch config
                   ,@(org-super-agenda-test--get-custom-group-members 'org-agenda)
                   ,@(org-super-agenda-test--get-custom-group-members 'org-habit)
                   (org-agenda-window-setup 'current-window) ; The default breaks batch tests by trying to open a new frame
                   (org-agenda-start-with-log-mode nil) ; Set this by default, in case it's set to t in my running Emacs instance
+                  (org-agenda-current-time-string "now - - - - - - - - - - - - - - - - - - - - - - - - -")
+                  (org-agenda-block-separator ?=)
                   ;; HACK: Look for test.org in either dir, so it works interactively and
                   ;; in batch tests.  This is ugly, but I don't know how else to do it.
                   (org-agenda-files (list (if (file-exists-p "test/test.org")
@@ -451,6 +455,10 @@ already loaded."
                        `(org-agenda-span ',span)
                      `(ignore nil))
                   string)
+             ;; Fix org-agenda variables whose value is different on
+             ;; graphical terminals in later Org versions.
+             (setf (nth 2 org-agenda-time-grid) "......"
+                   (nth 3 org-agenda-time-grid) "----------------")
              (unwind-protect
                  (progn
                    ;; Advise `format-time-string' so it always returns the same when no time is given,
