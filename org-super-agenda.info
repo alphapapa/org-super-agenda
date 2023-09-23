@@ -50,6 +50,7 @@ FAQ
 
 Changelog
 
+* 1.4-pre: 14-pre.
 * 1.3: 13.
 * 1.2: 12.
 * 1.1.1: 111.
@@ -546,6 +547,7 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
 
 * Menu:
 
+* 1.4-pre: 14-pre.
 * 1.3: 13.
 * 1.2: 12.
 * 1.1.1: 111.
@@ -556,9 +558,17 @@ File: README.info,  Node: Changelog,  Next: Development,  Prev: FAQ,  Up: Top
 * 1.0.0: 100.
 
 
-File: README.info,  Node: 13,  Next: 12,  Up: Changelog
+File: README.info,  Node: 14-pre,  Next: 13,  Up: Changelog
 
-7.1 1.3
+7.1 1.4-pre
+===========
+
+Nothing new yet.
+
+
+File: README.info,  Node: 13,  Next: 12,  Prev: 14-pre,  Up: Changelog
+
+7.2 1.3
 =======
 
 *Additions*
@@ -593,7 +603,7 @@ File: README.info,  Node: 13,  Next: 12,  Up: Changelog
 
 File: README.info,  Node: 12,  Next: 111,  Prev: 13,  Up: Changelog
 
-7.2 1.2
+7.3 1.2
 =======
 
 *Added*
@@ -652,7 +662,7 @@ File: README.info,  Node: 12,  Next: 111,  Prev: 13,  Up: Changelog
 
 File: README.info,  Node: 111,  Next: 11,  Prev: 12,  Up: Changelog
 
-7.3 1.1.1
+7.4 1.1.1
 =========
 
 *Fixed*
@@ -661,7 +671,7 @@ File: README.info,  Node: 111,  Next: 11,  Prev: 12,  Up: Changelog
 
 File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
 
-7.4 1.1
+7.5 1.1
 =======
 
 *Additions*
@@ -696,7 +706,7 @@ File: README.info,  Node: 11,  Next: 103,  Prev: 111,  Up: Changelog
 
 File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
-7.5 1.0.3
+7.6 1.0.3
 =========
 
 *Fixed*
@@ -706,7 +716,7 @@ File: README.info,  Node: 103,  Next: 102,  Prev: 11,  Up: Changelog
 
 File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
-7.6 1.0.2
+7.7 1.0.2
 =========
 
 *Fixed*
@@ -715,7 +725,7 @@ File: README.info,  Node: 102,  Next: 101,  Prev: 103,  Up: Changelog
 
 File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
-7.7 1.0.1
+7.8 1.0.1
 =========
 
 *Fixes*
@@ -727,7 +737,7 @@ File: README.info,  Node: 101,  Next: 100,  Prev: 102,  Up: Changelog
 
 File: README.info,  Node: 100,  Prev: 101,  Up: Changelog
 
-7.8 1.0.0
+7.9 1.0.0
 =========
 
 First tagged version.
@@ -794,35 +804,36 @@ File: README.info,  Node: Credits,  Prev: Development,  Up: Top
 
 Tag Table:
 Node: Top222
-Node: Introduction971
-Node: Contents2379
-Node: Screenshots2536
-Node: Installation2773
-Node: MELPA2934
-Node: Manual installation3087
-Node: Usage3536
-Node: Examples4512
-Node: Group selectors7997
-Node: Keywords8959
-Node: Special selectors9688
-Node: Normal selectors13967
-Node: Tips18847
-Node: FAQ19728
-Node: Why are some items not displayed even though I used group selectors for them?19978
-Node: Why did a group disappear when I moved it to the end of the list?20873
-Node: Changelog21454
-Node: 1321673
-Node: 1223221
-Node: 11125891
-Node: 1126066
-Node: 10327650
-Node: 10227861
-Node: 10127995
-Node: 10028333
-Node: Development28438
-Node: Bugs28840
-Node: Tests29534
-Node: Credits29871
+Node: Introduction990
+Node: Contents2398
+Node: Screenshots2555
+Node: Installation2792
+Node: MELPA2953
+Node: Manual installation3106
+Node: Usage3555
+Node: Examples4531
+Node: Group selectors8016
+Node: Keywords8978
+Node: Special selectors9707
+Node: Normal selectors13986
+Node: Tips18866
+Node: FAQ19747
+Node: Why are some items not displayed even though I used group selectors for them?19997
+Node: Why did a group disappear when I moved it to the end of the list?20892
+Node: Changelog21473
+Node: 14-pre21711
+Node: 1321817
+Node: 1223380
+Node: 11126050
+Node: 1126225
+Node: 10327809
+Node: 10228020
+Node: 10128154
+Node: 10028492
+Node: Development28597
+Node: Bugs28999
+Node: Tests29693
+Node: Credits30030
 
 End Tag Table
 
