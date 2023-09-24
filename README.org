@@ -239,7 +239,8 @@ As explained in the usage instructions and shown in the example, items are colle
 
 ** 1.4-pre
 
-Nothing new yet.
+*Additions*
++ Option ~org-super-agenda-show-message~ allows disabling of the message shown when the mode is enabled.  (Thanks to [[https://github.com/hpfr][Liam Hupfer]].)
 
 ** 1.3
 
