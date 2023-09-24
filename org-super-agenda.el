@@ -164,6 +164,10 @@ origin (e.g. Org QL's link-handling code).")
   :group 'org
   :link '(url-link "http://github.com/alphapapa/org-super-agenda"))
 
+(defcustom org-super-agenda-show-message t
+  "Show a message when `org-super-agenda-mode' is toggled."
+  :type 'boolean)
+
 (defcustom org-super-agenda-groups nil
   "List of groups to apply to agenda views.
 See readme for information."
@@ -369,9 +373,10 @@ With prefix argument ARG, turn on if positive, otherwise off."
         (add-to-list 'org-agenda-local-vars 'org-super-agenda-groups)
       (setq org-agenda-local-vars (remove 'org-super-agenda-groups org-agenda-local-vars)))
     ;; Display message
-    (message (if org-super-agenda-mode
-                 "org-super-agenda-mode enabled."
-               "org-super-agenda-mode disabled."))))
+    (when org-super-agenda-show-message
+      (message (if org-super-agenda-mode
+                   "org-super-agenda-mode enabled."
+                 "org-super-agenda-mode disabled.")))))
 
 ;;;; Group selectors
 
