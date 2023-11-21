@@ -963,6 +963,7 @@ of the arguments to the function."
                     else collect item into non-matching
                     finally return (list ,keyword
                                          non-matching
+                                         ;; FIXME: Remove the #' from `key-sort-fn'.
                                          (cl-loop for key in (sort (ht-keys groups) #',key-sort-fn)
                                                   for name = ,header-form
                                                   collect (list :name name
