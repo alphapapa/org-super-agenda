@@ -188,6 +188,7 @@ Every selector requires an argument, even if it's just ~t~, e.g. ~:anything~, ~:
 
 These selectors take one argument alone, or multiple arguments in a list. 
 
++  ~:ancestor-with-todo~ :: Group items whose ancestor (up to ~:limit~ hops, or with ~:nearestp~, their nearest) has the given to-do keyword.  (For example, ~(:ancestor-with-todo ("PROJECT" :nearestp t))~ to group by the nearest ancestor project heading.)
 +  =:category= :: Group items that match any of the given categories.  Argument may be a string or list of strings.
 +  =:children= :: Select any item that has child entries.  Argument may be ~t~ to match if it has any children, ~nil~ to match if it has no children, ~todo~ to match if it has children with any to-do keywords, or a string to match if it has children with certain to-do keywords.  You might use this to select items that are project top-level headings.  Be aware that this may be very slow in non-daily/weekly agenda views because of its recursive nature.
 +  =:date= :: Group items that have a date associated. Argument can be =t= to match items with any date, =nil= to match items without a date, or =today= to match items with today’s date. The =ts-date= text-property is matched against.
@@ -240,6 +241,7 @@ As explained in the usage instructions and shown in the example, items are colle
 ** 1.4-pre
 
 *Additions*
++ Selector ~:ancestor-with-todo~, which groups items by their ancestor having a certain to-do keyword (up to a ~:limit~ number of hops, or with ~:nearestp~, the nearest one).  (Useful, for example, to group items by their parent or ancestor project.)
 + Option ~org-super-agenda-show-message~ allows disabling of the message shown when the mode is enabled.  (Thanks to [[https://github.com/hpfr][Liam Hupfer]].)
 
 ** 1.3
