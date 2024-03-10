@@ -1091,9 +1091,10 @@ key and as the header for its group."
                          (directory-name (->> file-path file-name-directory directory-file-name file-name-nondirectory)))
               (concat "Directory: " directory-name)))
 
+(setq org-super-agenda-auto-outline-path-separator "/")
 (org-super-agenda--def-auto-group outline-path "their outline paths"
   :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
-              (s-join "/" (org-get-outline-path))))
+              (s-join org-super-agenda-auto-outline-path-separator (org-get-outline-path))))
 
 (org-super-agenda--def-auto-group parent "their parent heading"
   :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
