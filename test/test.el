@@ -928,7 +928,7 @@ already loaded."
                             :and (:todo "TODO" :priority>= "B" :tag "bills")
                             :discard (:anything)))
            :let* ((org-agenda-sorting-strategy '(priority-down tag-down))
-                  (org-super-agenda-retain-sorting t)))))
+                  (org-super-agenda-keep-order t)))))
 
 (ert-deftest org-super-agenda-test--without-retained-sorting ()
   (should (org-super-agenda-test--run
@@ -937,7 +937,7 @@ already loaded."
                             :and (:todo "TODO" :priority>= "B" :tag "bills")
                             :discard (:anything)))
            :let* ((org-agenda-sorting-strategy '(priority-down tag-down))
-                  (org-super-agenda-retain-sorting nil)))))
+                  (org-super-agenda-keep-order nil)))))
 
 (ert-deftest org-super-agenda-test--:order ()
   ;; DONE: Works.
