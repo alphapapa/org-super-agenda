@@ -577,6 +577,12 @@ File: README.info,  Node: 14-pre,  Next: 13,  Up: Changelog
      message shown when the mode is enabled.  (Thanks to Liam Hupfer
      (https://github.com/hpfr).)
 
+   *Changes*
+   • Selector ‘:auto-outline-path’ puts top-level headings in a group
+     named "Top-level headings".  (#258
+     (https://github.com/alphapapa/org-super-agenda/issues/258).  Thanks
+     to Gulshan Singh (https://github.com/gsingh93) for suggesting.)
+
 
 File: README.info,  Node: 13,  Next: 12,  Prev: 14-pre,  Up: Changelog
 
@@ -834,18 +840,18 @@ Node: Why are some items not displayed even though I used group selectors for th
 Node: Why did a group disappear when I moved it to the end of the list?21178
 Node: Changelog21759
 Node: 14-pre21997
-Node: 1322557
-Node: 1224120
-Node: 11126790
-Node: 1126965
-Node: 10328549
-Node: 10228760
-Node: 10128894
-Node: 10029232
-Node: Development29337
-Node: Bugs29739
-Node: Tests30433
-Node: Credits30770
+Node: 1322829
+Node: 1224392
+Node: 11127062
+Node: 1127237
+Node: 10328821
+Node: 10229032
+Node: 10129166
+Node: 10029504
+Node: Development29609
+Node: Bugs30011
+Node: Tests30705
+Node: Credits31042
 
 End Tag Table
 

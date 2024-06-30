@@ -244,6 +244,9 @@ As explained in the usage instructions and shown in the example, items are colle
 + Selector ~:ancestor-with-todo~, which groups items by their ancestor having a certain to-do keyword (up to a ~:limit~ number of hops, or with ~:nearestp~, the nearest one).  (Useful, for example, to group items by their parent or ancestor project.)
 + Option ~org-super-agenda-show-message~ allows disabling of the message shown when the mode is enabled.  (Thanks to [[https://github.com/hpfr][Liam Hupfer]].)
 
+*Changes*
++ Selector ~:auto-outline-path~ puts top-level headings in a group named "Top-level headings".  ([[https://github.com/alphapapa/org-super-agenda/issues/258][#258]].  Thanks to [[https://github.com/gsingh93][Gulshan Singh]] for suggesting.)
+
 ** 1.3
 
 *Additions*

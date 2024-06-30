@@ -1093,7 +1093,9 @@ key and as the header for its group."
 
 (org-super-agenda--def-auto-group outline-path "their outline paths"
   :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
-              (s-join "/" (org-get-outline-path))))
+	      (if-let ((outline-path (org-get-outline-path)))
+		  (s-join "/" outline-path)
+		"Top-level headings")))
 
 (org-super-agenda--def-auto-group parent "their parent heading"
   :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
