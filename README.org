@@ -247,6 +247,9 @@ As explained in the usage instructions and shown in the example, items are colle
 *Changes*
 + Selector ~:auto-outline-path~ puts top-level headings in a group named "Top-level headings".  ([[https://github.com/alphapapa/org-super-agenda/issues/258][#258]].  Thanks to [[https://github.com/gsingh93][Gulshan Singh]] for suggesting.)
 
+*Fixes*
++ Selector ~:time-grid~ incorrectly recognized some items.  ([[https://github.com/alphapapa/org-super-agenda/issues/264][#264]].  Thanks to [[https://github.com/floli][Florian Lindner]] for reporting, and to [[https://github.com/yantar92][Ihor Radchenko]] for suggesting.)
+
 ** 1.3
 
 *Additions*

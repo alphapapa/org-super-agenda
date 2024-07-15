@@ -1,0 +1,5 @@
+#+TITLE: Test for [[https://github.com/alphapapa/org-super-agenda/issues/264][issue #264]]
+
+* TODO dated item
+SCHEDULED: <2024-07-04 Do 14:00>
+* TODO undated item

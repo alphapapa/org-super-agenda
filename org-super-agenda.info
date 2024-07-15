@@ -583,6 +583,12 @@ File: README.info,  Node: 14-pre,  Next: 13,  Up: Changelog
      (https://github.com/alphapapa/org-super-agenda/issues/258).  Thanks
      to Gulshan Singh (https://github.com/gsingh93) for suggesting.)
 
+   *Fixes*
+   • Selector ‘:time-grid’ incorrectly recognized some items.  (#264
+     (https://github.com/alphapapa/org-super-agenda/issues/264).  Thanks
+     to Florian Lindner (https://github.com/floli) for reporting, and to
+     Ihor Radchenko (https://github.com/yantar92) for suggesting.)
+
 
 File: README.info,  Node: 13,  Next: 12,  Prev: 14-pre,  Up: Changelog
 
@@ -840,18 +846,18 @@ Node: Why are some items not displayed even though I used group selectors for th
 Node: Why did a group disappear when I moved it to the end of the list?21178
 Node: Changelog21759
 Node: 14-pre21997
-Node: 1322829
-Node: 1224392
-Node: 11127062
-Node: 1127237
-Node: 10328821
-Node: 10229032
-Node: 10129166
-Node: 10029504
-Node: Development29609
-Node: Bugs30011
-Node: Tests30705
-Node: Credits31042
+Node: 1323129
+Node: 1224692
+Node: 11127362
+Node: 1127537
+Node: 10329121
+Node: 10229332
+Node: 10129466
+Node: 10029804
+Node: Development29909
+Node: Bugs30311
+Node: Tests31005
+Node: Credits31342
 
 End Tag Table
 

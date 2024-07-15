@@ -961,3 +961,14 @@ already loaded."
                                     (:todo "WAITING")
                                     (:name "Not TODOs"
                                            :not (:todo t))))))))
+
+(ert-deftest org-super-agenda-test--issue-264 ()
+  ;; See <https://github.com/alphapapa/org-super-agenda/issues/264>.
+  ;; DONE: Works.
+  (should (org-super-agenda-test--run
+	   :body (org-todo-list)
+           :data-file "test/264.org"
+           :skip-lines 3
+           :groups '((:name "time-grid" :time-grid t)
+                     (:name "Todo" :todo "TODO")
+                     (:name "catch-all" :anything t)))))
