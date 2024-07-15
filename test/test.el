@@ -385,8 +385,8 @@ FNS should be a list of (FUNCTION-NAME FUNCTION-BODY) lists,
 where FUNCTION-BODY is a lambda form."
   (declare (indent defun))
   `(cl-letf* ,(cl-loop for (fn def) in fns
-                      collect `((symbol-function ',fn)
-                                ,def))
+                       collect `((symbol-function ',fn)
+                                 ,def))
      ,@body))
 
 (defmacro org-super-agenda-test--with-org-today-date (date &rest body)
@@ -449,14 +449,14 @@ already loaded."
                                             (expand-file-name ,data-file))))
                   ,@(if let*
                         let*
-                      `((ignore nil)))
+                      `((_ignore nil)))
                   ,(if groups-set
                        `(org-super-agenda-groups ,groups)
-                     `(ignore nil))
+                     `(_ignore nil))
                   ,(if span
                        `(org-agenda-span ',span)
-                     `(ignore nil))
-                  string)
+                     `(_ignore nil))
+                  _string)
              ;; Fix org-agenda variables whose value is different on
              ;; graphical terminals in later Org versions.
              (setf (nth 2 org-agenda-time-grid) "......"
