@@ -403,6 +403,8 @@ where FUNCTION-BODY is a lambda form."
           (groups nil groups-set)
           (span 'day)
           (date org-super-agenda-test-date)
+          (data-file "test/test.org")
+          (skip-lines nil)
           let*)
   "Test BODY with GROUPS and LET* binding.
 When `org-super-agenda-test-save-results' is non-nil, save the
@@ -442,9 +444,9 @@ already loaded."
                   (org-agenda-block-separator ?=)
                   ;; HACK: Look for test.org in either dir, so it works interactively and
                   ;; in batch tests.  This is ugly, but I don't know how else to do it.
-                  (org-agenda-files (list (if (file-exists-p "test/test.org")
-                                              (expand-file-name "test/test.org")
-                                            (expand-file-name "test.org"))))
+                  (org-agenda-files (list (if (file-exists-p ,data-file)
+                                              (expand-file-name ,data-file)
+                                            (expand-file-name ,data-file))))
                   ,@(if let*
                         let*
                       `((ignore nil)))
@@ -480,7 +482,13 @@ already loaded."
              ;; fine, because other than inserting group headers, we're not modifying any
              ;; whitespace.  BUT that means that, when a test fails, we won't be able to
              ;; easily see why, because there won't be any line-breaks for the diff.
-             (setq new-result (buffer-substring-no-properties 1 (point-max)))
+             (setq new-result (buffer-substring-no-properties
+                               (if ,skip-lines
+                                   (save-excursion
+                                     (forward-line ,skip-lines)
+                                     (point))
+                                 1)
+                               (point-max)))
              (unless org-super-agenda-test-show-results
                (kill-buffer)))))
 
