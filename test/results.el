@@ -278,6 +278,20 @@ Wednesday   5 July 2017
   test:       Scheduled:  TODO Shop for groceries                                                                :food:shopping:@town:
   test:       Deadline:   CHECK /r/emacs                                                                               :website:Emacs:
 
+ Take over Mars
+  ambition:   In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
+
+ Take over the moon
+  ambition:   In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
+
+ Take over the universe
+  ambition:   In   2 d.:  TODO [#A] Take over the world                                                     :universe:ambition::world:
+  ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
+  ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
+
+ Take over the world
+  ambition:   Sched. 1x:  TODO [#A] Skype with president of Antarctica                             :universe:ambition:world::meetings:
+
  Test data
   test:       18:00...... Scheduled:  TODO Order a pizza                                                                 :food:dinner:
   ambition:   In  10 d.:  TODO [#A] Take over the universe                                                         :universe:ambition:
@@ -285,20 +299,6 @@ Wednesday   5 July 2017
   test:       Scheduled:  TODO [#B] Fix flux capacitor                                                  :spaceship:shopping:@computer:
   test:       In  16 d.:  TODO [#B] Internet                                                                                   :bills:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
-
- [#A] Take over the universe
-  ambition:   In   2 d.:  TODO [#A] Take over the world                                                     :universe:ambition::world:
-  ambition:   In   5 d.:  TODO [#B] Renew membership in supervillain club                                         :universe:ambition::
-  ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
-
- [#A] Take over the world
-  ambition:   Sched. 1x:  TODO [#A] Skype with president of Antarctica                             :universe:ambition:world::meetings:
-
- [#B] Take over Mars
-  ambition:   In  77 d.:  TODO Visit Mars                                                     :universe:ambition::space:travel:planet:
-
- [#C] Take over the moon
-  ambition:   In  53 d.:  WAITING Visit the moon                                                     :universe:ambition::space:travel:
 
  Other items
                8:00...... ----------------
@@ -444,10 +444,7 @@ Wednesday   5 July 2017
 
  Scheduled earlier
   ambition:   Sched. 1x:  TODO [#A] Skype with president of Antarctica                             :universe:ambition:world::meetings:
-" "5db2acc8c5a09927fa8b6246b9480d69" "Headlines with TAGS match: Emacs
-Press ‘C-u r’ to search again
-
- SOMEDAY items
+" "5db2acc8c5a09927fa8b6246b9480d69" " SOMEDAY items
   ideas:      SOMEDAY Rewrite Emacs in Common Lisp                                        :Emacs:elisp:computers:software:programming:
 
  Other items
@@ -700,11 +697,7 @@ Wednesday   5 July 2017
   ideas:      Scheduled:  SOMEDAY Rewrite Emacs in Common Lisp                            :Emacs:elisp:computers:software:programming:
   test:       Scheduled:  TODO [#C] Get haircut                                                                       :personal:@town:
   ambition:   TODO Practice leaping tall                     !                                           :universe:ambition::personal:
-" "ee86c7d11d20c4894e7956db5efce309" "Global list of TODO items of type: ALL
-Press ‘N r’ (e.g. ‘0 r’) to search again: (0)[ALL] (1)CANCELED (2)DONE (3)CHECK (4)MAYBE (5)SOMEDAY (6)WAITING (7)UNDERWAY
-                      (8)IN-PROGRESS (9)STARTED (10)NEXT (11)TODAY (12)TODO
-
- Items without deadlines
+" "ee86c7d11d20c4894e7956db5efce309" " Items without deadlines
   ambition:   TODO [#A] Skype with president of Antarctica                                         :universe:ambition:world::meetings:
   ambition:   TODO [#B] Take over Mars                                                                            :universe:ambition::
   ambition:   TODO Practice leaping tall buildings in a single bound                                     :universe:ambition::personal:

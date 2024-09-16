@@ -646,6 +646,7 @@ already loaded."
 
 (ert-deftest org-super-agenda-test--someday-tags-view-Emacs ()
   (should (org-super-agenda-test--run
+           :skip-lines 3
            :groups '((:todo "SOMEDAY"))
            :body (org-tags-view nil "Emacs"))))
 
@@ -702,6 +703,7 @@ already loaded."
   ;; DONE: Works.  I don't remember why I have this one using
   ;; `org-todo-list', but I'll leave it.
   (should (org-super-agenda-test--run
+           :skip-lines 4
            :groups '((:deadline nil))
            :body (org-todo-list))))
 (ert-deftest org-super-agenda-test--:deadline-nil-agenda ()
