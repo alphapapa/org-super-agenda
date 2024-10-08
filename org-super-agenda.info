@@ -422,6 +422,8 @@ list.
      Group items that are less than (or equal to) the given effort.
      Argument is a time-duration string, like ‘5’ or ‘0:05’ for 5
      minutes.
+‘:done’
+     Group items that are done according to ‘org-done-keywords’.
 ‘:effort>’
      Group items that are higher than (or equal to) the given effort.
      Argument is a time-duration string, like ‘5’ or ‘0:05’ for 5

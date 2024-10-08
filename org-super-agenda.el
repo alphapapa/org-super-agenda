@@ -778,6 +778,13 @@ keyword, or `nil' to match only non-todo items."
           (_ ;; Oops
            (user-error "Argument to `:todo' must be a string, list of strings, t, or nil"))))
 
+(org-super-agenda--defgroup done
+  "Group items that are done according to `org-done-keywords'."
+  :section-name "Done items"
+  :test (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+          (when-let ((state (org-get-todo-state)))
+            (member state org-done-keywords))))
+
 (org-super-agenda--defgroup ancestor-with-todo
   "their earliest ancestor having the to-do keyword"
   ;; TODO: Add tests.
