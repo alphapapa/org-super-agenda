@@ -194,6 +194,7 @@ These selectors take one argument alone, or multiple arguments in a list.
 +  =:date= :: Group items that have a date associated. Argument can be =t= to match items with any date, =nil= to match items without a date, or =today= to match items with today’s date. The =ts-date= text-property is matched against.
 +  =:deadline= :: Group items that have a deadline. Argument can be ~t~ (to match items with any deadline), ~nil~ (to match items that have no deadline), ~past~ (to match items with a deadline in the past), ~today~ (to match items whose deadline is today), or ~future~ (to match items with a deadline in the future). Argument may also be given like ~before DATE~ or ~after DATE~ where DATE is a date string that ~org-time-string-to-absolute~ can process.
 +  =:effort<= :: Group items that are less than (or equal to) the given effort. Argument is a time-duration string, like ~5~ or ~0:05~ for 5 minutes.
++  =:done= :: Group items that are done according to ~org-done-keywords~.
 +  =:effort>= :: Group items that are higher than (or equal to) the given effort. Argument is a time-duration string, like ~5~ or ~0:05~ for 5 minutes.
 +  ~:file-path~ :: Group items whose buffers' filename paths match any of the given regular expressions.
 +  =:habit= :: Group habit items (items which have a =STYLE: habit= Org property).
