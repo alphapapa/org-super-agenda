@@ -277,7 +277,7 @@ A and B are Org timestamp elements."
   ;; Copied from `org-ql'.
   (cl-macrolet ((ts (ts)
                   `(when ,ts
-                     (org-timestamp-format ,ts "%s"))))
+                     (org-format-timestamp ,ts "%s"))))
     (let* ((a-ts (ts a))
            (b-ts (ts b)))
       (cond ((and a-ts b-ts)
@@ -553,9 +553,9 @@ Uses NAME, DOCSTRING, and COMPARATOR."
      ,(concat docstring "\nArgument is a time-duration string, like \"5\" or \"0:05\" for 5 minutes.")
      :section-name (concat "Effort " ,(symbol-name name) " "
                            (s-join " or " args) " items")
-     :let* ((effort-minutes (org-duration-string-to-minutes (car args))))
+     :let* ((effort-minutes (org-duration-to-minutes (car args))))
      :test (when-let ((item-effort (org-find-text-property-in-string 'effort item)))
-             (,comparator (org-duration-string-to-minutes item-effort) effort-minutes))))
+             (,comparator (org-duration-to-minutes item-effort) effort-minutes))))
 
 (org-super-agenda--defeffort-group <
   "Group items that are less than (or equal to) the given effort."
@@ -1024,7 +1024,7 @@ Formatted according to `org-super-agenda-date-format', which see."
                                               #'org-super-agenda--org-timestamp-element<))))
                   (pcase earliest-ts
                     ('nil nil)
-                    (_ (propertize (org-timestamp-format earliest-ts org-super-agenda-date-format)
+                    (_ (propertize (org-format-timestamp earliest-ts org-super-agenda-date-format)
                                    'org-super-agenda-ts earliest-ts))))))
   :key-sort-fn (lambda (a b)
                  (org-super-agenda--org-timestamp-element<
