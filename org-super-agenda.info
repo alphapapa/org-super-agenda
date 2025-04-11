@@ -308,6 +308,11 @@ Every selector requires an argument, even if it’s just ‘t’, e.g.
      with ‘:discard’, because it doesn’t actually test anything, so it’s
      faster than, e.g.  ‘:regexp "."’, which has to get the entry text
      for every item.
+‘:ancestor-with-todo’
+     Group items whose ancestor (up to ‘:limit’ hops, or with
+     ‘:nearestp’, their nearest) has the given to-do keyword.  (For
+     example, ‘(:ancestor-with-todo ("PROJECT" :nearestp t))’ to group
+     by the nearest ancestor project heading.)
 ‘:auto-category’
      This automatically groups items by their category (usually the
      filename it’s in, without the ‘.org’ suffix).
@@ -389,11 +394,6 @@ File: README.info,  Node: Normal selectors,  Prev: Special selectors,  Up: Group
 These selectors take one argument alone, or multiple arguments in a
 list.
 
-‘:ancestor-with-todo’
-     Group items whose ancestor (up to ‘:limit’ hops, or with
-     ‘:nearestp’, their nearest) has the given to-do keyword.  (For
-     example, ‘(:ancestor-with-todo ("PROJECT" :nearestp t))’ to group
-     by the nearest ancestor project heading.)
 ‘:category’
      Group items that match any of the given categories.  Argument may
      be a string or list of strings.
@@ -839,7 +839,7 @@ Node: Examples4531
 Node: Group selectors8016
 Node: Keywords8978
 Node: Special selectors9707
-Node: Normal selectors13986
+Node: Normal selectors14272
 Node: Tips19152
 Node: FAQ20033
 Node: Why are some items not displayed even though I used group selectors for them?20283

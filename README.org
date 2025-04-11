@@ -165,6 +165,7 @@ Every selector requires an argument, even if it's just ~t~, e.g. ~:anything~, ~:
 
 +  =:and= :: Group ITEMS that match all selectors in GROUP.
 +  =:anything= :: Select every item, no matter what.  This is probably most useful with ~:discard~, because it doesn't actually test anything, so it's faster than, e.g. ~:regexp "."~, which has to get the entry text for every item.
++  ~:ancestor-with-todo~ :: Group items whose ancestor (up to ~:limit~ hops, or with ~:nearestp~, their nearest) has the given to-do keyword.  (For example, ~(:ancestor-with-todo ("PROJECT" :nearestp t))~ to group by the nearest ancestor project heading.)
 +  =:auto-category= :: This automatically groups items by their category (usually the filename it's in, without the =.org= suffix).
 +  ~:auto-dir-name~ :: This automatically groups items by the directory name of their source buffer.
 +  =:auto-group= :: This selects items that have the =agenda-group= Org property set.  By setting this property for a subtree, every item in it will be sorted into an agenda group by that name and placed into the agenda where the ~:auto-group~ selector is ([[examples.org#automatically-by-group][example]]).
@@ -188,7 +189,6 @@ Every selector requires an argument, even if it's just ~t~, e.g. ~:anything~, ~:
 
 These selectors take one argument alone, or multiple arguments in a list. 
 
-+  ~:ancestor-with-todo~ :: Group items whose ancestor (up to ~:limit~ hops, or with ~:nearestp~, their nearest) has the given to-do keyword.  (For example, ~(:ancestor-with-todo ("PROJECT" :nearestp t))~ to group by the nearest ancestor project heading.)
 +  =:category= :: Group items that match any of the given categories.  Argument may be a string or list of strings.
 +  =:children= :: Select any item that has child entries.  Argument may be ~t~ to match if it has any children, ~nil~ to match if it has no children, ~todo~ to match if it has children with any to-do keywords, or a string to match if it has children with certain to-do keywords.  You might use this to select items that are project top-level headings.  Be aware that this may be very slow in non-daily/weekly agenda views because of its recursive nature.
 +  =:date= :: Group items that have a date associated. Argument can be =t= to match items with any date, =nil= to match items without a date, or =today= to match items with today’s date. The =ts-date= text-property is matched against.
