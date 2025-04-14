@@ -576,6 +576,10 @@ File: README.info,  Node: 14-pre,  Next: 13,  Up: Changelog
    • Option ‘org-super-agenda-show-message’ allows disabling of the
      message shown when the mode is enabled.  (Thanks to Liam Hupfer
      (https://github.com/hpfr).)
+   • Option ‘org-super-agenda-header-suffix’, a string appended to
+     group headers.  (#270
+     (https://github.com/alphapapa/org-super-agenda/issues/270).  Thanks
+     to Kamron Bhavnagri (https://github.com/KamWithK).)
 
    *Changes*
    • Selector ‘:auto-outline-path’ puts top-level headings in a group

@@ -205,6 +205,10 @@ to fill window width, and a newline is added."
   "String prepended to group headers."
   :type 'string)
 
+(defcustom org-super-agenda-header-suffix " "
+  "String appended to group headers."
+  :type 'string)
+
 (defcustom org-super-agenda-final-group-separator ""
   "Separator inserted after final agenda group.
 If a character, it is repeated to fill window width, and a
@@ -307,7 +311,7 @@ of `org-super-agenda-header-map', which see."
   (pcase name
     ((or `nil 'none) "")
     (_ (let* ((properties (text-properties-at 0 name))
-              (header (concat org-super-agenda-header-prefix name))
+              (header (concat org-super-agenda-header-prefix name org-super-agenda-header-suffix))
               (separator
                (cl-etypecase org-super-agenda-header-separator
                  (character (concat (make-string (window-width) org-super-agenda-header-separator)
