@@ -244,7 +244,7 @@ considerable, depending on the number of items."
 
 (defmacro org-super-agenda--when-with-marker-buffer (form &rest body)
   "When FORM is a marker, eval BODY wrapped in `org-with-point-at'."
-  (declare (indent defun) (debug (form body)))
+  (declare (indent 1) (debug (form body)))
   (org-with-gensyms (marker)
     `(let ((,marker ,form))
        (when (markerp ,marker)
