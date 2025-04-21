@@ -588,6 +588,10 @@ File: README.info,  Node: 14-pre,  Next: 13,  Up: Changelog
      (https://github.com/alphapapa/org-super-agenda/issues/264).  Thanks
      to Florian Lindner (https://github.com/floli) for reporting, and to
      Ihor Radchenko (https://github.com/yantar92) for suggesting.)
+   • Selector ‘:habit’ no longer causes ‘org-element’-related warnings
+     when used with Org 9.7+.  (#247
+     (https://github.com/alphapapa/org-super-agenda/issues/247).  Thanks
+     to several users for reporting, investigating, and testing.)
 
 
 File: README.info,  Node: 13,  Next: 12,  Prev: 14-pre,  Up: Changelog
@@ -846,18 +850,18 @@ Node: Why are some items not displayed even though I used group selectors for th
 Node: Why did a group disappear when I moved it to the end of the list?21178
 Node: Changelog21759
 Node: 14-pre21997
-Node: 1323129
-Node: 1224692
-Node: 11127362
-Node: 1127537
-Node: 10329121
-Node: 10229332
-Node: 10129466
-Node: 10029804
-Node: Development29909
-Node: Bugs30311
-Node: Tests31005
-Node: Credits31342
+Node: 1323386
+Node: 1224949
+Node: 11127619
+Node: 1127794
+Node: 10329378
+Node: 10229589
+Node: 10129723
+Node: 10030061
+Node: Development30166
+Node: Bugs30568
+Node: Tests31262
+Node: Credits31599
 
 End Tag Table
 

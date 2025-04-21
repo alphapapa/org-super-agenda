@@ -249,6 +249,7 @@ As explained in the usage instructions and shown in the example, items are colle
 
 *Fixes*
 + Selector ~:time-grid~ incorrectly recognized some items.  ([[https://github.com/alphapapa/org-super-agenda/issues/264][#264]].  Thanks to [[https://github.com/floli][Florian Lindner]] for reporting, and to [[https://github.com/yantar92][Ihor Radchenko]] for suggesting.)
++ Selector ~:habit~ no longer causes ~org-element~-related warnings when used with Org 9.7+.  ([[https://github.com/alphapapa/org-super-agenda/issues/247][#247]].  Thanks to several users for reporting, investigating, and testing.)
 
 ** 1.3
 

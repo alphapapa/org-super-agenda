@@ -606,7 +606,9 @@ to-do keywords."
   "Group habit items.
 Habit items have a \"STYLE: habit\" Org property."
   :section-name "Habits"
-  :test (org-is-habit-p (org-super-agenda--get-marker item)))
+  :test (org-super-agenda--when-with-marker-buffer
+            (org-super-agenda--get-marker item)
+          (org-is-habit-p)))
 
 (org-super-agenda--defgroup file-path
   "Group items by file path.
